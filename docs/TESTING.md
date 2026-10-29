@@ -1,0 +1,34 @@
+# 0.11.0 验收说明
+
+验收日期：2026-10-29。自动化浏览器使用静音、无头 Edge；业务测试使用独立内存服务和合成成员，不写入公开旅行，不调用付费模型。
+
+## 已检查
+
+- 218 项自动测试通过，工作区 164 个 JavaScript 文件语法检查通过。公开源码仅保留可复现工具，其语法文件数可能更少；GitHub Actions 对公开仓库独立执行检查。
+- 四个网页入口在 320×740、390×844、844×390、768×1024 和 1440×960 视口无整页横向溢出。实际查看日夜地图、近看地标、景点管理和旅行表单截图。
+- 使用浏览器实际触屏输入模拟单指拖动与双指缩放：画面变化，结束手势后不误触景点。
+- 上海、武汉的景点整组删除、刷新保持、恢复默认通过；删除正在近看的景点会返回全景。
+- 两个独立手机浏览器身份完成选点、创建、邀请、偏好草稿返回、断网失败后重试、生成、费用查看、提出修改、重新生成、双方接受、定稿和复制。
+- 320 像素宽度下，最终确认按钮和逐日表单可以正常访问。邀请与行程自动复制受限时，手动复制入口可用。
+
+## 复现
+
+先运行 `npm ci`。规则测试用 `npm test`，语法检查用 `npm run check`。
+
+浏览器检查另外需要 Python、Playwright 和 Edge：
+
+```sh
+python -m pip install playwright
+python tools/mobile-check.py
+python tools/travel-flow-check.py
+```
+
+脚本会启动自己的 `127.0.0.1` 临时端口，测试结束后关闭，不需要先启动网页。结果和截图保存在 `test-results/mobile/` 与 `test-results/travel-flow/`。
+
+没有 Edge 时，可运行 `python -m playwright install chromium`，再设置环境变量 `BROWSER_CHANNEL=chromium` 后执行脚本。PowerShell 使用 `$env:BROWSER_CHANNEL='chromium'`；macOS/Linux 可在命令前写 `BROWSER_CHANNEL=chromium`。
+
+## 未覆盖
+
+触屏模拟不等于手机真机验证。尚未完成 iOS Safari、微信内置浏览器、低端 Android 的真实键盘、GPU 内存、帧率、耗电或后台恢复测试。也没有进行生产并发压测、真实游客研究或实地路线验证。
+
+浏览器确认的布局与流程结果不能替代上述检查。当前在线入口用于体验和反馈，不作商业服务可用性承诺。

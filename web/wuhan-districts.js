@@ -1,0 +1,21 @@
+import * as THREE from 'three';
+import {tree} from './wuhan-architecture.js';
+import {terrainLift} from './wuhan-landscape.js';
+
+// Landscaped precincts connect the landmarks without inventing anonymous housing blocks.
+export function addDistricts(k,g,{surface,anchor,riverX,landmarks}){
+  const park=k.mat('#6e8b66',.98),stone=k.mat('#aeb29b',.96),gravel=k.mat('#bbb7a0',.94),water=k.mat('#517f83',.45,.18),curb=k.mat('#52675d'),gold=k.mat('#d8c296',.5,0,'#f3be76');gold.userData.night.intensity=1.9;
+  const footprints={crane:.46,bridge:.80,qingchuan:.45,guishan:.24,customs:.43,greenland:.28,han:.36,university:1.13,museum:.68,eastlake:.85,guqintai:.51,gude:.45,qintai:.66,station:.79,xinhai:.65,artmuseum:.60,baotong:.45};
+  const caps=landmarks.filter(l=>l.id!=='bridge').map(l=>({normal:surface(l.x,l.z,0,l.hemisphere||1).normalize(),r:Math.atan((footprints[l.id]||.4)/2.15)}));
+  function clear(x,z,side,pad=.02){if(x*x+z*z>4.25)return false;const n=surface(x,z,0,side).normalize();if(caps.some(c=>n.angleTo(c.normal)<c.r+pad))return false;
+    if(side>0){if(Math.abs(x-riverX(z))<.36)return false;const t=(x+2.04)/2.04;if(x<0&&Math.abs(z-(-.43+.30*t+.09*Math.sin(t*Math.PI*2)))<.16)return false;if(Math.abs(z-.60)<.14&&Math.abs(x)<.96)return false;}return true;}
+  function patch(cx,cz,rx,rz,side,material,lift=.006){const v=[],ix=[],N=128,M=40;for(let j=0;j<=M;j++)for(let i=0;i<=N;i++){const a=i/N*Math.PI*2,r=j/M,edge=1+.07*Math.sin(a*3)+.04*Math.cos(a*5),x=cx+Math.cos(a)*rx*r*edge,z=cz+Math.sin(a)*rz*r*edge;v.push(...surface(x,z,lift+.012+(side>0?terrainLift(x,z):0),side));}for(let j=0;j<M;j++)for(let i=0;i<N;i++){const a=j*(N+1)+i;ix.push(a,a+1,a+N+1,a+1,a+N+2,a+N+1);}const kept=[];for(let i=0;i<ix.length;i+=3){const tri=ix.slice(i,i+3);if(tri.every(n=>Math.abs(v[n*3+1])>.30))kept.push(...tri);}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));geo.setIndex(kept);geo.computeVertexNormals();material.side=THREE.DoubleSide;k.mesh(g,geo,material);}
+  function ribbon(points,width,side,mat,lift=.012){let chunk=[];function flush(){if(chunk.length<2){chunk=[];return;}const v=[],ix=[];for(let i=0;i<chunk.length;i++){const [x,z]=chunk[i],a=chunk[Math.max(0,i-1)],b=chunk[Math.min(chunk.length-1,i+1)],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz)||1;for(const s of [-1,1])v.push(...surface(x+s*dz/length*width/2,z-s*dx/length*width/2,lift+.012+(side>0?terrainLift(x,z):0),side));if(i){const n=i*2;ix.push(n-2,n,n-1,n-1,n,n+1);}}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));geo.setIndex(ix);geo.computeVertexNormals();mat.side=THREE.DoubleSide;k.mesh(g,geo,mat);chunk=[];}for(const p of points){if(clear(...p,side,.008))chunk.push(p);else flush();}flush();}
+  const precincts=[[-1.35,-.79,.61,.56,1],[-1.15,.80,.76,.58,1],[.98,1.36,.80,.47,1],[1.47,-.43,.45,.83,1],[-1.02,1.55,.72,.45,1],[-1.48,-1.15,.72,.54,-1],[1.70,.55,.70,.70,-1],[1.08,-1.13,.74,.67,-1]];
+  for(const [cx,cz,rx,rz,side] of precincts){const pts=Array.from({length:121},(_,i)=>{const a=i/120*Math.PI*2;return [cx+Math.cos(a)*rx*.90,cz+Math.sin(a)*rz*.90];});ribbon(pts,.045,side,gravel);for(let i=0;i<110;i++){const a=i*2.399963,r=.64+.36*((i*37%101)/100),x=cx+Math.cos(a)*rx*r,z=cz+Math.sin(a)*rz*r;if(!clear(x,z,side,.045))continue;const t=new THREE.Group(),h=.055+(i%7)*.006;tree(k,t,0,0,0,h,i%29===0);anchor(t,x,z,(side>0?terrainLift(x,z):0)+.006,side);g.add(t);}
+    for(let i=0;i<28;i++){const a=i/28*Math.PI*2,x=cx+Math.cos(a)*rx*.90,z=cz+Math.sin(a)*rz*.90;if(!clear(x,z,side))continue;const t=new THREE.Group();k.box(t,.013,.028,.013,curb,0,.014);k.box(t,.015,.004,.015,gold,0,.03);anchor(t,x,z,(side>0?terrainLift(x,z):0)+.016,side);g.add(t);}}
+  // Moon Lake forms a quiet foreground to the theatre; it is separate from the two rivers.
+  patch(-1.63,.96,.19,.20,1,stone,.013);patch(-1.63,.96,.16,.17,1,water,.017);
+  // Formal paths articulate the empty southern and northern approaches.
+  for(const side of [-1,1])for(const sign of [-1,1]){const pts=Array.from({length:160},(_,i)=>{const z=-1.8+i/159*3.6;return [sign*(.55+.22*Math.cos(z*1.5)),z];});ribbon(pts,.055,side,stone);}
+}

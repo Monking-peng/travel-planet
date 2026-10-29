@@ -1,0 +1,83 @@
+/* Shared touch layouts. Desktop composition is intentionally kept in its city stylesheet. */
+.travel-links{display:flex;align-items:center;gap:10px;margin-left:auto;margin-right:10px}
+@media(max-width:760px){
+  html{scroll-padding-top:16px}
+  body{min-width:320px}
+  button,a,input,select,textarea{touch-action:manipulation}
+  input,select,textarea{font-size:16px!important}
+  .app-shell{width:100%;max-width:100%;padding:0 16px;padding-bottom:env(safe-area-inset-bottom)}
+  .topbar{height:auto;min-height:104px;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:8px;gap:4px;flex-wrap:wrap}
+  .back-button{min-height:44px;font-size:14px;flex-shrink:0}
+  .top-actions{margin-left:auto;gap:4px}
+  .top-actions .icon-button{width:44px;height:44px}
+  .travel-links{order:3;flex:1 0 100%;min-width:0;width:100%;margin:0;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+  .travel-links>*{white-space:nowrap;flex-shrink:0;min-height:44px;display:inline-flex;align-items:center;padding:8px 12px;font-size:13px}
+  .heading{padding:20px 0 8px;min-height:72px}
+  .heading h1{font-size:28px;line-height:1.4;letter-spacing:0}
+  .planet-stage,.planet-stage.with-members{width:100%;height:clamp(360px,57svh,560px);margin:8px auto 0;overflow:visible}
+  .planet-viewpoints,body[data-city="上海"] .planet-viewpoints{top:0;left:0;transform:none;width:100%;max-width:100%;height:44px;display:flex;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;border-bottom:1px solid var(--line)}
+  .planet-viewpoints button,body[data-city="上海"] .planet-viewpoints button{min-height:44px;flex:0 0 auto;padding:8px 12px;white-space:nowrap;font-size:13px}
+  .planet-stage canvas{position:absolute;top:44px;width:100%;height:calc(100% - 146px)}
+  .planet-fallback{inset:44px 0 102px}
+  .planet-fallback img{width:100%;height:100%;object-fit:contain}
+  .planet-controls{bottom:0;left:0;transform:none;width:100%;max-width:100%;display:grid;grid-template-columns:44px 1fr 1fr 44px;gap:6px;min-height:96px;align-content:center}
+  #rotate-planet{grid-row:1;grid-column:1}.zoom-controls{grid-row:1;grid-column:2 / span 2;width:100%;justify-content:space-between}
+  #reset-planet{grid-row:1;grid-column:4}.planet-controls #manage-landmarks,.planet-controls #decorate-planet{grid-row:2;grid-column:1 / span 2;justify-content:center}
+  #night-planet{grid-row:2;grid-column:3 / span 2;justify-content:center}
+  .planet-controls button,.planet-controls .view-button{min-width:44px;min-height:44px;height:44px}
+  .planet-controls #manage-landmarks,.planet-controls .decorate-planet{font-size:13px;padding:8px 12px}
+  .zoom-controls{height:44px}
+  .planet-hint:not([hidden]){bottom:100px;max-width:100%;font-size:12px;background:var(--bg);padding:6px}
+  .members{width:100%;margin:8px 0;min-height:0}
+  .action-area{width:100%;max-width:440px;padding:16px 0 24px;margin:0 auto}
+  .action-area .text-button{min-height:44px}
+  .sheet{width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:24px 24px 0 0}
+  .sheet[open]{display:flex;flex-direction:column}
+  .sheet-head{flex-shrink:0;min-height:72px;padding:16px 20px}
+  .sheet-head h2{font-size:20px;line-height:1.4}
+  .sheet-head .close-button{width:44px;height:44px;flex-shrink:0}
+  .sheet-content{min-height:0;max-height:none;overflow-y:auto;overscroll-behavior:contain;padding:20px 20px max(24px,env(safe-area-inset-bottom));overflow-wrap:anywhere}
+  .sheet .chip,.sheet .text-button,.sheet .secondary,.sheet summary{min-height:44px}
+  .destination-list{gap:10px}.destination-card{padding:14px 12px;border-radius:12px}.destination-card strong{line-height:1.5}
+  .day-budget dl{grid-template-columns:1fr}
+  .itinerary-decision{padding:14px}.vote-options{flex-wrap:wrap}.vote-options button{min-height:44px}
+  .notice{max-width:calc(100% - 32px);bottom:max(16px,env(safe-area-inset-bottom));overflow-wrap:anywhere}
+  .scenery-editing .travel-links{display:none}.scenery-editing .topbar{height:auto;min-height:52px}.scenery-editing .planet-stage canvas{top:0;height:100%}
+  .scenery-inspecting .planet-stage{width:100%;height:calc(100dvh - 230px)}
+  .scenery-inspecting .planet-stage canvas{height:calc(100% - 54px)}
+  .scenery-inspecting .planet-controls{min-height:44px;display:flex;flex-wrap:nowrap;gap:8px}
+  .scenery-inspecting .zoom-controls{width:auto;flex:1}
+  .scenery-inspecting #night-planet{flex-shrink:0;padding:8px 14px}
+  .inspection-navigation button{width:44px;height:44px}.inspection-reset{min-height:44px}
+
+  .city-header{height:auto;min-height:110px;padding:max(8px,env(safe-area-inset-top)) 16px 8px;display:grid;grid-template-columns:1fr auto;gap:8px 12px}
+  .brand{font-size:20px;letter-spacing:1px;gap:10px;min-height:44px;white-space:nowrap}
+  .brand span{font-size:11px;padding-left:10px}
+  .city-header #night{grid-column:2;grid-row:1;min-height:44px;white-space:nowrap;padding:8px 14px}
+  .city-switch{grid-column:1/-1;grid-row:2;gap:6px}
+  .city-switch a{flex:1;text-align:center;padding:12px;min-height:44px;font-size:14px}
+  .scene-stage{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);overflow:visible}
+  .scene-heading{position:static;grid-row:1;padding:20px 20px 0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .scene-heading h1{font-size:30px;letter-spacing:4px;margin:0;order:-1}
+  .scene-heading p{font-size:12px;letter-spacing:1px;margin:0}
+  .scene-heading .preview-label{border:0;padding:0;font-size:12px}
+  .scene-heading .trip-entry{display:inline-flex;min-height:44px;align-items:center}
+  #shanghai,#wuhan{grid-row:2;width:100%;height:clamp(300px,56svh,520px);display:block}
+  .scene-controls{position:static;grid-row:3;display:flex;justify-content:center;flex-wrap:wrap;gap:6px;padding:8px 12px 16px}
+  .scene-controls button,.scene-controls #manage-landmarks{min-height:44px;padding:8px 12px;font-size:13px;white-space:nowrap}
+  .scene-controls #zoom-in,.scene-controls #zoom-out{min-width:44px}
+  .scene-instruction{display:none}
+  .landmark-detail{position:static;grid-row:4;width:auto;margin:0 16px 16px;padding:16px 18px;box-shadow:none;border-radius:0 12px 12px 0}
+  .landmark-detail h2{font-size:20px;margin:4px 0 8px}.landmark-detail p{font-size:13px;line-height:1.8;margin-bottom:8px}.landmark-detail a{display:inline-flex;align-items:center;min-height:44px;font-size:12px}
+  #loading{min-height:280px;z-index:3;flex-direction:column;padding:20px;text-align:center}
+  .landmark-nav{display:flex;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:14px 16px max(18px,env(safe-area-inset-bottom));gap:8px;min-height:90px}
+  .landmark-nav button{flex:0 0 auto;min-width:110px;max-width:190px;min-height:60px;padding:10px 14px;white-space:nowrap;font-size:13px;border:1px solid var(--line)!important;border-radius:10px;scroll-snap-align:start}
+  .landmark-nav button[aria-pressed=true]{background:var(--ink);color:var(--panel)}
+  .landmark-nav button[aria-pressed=true] span{color:inherit;opacity:.8}
+  .landmark-manager{width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:24px 24px 0 0}
+  .lm-header{padding:20px 20px 12px;gap:12px}.lm-header h2{font-size:22px}.landmark-manager .lm-close{width:44px;height:44px}
+  .lm-note{padding:0 20px 16px;line-height:1.8}.lm-list{grid-template-columns:1fr;padding:0 20px 12px;gap:0}
+  .lm-row{min-height:76px}.lm-row strong{font-size:14px}.lm-row span{font-size:12px}.lm-row button{min-height:44px;min-width:76px;font-size:13px}
+  .lm-footer{padding:14px 20px max(16px,env(safe-area-inset-bottom));gap:12px}.lm-footer button{min-height:44px}
+}
+@media(max-width:360px){.brand span{display:none}.scene-controls{gap:4px;padding-inline:8px}.scene-controls button,.scene-controls #manage-landmarks{padding-inline:9px}.planet-controls{gap:4px}.sheet-content{padding-inline:16px}}

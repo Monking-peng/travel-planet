@@ -1,0 +1,21 @@
+#manage-landmarks{font:inherit;font-size:13px;white-space:nowrap;padding:9px 14px;border:1px solid #c8d3c7;border-radius:8px;background:#f8faf0;color:#36584b;min-height:40px;cursor:pointer}
+#manage-landmarks:disabled{opacity:.5;cursor:wait}
+.landmark-manager{--lm-bg:#f9faf5;--lm-ink:#304b46;--lm-muted:#61766f;--lm-line:#d7dfd5;--lm-soft:#e9efe6;color:var(--lm-ink);background:var(--lm-bg);width:700px;max-width:calc(100vw - 64px);max-height:calc(100dvh - 64px);margin:auto;padding:0;border:1px solid var(--lm-line);border-radius:16px;box-shadow:0 24px 100px #0e251f35;font:14px/1.5 "PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+.landmark-manager[open]{display:flex;flex-direction:column}
+.landmark-manager::backdrop{background:#102a2555;backdrop-filter:blur(3px)}
+.lm-header{display:flex;align-items:center;justify-content:space-between;padding:24px 28px 12px;gap:24px;flex-shrink:0}
+.lm-header p{font-size:11px;letter-spacing:2px;color:var(--lm-muted);margin:0 0 4px}.lm-header h2{font-size:24px;font-weight:600;margin:0}
+.landmark-manager button{font:inherit;cursor:pointer;color:var(--lm-ink);background:transparent;border:1px solid var(--lm-line);border-radius:7px;padding:7px 14px;transition:none}
+.landmark-manager button:focus-visible,#manage-landmarks:focus-visible{outline:3px solid #b77d38;outline-offset:3px}
+.landmark-manager button:hover:not(:disabled){background:var(--lm-soft);color:var(--lm-ink)}
+.landmark-manager .lm-close{width:36px;height:36px;font-size:24px;line-height:1;padding:0;border:0}
+.lm-note{margin:0;padding:0 28px 18px;color:var(--lm-muted);font-size:12px;max-width:580px;flex-shrink:0}
+.lm-list{overflow-y:auto;overscroll-behavior:contain;display:grid;grid-template-columns:1fr 1fr;gap:0 28px;padding:0 28px 12px;min-height:0}
+.lm-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:65px;border-top:1px solid var(--lm-line)}
+.lm-row>div{min-width:0}.lm-row strong{display:block;font-size:13px;font-weight:500;line-height:1.45}.lm-row span{display:block;font-size:10px;color:var(--lm-muted);margin-top:4px}
+.lm-row button{flex-shrink:0;min-width:60px;font-size:12px;padding:6px 10px}
+.lm-row[data-present=false] strong{color:var(--lm-muted)}.lm-row[data-present=false] button{background:var(--lm-ink);color:var(--lm-bg);border-color:var(--lm-ink)}
+.lm-footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 28px;border-top:1px solid var(--lm-line);flex-shrink:0}.lm-count{font-size:12px;color:var(--lm-muted)}.lm-reset{font-size:12px!important}.lm-reset:disabled{opacity:.4;cursor:default}
+.night .landmark-manager,.planet-night .landmark-manager{--lm-bg:#172832;--lm-ink:#e0e5df;--lm-muted:#a2b3bc;--lm-line:#344854;--lm-soft:#2a3d47}
+.night #manage-landmarks,.planet-night #manage-landmarks{background:#172832;color:#e0e5df;border-color:#344854}
+.landmark-nav button:disabled,.planet-viewpoints button:disabled{cursor:default}

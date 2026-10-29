@@ -1,0 +1,1 @@
+<view class="resource-page"><text>星球组件已准备好</text><button bindtap="back">返回旅行</button></view>

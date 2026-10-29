@@ -1,0 +1,10 @@
+#wuhan{width:100%;height:100%;display:block;touch-action:none}.landmark-nav{grid-template-columns:repeat(6,minmax(0,1fr));gap:16px 0}.landmark-nav button:nth-child(7n){border-right:1px solid var(--line)}.landmark-nav button:nth-child(6n){border-right:0}.scene-heading h1{letter-spacing:14px}.landmark-detail{width:240px}.scene-stage{height:calc(100vh - 246px);min-height:400px}body.night .scene-heading p{color:#94bdcc}
+
+body.night #night{color:#21414b}
+
+.landmark-nav{grid-template-columns:repeat(8,minmax(0,1fr));gap:14px 0}.landmark-nav button:nth-child(6n){border-right:1px solid var(--line)}.landmark-nav button:nth-child(8n){border-right:0}.scene-stage{height:calc(100vh - 235px)}
+@media(max-width:1100px){.landmark-nav{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 0}.scene-stage{height:calc(100vh - 255px);min-height:340px}}
+
+/* Seventeen destinations remain within two desktop rows. */
+.landmark-nav{grid-template-columns:repeat(9,minmax(0,1fr))}.landmark-nav button:nth-child(8n){border-right:1px solid var(--line)}.landmark-nav button:nth-child(9n){border-right:0}
+@media(max-width:1100px){.landmark-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.landmark-nav button:nth-child(6n){border-right:0}}

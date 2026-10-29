@@ -1,0 +1,19 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),{spawn}=require('node:child_process'),{once}=require('node:events'),path=require('node:path');
+test('HTTP city catalogs, invitations and AI inputs use the authoritative room city',async()=>{
+  const payloads=[];const mock=http.createServer((req,res)=>{let raw='';req.on('data',b=>raw+=b);req.on('end',()=>{const wire=JSON.parse(raw),input=JSON.parse(wire.messages[1].content);payloads.push(input);const output=input.catalog?{plans:[{placeIds:['sh-bund','sh-suzhou','sh-nanjing']},{placeIds:['sh-pearl','sh-lujiazui','sh-yuyuan']}]}:{wants:['sh-bund','duanqiao'],tags:['江景'],must:[],avoid:[]};res.setHeader('Content-Type','application/json');res.end(JSON.stringify({choices:[{message:{content:JSON.stringify(output)}}]}));});});
+  await new Promise(resolve=>mock.listen(0,'127.0.0.1',resolve));
+  const child=spawn(process.execPath,['server/index.cjs'],{cwd:path.resolve(__dirname,'..'),windowsHide:true,env:{...process.env,PORT:'0',HOST:'127.0.0.1',TRAVEL_DB:':memory:',TRAVEL_AI_BASE_URL:'http://127.0.0.1:'+mock.address().port,TRAVEL_AI_KEY:'mock-only',TRAVEL_AI_MODEL:'mock',TRAVEL_AI_DAILY_LIMIT:'200',COOKIE_SECURE:'false',COOKIE_PATH:'/',TRUST_PROXY:'false'},stdio:['ignore','pipe','pipe']});
+  try{
+    const base=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('startup timeout')),15000);child.stdout.on('data',b=>{const m=b.toString().match(/http:\/\/127\.0\.0\.1:\d+/);if(m){clearTimeout(timer);resolve(m[0]);}});child.once('error',reject);});
+    let cookie='';const call=async(url,body)=>{const res=await fetch(base+url,{method:body===undefined?'GET':'POST',headers:{Cookie:cookie,...(body===undefined?{}:{'Content-Type':'application/json'})},body:body===undefined?undefined:JSON.stringify(body)});if(res.headers.get('set-cookie'))cookie=res.headers.get('set-cookie').split(';')[0];return {status:res.status,data:await res.json()};};
+    assert.equal((await call('/api/catalog')).data.city,'杭州');const cat=await call('/api/catalog?city='+encodeURIComponent('上海'));assert.ok(cat.data.places.every(p=>p.id.startsWith('sh-')));assert.equal((await call('/api/catalog?city=constructor')).status,400);
+    const r=(await call('/api/rooms',{city:'上海',startDate:'2026-11-07',days:1,nickname:'甲'})).data.room;assert.equal(r.city,'上海');const host=cookie;
+    assert.equal((await call('/api/rooms/'+r.id+'/preferences',{budget:500,maxWalk:5,wants:['duanqiao']})).data.error.code,'PLACE_CITY_MISMATCH');
+    await call('/api/rooms/'+r.id+'/preferences',{budget:500,maxWalk:5,tags:['江景'],wants:['sh-bund'],must:[],avoid:[]});
+    const ext=await call('/api/extract',{roomId:r.id,city:'杭州',text:'想去外滩看江景'});assert.deepEqual(ext.data.extraction.wants,['sh-bund']);assert.equal(payloads.at(-1).context.city,'上海');assert.ok(payloads.at(-1).places.every(p=>p.id.startsWith('sh-')));
+    cookie='';const invite=(await call('/api/rooms/'+r.id+'/invite?token='+r.inviteToken)).data.invite;assert.equal(invite.city,'上海');assert.equal(invite.joined,false);assert.ok(!invite.inviteToken);
+    assert.equal((await call('/api/extract',{roomId:r.id,text:'看江景'})).status,403);const n=payloads.length;cookie=host;
+    const generated=await call('/api/rooms/'+r.id+'/generate',{mode:'ai'});assert.equal(generated.status,200);assert.equal(payloads.length,n+1);assert.equal(payloads.at(-1).city,'上海');assert.ok(payloads.at(-1).catalog.every(p=>p.id.startsWith('sh-')));assert.ok(generated.data.room.proposals.every(p=>p.included.every(id=>id.startsWith('sh-'))));
+    assert.equal((await call('/api/rooms')).data.rooms[0].city,'上海');assert.equal((await call('/api/rooms',{city:'北京',startDate:'2026-11-07'})).status,400);
+  }finally{const exited=once(child,'exit');child.kill();await exited;await new Promise(resolve=>mock.close(resolve));}
+});

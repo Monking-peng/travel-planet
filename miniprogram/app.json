@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/travel/index",
+    "pages/about/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#eef2e7",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json",
+  "subPackages": [
+    {
+      "name": "scenery",
+      "root": "scenery",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "sceneryExtra",
+      "root": "scenery-extra",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "sceneryMore",
+      "root": "scenery-more",
+      "pages": [
+        "index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home/index": {
+      "network": "all",
+      "packages": [
+        "scenery"
+      ]
+    }
+  }
+}

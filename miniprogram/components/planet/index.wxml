@@ -1,0 +1,8 @@
+<xr-scene id="scene" bind:ready="ready" bind:tick="tick">
+  <xr-assets wx:if="{{assetsReady}}" bind:loaded="loaded" bind:error="error"><xr-asset-load type="gltf" asset-id="scenery-base" src="/scenery/assets/base.glb" /><xr-asset-load wx:for="{{assets}}" wx:key="id" type="gltf" asset-id="scenery-{{item.id}}" src="{{item.src}}" /></xr-assets>
+  <xr-node node-id="target" position="0 0.20 0" />
+  <xr-node wx:if="{{modelsReady}}" node-id="world" position="0 {{worldY}} 0" rotation="-20.05 -11.46 14.32"><xr-gltf model="scenery-base" /><xr-gltf wx:for="{{visiblePieces}}" wx:key="id" node-id="piece-{{item.id}}" model="scenery-{{item.id}}" /></xr-node>
+  <xr-camera node-id="camera" position="0 1.2 6.2" target="target" fov="{{cameraFov}}" clear-color="0.9333 0.9490 0.9059 1" near="0.1" far="100" />
+  <xr-light type="ambient" color="1 0.98 0.92" intensity="1.4" />
+  <xr-light type="directional" rotation="40 160 0" color="1 0.98 0.92" intensity="2.2" />
+</xr-scene>
