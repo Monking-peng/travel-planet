@@ -1,3 +1,4 @@
+import {WUHAN_PLACE_LINKS} from './wuhan-place-links.js';
 import {viewportFov,createTapTracker} from './viewport-controls.js';
 import {mountModulePanel} from './wuhan-module-panel.js';
 import {visibleLandmark,transitionPosition,reframeOrbit,FreeOrbitControls} from './shanghai-camera.js';
@@ -40,7 +41,7 @@ function boot(){
       let target=overviewTarget.clone(),position=overviewPosition.clone();
       if(item){const m=model.landmarks.get(id);m.updateWorldMatrix(true,true);target=m.localToWorld(new THREE.Vector3(0,(item.focusY??item.height*.46),item.focusZ||0));const view=new THREE.Vector3(...(item.view||(item.id==='swfc'?[1,.35,-1]:item.id==='tower'?[.9,.35,1]:item.area.startsWith('外滩')?[1,.55,1]:[-.65,.4,1]))).normalize();if(item.grounded)view.applyQuaternion(m.quaternion);const distance=item.distance||Math.max(1.25,item.height*3.5);position=target.clone().addScaledVector(view,distance);$('#detail-area').textContent=item.area;$('#detail-name').textContent=item.name;$('#detail-description').textContent=item.description;$('#detail-source').href=item.source;}
       const up=new THREE.Vector3(0,1,0);if(item?.grounded)up.applyQuaternion(model.landmarks.get(item.id).quaternion);controls=reframeOrbit(controls,up);wireOrbit();
-      $('#detail').hidden=!item;canvas.dataset.focus=item?id:'overview';
+      $('#detail').hidden=!item;const travelLink=$('#plan-place'),place=item&&WUHAN_PLACE_LINKS[item.id];travelLink.hidden=!place;if(place)travelLink.href='./wuhan-trip.html#place/'+place;canvas.dataset.focus=item?id:'overview';
       if(reduced.matches){camera.position.copy(position);controls.target.copy(target);controls.update();}
       else transition={start:performance.now(),from:camera.position.clone(),to:position,fromTarget:controls.target.clone(),toTarget:target};
     }

@@ -12,7 +12,7 @@ try:
   if m:base=m.group(0)+'/';break
  with sync_playwright() as p:
   b=p.chromium.launch(channel=os.environ.get('BROWSER_CHANNEL','msedge'),headless=True,args=['--mute-audio'])
-  for route,sel,canvasId in [('wuhan.html','#wuhan','#wuhan'),('shanghai.html','#shanghai','#shanghai'),('shanghai-trip.html','#planet-stage','#planet'),('','#planet-stage','#planet')]:
+  for route,sel,canvasId in [('wuhan-trip.html','#planet-stage','#planet'),('wuhan.html','#wuhan','#wuhan'),('shanghai.html','#shanghai','#shanghai'),('shanghai-trip.html','#planet-stage','#planet'),('','#planet-stage','#planet')]:
    c=b.new_context(viewport={'width':390,'height':844},device_scale_factor=1,is_mobile=True,has_touch=True,reduced_motion='reduce');page=c.new_page();page.on('pageerror',lambda e:report['errors'].append(str(e)));page.on('request',lambda q:report['writes'].append(q.url) if q.method not in ['GET','HEAD','OPTIONS'] else None)
    page.goto(base+route,wait_until='networkidle');expect(page.locator(sel)).to_have_attribute('data-state','ready',timeout=90000)
    name=route.replace('.html','') or 'hangzhou';canvas=page.locator(canvasId)
@@ -21,8 +21,8 @@ try:
     page.screenshot(path=str(out/(name+'-'+label+'.png')),full_page=True)
    shot('390-day')
    page.locator('#night' if route in ['wuhan.html','shanghai.html'] else '#night-planet').click();expect(canvas).to_have_attribute('data-night','true');shot('390-night')
-   if route in ['wuhan.html','shanghai.html','shanghai-trip.html']:
-    isTravel=route=='shanghai-trip.html';id='university' if route=='wuhan.html' else 'disney';nav=f'[data-overview={id}]' if isTravel else f'[data-landmark={id}]'
+   if route in ['wuhan.html','shanghai.html','shanghai-trip.html','wuhan-trip.html']:
+    isTravel=route in ['shanghai-trip.html','wuhan-trip.html'];id='university' if route in ['wuhan.html','wuhan-trip.html'] else 'disney';nav=f'[data-overview={id}]' if isTravel else f'[data-landmark={id}]'
     page.locator(nav).click();expect(canvas).to_have_attribute('data-focus',id);canvas.scroll_into_view_if_needed();shot('390-focus')
     page.locator('#manage-landmarks').click();expect(page.locator('#landmark-manager')).to_be_visible();assert page.locator('#landmark-manager').evaluate('(e)=>e.getBoundingClientRect().bottom<=innerHeight+1')
     page.locator(f'[data-module={id}]').click();expect(canvas).to_have_attribute('data-module-count','16');expect(canvas).to_have_attribute('data-focus','overview');shot('390-manager');page.locator('.lm-close').click()
@@ -39,7 +39,7 @@ try:
    for step in range(1,7):touches('touchMove',[(1,x+step*10,y-step*5)]);page.wait_for_timeout(40)
    touches('touchEnd',[]);page.wait_for_timeout(200)
    assert canvas.get_attribute('data-focus')==previous
-   if route in ['','shanghai-trip.html']:expect(page.locator('#sheet')).not_to_be_visible()
+   if route in ['','shanghai-trip.html','wuhan-trip.html']:expect(page.locator('#sheet')).not_to_be_visible()
    assert before!=canvas.screenshot();report['checks'].append(name+': CDP touch pinch and drag change image without accidental selection')
    if not route:
     page.locator('#decorate-planet').click();page.locator('[data-inspect=boat]').click();shot('390-inspection')

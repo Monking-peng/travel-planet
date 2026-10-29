@@ -14,10 +14,11 @@ const places = [
 const tags=['湖景','美食','散步','人文','拍照','安静','坐船','自然'];
 const palette=['#668f7c','#c28f73','#8994bf','#bca85e','#b180a0','#77a6b3'];
 const shanghai=require('./shanghai-catalog.cjs');
+const wuhan=require('./wuhan-catalog.cjs');
 const index=list=>Object.assign(Object.create(null),Object.fromEntries(list.map(p=>[p.id,p])));
-const catalogs={'杭州':{city:'杭州',places,tags,byId:index(places)},'上海':{city:'上海',...shanghai,byId:index(shanghai.places)}};
+const catalogs={'杭州':{city:'杭州',places,tags,byId:index(places)},'上海':{city:'上海',...shanghai,byId:index(shanghai.places)},'武汉':{city:'武汉',...wuhan,byId:index(wuhan.places)}};
 function getCatalog(city='杭州'){
   if(typeof city!=='string'||!Object.hasOwn(catalogs,city))return null;
   return catalogs[city];
 }
-module.exports={places,tags,palette,getCatalog,byId:index([...places,...shanghai.places])};
+module.exports={places,tags,palette,getCatalog,byId:index([...places,...shanghai.places,...wuhan.places])};

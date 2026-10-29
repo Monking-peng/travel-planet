@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="./mobile.css">
 </head>
 <body>
-  <header class="city-header"><a class="brand" href="./">一起去<span>旅行星球</span></a><nav class="city-switch" aria-label="切换城市"><a href="./">杭州</a><a href="./shanghai.html">上海</a><a href="./wuhan.html" aria-current="page">武汉</a></nav><button id="night" aria-pressed="false" disabled>☾ 夜晚</button></header>
+  <header class="city-header"><a class="brand" href="./">一起去<span>旅行星球</span></a><nav class="city-switch" aria-label="切换城市"><a href="./">杭州</a><a href="./shanghai.html">上海</a><a href="./wuhan.html" aria-current="page">武汉</a></nav><a class="trip-entry" href="./wuhan-trip.html">一起计划武汉 →</a><button id="night" aria-pressed="false" disabled>☾ 夜晚</button></header>
   <main>
     <section class="scene-stage" aria-label="武汉旅行星球">
       <div class="scene-heading"><p>长江与汉江两岸</p><h1>武汉</h1><span class="preview-label">江城 · 两江三镇</span></div>
       <canvas id="wuhan" tabindex="0" aria-label="武汉星球，可拖动旋转、滚轮缩放，方向键旋转，加减键缩放，0 恢复全景" aria-busy="true"></canvas>
       <div id="loading" role="status"><span>正在载入两江三镇…</span><button id="retry" hidden>重新载入</button></div>
-      <aside class="landmark-detail" id="detail" hidden aria-live="polite"><p id="detail-area"></p><h2 id="detail-name"></h2><p id="detail-description"></p><a id="detail-source" target="_blank" rel="noopener noreferrer">查看实景参考 ↗</a></aside>
+      <aside class="landmark-detail" id="detail" hidden aria-live="polite"><p id="detail-area"></p><h2 id="detail-name"></h2><p id="detail-description"></p><a id="detail-source" target="_blank" rel="noopener noreferrer">查看实景参考 ↗</a><a id="plan-place" class="trip-entry" hidden>选入武汉旅行 →</a></aside>
       <div class="scene-controls" role="group" aria-label="景观控制"><button type="button" id="manage-landmarks" disabled>管理景点</button><button id="overview" disabled>↺ 全景</button><button id="rotate" aria-pressed="false" disabled>开始旋转</button><button id="zoom-out" aria-label="缩小" disabled>−</button><button id="zoom-in" aria-label="放大" disabled>＋</button></div>
       <p class="scene-instruction">拖动旋转 · 滚轮缩放</p>
     </section>

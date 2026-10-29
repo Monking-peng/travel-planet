@@ -81,3 +81,5 @@
   .lm-footer{padding:14px 20px max(16px,env(safe-area-inset-bottom));gap:12px}.lm-footer button{min-height:44px}
 }
 @media(max-width:360px){.brand span{display:none}.scene-controls{gap:4px;padding-inline:8px}.scene-controls button,.scene-controls #manage-landmarks{padding-inline:9px}.planet-controls{gap:4px}.sheet-content{padding-inline:16px}}
+
+.trip-entry{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:20px;background:#345c4b;color:#fff;text-decoration:none;font-size:13px;font-weight:600}.landmark-detail .trip-entry{margin-top:12px}.city-header{flex-wrap:wrap}@media(max-width:760px){.city-header>.trip-entry{order:4;flex-basis:100%;padding:9px 12px}}

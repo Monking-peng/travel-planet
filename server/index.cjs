@@ -25,12 +25,12 @@ const server=http.createServer(async(req,res)=>{
       rate('ip:'+(ip||'local'),150);
       const input=req.method==='POST'?await body(req):{};const user=bridge.verify(req,url.pathname+url.search,input)||session(req,res);
       if(url.pathname==='/api/status')return json(res,200,{ok:true,ai:ai.available(),user:{id:user.uid,nickname:user.nickname},version,release});
-      if(url.pathname==='/api/catalog'){const c=catalog.getCatalog(url.searchParams.get('city')??undefined);if(!c)domain.fail('CITY_UNSUPPORTED','目前支持杭州和上海。');return json(res,200,{city:c.city,places:c.places,tags:c.tags});}
+      if(url.pathname==='/api/catalog'){const c=catalog.getCatalog(url.searchParams.get('city')??undefined);if(!c)domain.fail('CITY_UNSUPPORTED','目前支持杭州、上海和武汉。');return json(res,200,{city:c.city,places:c.places,tags:c.tags});}
       if(url.pathname==='/api/rooms'&&req.method==='GET')return json(res,200,{rooms:db.list(user.uid)});
       if(url.pathname==='/api/rooms'&&req.method==='POST'){
         rate('create:'+user.uid,6);const room=domain.create(user.uid,input);db.insert(room);if(user.token)db.nickname(user.token,domain.text(input.nickname,16));return json(res,201,{room:roomView(room,user.uid)});
       }
-      if(url.pathname==='/api/extract'&&req.method==='POST'){rate('ai:'+user.uid,6);const text=domain.text(input.text,1000);if(!text)domain.fail('EMPTY','先写一点你对旅行的想法。');let context={city:input.city??'杭州'};if(input.roomId){const r=db.get(String(input.roomId));domain.member(r,user.uid);context={city:r.city,startDate:r.startDate,days:r.days};}if(!catalog.getCatalog(context.city))domain.fail('CITY_UNSUPPORTED','目前支持杭州和上海。');reserveAI(user,ip,input.roomId);return json(res,200,{extraction:await ai.extract(text,context)});}
+      if(url.pathname==='/api/extract'&&req.method==='POST'){rate('ai:'+user.uid,6);const text=domain.text(input.text,1000);if(!text)domain.fail('EMPTY','先写一点你对旅行的想法。');let context={city:input.city??'杭州'};if(input.roomId){const r=db.get(String(input.roomId));domain.member(r,user.uid);context={city:r.city,startDate:r.startDate,days:r.days};}if(!catalog.getCatalog(context.city))domain.fail('CITY_UNSUPPORTED','目前支持杭州、上海和武汉。');reserveAI(user,ip,input.roomId);return json(res,200,{extraction:await ai.extract(text,context)});}
       const match=url.pathname.match(/^\/api\/rooms\/([a-z0-9-]+)(?:\/([a-zA-Z]+))?$/);
       if(match){const [,id,action]=match,room=db.get(id);
         if(action==='invite'&&req.method==='GET'){

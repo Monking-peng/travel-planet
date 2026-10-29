@@ -51,5 +51,6 @@ export function mountModulePanel({model,canvas,resetView}){
   listen(window,'storage',event=>{if(event.key===MODULE_STORAGE_KEY||event.key===null)apply(parseRemovedModules(event.newValue));});
   // The travel shell enables its controls after its asynchronous scene mount.
   listen(canvas,'planetready',()=>sync());
+  listen(canvas,'planetready',()=>sync());
   return()=>{cleanups.forEach(fn=>fn());dialog.close();dialog.remove();};
 }

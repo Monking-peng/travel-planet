@@ -14,7 +14,7 @@ function host(room,uid){member(room,uid);if(room.hostId!==uid)fail('HOST_ONLY','
 function open(room){if(room.closed)fail('CLOSED','这次旅行已关闭。',409);}
 function editable(room){open(room);if(room.final)fail('FINAL_LOCKED','这份行程已经定稿，先开启新一轮讨论。',409);}
 function makeMember(uid,nickname,index){return {id:uid,nickname:text(nickname,16)||'旅伴',color:palette[index%palette.length],joinedAt:new Date().toISOString(),preferences:null};}
-function roomCatalog(city){return getCatalog(city)||fail('CITY_UNSUPPORTED','目前支持杭州和上海，请选择对应城市。');}
+function roomCatalog(city){return getCatalog(city)||fail('CITY_UNSUPPORTED','目前支持杭州、上海和武汉，请选择对应城市。');}
 function create(uid,input){
   const {city}=roomCatalog(input.city);
   const startDate=text(input.startDate,10),days=Number(input.days||2);

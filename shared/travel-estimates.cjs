@@ -1,7 +1,7 @@
 // Planning reserves, not road-network distances, live navigation or quoted fares.
 const round=n=>Math.round(n*10)/10,ceil5=n=>Math.ceil(n/5)*5;
 const VERSION=2,MEALS=100,DAY_END=1080;
-const centers={上海:{name:'人民广场周边',lat:31.230,lng:121.473,riverBank:'west'},杭州:{name:'湖滨市区',lat:30.252,lng:120.163}};
+const centers={武汉:{name:'江汉路周边',lat:30.582,lng:114.298,riverBank:'hankou'},上海:{name:'人民广场周边',lat:31.230,lng:121.473,riverBank:'west'},杭州:{name:'湖滨市区',lat:30.252,lng:120.163}};
 function distance(a,b){const rad=Math.PI/180,x=(b.lat-a.lat)*rad,y=(b.lng-a.lng)*rad;const h=Math.sin(x/2)**2+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(y/2)**2;return 6371*2*Math.asin(Math.min(1,Math.sqrt(h)));}
 function transfer(a,b,walkingBudget=Infinity){
  const d=distance(a,b),crossing=Boolean(a.riverBank&&b.riverBank&&a.riverBank!==b.riverBank),island=a.id==='santan'||b.id==='santan';

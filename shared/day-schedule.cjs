@@ -3,7 +3,7 @@ const {DAY_END,centers,transfer,access,costs,round}=require('./travel-estimates.
 const hhmm=n=>`${Math.floor(n/60).toString().padStart(2,'0')}:${(n%60).toString().padStart(2,'0')}`;
 function schedule(route,limits){
  const places=route.map(id=>byId[id]);if(!places.length||places.some(p=>!p)||places.some(p=>p.exclusiveDay)&&places.length!==1)return {endMinute:Infinity,walk:Infinity};
- const city=route[0].startsWith('sh-')?'上海':'杭州',center=centers[city];
+ const city=route[0].startsWith('wh-')?'武汉':route[0].startsWith('sh-')?'上海':'杭州',center=centers[city];
  let time=limits.startHour*60,walk=0,transport=0,travel=0,transitMinutes=0,crossings=0,lunch=false;
  const stops=[],breaks=[],outbound=access(places[0],city),inbound=access(places.at(-1),city);
  let walkingBudget=(limits.maxWalk??Infinity)-places.reduce((n,p)=>n+p.walk,0)-outbound.walk-inbound.walk;

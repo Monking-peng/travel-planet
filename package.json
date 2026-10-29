@@ -1,8 +1,8 @@
 {
   "name": "travel-planet",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
-  "description": "一起去 · 杭沪多人旅行与武汉地标地图",
+  "description": "一起去 · 杭沪汉多人旅行与城市地标地图",
   "scripts": {
     "start": "node --env-file-if-exists=.env server/index.cjs",
     "dev": "node server/index.cjs",
