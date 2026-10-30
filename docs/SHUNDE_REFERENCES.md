@@ -13,7 +13,7 @@
 | 逢简水乡 | 石拱桥、桥头进士牌坊、河道与小船；黑色柱架、金色梁饰、上翘瓦顶，不将局部景观称作整个水乡 | [桥与牌坊同框](https://www.sohu.com/a/450999353_341089)、[牌坊细部](https://k.sina.com.cn/article_6438914599_17fca0a2700100oyjp.html) |
 | 顺德演艺中心 | 玻璃长方体外壳内的红色折面屋顶，卵形石质音乐厅、灯塔和临水台阶；依据设计团队资料，未将旁边图书馆混作剧场 | [P&T 项目与照片](https://web.p-t-group.com/sc/project-detail.php?projects_category_id=4&projects_id=52&projects_name=Shunde-Library-and-Performing-Arts-Centre) |
 | 碧江金楼 | 灰砖外墙、硬山瓦顶、木构阳台、绿栏杆和月洞门；金色集中在木雕和梁架，外墙不做成金色 | [建筑外观照片](https://www.sohu.com/a/190764153_743740) |
-| 宝林寺 | 山林、分层石台、绿瓦山门、暖色瓦顶殿堂与长石阶，保留建筑沿山势抬升的关系 | [寺院整体实拍](https://k.sina.cn/article_2407500342_8f7f8a360010022hp.html) |
+| 宝林寺 | 连续山坡承托院落，宽石阶通向三孔灰砖绿瓦山门；红柱、深门窗、圆窗、钟鼓楼和绿边暖瓦重檐殿。石阶中间的雕刻以低对比纹样概括 | [寺院整体实拍](https://k.sina.cn/article_2407500342_8f7f8a360010022hp.html)、[山门正面](https://fo.sina.com.cn/temple/2012-11-23/14363617.shtml)、[登山石阶与殿堂实拍](https://www.abaxjp.com/china1602-13horinji/china1602-13horinji.html) |
 
 照片只用于观察造型、材质和空间关系，没有作为产品贴图，也不包含在公开仓库或源码包。参考页的可用性由原网站决定；这些来源不用于提供票价、营业时间或旅游承诺。
 
@@ -34,3 +34,8 @@
 ![顺峰山公园湖景](images/shunde-park.png)
 
 ![顺峰山公园夜景](images/shunde-park-night.png)
+
+
+![宝林寺长石阶、山门与山林院落](images/shunde-baolin.png)
+
+![宝林寺夜间檐下与步道照明](images/shunde-baolin-night.png)

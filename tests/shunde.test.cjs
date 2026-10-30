@@ -55,3 +55,20 @@ test('Shunde riverside paths stay on land, meet all eight modules and survive re
     scene.setLandmarkEnabled('shunfeng',false);assert.ok(paths.parent===scene.root);scene.setNight(false);assert.equal(soil[0].color.getHex(),0xffffff);
   }finally{scene.dispose();}
 });
+
+test('Baolin courts sit on a continuous hill and three gate portals remain open',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{baolin}=await import('../web/shunde-temple.js'),k=makeKit({time:{value:0},night:{value:0}}),temple=baolin(k);temple.updateMatrixWorld(true);
+  try{
+    const soil=temple.children.find(o=>o.material?.userData.terrainTint);assert.ok(soil);
+    for(const q of temple.userData.courts)for(const sx of [-1,0,1])for(const sz of [-1,0,1]){
+      const ray=new T.Raycaster(new T.Vector3(sx*(q.w/2-.012),1,q.z+sz*(q.d/2-.012)),new T.Vector3(0,-1,0)),ground=ray.intersectObject(soil)[0];
+      assert.ok(ground&&q.y-ground.point.y>=-.001&&q.y-ground.point.y<.020,'terrace should rest on soil, without a high exposed box');
+    }
+    const {gate}=temple.userData;
+    for(const x of gate.openings){const ray=new T.Raycaster(new T.Vector3(x,gate.y+.055,gate.z+.065),new T.Vector3(0,0,-1),0,.13);assert.equal(ray.intersectObject(temple,true).length,0,'gate opening is obstructed');}
+    for(const [x,y,z]of temple.userData.stairSamples){const ground=new T.Raycaster(new T.Vector3(x,1,z),new T.Vector3(0,-1,0)).intersectObject(soil)[0];assert.ok(ground&&y>ground.point.y+.003&&y-ground.point.y<.028,'stair deck must sit just above the slope');}
+    assert.ok(temple.userData.stairSamples.length>40&&temple.userData.trees.length>70);
+    for(const [x,,z]of temple.userData.trees)assert.ok(!(Math.abs(x)<.265&&z>.10),'trees cannot obscure the processional stairs');
+    const a=soil.geometry.attributes.normal;for(let i=0;i<a.count;i++)assert.ok(a.getY(i)>0,'terrain normals must face skyward');
+  }finally{temple.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

@@ -68,26 +68,3 @@ export function bijiang(k){
   bollards(k,g,[[-.40,.36],[.40,.35]]);people(k,g,[[-.10,.30],[-.16,.31],[.20,.31]]);
   return k.merge(g);
 }
-
-export function baolin(k){
-  const g=new THREE.Group(),p=palette(k),heightAt=(x,z)=>Math.pow(Math.max(0,1-(x/.74)**2-(z/.84)**2),1.5)*Math.max(0,.28-.67*z),tile=k.mat('#a98045',.77),temple={...p,red:k.mat('#995340'),wood:k.mat('#8d4737'),tile};
-  skin(k,g,(u,v)=>{const a=u*Math.PI*2,x=Math.cos(a)*v*.74,z=Math.sin(a)*v*.84;return [x,heightAt(x,z),z];},36,96,k.mat('#527658',.98));
-  // Three terraces climb the mountain; the forecourt, gate and main hall remain distinct.
-  const retaining=k.mat('#a6a693',.97);
-  for(const [z,y,w,d]of [[.45,.10,.56,.20],[0,.26,.74,.26],[-.42,.43,.85,.32]]){
-    k.box(g,w,y+.015,d,retaining,0,(y+.015)/2,z);k.box(g,w+.008,.012,d+.008,p.stone,0,y+.016,z);
-    for(const x of [-w/2,w/2]){k.box(g,.015,.05,d,p.wall,x,y+.04,z);for(let i=0;i<6;i++)k.box(g,.008,.078,.008,p.wall,x,y+.05,z+(i/5-.5)*d);}
-  }
-  hall(k,g,temple,{z:-.42,y:.455,w:.43,d:.25,h:.19,double:true});plaque(k,g,'宝林寺',.14,.034,0,.62,-.26);
-  hall(k,g,temple,{z:0,y:.285,w:.36,d:.19,h:.13});
-  const green=k.mat('#487b5a');hall(k,g,{...temple,tile:green},{z:.45,y:.125,w:.29,d:.14,h:.12});
-  for(const x of [-.31,.31])hall(k,g,temple,{x,z:-.40,y:.455,w:.16,d:.17,h:.11});
-  for(const [start,end,base,top]of [[.72,.55,.018,.12],[.35,.13,.12,.28],[-.13,-.26,.28,.45]])for(let i=0;i<12;i++){
-    const z=start+(end-start)*i/11,y=base+(top-base)*(i+1)/12,depth=(start-end)/11+.002;k.box(g,.23,y,depth,p.stone,0,y/2,z);
-    for(const x of [-.13,.13]){k.box(g,.008,.040,depth,p.wall,x,y+.022,z);if(i%3===0)k.box(g,.012,.06,.012,p.wall,x,y+.031,z);}
-  }
-  for(let i=0;i<75;i++){const a=i*2.39996,r=.38+((i*13)%37)/37*.28,x=Math.cos(a)*r,z=Math.sin(a)*r;if(Math.abs(x)<.24&&z>.16)continue;if(Math.abs(x)<.48&&z<.20&&z>-.46)continue;tree(k,g,x,heightAt(x,z),z,.08+(i%4)*.015);}
-  for(const [z,y]of [[.67,.05],[.57,.11],[.30,.16],[.20,.23],[-.14,.31],[-.24,.43]])for(const x of [-.15,.15]){k.cyl(g,.002,.003,.024,p.wood,x,y+.015,z,6);k.ball(g,.004,p.warm,x,y+.030,z);}
-  for(const x of [-.17,.17])lantern(k,g,x,.62,-.26,p);
-  return k.merge(g);
-}
