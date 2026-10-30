@@ -3,8 +3,8 @@ import {roof,plaque,tree} from './wuhan-architecture.js';
 import {people,bollards,glow} from './shenzhen-forms.js';
 import {palette,footing,lattice,balcony,lantern,archWall,bridge} from './shunde-kit.js';
 
-export function shunfeng(k){
-  const g=new THREE.Group(),p=palette(k),stone=k.mat('#c9c7b7'),relief=k.mat('#a6aa9b'),tile=k.mat('#a68e63'),jade=k.mat('#527c68');footing(k,g,1.34,1.16,p);
+export function shunfengGate(k){
+  const g=new THREE.Group(),p=palette(k),stone=k.mat('#c9c7b7'),relief=k.mat('#a6aa9b'),tile=k.mat('#a68e63'),jade=k.mat('#527c68');
   // Three true arch openings, distinct piers and seven roof sections.
   archWall(k,g,{w:1.05,h:.42,d:.095,y:.025,openings:[{x:0,r:.15,spring:.18},{x:-.36,r:.095,spring:.15},{x:.36,r:.095,spring:.15}],mat:stone});
   for(const x of [-.53,-.20,.20,.53]){
@@ -19,12 +19,7 @@ export function shunfeng(k){
   roof(k,g,1.18,.25,.08,.395,tile,jade);
   plaque(k,g,'顺峰山',.19,.044,0,.414,.067);
   for(const x of [-.60,.60]){k.box(g,.075,.045,.075,stone,x,.045,.30);const lion=k.mesh(g,new THREE.IcosahedronGeometry(.026,1),relief,x,.089,.30);lion.scale.set(.8,1.3,1);}
-  const water=k.cyl(g,.48,.48,.008,p.water,0,.024,-.32,72);water.scale.z=.41;
-  for(const x of [-.30,0,.30]){const b=new THREE.Group();bridge(k,b,p,{w:.08,length:.27,rise:.038});b.rotation.y=Math.PI/2;b.position.set(x,0,-.31);g.add(b);}
-  for(const side of [-1,1]){for(let i=0;i<6;i++){const z=-.40+i*.14;k.box(g,.008,.043,.008,stone,side*.63,.044,z);}k.box(g,.006,.006,.74,stone,side*.63,.063,-.05);}
-  for(const x of [-.58,.58])tree(k,g,x,.018,-.46,.12);
   for(const x of [-.49,-.17,.17,.49])k.box(g,.004,.003,.065,p.warm,x,.025,.08);
-  bollards(k,g,[[-.58,.46],[.58,.46],[-.58,-.49],[.58,-.49]]);people(k,g,[[.05,.32],[.1,.36],[-.3,.30],[.36,.25],[.4,.27]]);
   return k.merge(g);
 }
 
