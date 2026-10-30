@@ -53,41 +53,6 @@ export function chen(k){
   bollards(k,g,[[-.57,.65],[.57,.65],[-.68,-.36],[.68,-.36]]);people(k,g,[[-.1,.66],[.08,.68],[.15,.66]]);return k.merge(g);
 }
 
-function pointed(k,g,x,y,z,w,h,d,mat){const shape=new THREE.Shape();shape.moveTo(-w/2,0);shape.lineTo(-w/2,h*.65);shape.quadraticCurveTo(-w*.42,h*.86,0,h);shape.quadraticCurveTo(w*.42,h*.86,w/2,h*.65);shape.lineTo(w/2,0);shape.closePath();return k.mesh(g,new THREE.ExtrudeGeometry(shape,{depth:d,bevelEnabled:false,curveSegments:12}),mat,x,y,z);}
-function cross(k,g,x,y,z,m,s=1){k.box(g,.004*s,.055*s,.004*s,m,x,y,z);k.box(g,.030*s,.004*s,.004*s,m,x,y+.011*s,z);}
-export function cathedral(k){
-  const g=new THREE.Group(),stone=plaza(k,g,.65,.68),wall=k.mat('#b2ad9c',.84),edge=k.mat('#d1c9b2'),shadow=k.mat('#5c6969'),wood=k.mat('#534b42'),tile=k.mat('#5f6b70'),stained=k.mat('#677c83',.42,.16,'#ceb494'),light=glow(k,'#e0c7a0',.85);stained.userData.night.intensity=.38;
-  k.box(g,.72,.028,1.08,stone,0,.031,0);k.box(g,.49,.40,.90,wall,0,.245,-.04);
-  // Long gabled nave and two independent octagonal spires.
-  const s=new THREE.Shape();s.moveTo(-.265,0);s.lineTo(.265,0);s.lineTo(0,.22);s.closePath();k.mesh(g,new THREE.ExtrudeGeometry(s,{depth:.93,bevelEnabled:false}),tile,0,.445,-.51);
-  for(const x of [-.30,.30]){
-    k.box(g,.20,.69,.25,wall,x,.393,.38);
-    for(const y of [.23,.48,.72]){k.box(g,.226,.014,.27,edge,x,y,.38);k.box(g,.218,.002,.003,light,x,y+.007,.517);}
-    for(const dx of [-.086,.086]){k.box(g,.020,.71,.03,edge,x+dx,.40,.518);for(const y of [.26,.51,.73])k.cyl(g,0,.018,.065,edge,x+dx,y+.030,.518,4).rotation.y=Math.PI/4;}
-    for(const y of [.30,.54]){pointed(k,g,x,y,.510,.12,.16,.003,shadow);pointed(k,g,x,y+.012,.515,.093,.135,.003,stained);for(const dx of [-.025,.025])k.box(g,.003,.13,.005,edge,x+dx,y+.074,.520);}
-    k.cyl(g,.075,.104,.08,wall,x,.77,.38,8);k.cyl(g,0,.098,.34,wall,x,.976,.38,8);
-    for(let i=0;i<8;i++){const a=i*Math.PI/4;k.beam(g,[x+Math.cos(a)*.098,.807,.38+Math.sin(a)*.098],[x,1.146,.38],.002,edge,4);}
-    cross(k,g,x,1.173,.38,shadow,.75);
-  }
-  k.box(g,.43,.43,.035,wall,0,.267,.493);
-  const face=new THREE.Shape();face.moveTo(-.23,0);face.lineTo(.23,0);face.lineTo(0,.18);face.closePath();k.mesh(g,new THREE.ExtrudeGeometry(face,{depth:.035,bevelEnabled:false}),wall,0,.481,.475);cross(k,g,0,.689,.494,edge,.8);
-  const rose=k.mesh(g,new THREE.CircleGeometry(.099,64),stained,0,.399,.515);k.mesh(g,new THREE.TorusGeometry(.103,.007,6,64),edge,0,.399,.521);
-  for(let i=0;i<16;i++){const a=i/16*Math.PI*2;k.beam(g,[0,.399,.526],[Math.cos(a)*.096,.399+Math.sin(a)*.096,.526],.002,edge,4);const petal=k.mesh(g,new THREE.TorusGeometry(.018,.0015,4,24),edge,Math.cos(a)*.065,.399+Math.sin(a)*.065,.528);petal.scale.set(.7,1,1);petal.rotation.z=a;}
-  k.mesh(g,new THREE.TorusGeometry(.031,.002,4,40),edge,0,.399,.527);
-  for(const x of [-.30,0,.30]){const w=x===0?.16:.116,h=x===0?.24:.20;pointed(k,g,x,.047,.525,w+.034,h+.025,.012,edge);pointed(k,g,x,.047,.539,w,h,.003,shadow);k.box(g,w*.88,h*.59,.004,wood,x,.047+h*.295,.545);k.box(g,.003,h*.59,.005,edge,x,.047+h*.295,.55);}
-  for(const side of [-1,1])for(let i=0;i<5;i++){const z=-.42+i*.18;k.box(g,.036,.30,.036,edge,side*.281,.204,z);const pane=pointed(k,g,0,.18,0,.075,.20,.003,stained);pane.rotation.y=side*Math.PI/2;pane.position.x=side*.250;pane.position.z=z;}
-  for(const x of [-.30,.30]){
-    for(let row=0;row<26;row++){const y=.054+row*.025;k.box(g,.20,.0009,.001,shadow,x,y,.506);for(const s of [-1,1])k.box(g,.001,.0009,.25,shadow,x+s*.101,y,.38);}
-    for(const y of [.50,.74]){const top=new THREE.Shape();top.moveTo(-.080,0);top.lineTo(.080,0);top.lineTo(0,.078);top.closePath();k.mesh(g,new THREE.ExtrudeGeometry(top,{depth:.012,bevelEnabled:false}),edge,x,y,.516);}
-    for(const dx of [-.080,.080])for(const z of [.28,.48]){k.cyl(g,.009,.012,.070,edge,x+dx,.77,z,6);k.cyl(g,0,.012,.045,edge,x+dx,.8275,z,6);}
-  }
-  for(const x of [-.30,0,.30]){const w=x===0?.19:.145;for(let i=0;i<3;i++){const z=.55+i*.003,ww=w+i*.012;const pts=[[x-ww/2,.05,z],[x-ww/2,.19,z],[x-ww*.35,.25,z],[x,.31,z],[x+ww*.35,.25,z],[x+ww/2,.19,z],[x+ww/2,.05,z]];k.line(g,pts,.002,edge);}}
-  for(let i=0;i<18;i++)k.cyl(g,0,.006,.025,edge,(i-8.5)*.023,.306,.525,4);
-  const clock=k.mesh(g,new THREE.CircleGeometry(.029,32),shadow,-.30,.672,.533);k.mesh(g,new THREE.TorusGeometry(.030,.002,4,32),edge,-.30,.672,.535);k.beam(g,[-.30,.672,.539],[-.30,.691,.539],.0015,edge,4);k.beam(g,[-.30,.672,.539],[-.283,.664,.539],.0015,edge,4);
-  for(let i=0;i<5;i++)k.box(g,.78,.006*(i+1),.022,stone,0,.003*(i+1),.625-i*.022);
-  for(const x of [-.50,.50])tree(k,g,x,.018,-.27,.14);bollards(k,g,[[-.48,.46],[.48,.46],[-.48,-.46],[.48,-.46]]);people(k,g,[[-.12,.61],[.10,.62],[.15,.61]]);return k.merge(g);
-}
-
 function ellipsoid(k,g,r,m,x,y,z,scale,rotation=0){const o=k.ball(g,r,m,x,y,z);o.scale.set(...scale);o.rotation.z=rotation;return o;}
 function goat(k,g,m,{x,y,z,s=1,angle=0,tall=false}){
   const q=new THREE.Group();g.add(q);

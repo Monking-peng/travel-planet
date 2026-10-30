@@ -44,3 +44,10 @@
 ![广州大剧院白天](images/guangzhou-opera.png)
 
 ![广州大剧院夜景](images/guangzhou-opera-night.png)
+
+
+0.29.0 对照[越秀区政府的石室圣心大教堂实拍](https://www.yuexiu.gov.cn/zjyx/yxjd/zjwh/content/post_8665100.html)，补齐低位侧廊、上层高窗、开放飞扶壁、尖柱与玫瑰花窗。保留灰暖花岗岩、深色坡屋面和暗红木门；夜间分区照亮石柱与窗，所属灯光随整栋建筑增删。修正两侧支撑前后错位与柱脚悬空。仅复现照片可见的主要外观，不宣称完整测绘或真实当晚照明。
+
+![石室圣心大教堂白天](images/guangzhou-cathedral.png)
+
+![石室圣心大教堂侧面夜景](images/guangzhou-cathedral-night.png)

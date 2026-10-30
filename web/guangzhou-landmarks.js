@@ -1,6 +1,7 @@
 import {opera} from './guangzhou-opera.js';
 import {canton,twins,museum} from './guangzhou-modern.js';
-import {memorial,chen,cathedral,rams} from './guangzhou-heritage.js';
+import {memorial,chen,rams} from './guangzhou-heritage.js';
+import {cathedral} from './guangzhou-cathedral.js';
 import {haixin,huacheng} from './guangzhou-riverfront.js';
 
 export const LANDMARKS=[
@@ -10,7 +11,7 @@ export const LANDMARKS=[
   {id:'museum',name:'广东省博物馆',area:'天河 · 珍宝容器',x:1.04,z:1.32,height:.58,distance:2.6,view:[.6,.65,1.5],description:'悬挑的灰色盒体上嵌入深红凹槽，底部收进形成入口与阴影。石材板缝、台阶和红色内壁共同表达立面层次。',source:'https://www.archdaily.com/127122/guangdong-museum-rocco-design-architects'},
   {id:'memorial',name:'中山纪念堂',area:'越秀 · 蓝瓦八角大堂',x:-1.02,z:.79,hemisphere:-1,height:.70,distance:2.8,view:[.40,.67,1.6],description:'八角大厅与层层蓝色琉璃瓦顶、红柱门廊和天下为公匾额。保留宽阔的前庭石阶，夜间以暖色檐下照明衬托蓝瓦。',source:'https://dp.pconline.com.cn/photo/list_3205165.html'},
   {id:'chen',name:'陈家祠',area:'荔湾 · 岭南建筑与陶塑',x:1.05,z:.80,hemisphere:-1,height:.38,distance:2.9,view:[.45,1.25,1.3],description:'三进三路的厅堂与开放庭院，青灰砖墙、硬山瓦顶、连廊和陶塑屋脊。陶塑用小型人物与亭阁轮廓简化表达，不以随机民居替代祠堂。',source:'https://wglj.gz.gov.cn/ztmb/gzhyn/ajjq/4a/content/post_9773088.html'},
-  {id:'cathedral',name:'石室圣心大教堂',area:'越秀 · 石构双塔',x:-1.06,z:-1.04,hemisphere:-1,height:1.20,distance:3.1,view:[.35,.55,1.8],description:'浅色花岗岩双尖塔、玫瑰花窗、尖拱门与长向中殿。以深浅石构和细小灯光表达层次，夜景为艺术化呈现。',source:'https://www.yuexiu.gov.cn/zjyx/yxjd/zjwh/content/post_8665100.html'},
+  {id:'cathedral',name:'石室圣心大教堂',area:'越秀 · 石构双塔',x:-1.06,z:-1.04,hemisphere:-1,height:1.20,distance:3.1,view:[1.2,.60,1.8],description:'花岗岩双尖塔、层层退入的尖拱门、玫瑰花窗与长向中殿。较低侧廊、上部高窗和开放飞扶壁沿两侧展开；夜间暖光照亮石柱与深色花窗，保留石材层次。',source:'https://www.yuexiu.gov.cn/zjyx/yxjd/zjwh/content/post_8665100.html'},
   {id:'rams',name:'五羊石像',area:'越秀山 · 羊城象征',x:1.03,z:-1.05,hemisphere:-1,height:.85,distance:2.6,view:[.45,.60,1.6],description:'五只姿态不同的石羊围绕山石，主羊高立、其余四羊环绕；雕塑以浅色石材、花坛和林荫组织成完整景点。',source:'https://www.gzass.gd.cn/whzc/wenhuaziyuan/wenhuajingguan/129.html'},
   {id:'haixin',name:'海心桥',area:'珠江 · 步行桥',x:0,z:-.61,height:.44,distance:2.5,view:[.30,1.1,1.6],description:'单道白色斜拱与弯曲步道跨过珠江，细钢索连接桥面，两端分叉坡道接入江岸。暖色栏杆和白色拱灯形成清晰的夜间轮廓。',source:'https://www.haizhu.gov.cn/hzdt/ztlm/tzhz/rjhj/lyjd/csmp/content/post_9195706.html'},
   {id:'huacheng',name:'花城广场',area:'珠江新城 · 城市绿轴',x:.78,z:.10,height:.16,distance:2.25,view:[.35,1.4,1.2],description:'林荫步行轴串起花坛、喷泉和浮岛水景，连接东西塔与江岸。用暖色树下照明、低位地灯和水面倒影表现夜间层次，不复刻临时活动灯光。',source:'https://www.gdfao.gov.cn/zwgk/zdly/gzscfd/content/post_1333472.html'},

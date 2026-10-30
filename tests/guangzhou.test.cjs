@@ -66,3 +66,26 @@ test('Opera House curved roofs stay closed and the entrance promenade stays dry 
     }
   }finally{scene.dispose();}
 });
+
+test('Cathedral side aisles have covered roofs, open flying buttresses and detachable facade lights',async()=>{
+  const T=await import('three'),{createGuangzhouScene,RADIUS}=await import('../web/guangzhou-scene.js'),scene=createGuangzhouScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('cathedral'),bent=([x,y,z])=>new T.Vector3(x,y-RADIUS+Math.sqrt(RADIUS*RADIUS-x*x-z*z),z).applyMatrix4(g.matrixWorld);
+    const segment=(a,b)=>{const start=bent(a),end=bent(b),delta=end.clone().sub(start);return new T.Raycaster(start,delta.clone().normalize(),0,delta.length()).intersectObject(g,true);};
+    for(const side of [-1,1]){
+      for(const z of [-.40,-.23,-.06,.11,.28]){
+        const roof=segment([side*.32,.40,-.04+z],[side*.32,.27,-.04+z]);
+        assert.ok(roof.length&&roof[0].object.material.color.getHexString()==='76796a','Lower aisle needs a closed sloping roof between the supports');
+      }
+      for(const z of [-.475,-.305,-.135,.035,.205]){
+        const center=-.04+z;
+        assert.equal(segment([side*.34,.35,center-.025],[side*.34,.35,center+.025]).length,0,'Space below the flying buttress must remain open');
+        assert.ok(segment([side*.34,.42,center-.025],[side*.34,.42,center+.025]).length,'The stone arch must cross above the open space');
+      }
+    }
+    const lights=[];g.traverse(o=>{if(o.isSpotLight)lights.push(o);});assert.equal(lights.length,2);
+    scene.setNight(true);assert.ok(lights.every(l=>l.intensity>0&&l.target.parent===g));
+    scene.setLandmarkEnabled('cathedral',false);scene.root.traverse(o=>assert.ok(!lights.includes(o)));scene.setLandmarkEnabled('cathedral',true);assert.equal(g.parent,scene.root);
+    scene.setNight(false);assert.ok(lights.every(l=>l.intensity===0));
+  }finally{scene.dispose();}
+});
