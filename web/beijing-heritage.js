@@ -3,7 +3,7 @@ import {roof,stairs,rail,tree,plaque} from './wuhan-architecture.js';
 
 function palette(k){return {red:k.mat('#973c30',.86),stone:k.mat('#e3d8bd',.88),gold:k.mat('#c58b37',.66,.15),tile:k.mat('#bc7b24',.78),blue:k.mat('#214963',.66,.15),green:k.mat('#476358',.85),trim:k.mat('#73937e',.8),dark:k.mat('#382d27',.9)};}
 function hip(k,g,w,d,h,y,p,x=0,z=0){roof(k,g,w,d,h,y,p.tile,p.gold,x,z);k.box(g,Math.max(.008,(w-d)*.85),.007,d*.085,p.tile,x,y+h-.004,z);}
-function hall(k,g,p,{x=0,z=0,w=.35,d=.22,h=.13,y=.025,double=false,name=''}){
+export function hall(k,g,p,{x=0,z=0,w=.35,d=.22,h=.13,y=.025,double=false,name=''}){
   k.box(g,w+.045,.024,d+.045,p.stone,x,y-.012,z);k.box(g,w*.86,h,d*.80,p.red,x,y+h/2,z);
   for(const side of [-1,1])for(let i=0;i<9;i++){
     const xx=x+(i/8-.5)*w*.94;k.cyl(g,.004,.005,h+.012,p.red,xx,y+h/2,z+side*d*.48,8);

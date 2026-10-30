@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 
 test('Beijing landmark geometry is finite and complete modules detach with all their lights',async()=>{
   const {createBeijingScene}=await import('../web/beijing-scene.js'),{LANDMARKS}=await import('../web/beijing-landmarks.js');const scene=createBeijingScene(),geos=new Set(),textures=new Set(),original=new Map(scene.landmarks);
-  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,11);
+  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,12);
   scene.root.traverse(o=>{if(!o.isMesh)return;geos.add(o.geometry);if(o.material.map)textures.add(o.material.map);for(const key of ['position','normal']){assert.ok(o.geometry.attributes[key]);for(const v of o.geometry.attributes[key].array)assert.ok(Number.isFinite(v),`${o.name}: ${key}`);}});
   scene.setNight(true);
   for(const [id,g] of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(o=>o.intensity>0));assert.equal(scene.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);scene.root.traverse(o=>assert.ok(!lights.includes(o),'removed landmark must not illuminate the remaining scene'));assert.equal(scene.setLandmarkEnabled(id,true),true);assert.equal(scene.landmarks.get(id),g);}
@@ -38,4 +38,25 @@ test('Blue roofs stay blue at night and Water Cube breathing respects reduced mo
   const {createBeijingScene}=await import('../web/beijing-scene.js'),{parseRemovedModules}=await import('../web/destination-module-panel.js'),{LANDMARKS}=await import('../web/beijing-landmarks.js');const scene=createBeijingScene();
   try{assert.deepEqual([...parseRemovedModules('["heaven","crane","heaven",null]',LANDMARKS)],['heaven']);const blue=[],pulse=[];scene.landmarks.get('heaven').traverse(o=>{if(o.material?.color.getHexString()==='214963')blue.push(o.material);});assert.ok(blue.length);scene.setNight(true);assert.ok(blue.every(m=>m.emissive.b>m.emissive.r));scene.landmarks.get('watercube').traverse(o=>{if(o.material?.userData.pulse)pulse.push(o.material);});assert.ok(pulse.length);scene.update(1,false);const a=pulse[0].emissiveIntensity;scene.update(5,false);assert.notEqual(a,pulse[0].emissiveIntensity);scene.update(5,true);const b=pulse[0].emissiveIntensity;scene.update(25,true);assert.equal(b,pulse[0].emissiveIntensity);scene.setNight(false);scene.update(26,false);assert.equal(pulse[0].emissiveIntensity,0);
   }finally{scene.dispose();}
+});
+
+test('Jingshan pavilions stand on an upward facing connected hill and its forest leaves the courts clear',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jingshan,jingshanHeight}=await import('../web/beijing-jingshan.js');
+  const k=makeKit({time:{value:0},night:{value:0}}),g=jingshan(k);g.updateMatrixWorld(true);
+  try{const soil=g.children.find(o=>o.material?.userData.terrainTint);assert.ok(soil);assert.equal(g.userData.pavilions.length,5);assert.ok(g.userData.treeCount>100);
+    for(const f of g.userData.pavilions){const hits=new T.Raycaster(new T.Vector3(f.x,1,f.z),new T.Vector3(0,-1,0)).intersectObject(soil);assert.ok(hits.length,`${f.name}: hill must have an upward face`);assert.ok(Math.abs(hits[0].point.y-(f.y-.010))<.007,`${f.name}: foundation must meet the actual hill`);}
+    for(const x of [-.22,0,.22])assert.ok(jingshanHeight(x,-.40)<.003,'Shouhuang court must remain on flat land');
+    assert.ok(g.userData.pavilions[2].y>g.userData.pavilions[1].y&&g.userData.pavilions[1].y>g.userData.pavilions[0].y);
+    for(let i=0;i<soil.geometry.attributes.normal.count;i++)assert.ok(soil.geometry.attributes.normal.getY(i)>=0,'hill triangles must face outward');
+  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Beijing axis preserves the north-south order with grounded links and night terrain blends into the globe',async()=>{
+  const T=await import('three'),{createBeijingScene,RADIUS}=await import('../web/beijing-scene.js');const s=createBeijingScene();s.root.updateMatrixWorld(true);
+  try{const axis=s.root.getObjectByName('beijing-axis-landscape');assert.deepEqual(axis.userData.connections.map(c=>[c.from,c.to]),[['tiananmen','palace'],['palace','jingshan'],['jingshan','drum']]);
+    for(const p of axis.userData.points)assert.ok(Math.abs(new T.Vector3(...p).length()-(RADIUS+.014))<.00001);
+    let z=Infinity;for(const id of ['tiananmen','palace','jingshan','drum']){const current=s.landmarks.get(id).position.z;assert.ok(current<z);z=current;}
+    let soil;s.landmarks.get('jingshan').traverse(o=>{if(o.material?.userData.terrainTint)soil=o.material;});s.setNight(true);const ground=s.root.getObjectByName('beijing-terrain').material,edge=new T.Color('#8f9c79').multiply(soil.color);assert.ok(Math.abs(edge.r-ground.color.r)<1e-7&&Math.abs(edge.g-ground.color.g)<1e-7&&Math.abs(edge.b-ground.color.b)<1e-7);assert.equal(soil.emissive.getHex(),0);
+    s.setLandmarkEnabled('jingshan',false);assert.equal(axis.parent,s.root);s.setNight(false);assert.equal(soil.color.getHexString(),'ffffff');
+  }finally{s.dispose();}
 });
