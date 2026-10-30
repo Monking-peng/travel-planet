@@ -1,6 +1,6 @@
 # 广州地图与造型参考
 
-广州入口为 `guangzhou.html`，含八组可独立增删的地标。当前为景观地图，未接入广州多人旅行目录；杭州、上海和武汉旅行保持。
+广州入口为 `guangzhou.html`，含十组可独立增删的地标。当前为景观地图，未接入广州多人旅行目录；杭州、上海和武汉旅行保持。
 
 ## 实景与模型
 
@@ -14,6 +14,8 @@
 | 陈家祠 | 三进三路厅堂、六个院落、灰砖硬山屋顶与彩色陶塑屋脊 | [广州文旅资料](https://wglj.gz.gov.cn/ztmb/gzhyn/ajjq/4a/content/post_9773088.html)、[航拍](https://huacheng.gz-cmc.com/pages/2022/10/26/3034a897ffc64513872b5c4a4138686b.html) |
 | 石室圣心大教堂 | 双尖塔、花岗岩立面、玫瑰窗、尖拱门和长向中殿 | [越秀区资料](https://www.yuexiu.gov.cn/zjyx/yxjd/zjwh/content/post_8665100.html)、[实拍照片](https://www.synotrip.com/sites/default/files/107923/timg_29.jpg) |
 | 五羊石像 | 一只高立的主羊和四只姿态不同的石羊、岩石底座及花坛林荫 | [广州社科院资料](https://www.gzass.gd.cn/whzc/wenhuaziyuan/wenhuajingguan/129.html)、[近景实拍](https://newbbs-fd.zol-img.com.cn/t_s1200x5000/g5/M00/03/09/ChMkJlg-Xg-IfuWuAAcNs1dIREwAAYLMwAKQmkABw3L452.jpg) |
+| 海心桥 | 一道白色斜拱、弯曲桥面、细钢索与两端分叉坡道；桥拱冷白光、木栏杆暖光 | [海珠区资料](https://www.haizhu.gov.cn/hzdt/ztlm/tzhz/rjhj/lyjd/csmp/content/post_9195706.html)、[设计方项目实拍](https://www.archcollege.com/52974.html)、[广州日报现场图](https://huacheng.gz-cmc.com/pages/2021/06/25/798a5c060bf24462b142ff65b09d01e3.html) |
+| 花城广场 | 林荫轴线、棕榈树阵、喷水广场、浮岛水景和两侧花坛；地灯与树下暖光，保留行走空间 | [广东省外办资料](https://www.gdfao.gov.cn/zwgk/zdly/gzscfd/content/post_1333472.html)、[广场与林荫夜间照片](https://m.urbanlight.cn/photosdetail/0771aef4-57eb-4c3e-9a8d-2f3139ada685) |
 
 上述照片已在制作前查看，仅用于造型参考，没有作为贴图或打包至仓库。外站可用性由原网站决定，不依据这些资料提供票价、开放时间或预约承诺。
 
@@ -21,7 +23,7 @@
 
 建筑按辨识度保留主要轮廓和材质，并非精确测绘。球面位置、河道、比例和朝向经过艺术化重排；古建筑陶塑和雕像是简化模型。灯光用于表现夜景层次，不代表真实场馆当前照明、演出时段或完整灯光节目。
 
-四组现代地标和四组历史文化景点分布于两个半球，避免模型落入主河道。所属灯光、植物、台阶和广场随整个景点增删。系统减少动态效果时，彩光变化与窗灯动画停止。
+四组现代地标、海心桥、花城广场与四组历史文化景点分布于两个半球。大剧院、博物馆和东西塔安排在同一岸；海心桥跨江，其余模型避开河道。连续江岸步道与场馆之间的步道属于公共景观，删除某个地标后保留。所属灯光、植物、台阶和广场随整个景点增删。系统减少动态效果时，彩光变化与窗灯动画停止。
 
 `npm test` 覆盖完整几何、水面避让、球面落地、模块间距、整组管理、资源释放和夜间底色；`python tools/destination-check.py guangzhou` 使用独立内存服务检查日夜近看、触屏、键盘、窄屏布局、保存恢复和 WebGL 故障重试。手机模拟不等同于物理手机性能验收。
 
@@ -30,3 +32,8 @@
 ![广州塔夜景](images/guangzhou-canton-night.png)
 
 ![陈家祠庭院](images/guangzhou-chen.png)
+
+
+![海心桥弯曲桥面、单斜拱和分叉坡道](images/guangzhou-haixin.png)
+
+![花城广场林荫、浮岛水景与场馆步道](images/guangzhou-huacheng-night.png)

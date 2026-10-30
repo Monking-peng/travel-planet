@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {makeKit} from './wuhan-kit.js';
 import {surfaceDetail} from './wuhan-atmosphere.js';
 import {LANDMARKS,createLandmark} from './guangzhou-landmarks.js';
+import {createRiverbanks} from './guangzhou-riverfront.js';
 import {TessellateModifier} from 'three/addons/modifiers/TessellateModifier.js';
 
 export const RADIUS=2.15;
@@ -15,8 +16,8 @@ function channelGeometry(width,lift){
 export function createGuangzhouScene(){
   const clock={time:{value:0},night:{value:0}},k=makeKit(clock),root=new THREE.Group(),landmarks=new Map(),modules=new Map();
   const ground=k.mat('#91a18a',.98),terrain=k.mesh(root,new THREE.SphereGeometry(RADIUS,160,128),ground);terrain.name='guangzhou-terrain';terrain.receiveShadow=true;surfaceDetail(ground,clock);
-  const bank=k.mat('#b7b9a0',.98);bank.side=THREE.DoubleSide;k.mesh(root,channelGeometry(.27,1.001),bank).name='guangzhou-banks';
-  const seaMaterial=k.mat('#608e83',.6,.12);seaMaterial.envMapIntensity=.1;seaMaterial.side=THREE.DoubleSide;k.mesh(root,channelGeometry(.22,1.002),seaMaterial).name='guangzhou-waterways';surfaceDetail(seaMaterial,clock,true);
+  const bank=k.mat('#b7b9a0',.98);bank.side=THREE.DoubleSide;k.mesh(root,channelGeometry(.50,1.001),bank).name='guangzhou-banks';
+  const seaMaterial=k.mat('#608e83',.6,.12);seaMaterial.envMapIntensity=.1;seaMaterial.side=THREE.DoubleSide;k.mesh(root,channelGeometry(.44,1.002),seaMaterial).name='guangzhou-waterways';surfaceDetail(seaMaterial,clock,true);
   for(const item of LANDMARKS){
     const model=createLandmark(k,item.id);model.name=item.id;
     model.traverse(o=>{const m=o.material;if(!m?.userData.spectrum)return;
@@ -29,6 +30,7 @@ export function createGuangzhouScene(){
     const light=new THREE.PointLight(['canton','twins','opera','museum'].includes(item.id)?'#ccdef2':'#f7d3a2',0,1.5,2);light.position.set(.24,.22,.34);light.userData.nightIntensity=item.id==='chen'?.075:.050;model.add(light);
     const normal=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(normal).multiplyScalar(RADIUS+.006);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),normal);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
   }
+  root.updateMatrixWorld(true);root.add(createRiverbanks(k,{radius:RADIUS,channelX,landmarks}));
   let night=false,disposed=false;
   function setNight(value){night=Boolean(value);clock.night.value=+night;ground.color.set(night?'#314b44':'#91a18a');seaMaterial.color.set(night?'#234a48':'#608e83');for(const m of k.materials){const n=m.userData.night;if(n){m.emissive.copy(n.color);m.emissiveIntensity=night?n.intensity:0;}}modules.forEach(g=>g.traverse(o=>{if(o.isLight)o.intensity=night?o.userData.nightIntensity:0;}));}
   function update(time,reduced){clock.time.value=reduced?0:time;for(const m of k.materials){const n=m.userData.night,p=m.userData.pulse;if(n&&p)m.emissiveIntensity=night?n.intensity*(reduced?1:.80+.20*Math.sin(time*p.speed+p.phase)):0;}}
