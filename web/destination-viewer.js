@@ -8,7 +8,7 @@ import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
-export function mountCity({id:cityId,name:cityName,landmarks:LANDMARKS,createScene}){
+export function mountCity({id:cityId,name:cityName,landmarks:LANDMARKS,createScene,overview={}}){
 const $=s=>document.querySelector(s),canvas=$('#destination'),stage=$('.scene-stage'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const nav=$('#landmarks');
 for(const l of LANDMARKS){const button=document.createElement('button');button.type='button';button.dataset.landmark=l.id;button.disabled=true;button.setAttribute('aria-pressed','false');const area=document.createElement('span');area.textContent=l.area.split(' · ')[0];button.append(area,document.createTextNode(l.name));nav.append(button);}
@@ -21,7 +21,7 @@ function boot(){
   try{
     renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     const scene=new THREE.Scene();scene.fog=new THREE.Fog('#edf1ed',12,22);const camera=new THREE.PerspectiveCamera(35,1,.05,40);
-    const overviewPosition=new THREE.Vector3(2.7,7.0,6.0),overviewTarget=new THREE.Vector3(0,.65,0);camera.position.copy(overviewPosition);
+    const overviewPosition=new THREE.Vector3(...(overview.position||[2.7,7.0,6.0])),overviewTarget=new THREE.Vector3(...(overview.target||[0,.65,0]));camera.position.copy(overviewPosition);
     controls=new FreeOrbitControls(camera,canvas);controls.target.copy(overviewTarget);controls.enableDamping=!reduced.matches;controls.dampingFactor=.09;controls.minDistance=1.15;controls.maxDistance=12;controls.enablePan=false;
     pmrem=new THREE.PMREMGenerator(renderer);environment=new RoomEnvironment();envTarget=pmrem.fromScene(environment,.04);scene.environment=envTarget.texture;scene.environmentIntensity=.45;environment.dispose();pmrem.dispose();
     const ambient=new THREE.HemisphereLight('#f7f5e9','#728c80',2.0);scene.add(ambient);
@@ -53,7 +53,7 @@ function boot(){
     const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();const taps=createTapTracker();
     listen(canvas,'pointerdown',e=>taps.down(e));listen(canvas,'pointermove',e=>taps.move(e));listen(canvas,'pointercancel',e=>taps.cancel(e));listen(canvas,'lostpointercapture',e=>taps.cancel(e));listen(canvas,'pointerup',e=>{if(!taps.up(e))return;const rect=canvas.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const id=visibleLandmark(model.root,raycaster);if(id)select(id);});
     listen(reduced,'change',()=>{controls.enableDamping=!reduced.matches;if(reduced.matches){transition=null;rotating=false;syncRotation();}});
-    function fit(){const {width,height}=canvas.getBoundingClientRect();renderer.setSize(width,height,false);composer.setSize(width,height);camera.aspect=width/height;camera.fov=viewportFov(35,width,height);camera.updateProjectionMatrix();controls.handleResize();}
+    function fit(){const {width,height}=canvas.getBoundingClientRect();renderer.setSize(width,height,false);composer.setSize(width,height);camera.aspect=width/height;camera.fov=viewportFov(35,width,height);camera.updateProjectionMatrix();controls.handleResize();const cities=$('.city-switch'),current=cities?.querySelector('[aria-current="page"]');if(cities&&current&&cities.scrollWidth>cities.clientWidth){const r=current.getBoundingClientRect(),c=cities.getBoundingClientRect();cities.scrollLeft+=r.left-c.left-(cities.clientWidth-r.width)/2;}}
     resize=new ResizeObserver(fit);resize.observe(canvas);fit();
     function render(now){if(stopped)return;frame=requestAnimationFrame(render);if(document.hidden){last=now;return;}const wallDelta=Math.min(.5,(now-(last||now))/1000),dt=Math.min(.05,wallDelta);last=now;if(!reduced.matches)elapsed+=wallDelta;
       if(transition){const t=Math.min(1,(now-transition.start)/700),e=t*t*(3-2*t);camera.position.copy(transitionPosition(transition.from,transition.to,e));controls.target.lerpVectors(transition.fromTarget,transition.toTarget,e);if(t===1){transition=null;}}
