@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {glow} from './shenzhen-forms.js';
+import {channelWidth,islandWidth} from './changsha-geography.js';
 
 // Landscape follows the sphere. These are shared mountains and riverside public
 // spaces, not anonymous buildings or parts left behind by a removed landmark.
@@ -49,29 +50,29 @@ export function createChangshaLandscape(k,{radius,landmarks,channelX,terrain}){
   }
   // Continuous bank walks remain outside the water and connect both hemispheres.
   for(const side of [-1,1]){
-    const points=[];for(let i=0;i<=320;i++){const a=i/320*Math.PI*2,x=channelX(a)+side*.267,yz=Math.sqrt(radius*radius-x*x);points.push(new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize().multiplyScalar(radius+.008));}
+    const points=[];for(let i=0;i<=320;i++){const a=i/320*Math.PI*2,x=channelX(a)+side*(channelWidth(a)/2+.037),yz=Math.sqrt(radius*radius-x*x);points.push(new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize().multiplyScalar(radius+.008));}
     ribbon(points,.054,edge);ribbon(points.map(v=>v.clone().normalize().multiplyScalar(radius+.010)),.041,stone);
     for(let i=0;i<54;i++){
-      const a=i/54*Math.PI*2,x=channelX(a)+side*.297,yz=Math.sqrt(radius*radius-x*x),v=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize(),g=new THREE.Group();g.position.copy(v).multiplyScalar(radius+.012);g.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v);
+      const a=i/54*Math.PI*2,x=channelX(a)+side*(channelWidth(a)/2+.067),yz=Math.sqrt(radius*radius-x*x),v=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize(),g=new THREE.Group();g.position.copy(v).multiplyScalar(radius+.012);g.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v);
       k.cyl(g,.002,.003,.037,metal,0,.0185,0,6);k.box(g,.009,.006,.008,light,0,.040,0);group.add(g);
     }
   }
   // Each entrance meets its nearest river walk; endpoints use the real module
   // transform instead of guessed world coordinates that can cross the water.
   landmarks.forEach((model,id)=>{
-    if(id==='juzhouBridge')return;
-    const p=model.localToWorld(new THREE.Vector3(0,0,id==='yuelu'?.68:id==='meixi'?.72:.51)).normalize(),a=Math.atan2(p.z,p.y),x=channelX(a)+Math.sign(p.x)*.267,yz=Math.sqrt(radius*radius-x*x),end=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
+    if(id==='juzhouBridge'||id==='juzizhou')return;
+    const p=model.localToWorld(new THREE.Vector3(0,0,id==='yuelu'?.68:id==='meixi'?.72:.51)).normalize(),a=Math.atan2(p.z,p.y),x=channelX(a)+Math.sign(p.x)*(channelWidth(a)/2+.037),yz=Math.sqrt(radius*radius-x*x),end=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
     const route=[];for(let i=0;i<=56;i++){const n=p.clone().lerp(end,i/56).normalize(),q=n.clone().multiplyScalar(radius),h=n.y>0?ridgeHeight(q.x,q.z):0;route.push(n.multiplyScalar(radius+h+.011));}
     ribbon(route,.036,stone);
   });
   // A loop walk and ordered grove give the long, low island its aerial character.
   for(const side of [-1,1]){
-    const points=[];for(let i=1;i<90;i++){const a=-.65+i/90*1.40,w=.19*Math.pow(Math.sin(i/90*Math.PI),.65),x=channelX(a)+side*w*.34,yz=Math.sqrt(radius*radius-x*x);points.push(new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize().multiplyScalar(radius+.020));}
+    const points=[];for(let i=1;i<90;i++){const a=-.65+i/90*1.40,w=islandWidth(a),x=channelX(a)+side*w*.34,yz=Math.sqrt(radius*radius-x*x);points.push(new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize().multiplyScalar(radius+.020));}
     ribbon(points,.012,edge);
   }
   for(let i=0;i<42;i++){
-    const t=(i+.5)/42,a=-.62+t*1.32,w=.19*Math.pow(Math.sin(t*Math.PI),.65),x=channelX(a)+Math.sin(i*2.4)*w*.15,yz=Math.sqrt(radius*radius-x*x),n=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
-    if(Math.abs(a+.07)<.15)continue;
+    const t=(i+.5)/42,a=-.62+t*1.32,w=islandWidth(a),x=channelX(a)+Math.sin(i*2.4)*w*.15,yz=Math.sqrt(radius*radius-x*x),n=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
+    if(Math.abs(a+.07)<.15||a>.34)continue;
     const g=new THREE.Group();g.position.copy(n).multiplyScalar(radius+.021);g.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);
     k.cyl(g,.002,.0025,.025,bark,0,.012,0,5);const crown=k.mesh(g,new THREE.IcosahedronGeometry(.022+(i%3)*.003,1),leaves[i%3],0,.039,0);crown.scale.y=1.2;group.add(g);
   }

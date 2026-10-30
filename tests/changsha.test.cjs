@@ -15,8 +15,8 @@ test('Changsha courtyard roofs are closed and the city-wall passage is not cross
 });
 
 test('Changsha landmarks stay on land, above the globe and separated on two hemispheres',async()=>{
-  const T=await import('three'),{createChangshaScene,RADIUS,channelX}=await import('../web/changsha-scene.js');const scene=createChangshaScene();scene.root.updateMatrixWorld(true);
-  try{const caps=[];for(const [id,g]of scene.landmarks){const normal=g.position.clone().normalize();let radius=0;g.traverse(m=>{if(!m.isMesh)return;const a=m.geometry.attributes.position;for(let i=0;i<a.count;i++){const p=new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld);assert.ok(p.length()>RADIUS-.002,`${id} sinks into terrain`);radius=Math.max(radius,normal.angleTo(p));p.normalize().multiplyScalar(RADIUS);if(id!=='juzhouBridge')assert.ok(Math.abs(p.x-channelX(Math.atan2(p.z,p.y)))>.24,`${id} intrudes into the river`);}});if(id!=='juzhouBridge')caps.push({id,normal,radius});}
+  const T=await import('three'),{createChangshaScene,RADIUS,channelX,channelWidth,islandWidth}=await import('../web/changsha-scene.js');const scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+  try{const caps=[];for(const [id,g]of scene.landmarks){const normal=g.position.clone().normalize();let radius=0;g.traverse(m=>{if(!m.isMesh)return;const a=m.geometry.attributes.position;for(let i=0;i<a.count;i++){const p=new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld);assert.ok(p.length()>RADIUS-.002,`${id} sinks into terrain`);radius=Math.max(radius,normal.angleTo(p));p.normalize().multiplyScalar(RADIUS);const angle=Math.atan2(p.z,p.y),offset=Math.abs(p.x-channelX(angle));if(id==='juzizhou')assert.ok(offset<islandWidth(angle)/2,`${id} leaves Orange Isle`);else if(id!=='juzhouBridge')assert.ok(offset>channelWidth(angle)/2+.008,`${id} intrudes into the river`);}});if(id!=='juzhouBridge')caps.push({id,normal,radius});}
     for(let i=0;i<caps.length;i++)for(let j=i+1;j<caps.length;j++){const a=caps[i],b=caps[j];assert.ok(a.normal.angleTo(b.normal)-a.radius-b.radius>.025,`${a.id} crowds ${b.id}`);}
     assert.equal(caps.filter(c=>c.normal.y<0).length,4);
   }finally{scene.dispose();}
@@ -24,7 +24,7 @@ test('Changsha landmarks stay on land, above the globe and separated on two hemi
 
 test('Changsha complete landmark modules detach with their lighting and release resources once',async()=>{
   const {createChangshaScene}=await import('../web/changsha-scene.js'),{LANDMARKS}=await import('../web/changsha-landmarks.js');const scene=createChangshaScene(),original=new Map(scene.landmarks),geometries=new Set();
-  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,9);
+  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,10);
   scene.root.traverse(o=>{if(!o.isMesh)return;geometries.add(o.geometry);for(const key of ['position','normal'])for(const v of o.geometry.attributes[key].array)assert.ok(Number.isFinite(v),`${o.name} ${key}`);});
   scene.setNight(true);
   for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(scene.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);scene.root.traverse(o=>assert.ok(!lights.includes(o)));assert.equal(scene.setLandmarkEnabled(id,true),true);assert.equal(scene.landmarks.get(id),g);}
@@ -82,4 +82,38 @@ test('Meixi curved roofs are closed and the common court keeps clear routes betw
       }
     }
   }finally{model.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Orange Isle forecourt is supported by actual island geometry and both river branches remain open',async()=>{
+  const T=await import('three'),{createChangshaScene,RADIUS,channelWidth,islandWidth,channelX}=await import('../web/changsha-scene.js');
+  const scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+  try{
+    assert.ok(Math.abs(channelWidth(0)-channelWidth(Math.PI*2))<1e-10,'River seam must close around the globe');
+    const island=scene.root.getObjectByName('xiangjiang-island'),model=scene.landmarks.get('juzizhou');
+    for(let angle=.25;angle<.72;angle+=.018){
+      assert.ok(channelWidth(angle)-islandWidth(angle)>.17,'Both river branches must remain visibly open');
+      for(const side of [-1,1]){
+        const x=channelX(angle)+side*(channelWidth(angle)+islandWidth(angle))/4,rad=Math.sqrt(RADIUS*RADIUS-x*x),n=new T.Vector3(x,Math.cos(angle)*rad,Math.sin(angle)*rad).normalize();
+        assert.equal(new T.Raycaster(n.clone().multiplyScalar(4),n.clone().negate()).intersectObject(island).length,0,'Island must not close a water branch');
+      }
+    }
+    for(let i=0;i<48;i++){
+      const angle=i/48*Math.PI*2,point=model.localToWorld(new T.Vector3(Math.cos(angle)*.305,.006,Math.sin(angle)*.174+.023)).normalize();
+      const hit=new T.Raycaster(point.clone().multiplyScalar(4),point.clone().negate()).intersectObject(island)[0];
+      assert.ok(hit&&hit.point.length()>RADIUS+.007,'Forecourt edge must be supported by the island, not water');
+    }
+  }finally{scene.dispose();}
+});
+
+test('Orange Isle sculpture keeps a solid head, a projected facial profile and a wide shoulder silhouette',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{juzizhou}=await import('../web/changsha-juzizhou.js');
+  const kit=makeKit({time:{value:0},night:{value:0}}),g=juzizhou(kit);g.updateMatrixWorld(true);
+  try{
+    const stone=g.children.filter(o=>o.material?.userData.sculptureStone);
+    const front=(x,y)=>new T.Raycaster(new T.Vector3(x,y,1),new T.Vector3(0,0,-1)).intersectObjects(stone)[0];
+    for(const y of [.104,.124,.145,.167,.19])assert.ok(front(0,y),'Head and neck must have no visible central gaps');
+    const nose=front(0,.128),cheek=front(.022,.128);assert.ok(nose&&cheek&&nose.point.z-cheek.point.z>.008,'Nose must be a real projecting surface');
+    assert.ok(new T.Raycaster(new T.Vector3(0,.15,-1),new T.Vector3(0,0,1)).intersectObjects(stone).length,'Head needs a rear volume');
+    const bounds=new T.Box3();stone.forEach(mesh=>bounds.expandByObject(mesh));const size=bounds.getSize(new T.Vector3());assert.ok(size.x/size.y>2.2,'Long shoulders are essential to the actual sculpture silhouette');
+  }finally{g.traverse(o=>o.geometry?.dispose());kit.materials.forEach(m=>m.dispose());}
 });
