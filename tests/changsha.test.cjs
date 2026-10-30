@@ -55,3 +55,31 @@ test('Changsha mountain is continuous terrain and the bridge has open spans with
   const pier=new T.Raycaster(new T.Vector3(0,.08,.3),new T.Vector3(0,0,-1),0,.40).intersectObject(bridge,true);assert.ok(pier.length,'Concrete pier must connect deck to its support');
   bridge.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());
 });
+
+test('Meixi curved roofs are closed and the common court keeps clear routes between three venues',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{meixi}=await import('../web/changsha-meixi.js'),k=makeKit({time:{value:0},night:{value:0}}),model=meixi(k);model.updateMatrixWorld(true);
+  try{
+    const floor=model.children.find(o=>o.material?.userData.groundSurface),roofs=model.children.filter(o=>o.material?.userData.meixiRoof);
+    assert.equal(roofs.length,3);assert.ok(floor);
+    for(const mesh of [floor,...roofs]){const a=mesh.geometry.attributes.normal;for(let i=0;i<a.count;i++)assert.ok(a.getY(i)>0,'court and roofs need upward-facing, non-degenerate normals');}
+    for(const q of model.userData.venues){
+      const roof=roofs.find(o=>o.material.userData.meixiRoof===q.id),heights=[];
+      // Sample the center, each petal and the recesses on the built roof.
+      for(let i=0;i<q.outline.length;i+=5)for(const scale of [0,.45,.94]){
+        const [ox,oz]=q.outline[i],x=q.x+(ox-q.x)*scale,z=q.z+(oz-q.z)*scale;
+        const hit=new T.Raycaster(new T.Vector3(x,1,z),new T.Vector3(0,-1,0)).intersectObject(roof)[0];
+        assert.ok(hit&&hit.point.y>.10,'roof has a hole or an implausibly low fold');heights.push(hit.point.y);
+      }
+      assert.ok(Math.max(...heights)-Math.min(...heights)>.055,'venue needs actual rising folds, not a flat extruded outline');
+    }
+    const buildings=model.children.filter(o=>o.material?.userData.venue||o.material?.userData.meixiRoof);
+    for(const route of model.userData.paths){
+      const curve=new T.CatmullRomCurve3(route.map(([x,z])=>new T.Vector3(x,.07,z)),false,'centripetal');
+      for(const point of curve.getPoints(40)){
+        const ray=new T.Raycaster(new T.Vector3(point.x,1,point.z),new T.Vector3(0,-1,0));
+        assert.equal(ray.intersectObjects(buildings,false).length,0,'a venue obstructs the common-court route');
+        assert.ok(ray.intersectObject(floor)[0],'a route leaves the public forecourt');
+      }
+    }
+  }finally{model.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

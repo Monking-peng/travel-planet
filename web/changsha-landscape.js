@@ -60,7 +60,7 @@ export function createChangshaLandscape(k,{radius,landmarks,channelX,terrain}){
   // transform instead of guessed world coordinates that can cross the water.
   landmarks.forEach((model,id)=>{
     if(id==='juzhouBridge')return;
-    const p=model.localToWorld(new THREE.Vector3(0,0,id==='yuelu'?.68:.51)).normalize(),a=Math.atan2(p.z,p.y),x=channelX(a)+Math.sign(p.x)*.267,yz=Math.sqrt(radius*radius-x*x),end=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
+    const p=model.localToWorld(new THREE.Vector3(0,0,id==='yuelu'?.68:id==='meixi'?.72:.51)).normalize(),a=Math.atan2(p.z,p.y),x=channelX(a)+Math.sign(p.x)*.267,yz=Math.sqrt(radius*radius-x*x),end=new THREE.Vector3(x,Math.cos(a)*yz,Math.sin(a)*yz).normalize();
     const route=[];for(let i=0;i<=56;i++){const n=p.clone().lerp(end,i/56).normalize(),q=n.clone().multiplyScalar(radius),h=n.y>0?ridgeHeight(q.x,q.z):0;route.push(n.multiplyScalar(radius+h+.011));}
     ribbon(route,.036,stone);
   });

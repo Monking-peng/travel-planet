@@ -13,7 +13,7 @@
 | 橘子洲大桥 | 连续低拱、桥墩、双向车道、岛上环形匝道与狭长绿洲 | [长沙晚报航拍](https://www.icswb.com/h/152/20160518/415626.html)、[湖南省橘子洲资料](https://www.hunan.gov.cn/hnszf/c101474/202108/t20210827_20403826.html) |
 | 长沙国金中心 | 高低双塔、深蓝玻璃、退台塔冠、竖向构件与商场裙楼 | [建筑事务所资料](https://www.wongtung.com/cn/projects/changsha-international-finance-square-2/)、[整体建筑实拍](https://www.kinlong.com/case-landmark/9.html) |
 | 湖南博物院 | 宽大的深色悬挑屋盖、通高玻璃、两侧浅色展馆与下层入口 | [正立面实拍](https://travel.voc.com.cn/article/201712/201712010956426419.html) |
-| 梅溪湖艺术中心 | 大剧场、小剧场与艺术馆三组流动体量、白色折带、玻璃缝隙和连通前场 | [北京市建筑设计研究院](https://www.biad.com.cn/project/id/8/)、[航拍照片](https://www.hunantoday.cn/news/xhn/202609/33876599.html) |
+| 梅溪湖艺术中心 | 四瓣大剧场、三瓣艺术馆、单瓣小剧场；凹口翻卷屋盖、青蓝玻璃、短天窗、弯曲绿地和连通前场 | [北京市建筑设计研究院](https://www.biad.com.cn/project/id/8/)、[航拍照片](https://www.hunantoday.cn/news/xhn/202609/33876599.html) |
 | 谢子龙影像艺术馆 | 浅色清水混凝土、悬挑与架空水院、狭长窗、窄桥与入口楼梯 | [湖南湘江新区照片](https://xjxq.hunan.gov.cn/hnxjxq/sytpxw/202003/t20200318_11814798.html) |
 
 制作前已实际查看照片，修正了屋顶开口、城墙支承、场馆体量相交、玻璃与白色外墙比例。原始照片仅用于观察，未作为贴图或打包至仓库。来源页面可用性由原网站决定，不依据这些页面提供票价、开放或预约承诺。
@@ -36,3 +36,8 @@
 ![长沙山水洲城全景](images/changsha-overview.png)
 
 ![橘子洲大桥与两岸](images/changsha-bridge.png)
+
+
+0.25.0 对照设计方三张外部照片重做梅溪湖三馆，区分瓣数、长短和高度，压低过尖的屋盖并保持中央公共通道。屋顶浅色、青蓝玻璃与入口暖光分开处理；射线检测确认屋面闭合、地面朝上、三条广场通道没有被建筑遮断。原先横穿小剧场的通道已绕开。这里仍是缩微外观表达，并非完整场馆测绘；灯光不代表现场灯光秀。
+
+![梅溪湖日景](images/changsha-meixi.png)

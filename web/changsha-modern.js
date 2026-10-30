@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {skin,plaza,bollards,people,glow} from './shenzhen-forms.js';
+import {plaza,bollards,people,glow} from './shenzhen-forms.js';
 import {plaque,tree} from './wuhan-architecture.js';
 
 function bevelRect(w,d,b=.016){return [[-w/2+b,d/2],[w/2-b,d/2],[w/2,d/2-b],[w/2,-d/2+b],[w/2-b,-d/2],[-w/2+b,-d/2],[-w/2,-d/2+b],[-w/2,d/2-b]];}
@@ -30,45 +30,6 @@ export function ifs(k){
   plaque(k,g,'IFS 国金中心',.21,.045,0,.104,.229);
   for(const x of [-.57,.57])tree(k,g,x,.015,.23,.09);
   bollards(k,g,[[-.52,.36],[-.20,.40],[.20,.40],[.52,.36]],'#eace99');people(k,g,[[-.21,.31],[.18,.35],[.31,.31],[.40,.33]]);
-  return k.merge(g);
-}
-
-function petalOutline(a,s){return s*(1+.26*Math.cos(a*3)+.065*Math.sin(a*2));}
-function fluidVenue(k,g,{x,z,s,stretch=1,turn=0,height=.30,lobes=3},white,glass,edge,seam){
-  const point=(a,r,y)=>{const radius=lobes===1?s*(1+.16*Math.cos(a)):petalOutline(a,s),xx=Math.cos(a)*radius*r*stretch,zz=Math.sin(a)*radius*r;return [x+xx*Math.cos(turn)-zz*Math.sin(turn),y,z+xx*Math.sin(turn)+zz*Math.cos(turn)];};
-  const roofY=(a,r)=>.045+height*(.76+.15*Math.cos(a*lobes)*r)+.045*(1-r*r);
-  // Continuous glass walls sit below a closed, gently rising folded roof.
-  skin(k,g,(u,v)=>{const a=u*Math.PI*2;return point(a,1,.025+(roofY(a,1)-.025)*v);},10,128,glass);
-  // Broad white folds dominate the actual buildings. Glazing sits in recessed
-  // horizontal gaps rather than forming the whole external wall.
-  for(const [lo,hi]of [[.24,.43],[.48,.65],[.70,.85],[.90,1]]){
-    skin(k,g,(u,v)=>{const a=u*Math.PI*2,f=lo+(hi-lo)*v;return point(a,1.018+.013*Math.sin(v*Math.PI),.025+(roofY(a,1)-.025)*f);},4,128,white);
-  }
-  skin(k,g,(u,v)=>{const a=u*Math.PI*2,r=.001+.999*v;return point(a,r,roofY(a,r));},22,128,white);
-  for(let ring=0;ring<5;ring++){
-    const r=1-ring*.145;
-    k.line(g,Array.from({length:129},(_,i)=>{const a=i/128*Math.PI*2;return point(a,r,roofY(a,r)+.0015);}),ring===0?.0027:.0012,ring===0?edge:seam,true);
-  }
-  // The lower ribbons fold with the same perimeter rather than floating flat rings.
-  for(const f of [.24,.70])k.line(g,Array.from({length:129},(_,i)=>{const a=i/128*Math.PI*2;return point(a,1.021,.025+(roofY(a,1)-.025)*f);}),.0015,edge,true);
-  for(let i=0;i<64;i++){const a=i/64*Math.PI*2;k.beam(g,point(a,1.001,.030),point(a,1.001,roofY(a,1)-.004),.001,seam,4);}
-}
-export function meixi(k){
-  const g=new THREE.Group(),base=plaza(k,g,.83,.69,'#bdc3b9'),white=k.mat('#d1d8d4',.67,.12),glass=k.mat('#365b65',.49,.16,'#99bdc4'),edge=glow(k,'#c9e3df',.60,3,.38),seam=k.mat('#9caaa6',.70,.14);glass.userData.night.intensity=.12;
-  base.userData.groundSurface=true;
-  fluidVenue(k,g,{x:.02,z:.25,s:.23,stretch:1.38,turn:-.22,height:.27},white,glass,edge,seam);
-  fluidVenue(k,g,{x:.32,z:-.29,s:.18,stretch:1.10,turn:.50,height:.23},white,glass,edge,seam);
-  fluidVenue(k,g,{x:-.37,z:-.29,s:.17,stretch:1.23,turn:-.35,height:.18,lobes:1},white,glass,edge,seam);
-  // A connected pedestrian forecourt surrounds the venues; only small edge
-  // pools occupy water, matching the aerial view rather than an invented lake.
-  const water=k.mat('#5a8982',.50,.10),green=k.mat('#788c69');
-  for(const [x,z,rx,rz]of [[-.60,.10,.07,.24],[.60,.14,.07,.25],[-.11,-.49,.12,.047]]){
-    const pool=k.cyl(g,rx,rx,.010,water,x,.026,z,48);pool.scale.z=rz/rx;
-    const bed=k.cyl(g,rx*.75,rx*.75,.016,green,x+(x<0?-.015:.015),.029,z,48);bed.scale.z=rz/rx*.75;
-  }
-  const path=k.mat('#d4d6ca');
-  k.line(g,[[-.66,.023,-.03],[-.20,.023,-.01],[.02,.023,-.06],[.53,.023,-.02]],.018,path);
-  bollards(k,g,[[-.68,.32],[-.32,.50],[.38,.43],[.64,-.30]],'#cee1dc');people(k,g,[[-.15,-.02],[.04,-.07],[.47,-.02]]);
   return k.merge(g);
 }
 

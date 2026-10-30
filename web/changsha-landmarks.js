@@ -1,5 +1,6 @@
 import {yuelu,aiwan,dufu,tianxin} from './changsha-heritage.js';
-import {ifs,meixi,hunanMuseum,xie} from './changsha-modern.js';
+import {ifs,hunanMuseum,xie} from './changsha-modern.js';
+import {meixi} from './changsha-meixi.js';
 import {juzhouBridge} from './changsha-bridge.js';
 
 export const LANDMARKS=[
@@ -10,7 +11,7 @@ export const LANDMARKS=[
   {id:'juzhouBridge',name:'橘子洲大桥',area:'湘江 · 洲岛与桥梁',x:0,z:-.15,height:.23,distance:3.5,view:[.18,1.25,-1.8],waterfront:true,description:'连续低拱横跨湘江，环形匝道落向狭长洲岛。两岸步道、桥上车流和克制的夜间灯带，连接山麓与城市；按航拍关系作缩微表达。',source:'https://www.icswb.com/h/152/20160518/415626.html'},
   {id:'ifs',name:'长沙国金中心',area:'五一商圈 · 双塔与露台',x:1.12,z:-1.02,hemisphere:1,height:1.67,distance:3.5,view:[.55,.62,1.8],description:'两座塔楼保持明显高低差，保留深蓝玻璃、退台塔冠和竖向构件。裙楼露台与暖色店铺围绕双塔，窗灯和轮廓光缓慢变化。',source:'https://www.wongtung.com/cn/projects/changsha-international-finance-square-2/'},
   {id:'museum',name:'湖南博物院',area:'开福 · 悬挑屋盖与玻璃大厅',x:-1.10,z:.80,hemisphere:-1,height:.49,distance:2.8,view:[.4,.55,1.7],description:'宽大的深色悬挑屋盖、中央通高玻璃大厅和两侧浅色展馆体量。台阶、框架与横向遮阳线条保留实景的主要结构。',source:'https://travel.voc.com.cn/article/201712/201712010956426419.html'},
-  {id:'meixi',name:'梅溪湖艺术中心',area:'梅溪湖 · 三组流动建筑',x:1.12,z:-1.01,hemisphere:-1,height:.47,distance:3.0,view:[.5,1.1,1.5],description:'大剧场、小剧场与艺术馆以不同大小的连续曲面展开。弧形玻璃、层叠白色屋盖和水院平台构成整体，不以普通圆盒替代。',source:'https://www.biad.com.cn/project/id/8/'},
+  {id:'meixi',name:'梅溪湖艺术中心',area:'梅溪湖 · 三组流动建筑',x:1.12,z:-1.01,hemisphere:-1,height:.47,distance:3.0,view:[.5,1.1,1.5],description:'四瓣大剧场、三瓣艺术馆与单瓣小剧场围绕中央广场展开。浅色曲面在凹口处翻起，青蓝玻璃入口与窗带嵌在屋盖下；弯曲绿地和暖色步道灯连接三组场馆。',source:'https://www.biad.com.cn/project/id/8/'},
   {id:'xie',name:'谢子龙影像艺术馆',area:'洋湖 · 清水混凝土与水院',x:-1.12,z:-1.05,hemisphere:-1,height:.42,distance:2.8,view:[.45,.68,1.5],description:'浅色混凝土悬挑体量、狭长水平窗和架空水院，窄步道穿过水面，楼梯藏在入口下方。夜间保留克制的檐下照明。',source:'https://xjxq.hunan.gov.cn/hnxjxq/sytpxw/202003/t20200318_11814798.html'},
 ].map(item=>({...item,grounded:true}));
 const builders={dufu,yuelu,aiwan,tianxin,juzhouBridge,ifs,museum:hunanMuseum,meixi,xie};
