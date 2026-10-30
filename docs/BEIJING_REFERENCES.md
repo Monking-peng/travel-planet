@@ -40,3 +40,10 @@
 ![佛香阁与下方园林](images/beijing-summer.png)
 
 ![佛香阁夜景](images/beijing-summer-night.png)
+
+
+0.27.0 对照 [LAVA 设计团队水立方照片](https://www.l-a-v-a.net/projects/beijing-watercube/)，将硬折面改为浅蓝灰连续气枕，细化接缝和底部玻璃入口雨棚。球面贴合保留气枕平滑法线，夜间蓝光集中在膜块边缘，中心保留较暗层次。原页面室内照片、剖面模型未当作外墙依据；夜景为缩微表达，不复刻特定灯光秀。
+
+![水立方白天](images/beijing-watercube.png)
+
+![水立方夜景](images/beijing-watercube-night.png)

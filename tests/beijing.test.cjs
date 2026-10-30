@@ -1,6 +1,30 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Water Cube membranes cover every face outward and keep smooth normals after spherical bending',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{foamFace}=await import('../web/beijing-watercube.js'),{createBeijingScene}=await import('../web/beijing-scene.js');
+  const k=makeKit({time:{value:0},night:{value:0}}),mat=k.mat('#8faebc'),groups=[];
+  try{
+    for(const [u,v,normal]of [[[1,0,0],[0,1,0],[0,0,1]],[[1,0,0],[0,1,0],[0,0,-1]],[[0,0,1],[0,1,0],[1,0,0]],[[0,0,1],[0,1,0],[-1,0,0]],[[1,0,0],[0,0,1],[0,1,0]]]){
+      const g=new T.Group(),n=new T.Vector3(...normal);groups.push(g);foamFace(k,g,.65,.21,[0,0,0],u,v,normal,[mat],3);g.updateMatrixWorld(true);
+      g.traverse(o=>{if(o.material!==mat)return;const p=o.geometry.attributes.position,a=o.geometry.attributes.normal;for(let i=0;i<a.count;i++){assert.ok(new T.Vector3().fromBufferAttribute(a,i).dot(n)>.1,'membrane normal must point outward');const depth=new T.Vector3().fromBufferAttribute(p,i).dot(n);assert.ok(depth>=-1e-6&&depth<=.0041,'cushions must remain a shallow outer skin');}});
+      for(const [x,y]of [[.17,.04],[-.1,-.06],[0,.02],[.23,.08]]){
+        const origin=new T.Vector3(...u).multiplyScalar(x).addScaledVector(new T.Vector3(...v),y).addScaledVector(n,.1),hits=new T.Raycaster(origin,n.clone().negate()).intersectObject(g,true);
+        assert.ok(hits.length&&hits[0].distance>.095&&hits[0].distance<=.1001,'single-sided membrane must cover the full facade without holes');
+      }
+    }
+    const scene=createBeijingScene();try{
+      let duplicates=0;scene.landmarks.get('watercube').traverse(o=>{
+        if(!o.material?.userData.cushion)return;const p=o.geometry.attributes.position,n=o.geometry.attributes.normal,c=o.geometry.attributes.color,seen=new Map();
+        for(let i=0;i<p.count;i++){
+          if(c.getX(i)<.89)continue;const key=[p.getX(i),p.getY(i),p.getZ(i)].map(x=>x.toFixed(6)).join(','),current=new T.Vector3().fromBufferAttribute(n,i);
+          if(seen.has(key)){assert.ok(current.dot(seen.get(key))>.9999,'adjacent triangles must retain a continuous normal at shared interior vertices');duplicates++;}else seen.set(key,current);
+        }
+      });assert.ok(duplicates>100,'exercise the rendered tessellated surface, not only the raw module');
+    }finally{scene.dispose();}
+  }finally{groups.forEach(g=>g.traverse(o=>o.geometry?.dispose()));k.materials.forEach(m=>m.dispose());}
+});
+
 test('Foxiang has a closed tiled top and genuinely open upper balconies around recessed doors',async()=>{
   const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{foxiang}=await import('../web/beijing-foxiang.js');
   const k=makeKit({time:{value:0},night:{value:0}}),g=foxiang(k);g.updateMatrixWorld(true);

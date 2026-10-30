@@ -25,30 +25,6 @@ export function nest(k){
   return k.merge(g);
 }
 
-function clip(poly,nx,ny,c){const out=[];for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],da=a[0]*nx+a[1]*ny-c,db=b[0]*nx+b[1]*ny-c;if(da<=0)out.push(a);if((da<0)!==(db<0)){const t=da/(da-db);out.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]);}}return out;}
-function foamFace(k,g,w,h,origin,u,v,normal,materials,seed){
-  const points=[],cols=Math.round(w/.078),rows=Math.max(3,Math.round(h/.078));for(let y=0;y<rows;y++)for(let x=0;x<cols;x++)points.push([(x+.5+.28*Math.sin(x*7+y*11+seed))*w/cols-w/2,(y+.5+.27*Math.cos(x*13+y*3+seed))*h/rows-h/2]);
-  const rim=k.mat('#bdced0',.47,.22);
-  points.forEach((p,i)=>{let cell=[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]];for(let j=0;j<points.length&&cell.length;j++){if(i===j)continue;const q=points[j];cell=clip(cell,q[0]-p[0],q[1]-p[1],(q[0]*q[0]+q[1]*q[1]-p[0]*p[0]-p[1]*p[1])/2);}if(cell.length<3)return;
-    const map=(a,b,lift)=>origin.map((n,j)=>n+u[j]*a+v[j]*b+normal[j]*lift),vertices=[...map(p[0],p[1],.008)],idx=[],n=cell.length;
-    for(const r of [.33,.68,1])cell.forEach(([a,b])=>vertices.push(...map(p[0]+(a-p[0])*r,p[1]+(b-p[1])*r,.008*Math.sqrt(1-r*r))));
-    for(let j=0;j<n;j++){const next=(j+1)%n;idx.push(0,1+j,1+next);for(let ring=0;ring<2;ring++){const a=1+ring*n+j,b=1+ring*n+next;idx.push(a,a+n,b,b,a+n,b+n);}}
-    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setIndex(idx);geo.computeVertexNormals();const mat=materials[i%materials.length];mat.side=THREE.DoubleSide;k.mesh(g,geo,mat);
-    cell.forEach((a,j)=>k.beam(g,map(...a,.001),map(...cell[(j+1)%cell.length],.001),.0012,rim,4));
-  });
-}
-export function watercube(k){
-  const g=new THREE.Group(),base=k.mat('#cccbbf'),blue=['#96b8c2','#7da6b7','#a1c3cb','#6e98b0'].map((color,i)=>{const m=k.mat(color,.37,.17,'#45a5e0');m.userData.night.intensity=.5+i*.09;m.userData.pulse={speed:.32,phase:i*.7};return m;});
-  k.box(g,.74,.019,.67,base,0,.009,0);k.box(g,.65,.207,.58,k.mat('#3b647a',.3,.2),0,.126,0);
-  for(const s of [-1,1]){
-    foamFace(k,g,.65,.21,[0,.13,s*.292],[1,0,0],[0,1,0],[0,0,s],blue,s+2);
-    foamFace(k,g,.58,.21,[s*.327,.13,0],[0,0,1],[0,1,0],[s,0,0],blue,s+5);
-  }
-  foamFace(k,g,.65,.58,[0,.237,0],[1,0,0],[0,0,1],[0,1,0],blue,9);
-  const glass=k.glass('#416676','#b9ecff',37);k.box(g,.18,.035,.006,glass,0,.035,.302);for(let i=0;i<6;i++)k.box(g,.002,.035,.008,base,(i/5-.5)*.18,.035,.306);
-  return k.merge(g);
-}
-
 export function theatre(k){
   const g=new THREE.Group(),stone=k.mat('#c7c7ba'),water=k.mat('#507d89',.29,.2),metal=k.mat('#a3afb4',.40,.57),glass=k.mat('#567d8d',.25,.4,'#b8d6db'),seam=k.mat('#758d98',.55,.28);glass.userData.night.intensity=.42;
   const ground=k.cyl(g,.66,.66,.014,stone,0,.007,0,96);ground.scale.z=.77;const pool=k.cyl(g,.60,.60,.013,water,0,.019,0,96);pool.scale.z=.73;

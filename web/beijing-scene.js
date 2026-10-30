@@ -13,7 +13,14 @@ export function createBeijingScene(){
   const ground=k.mat('#8f9c79',.97),terrain=k.mesh(root,new THREE.SphereGeometry(RADIUS,160,128),ground);terrain.name='beijing-terrain';terrain.receiveShadow=true;surfaceDetail(ground,clock);
   for(const item of LANDMARKS){
     const model=createLandmark(k,item.id);model.name=item.id;
-    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position;for(let i=0;i<a.count;i++)a.setY(i,a.getY(i)-sag(a.getX(i),a.getZ(i)));a.needsUpdate=true;o.geometry.computeVertexNormals();
+    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position,normals=o.geometry.attributes.normal,smooth=o.material.userData.cushion;
+      for(let i=0;i<a.count;i++){
+        const x=a.getX(i),z=a.getZ(i);a.setY(i,a.getY(i)-sag(x,z));
+        // Inverse-transpose of the spherical bend preserves shared smooth normals.
+        // Recomputing on TessellateModifier's non-indexed output flattens every face.
+        if(smooth){const ny=normals.getY(i),denom=Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),nx=normals.getX(i)+x/denom*ny,nz=normals.getZ(i)+z/denom*ny,length=Math.hypot(nx,ny,nz);normals.setXYZ(i,nx/length,ny/length,nz/length);}
+      }
+      a.needsUpdate=true;if(smooth)normals.needsUpdate=true;else o.geometry.computeVertexNormals();
       const material=o.material;if(!material.userData.night&&!material.userData.terrainTint&&['palace','tiananmen','heaven','summer','beihai','drum','wall','jingshan'].includes(item.id)){material.userData.night={color:material.color.clone(),intensity:material.metalness>.1?.14:.045};}
     });
     // Lamps belong to the complete landmark module; removal leaves no floating lights.
