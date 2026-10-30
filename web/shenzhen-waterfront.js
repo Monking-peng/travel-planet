@@ -26,7 +26,7 @@ export function createWaterfront(k,{radius,shorelineZ,landmarks}){
   // before adding it, so a removed/repositioned landmark cannot leave a path
   // cutting through an unrelated building.
   const connections=[];
-  for(const id of ['civic','cocoon','diwang','wheel','window','minghua']){
+  for(const id of ['civic','cocoon','diwang','wheel','window','minghua','talent']){
     const cap=caps.find(c=>c.id===id);if(!cap)continue;
     const a=Math.atan2(cap.normal.y,cap.normal.x),end=at(a,.048).normalize(),model=landmarks.get(id);let start=cap.normal.clone(),nearest=Infinity;
     model.traverse(o=>{if(!o.isMesh)return;const positions=o.geometry.attributes.position;for(let i=0;i<positions.count;i++){const p=new THREE.Vector3().fromBufferAttribute(positions,i).applyMatrix4(o.matrixWorld);if(p.length()>radius+.025)continue;const angle=p.angleTo(end);if(angle<nearest){nearest=angle;start=p.normalize();}}});
@@ -34,5 +34,23 @@ export function createWaterfront(k,{radius,shorelineZ,landmarks}){
     const axis=new THREE.Vector3().crossVectors(start,end).normalize(),points=[];let clear=true;for(let i=0;i<=60;i++){const n=start.clone().applyAxisAngle(axis,distance*i/60);if(caps.some(c=>c!==cap&&n.angleTo(c.normal)<c.angle+.012)){clear=false;break;}points.push(n.multiplyScalar(radius+.014));}
     if(clear){ribbon(points,.038,paving);connections.push({id,start:start.toArray(),end:end.toArray()});}
   }
-  k.merge(g);g.userData.connections=connections;g.traverse(o=>{if(o.isMesh){o.castShadow=o.material!==paving&&o.material!==kerb&&o.material!==green;o.receiveShadow=true;o.material.envMapIntensity=.18;}});return g;
+  const districtLinks=[];
+  function facingGround(model,toward){
+    let nearest=Infinity,point=model.position.clone().normalize();
+    model.traverse(o=>{if(!o.isMesh)return;const p=o.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3().fromBufferAttribute(p,i).applyMatrix4(o.matrixWorld);if(v.length()>radius+.025)continue;const distance=v.angleTo(toward);if(distance<nearest){nearest=distance;point=v.normalize();}}});return point;
+  }
+  // The park is part of the Houhai waterfront district. Short walking links
+  // meet the actual edges of the Spring Bamboo and Spring Cocoon forecourts.
+  for(const from of ['bamboo','cocoon']){
+    const to='talent',a=landmarks.get(from),b=landmarks.get(to);if(!a||!b)continue;
+    const start=facingGround(a,b.position),end=facingGround(b,a.position),angle=start.angleTo(end),axis=new THREE.Vector3().crossVectors(start,end).normalize(),points=[];let clear=true;
+    for(let i=0;i<=40;i++){const n=start.clone().applyAxisAngle(axis,angle*i/40);if(caps.some(c=>![from,to].includes(c.id)&&n.angleTo(c.normal)<c.angle+.012)){clear=false;break;}points.push(n.multiplyScalar(radius+.015));}
+    if(!clear)continue;
+    ribbon(points.map(p=>p.clone().normalize().multiplyScalar(radius+.009)),.069,green);ribbon(points,.034,paving);
+    for(const i of [10,30]){
+      const p=points[i],n=p.clone().normalize(),t=points[i+1].clone().sub(points[i-1]).normalize(),side=new THREE.Vector3().crossVectors(t,n).normalize().multiplyScalar(.024),q=p.clone().add(side).normalize().multiplyScalar(radius+.014),item=new THREE.Group();item.position.copy(q);item.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);k.cyl(item,.002,.0026,.026,metal,0,.013,0,6);k.box(item,.007,.004,.007,lamp,0,.029,0);g.add(item);
+    }
+    districtLinks.push({from,to,start:start.toArray(),end:end.toArray()});
+  }
+  k.merge(g);g.userData.connections=connections;g.userData.districtLinks=districtLinks;g.traverse(o=>{if(o.isMesh){o.castShadow=o.material!==paving&&o.material!==kerb&&o.material!==green;o.receiveShadow=true;o.material.envMapIntensity=.18;}});return g;
 }

@@ -9,6 +9,21 @@ export const RADIUS=2.15,SHORE_Z=1.45;
 export const shorelineZ=angle=>SHORE_Z+.055*Math.cos(angle*3)+.10*Math.sin(angle*2);
 export function surface(x,z,lift=0,side=1){return new THREE.Vector3(x,side*Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),z).normalize().multiplyScalar(RADIUS+lift);}
 const sag=(x,z)=>RADIUS-Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z));
+// Split every face in the same way before bending a broad filled surface.
+// Longest-edge tessellation leaves T junctions that open into bright cracks
+// when formerly straight shared edges are projected onto the sphere.
+function conformingSurface(geometry){
+  let current=geometry.index?geometry.toNonIndexed():geometry.clone();
+  for(let pass=0;pass<4;pass++){
+    const p=current.attributes.position,next=new Float32Array(p.count*12);let offset=0;
+    for(let i=0;i<p.count;i+=3){
+      const a=new THREE.Vector3().fromBufferAttribute(p,i),b=new THREE.Vector3().fromBufferAttribute(p,i+1),c=new THREE.Vector3().fromBufferAttribute(p,i+2),ab=a.clone().add(b).multiplyScalar(.5),bc=b.clone().add(c).multiplyScalar(.5),ca=c.clone().add(a).multiplyScalar(.5);
+      for(const v of [a,ab,ca,ab,b,bc,ca,bc,c,ab,bc,ca]){next[offset++]=v.x;next[offset++]=v.y;next[offset++]=v.z;}
+    }
+    current.dispose();current=new THREE.BufferGeometry();current.setAttribute('position',new THREE.BufferAttribute(next,3));
+  }
+  return current;
+}
 function shoreGeometry(){
   const positions=[],indices=[];for(let row=0;row<2;row++)for(let j=0;j<=256;j++){const a=j/256*Math.PI*2,z=shorelineZ(a)+row*.026,r=Math.sqrt(RADIUS*RADIUS-z*z);positions.push(Math.cos(a)*r,Math.sin(a)*r,z);}
   for(let j=0;j<256;j++){const a=j,b=j+257;indices.push(a,b,a+1,b,b+1,a+1);}const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setIndex(indices);geometry.computeVertexNormals();return geometry;
@@ -24,7 +39,7 @@ export function createShenzhenScene(){
   const shore=k.mesh(root,shoreGeometry(),k.mat('#b4b59a',.98));shore.scale.setScalar(1.0025);shore.name='shenzhen-shore';shore.material.side=THREE.DoubleSide;
   for(const item of LANDMARKS){
     const model=createLandmark(k,item.id);model.name=item.id;
-    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;o.material.envMapIntensity=.42;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position;for(let i=0;i<a.count;i++){const y=a.getY(i),wrap=item.id==='minghua'&&o.material.userData.rigidVessel?1-THREE.MathUtils.smoothstep(y,.028,.075):1;a.setY(i,y-sag(a.getX(i),a.getZ(i))*wrap);}a.needsUpdate=true;o.geometry.computeVertexNormals();});
+    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=!o.material.userData.landSurface;o.receiveShadow=true;o.material.envMapIntensity=.42;const original=o.geometry;o.geometry=o.material.userData.conformingSurface?conformingSurface(original):new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position;for(let i=0;i<a.count;i++){const y=a.getY(i),wrap=item.id==='minghua'&&o.material.userData.rigidVessel?1-THREE.MathUtils.smoothstep(y,.028,.075):1;a.setY(i,y-sag(a.getX(i),a.getZ(i))*wrap);}a.needsUpdate=true;o.geometry.computeVertexNormals();});
     const light=new THREE.PointLight(['cocoon','pingan','bamboo'].includes(item.id)?'#ccdef2':'#f7d3a2',0,1.5,2);light.position.set(.24,.22,.34);light.userData.nightIntensity=item.id==='civic'?.035:.012;model.add(light);
     const normal=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(normal).multiplyScalar(RADIUS+.006);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),normal);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
   }
