@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 
 test('Shenzhen complete landmark modules detach with their lighting and release resources once',async()=>{
   const {createShenzhenScene}=await import('../web/shenzhen-scene.js'),{LANDMARKS}=await import('../web/shenzhen-landmarks.js');const scene=createShenzhenScene(),original=new Map(scene.landmarks),geometries=new Set();
-  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,10);
+  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,11);
   scene.root.traverse(o=>{if(!o.isMesh)return;geometries.add(o.geometry);for(const key of ['position','normal'])for(const v of o.geometry.attributes[key].array)assert.ok(Number.isFinite(v),`${o.name} ${key}`);});
   scene.setNight(true);
   for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(scene.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);scene.root.traverse(o=>assert.ok(!lights.includes(o)));assert.equal(scene.setLandmarkEnabled(id,true),true);assert.equal(scene.landmarks.get(id),g);}
@@ -29,4 +29,25 @@ test('Shenzhen night lights change gently, preserve base colors and respect redu
   const {createShenzhenScene}=await import('../web/shenzhen-scene.js'),{parseRemovedModules}=await import('../web/destination-module-panel.js'),{LANDMARKS}=await import('../web/shenzhen-landmarks.js');const scene=createShenzhenScene();
   try{assert.deepEqual([...parseRemovedModules('["wheel","palace","wheel",null]',LANDMARKS)],['wheel']);const colors=new Map(),pulse=[];scene.landmarks.forEach(g=>g.traverse(o=>{if(o.material?.color)colors.set(o.material,o.material.color.clone());if(o.material?.userData.pulse)pulse.push(o.material);}));assert.ok(pulse.length);scene.setNight(true);colors.forEach((color,m)=>assert.ok(m.color.equals(color)));scene.update(1,false);const values=pulse.map(m=>m.emissiveIntensity);scene.update(4,false);assert.ok(pulse.some((m,i)=>m.emissiveIntensity!==values[i]));scene.update(5,true);const still=pulse.map(m=>m.emissiveIntensity);scene.update(30,true);assert.deepEqual(pulse.map(m=>m.emissiveIntensity),still);scene.setNight(false);scene.update(31,false);assert.ok(pulse.every(m=>m.emissiveIntensity===0));}
   finally{scene.dispose();}
+});
+
+test('Minghua portholes and promenade windows are visible outside the hull',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{minghua}=await import('../web/shenzhen-minghua.js');const k=makeKit({time:{value:0},night:{value:0}}),g=minghua(k);g.updateMatrixWorld(true);
+  try{
+    for(const [x,y,color] of [[-.028,.088,'344b50'],[-.028,.131,'344b50'],[-.080,.201,'34515a'],[-.080,.241,'34515a']]){
+      const hits=new T.Raycaster(new T.Vector3(x,y,.5),new T.Vector3(0,0,-1)).intersectObject(g,true);
+      assert.ok(hits.length);assert.equal(hits[0].object.material.color.getHexString(),color,`Window at ${x}, ${y} is hidden behind the ship wall`);
+    }
+    const water=new T.Raycaster(new T.Vector3(.18,.5,.30),new T.Vector3(0,-1,0)).intersectObject(g,true);
+    assert.ok(water.length);assert.equal(water[0].object.material.color.getHexString(),'468d91','The fountain forecourt must remain an enclosed water pool');
+  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Shenzhen waterfront connects its six districts and remains when buildings are removed',async()=>{
+  const T=await import('three'),{createShenzhenScene,RADIUS,shorelineZ}=await import('../web/shenzhen-scene.js');const scene=createShenzhenScene();scene.root.updateMatrixWorld(true);
+  try{
+    const walk=scene.root.getObjectByName('shenzhen-coastal-greenway');assert.ok(walk);assert.deepEqual(walk.userData.connections.map(c=>c.id).sort(),['civic','cocoon','diwang','minghua','wheel','window'].sort());
+    walk.traverse(o=>{if(!o.isMesh)return;const positions=o.geometry.attributes.position;for(let i=0;i<positions.count;i++){const p=new T.Vector3().fromBufferAttribute(positions,i);assert.ok(p.length()>RADIUS,'Walks and lamps must stay above terrain');p.normalize().multiplyScalar(RADIUS);assert.ok(p.z<shorelineZ(Math.atan2(p.y,p.x)),'The greenway must not cut across the sea');}});
+    for(const id of [...scene.landmarks.keys()])scene.setLandmarkEnabled(id,false);assert.equal(walk.parent,scene.root);assert.equal(scene.landmarks.size,0);
+  }finally{scene.dispose();}
 });

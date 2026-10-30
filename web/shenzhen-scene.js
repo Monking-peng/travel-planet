@@ -3,6 +3,7 @@ import {makeKit} from './wuhan-kit.js';
 import {surfaceDetail} from './wuhan-atmosphere.js';
 import {LANDMARKS,createLandmark} from './shenzhen-landmarks.js';
 import {TessellateModifier} from 'three/addons/modifiers/TessellateModifier.js';
+import {createWaterfront} from './shenzhen-waterfront.js';
 
 export const RADIUS=2.15,SHORE_Z=1.45;
 export const shorelineZ=angle=>SHORE_Z+.055*Math.cos(angle*3)+.10*Math.sin(angle*2);
@@ -23,10 +24,11 @@ export function createShenzhenScene(){
   const shore=k.mesh(root,shoreGeometry(),k.mat('#b4b59a',.98));shore.scale.setScalar(1.0025);shore.name='shenzhen-shore';shore.material.side=THREE.DoubleSide;
   for(const item of LANDMARKS){
     const model=createLandmark(k,item.id);model.name=item.id;
-    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;o.material.envMapIntensity=.42;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position;for(let i=0;i<a.count;i++)a.setY(i,a.getY(i)-sag(a.getX(i),a.getZ(i)));a.needsUpdate=true;o.geometry.computeVertexNormals();});
+    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;o.material.envMapIntensity=.42;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position;for(let i=0;i<a.count;i++){const y=a.getY(i),wrap=item.id==='minghua'&&o.material.userData.rigidVessel?1-THREE.MathUtils.smoothstep(y,.028,.075):1;a.setY(i,y-sag(a.getX(i),a.getZ(i))*wrap);}a.needsUpdate=true;o.geometry.computeVertexNormals();});
     const light=new THREE.PointLight(['cocoon','pingan','bamboo'].includes(item.id)?'#ccdef2':'#f7d3a2',0,1.5,2);light.position.set(.24,.22,.34);light.userData.nightIntensity=item.id==='civic'?.035:.012;model.add(light);
     const normal=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(normal).multiplyScalar(RADIUS+.006);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),normal);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
   }
+  root.add(createWaterfront(k,{radius:RADIUS,shorelineZ,landmarks}));
   let night=false,disposed=false;
   function setNight(value){night=Boolean(value);clock.night.value=+night;ground.color.set(night?'#29443e':'#8ca08a');seaMaterial.color.set(night?'#18394c':'#427d8c');for(const m of k.materials){const n=m.userData.night;if(n){m.emissive.copy(n.color);m.emissiveIntensity=night?n.intensity:0;}}modules.forEach(g=>g.traverse(o=>{if(o.isLight)o.intensity=night?o.userData.nightIntensity:0;}));}
   function update(time,reduced){clock.time.value=reduced?0:time;for(const m of k.materials){const n=m.userData.night,p=m.userData.pulse;if(n&&p)m.emissiveIntensity=night?n.intensity*(reduced?1:.80+.20*Math.sin(time*p.speed+p.phase)):0;}}
