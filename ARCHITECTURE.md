@@ -8,6 +8,7 @@
 - `web/shanghai-trip.html`：上海地图和多人旅行。
 - `web/wuhan-trip.html`：武汉地图和多人旅行，复用 `wuhan-scene.js` 与原夜景效果。
 - `web/shanghai.html`、`web/wuhan.html`：地标浏览、日夜模式、整组景点管理。
+- `web/beijing.html`：北京十一组地标地图，使用独立的北京模型与新增城市浏览器控制。
 - `web/mobile.css`：窄屏导航、画布、控制区与表单布局。
 - `web/viewport-controls.js`：窄屏取景与点击、拖动、多指手势区分。
 - `server/index.cjs`：静态资源、身份 Cookie、房间权限与接口。
