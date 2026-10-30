@@ -1,8 +1,8 @@
 # 一起去 · Travel Planet
 
-用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.14.0**，支持桌面和手机网页。
+用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.15.0**，支持桌面和手机网页。
 
-**[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)**
+**[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)** · **[顺德地图](https://43.139.249.151/travel/shunde.html)**
 
 这些是公开测试入口。测试时请创建自己的旅行；无需配置密钥即可使用「基础排程」。线上演示不是订票或支付服务。
 
@@ -10,8 +10,8 @@
 
 | 功能 | 当前范围 |
 | --- | --- |
-| 3D 城市浏览 | 杭州、上海、武汉、北京、深圳；旋转、缩放、近看地标、日夜切换 |
-| 景点模块 | 上海、武汉、北京、深圳整组添加或移除；杭州装扮；设置保存在当前浏览器 |
+| 3D 城市浏览 | 杭州、上海、武汉、北京、深圳、顺德；旋转、缩放、近看地标、日夜切换 |
+| 景点模块 | 上海、武汉、北京、深圳、顺德整组添加或移除；杭州装扮；设置保存在当前浏览器 |
 | 多人旅行 | 杭州、上海、武汉；选点、邀请加入、偏好提交、方案比较、明确接受、共同定稿 |
 | 约束校验 | 游览时间、首末接驳、转场、过江、步行、餐饮和分项预算 |
 | 可选 AI | 整理自然语言想法、协助提出方案；未配置时使用明确标注的基础排程 |
@@ -22,6 +22,8 @@
 北京新增 **11 组具名地标**：故宫、天安门、天坛、颐和园、长城、北海白塔、钟鼓楼、国家大剧院、央视总部、鸟巢和水立方。提供日夜、自由旋转、逐景近看和整组管理；北京当前为景观地图，尚未接入多人旅行。详见 [北京造型参考](docs/BEIJING_REFERENCES.md)。
 
 深圳新增 **10 组具名地标**：平安金融中心、春笋、地王大厦、京基100、市民中心、春茧、湾区之光、世界之窗铁塔、大鹏南门和莲花山。提供滨海地形、日夜与整组管理；深圳当前为景观地图，尚未接入多人旅行。详见 [深圳造型参考](docs/SHENZHEN_REFERENCES.md)。
+
+顺德新增 **8 组具名景点**：清晖园、顺峰山牌坊、和美术馆、华盖路、逢简水乡、顺德演艺中心、碧江金楼和宝林寺。包含双半球布局、水道、日夜、手机浏览和整组管理；顺德尚未接入多人旅行。详见 [顺德造型参考](docs/SHUNDE_REFERENCES.md)。
 
 ## 界面预览
 
@@ -67,7 +69,7 @@ npm run check
 
 自动测试覆盖业务规则、隐私、接口、规划限制、模型涉水与布局、整组资源生命周期、触屏误点和窄屏取景。GitHub Actions 在推送和拉取请求时执行以上检查。
 
-可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 和 `python tools/wuhan-flow-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing` 或 `python tools/destination-check.py shenzhen`。详细范围见 [验收说明](docs/TESTING.md)。
+可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 和 `python tools/wuhan-flow-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing`、`python tools/destination-check.py shenzhen` 或 `python tools/destination-check.py shunde`。详细范围见 [验收说明](docs/TESTING.md)。
 
 ## 已知边界
 
