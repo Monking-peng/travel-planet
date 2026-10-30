@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 
 test('Shenzhen complete landmark modules detach with their lighting and release resources once',async()=>{
   const {createShenzhenScene}=await import('../web/shenzhen-scene.js'),{LANDMARKS}=await import('../web/shenzhen-landmarks.js');const scene=createShenzhenScene(),original=new Map(scene.landmarks),geometries=new Set();
-  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,12);
+  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,13);
   scene.root.traverse(o=>{if(!o.isMesh)return;geometries.add(o.geometry);for(const key of ['position','normal'])for(const v of o.geometry.attributes[key].array)assert.ok(Number.isFinite(v),`${o.name} ${key}`);});
   scene.setNight(true);
   for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(scene.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);scene.root.traverse(o=>assert.ok(!lights.includes(o)));assert.equal(scene.setLandmarkEnabled(id,true),true);assert.equal(scene.landmarks.get(id),g);}
@@ -46,7 +46,7 @@ test('Minghua portholes and promenade windows are visible outside the hull',asyn
 test('Shenzhen waterfront connects seven districts and remains when buildings are removed',async()=>{
   const T=await import('three'),{createShenzhenScene,RADIUS,shorelineZ}=await import('../web/shenzhen-scene.js');const scene=createShenzhenScene();scene.root.updateMatrixWorld(true);
   try{
-    const walk=scene.root.getObjectByName('shenzhen-coastal-greenway');assert.ok(walk);assert.deepEqual(walk.userData.connections.map(c=>c.id).sort(),['civic','cocoon','diwang','minghua','wheel','window','talent'].sort());assert.deepEqual(walk.userData.districtLinks.map(c=>[c.from,c.to]),[['bamboo','talent'],['cocoon','talent']]);
+    const walk=scene.root.getObjectByName('shenzhen-coastal-greenway');assert.ok(walk);assert.deepEqual(walk.userData.connections.map(c=>c.id).sort(),['civic','cocoon','diwang','minghua','wheel','window','talent'].sort());assert.deepEqual(walk.userData.districtLinks.map(c=>[c.from,c.to]),[['bamboo','talent'],['cocoon','talent'],['culture','civic'],['lianhua','culture']]);
     walk.traverse(o=>{if(!o.isMesh)return;const positions=o.geometry.attributes.position;for(let i=0;i<positions.count;i++){const p=new T.Vector3().fromBufferAttribute(positions,i);assert.ok(p.length()>RADIUS,'Walks and lamps must stay above terrain');p.normalize().multiplyScalar(RADIUS);assert.ok(p.z<shorelineZ(Math.atan2(p.y,p.x)),'The greenway must not cut across the sea');}});
     for(const id of [...scene.landmarks.keys()])scene.setLandmarkEnabled(id,false);assert.equal(walk.parent,scene.root);assert.equal(scene.landmarks.size,0);
   }finally{scene.dispose();}
@@ -88,4 +88,19 @@ test('Civic Center retains the open central axis, split roof, and correctly colo
     }
     const lights=[];g.traverse(o=>{if(o.isSpotLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.target.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));
   }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+
+test('Cultural pair leaves a clear public axis, closes its folded roofs and carries distinct interior lighting',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{cultureCenter}=await import('../web/shenzhen-culture.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=cultureCenter(k);g.updateMatrixWorld(true);
+ try{
+  const axis=new T.Raycaster(new T.Vector3(0,.06,.33),new T.Vector3(0,0,-1)).intersectObject(g,true);assert.equal(axis.length,0,'People and the bridge must not block the central passage');
+  const bridge=new T.Raycaster(new T.Vector3(0,.30,-.205),new T.Vector3(0,-1,0)).intersectObject(g,true);assert.ok(bridge.length&&bridge[0].point.y>.09,'An elevated link spans the clear axis');
+  for(const side of [-1,1])for(const z of [-.14,-.045,.055])for(const dx of [-.08,0,.08]){
+   const hits=new T.Raycaster(new T.Vector3(side*.275+dx,.6,z),new T.Vector3(0,-1,0)).intersectObject(g,true);assert.ok(hits.some(h=>h.point.y>.095&&!h.object.material.transparent),'The three folded roof bays must close over each foyer');
+  }
+  const lights=[];g.traverse(o=>{if(o.isPointLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));assert.notEqual(lights[0].color.getHex(),lights[1].color.getHex());
+  assert.ok(k.materials.some(m=>m.transparent&&m.opacity<.5),'Glazing must preserve views of the branching columns');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });

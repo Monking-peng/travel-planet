@@ -41,8 +41,8 @@ export function createWaterfront(k,{radius,shorelineZ,landmarks}){
   }
   // The park is part of the Houhai waterfront district. Short walking links
   // meet the actual edges of the Spring Bamboo and Spring Cocoon forecourts.
-  for(const from of ['bamboo','cocoon']){
-    const to='talent',a=landmarks.get(from),b=landmarks.get(to);if(!a||!b)continue;
+  for(const [from,to] of [['bamboo','talent'],['cocoon','talent'],['culture','civic'],['lianhua','culture']]){
+    const a=landmarks.get(from),b=landmarks.get(to);if(!a||!b)continue;
     const start=facingGround(a,b.position),end=facingGround(b,a.position),angle=start.angleTo(end),axis=new THREE.Vector3().crossVectors(start,end).normalize(),points=[];let clear=true;
     for(let i=0;i<=40;i++){const n=start.clone().applyAxisAngle(axis,angle*i/40);if(caps.some(c=>![from,to].includes(c.id)&&n.angleTo(c.normal)<c.angle+.012)){clear=false;break;}points.push(n.multiplyScalar(radius+.015));}
     if(!clear)continue;

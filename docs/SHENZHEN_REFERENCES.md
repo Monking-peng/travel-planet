@@ -1,6 +1,6 @@
 # 深圳地图与造型参考
 
-深圳入口为 `shenzhen.html`，包含十二组独立地标。该页面是艺术化微缩景观，尚未接入多人旅行目录；原杭州、上海、武汉的旅行流程保留。
+深圳入口为 `shenzhen.html`，包含十三组独立地标。该页面是艺术化微缩景观，尚未接入多人旅行目录；原杭州、上海、武汉的旅行流程保留。
 
 ## 实景与制作范围
 
@@ -58,3 +58,14 @@
 ![市民中心白天](images/shenzhen-civic.png)
 
 ![市民中心夜景](images/shenzhen-civic-night.png)
+
+
+## 音乐厅与图书馆文化双馆（0.31.0）
+
+参考[深圳音乐厅官网的外观和夜景](https://www.szyyt.com/about/about.html)、[WiNG 的图书馆正面实拍](https://commons.wikimedia.org/wiki/File:Shenzhen_Library_Overview.jpg)、[WiNG 的双馆同框照片](https://commons.wikimedia.org/wiki/File:Shenzhen_Library_%26_Shenzhen_Shenzhen_Concert_Hall_Overview1.jpg)和[深圳政府图书馆夜景](https://www.sz.gov.cn/en_szgov/news/infocus/SZCitywalk/Events/Whatshappening/content/post_11854362.html)，制作三折玻璃屋顶、内倾侧幕墙、树枝状支柱、深色后部体量、相向入口及中央通道。音乐厅偏暖金，图书馆偏冷白；两侧浅水庭院、前庭树池和后方连桥随双馆整体增删。两条短步道连接莲花山和市民中心。
+
+双馆是一个有明确场地关系的景观模块，未扩充旅行目录。位置按微缩星球调整，不是导航地图；灯光为艺术化表现，不宣称实时或完整测绘。原始参考照片未放入公开包，下面均为产品实际截图。
+
+![文化双馆白天](images/shenzhen-culture.png)
+
+![文化双馆暖金与冷白夜景](images/shenzhen-culture-night.png)
