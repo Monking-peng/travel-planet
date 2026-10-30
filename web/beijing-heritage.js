@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {foxiang} from './beijing-foxiang.js';
 import {roof,stairs,rail,tree,plaque} from './wuhan-architecture.js';
 
 function palette(k){return {red:k.mat('#973c30',.86),stone:k.mat('#e3d8bd',.88),gold:k.mat('#c58b37',.66,.15),tile:k.mat('#bc7b24',.78),blue:k.mat('#214963',.66,.15),green:k.mat('#476358',.85),trim:k.mat('#73937e',.8),dark:k.mat('#382d27',.9)};}
@@ -86,9 +87,13 @@ export function summer(k){
   for(let i=0;i<64;i++){const a=i*2.4,r=.15+.30*((i*13%61)/61),x=Math.cos(a)*r,z=-.18+Math.sin(a)*r*.63;if(Math.abs(x)<.17||(Math.abs(x)<.39&&z>-.09))continue;tree(k,g,x,landY(x,z),z,.052+(i%4)*.006);}
   for(let j=0;j<4;j++)k.box(g,.31-j*.028,.035,.23-j*.016,p.stone,0,.19+j*.035,-.18);
   for(let i=0;i<23;i++){const z=.12-i*.28/22,y=.25*Math.sqrt(Math.max(0,1-((z+.18)/.33)**2))+.018;k.box(g,.075,.024,.017,p.stone,0,y,z);}
-  const tower=new THREE.Group();tower.position.set(0,.325,-.18);g.add(tower);
-  for(let level=0;level<3;level++){const r=.145-level*.016,y=level*.105;k.cyl(tower,r*.73,r*.73,.083,p.red,0,y+.041,0,8);for(let i=0;i<8;i++){const a=i/8*Math.PI*2;k.cyl(tower,.003,.004,.08,p.gold,Math.sin(a)*r*.77,y+.04,Math.cos(a)*r*.77,6);}circularRoof(k,tower,r,y+.083,.047,p.green,p.gold,8);}
-  circularRoof(k,tower,.150,.005,.035,p.green,p.gold,8);k.ball(tower,.01,p.gold,0,.35,0);plaque(k,tower,'佛香阁',.055,.022,0,.25,.10);
+  const tower=foxiang(k);tower.position.set(0,.313,-.18);tower.scale.set(.95,.88,.95);g.add(tower);
+  // Stone plinth and white balustrades remain distinct from the red balconies.
+  const ashlar=k.mat('#a49778',.95),mortar=k.mat('#8b836e',.97);
+  k.box(g,.32,.106,.24,ashlar,0,.258,-.18);
+  for(let i=0;i<7;i++){const yy=.212+i*.014;k.box(g,.32,.0008,.001,mortar,0,yy,-.059);for(const side of [-1,1])k.box(g,.001,.0008,.24,mortar,side*.1605,yy,-.18);}
+  for(const side of [-1,1])for(let i=0;i<10;i++){const z=-.30+i*.027;k.cyl(g,.0013,.0017,.024,p.stone,side*.16,.330,z,6);}
+  for(const side of [-1,1]){k.box(g,.003,.003,.25,p.stone,side*.16,.343,-.18);for(let i=0;i<5;i++){const x=side*(.07+i*.021);k.cyl(g,.0013,.0017,.024,p.stone,x,.330,-.054);}k.box(g,.11,.003,.003,p.stone,side*.11,.343,-.054);}
   for(const x of [-.24,.24]){k.box(g,.24,.04,.13,p.stone,x,.16,.005);hall(k,g,{...p,tile:p.green},{x,z:.005,w:.22,d:.10,h:.045,y:.18});}
   // The Long Corridor follows the dry shoreline below the hill, not the slope.
   k.box(g,.96,.024,.072,p.stone,0,.018,.16);
@@ -97,7 +102,11 @@ export function summer(k){
   // An arched bridge and its small island retain the garden's lake setting.
   const bg=new THREE.Group();bg.position.set(.25,.02,.31);bg.rotation.y=-.55;g.add(bg);
   for(let i=0;i<17;i++){const x=(i/16-.5)*.39,y=.025+.045*Math.sin(i/16*Math.PI);k.box(bg,.028,.012,.045,p.stone,x,y,0);for(const s of [-1,1]){k.box(bg,.003,.018,.003,p.stone,x,y+.015,s*.024);if(i%2===0)k.box(bg,.007,y,.032,p.stone,x,y/2,0);}}
-  return k.merge(g);
+  k.merge(g);
+  for(const x of [-.19,.19]){
+    const light=new THREE.PointLight('#f3d4a5',0,.48,2);light.position.set(x,.51,.025);light.userData.nightIntensity=.012;g.add(light);
+  }
+  return g;
 }
 export function greatWall(k){
   const g=new THREE.Group(),p=palette(k),rock=k.mat('#a2a18e'),wall=k.mat('#b2ac93',.93),dark=k.mat('#5f6457');

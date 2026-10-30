@@ -1,6 +1,25 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Foxiang has a closed tiled top and genuinely open upper balconies around recessed doors',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{foxiang}=await import('../web/beijing-foxiang.js');
+  const k=makeKit({time:{value:0},night:{value:0}}),g=foxiang(k);g.updateMatrixWorld(true);
+  try{
+    for(const [x,z]of [[0,0],[.02,.03],[.10,.01],[-.07,.06]]){
+      const hits=new T.Raycaster(new T.Vector3(x,1,z),new T.Vector3(0,-1,0)).intersectObject(g,true);
+      assert.ok(hits.length&&hits[0].point.y>.42,'a roof must cover the upper hall, including its center');
+      assert.ok(hits[0].face.normal.y>0,'roof surface must face upward');
+    }
+    for(const q of g.userData.levels.slice(0,2))for(let side=0;side<8;side++){
+      const a=(side+.25)*Math.PI/4,n=new T.Vector3(Math.sin(a),0,Math.cos(a)),origin=n.clone().multiplyScalar(.20);origin.y=q.floor+.04;
+      const hits=new T.Raycaster(origin,n.clone().negate()).intersectObject(g,true);
+      assert.ok(hits.length&&hits[0].distance>.085&&hits[0].distance<.12,'gallery sightline should reach recessed doors rather than a solid outer wall');
+    }
+    const entrance=new T.Raycaster(new T.Vector3(0,.045,.25),new T.Vector3(0,0,-1)).intersectObject(g,true);
+    assert.ok(entrance.length&&entrance[0].distance<.15,'lowest eave must have an entrance storey below it');
+  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Beijing landmark geometry is finite and complete modules detach with all their lights',async()=>{
   const {createBeijingScene}=await import('../web/beijing-scene.js'),{LANDMARKS}=await import('../web/beijing-landmarks.js');const scene=createBeijingScene(),geos=new Set(),textures=new Set(),original=new Map(scene.landmarks);
   assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,12);

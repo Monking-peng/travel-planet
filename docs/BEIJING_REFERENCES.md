@@ -9,7 +9,7 @@
 | 故宫 | 午门、三大殿、内廷、宫墙角楼、黄瓦朱柱与三层台基 | [故宫博物院·太和殿](https://www.dpm.org.cn/explore/building/236465.html)；[宫城俯瞰照片](https://n.sinaimg.cn/sinakd2021615s/52/w2048h1204/20210615/a31e-krpikqf2031862.jpg) |
 | 天安门·金水桥 | 宽城台、五券门、九开间柱廊、重檐、七座桥与华表 | [北京市介绍](https://korean.beijing.gov.cn/travellinginbeijing/attractions/202604/t20260403_4574593.html)；[正立面照片](https://bivitour.com/Uploads/images/BaiViet/chuyen-phat-nhanh-bac-kinh.png) |
 | 天坛·祈年殿 | 三重蓝瓦圆檐、朱柱、三层白石圆台、围栏与配殿 | [北京市公园管理中心](https://gygl.beijing.gov.cn/mlgy/mlgy_gyjg01/201912/t20191211_1048233.html)；[俯瞰照片](https://p0.itc.cn/images03/20200528/b38a3a4604f14b3d87bed0a07f656df4.jpeg) |
-| 颐和园 | 昆明湖、万寿山、绿瓦八角佛香阁、依山石阶、长廊与拱桥 | [北京旅游介绍](https://s.visitbeijing.com.cn/index.php/line/463)；[佛香阁照片](https://stat.ameba.jp/user_images/20240520/10/sisiza1949/c1/e1/j/o0640048015441067520.jpg) |
+| 颐和园 | 昆明湖、万寿山、八角佛香阁、橙黄瓦心与深绿脊边、红柱外廊、青蓝金色梁枋、依山石阶、长廊与拱桥 | [北京旅游介绍](https://s.visitbeijing.com.cn/index.php/line/463)；[佛香阁照片](https://stat.ameba.jp/user_images/20240520/10/sisiza1949/c1/e1/j/o0640048015441067520.jpg) |
 | 八达岭长城 | 连续山脊、随坡城墙、垛口、石阶与四座敌楼 | [北京市山地照片](https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html) |
 | 北海·白塔 | 湖心林丘、覆钵塔身、相轮、宝顶、山门和桥梁 | [北京市介绍](https://www.beijing.gov.cn/tsbj/sxym/202512/t20251212_4338563.html)；[白塔与山门照片](https://adventurepatches.com/wp-content/uploads/2015/09/Sept-14-2015-Beihai-Park-102-copy.jpg) |
 | 钟鼓楼 | 前红后灰的两座城楼、厚台座、绿瓦重檐和独立广场 | [北京市介绍](https://www.beijing.gov.cn/renwen/rwzyd/qxdw/zmzhzhpgj/zhgl/202309/t20230919_3262298.html)；[鼓楼照片](https://r1.visitbeijing.com.cn/vbj-spanish/2024/0929/e94fc9f258a099da319ea34ce5cdb84f.jpg) |
@@ -33,3 +33,10 @@
 ![景山五亭、林丘与南麓绮望楼](images/beijing-jingshan.png)
 
 ![景山夜间檐口与林间步道](images/beijing-jingshan-night.png)
+
+
+0.26.0 对照[北京旅游网佛香阁实拍](https://s.visitbeijing.com.cn/attraction/120932)和[公园管理中心形制说明](https://gygl.beijing.gov.cn/whgy/whgy_wsgc/201912/t20191206_885777.html)，重做八角主体、四重瓦檐、入口层、两层外廊和顶部窗带。外廊保留真实进深，门窗向内收，台基石缝与白石栏杆和红色木栏分开；夜景使用低亮度暖光，保留瓦面和梁枋配色。本批只修主体和台基，不宣称完整还原颐和园平面。
+
+![佛香阁与下方园林](images/beijing-summer.png)
+
+![佛香阁夜景](images/beijing-summer-night.png)
