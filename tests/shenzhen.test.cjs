@@ -72,3 +72,20 @@ test('Talent Park curved lake has one closed boundary without cracks between tri
     const visited=new Set(),pending=[boundary.keys().next().value];while(pending.length){const v=pending.pop();if(visited.has(v))continue;visited.add(v);for(const n of boundary.get(v))pending.push(n);}assert.equal(visited.size,boundary.size,'The lake must have only its outer shore, not internal holes');
   }finally{scene.dispose();}
 });
+
+test('Civic Center retains the open central axis, split roof, and correctly colored sloping towers',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{civic}=await import('../web/shenzhen-city-hall.js');
+  const k=makeKit({time:{value:0},night:{value:0}}),g=civic(k);g.updateMatrixWorld(true);
+  const down=(x,z)=>new T.Raycaster(new T.Vector3(x,1,z),new T.Vector3(0,-1,0)).intersectObject(g,true);
+  try{
+    const passage=new T.Raycaster(new T.Vector3(0,.06,.30),new T.Vector3(0,0,-1)).intersectObject(g,true);assert.equal(passage.length,0,'The two podiums must leave a through-passage');
+    const slot=down(0,-.010);assert.ok(slot.length);assert.ok(slot[0].point.y<.04,'The narrow roof slot must open onto the passage between its braces');
+    for(const x of [-.035,.035,-.44,.44]){const roof=down(x,-.01);assert.ok(roof.length);assert.equal(roof[0].object.material.color.getHexString(),'4f7c96','The roof either side of the slot must stay closed');}
+    for(const [sign,color] of [[-1,'d1a634'],[1,'a64442']]){
+      const outer=down(sign*.22,-.105),inner=down(sign*.14,-.105);
+      assert.equal(outer[0].object.material.color.getHexString(),color);assert.equal(inner[0].object.material.color.getHexString(),color);
+      assert.ok(outer[0].point.y>inner[0].point.y+.02,'Tower tops slope toward the central axis');
+    }
+    const lights=[];g.traverse(o=>{if(o.isSpotLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.target.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));
+  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

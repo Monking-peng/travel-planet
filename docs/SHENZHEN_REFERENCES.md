@@ -47,3 +47,14 @@
 ![深圳人才公园内湖、两座步桥及后海地标](images/shenzhen-talent-park.png)
 
 ![人才公园夜间桥灯与环湖步道](images/shenzhen-talent-park-night.png)
+
+
+## 市民中心外观校正（0.30.0）
+
+对照[中建实拍](https://2bhn.cscec.com/ywly/kjww/202506/3878756.html)、[N509FZ 南向全景](https://commons.wikimedia.org/wiki/File:Civic_Center_from_the_C-E_Center_Shenzhen_(20160811173423).jpg)和[Cocoablini 通廊照片](https://commons.wikimedia.org/wiki/File:Shenzhen_Civic_Center_Aperture.jpg)，修正南向正面金黄圆塔在左、暗红方塔在右，以及向中心倾斜的塔顶。蓝色长屋盖补齐银灰厚边、底面、中央透空结构缝和两翼斜撑；玻璃基座向通廊收分，中央通道保持贯通。前庭加入铺装、绿篱和低位灯具。
+
+夜景为克制的艺术化照明，保留建筑底色，不宣称复刻某晚的真实灯光。没有根据局部照片臆造不可见的完整平面。所有实拍仅作内部参考，公开图片均为产品截图。
+
+![市民中心白天](images/shenzhen-civic.png)
+
+![市民中心夜景](images/shenzhen-civic-night.png)

@@ -1,5 +1,6 @@
 import {pingan,bamboo,diwang,kk100} from './shenzhen-towers.js';
-import {civic,cocoon} from './shenzhen-civic.js';
+import {cocoon} from './shenzhen-civic.js';
+import {civic} from './shenzhen-city-hall.js';
 import {wheel,windowWorld,dapeng,lianhua} from './shenzhen-places.js';
 import {minghua} from './shenzhen-minghua.js';
 import {talentPark} from './shenzhen-talent-park.js';
@@ -8,7 +9,7 @@ export const LANDMARKS=[
   {id:'pingan',name:'平安金融中心',area:'福田 · 城市天际线',x:.85,z:-1.15,height:1.24,distance:2.9,view:[.7,.4,1.4],description:'银色立面由八道角柱向上收束，顶部形成分面尖冠。密集窗格、退台裙房与冷白轮廓光保留超高层的修长比例。',source:'https://www.kpf.com/project/ping-an-finance-centre'},
   {id:'bamboo',name:'春笋·华润大厦',area:'后海 · 深圳湾',x:-.80,z:-.85,height:.92,distance:2.4,view:[.6,.4,1.4],description:'饱满的圆形塔身逐渐收尖，密集银色竖肋汇入顶部菱形结构。底层入口与塔冠分别表现交织柱网，夜景保留淡蓝玻璃与白色结构。',source:'https://www.kpf.com/project/china-resources-tower'},
   {id:'diwang',name:'地王大厦',area:'罗湖 · 深南东路',x:1.80,z:-.45,height:1.0,distance:2.6,view:[.55,.36,1.5],description:'青绿色玻璃、成排横向线条与两侧圆柱塔身，顶部保留一对细长塔尖。较低的副楼与主塔构成有层次的整体。',source:'https://www.sz.gov.cn/szstory/202302/content/post_10421146.html'},
-  {id:'civic',name:'深圳市民中心',area:'福田 · 城市中轴',x:.85,z:.55,height:.35,distance:2.7,view:[.5,.85,1.5],description:'蓝灰色长屋顶像展开的双翼，中央红色方塔与金色圆塔形成对照。玻璃裙楼、柱廊、台阶和前庭共同组成舒展的市民广场。',source:'https://society.people.com.cn/n1/2018/1124/c1008-30418921.html'},
+  {id:'civic',name:'深圳市民中心',area:'福田 · 城市中轴',x:.85,z:.55,height:.40,distance:2.7,focusY:.16,view:[.20,.58,1.65],description:'蓝色双翼屋盖中央抬起，银灰边缘向两侧舒展。南向正面的左侧是金黄圆塔，右侧是暗红方塔，斜切塔顶呼应屋面；下方玻璃基座、斜撑和开敞通廊连接前庭。',source:'https://2bhn.cscec.com/ywly/kjww/202506/3878756.html'},
   {id:'cocoon',name:'深圳湾体育中心·春茧',area:'后海 · 滨海体育',x:-1.80,z:-.30,height:.30,distance:2.65,view:[.5,.9,1.4],description:'连续起伏的白色斜交网壳包裹体育场与体育馆，开放的内碗和闭合屋盖相互衔接。以网壳、玻璃和浅色灯光表达春茧的结构。',source:'https://www.eyeshenzhen.com/content/2023-05/12/content_30192864.htm'},
   {id:'talent',name:'深圳人才公园',area:'后海 · 内湖与星光桥',x:-.75,z:.55,height:.23,distance:3.0,focusY:.12,view:[.18,1.1,1.25],description:'大面积内湖绕过东侧绿坡，蓝色跑道与曲线岸线环湖展开。南侧 π 桥保留弧形木栈道，东侧星光桥排列点状灯柱；岸边石阶、湿地与成片林冠共同组成滨水公园。',source:'https://www.szns.gov.cn/mlns/stns/lc/csgy/content/post_12595660.html'},
   {id:'lianhua',name:'莲花山',area:'福田 · 山顶广场',x:-.20,z:-1.85,height:.49,distance:2.4,view:[.35,.8,1.5],description:'连续山坡、登顶石阶和成片林木围合山顶广场。中央以小尺度铜像和石台表现莲花山的纪念性景观。',source:'https://www.shenzhenshizhi.cn/a/109.html'},
