@@ -7,6 +7,7 @@ root=Path(__file__).resolve().parents[1]
 city=sys.argv[1] if len(sys.argv)>1 else 'beijing'
 configs={'beijing':{'count':11,'focus':'summer','first':'palace','night':['palace','tiananmen','heaven','summer','nest','watercube','cctv'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','shenzhen.html']},'shenzhen':{'count':10,'focus':'wheel','first':'pingan','night':['pingan','bamboo','diwang','civic','cocoon','lianhua','kk100','wheel','window','dapeng'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html']}}
 configs['shunde']={'count':8,'focus':'fengjian','first':'qinghui','night':['qinghui','shunfeng','hem','huagai','fengjian','theatre','bijiang','baolin'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html']}
+configs['guangzhou']={'count':8,'focus':'cathedral','first':'canton','night':['canton','twins','opera','museum','memorial','chen','cathedral','rams'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html','shunde.html']}
 assert city in configs, 'Unknown city viewer'
 config=configs[city];count=config['count'];focus=config['focus'];first=config['first']
 out=root/'test-results'/('destination-'+city);out.mkdir(parents=True,exist_ok=True)
