@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#edf1ed"><meta name="description" content="沿湘江走入湖湘书院、山林楼阁与当代建筑。一起去 · 长沙旅行星球。">
+  <title>一起去 · 长沙旅行星球</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg"><link rel="stylesheet" href="./shanghai.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+  <link rel="stylesheet" href="./shanghai-module-panel.css"><link rel="stylesheet" href="./destination.css">
+  <link rel="stylesheet" href="./mobile.css">
+</head>
+<body>
+  <header class="city-header"><a class="brand" href="./">一起去<span>旅行星球</span></a><nav class="city-switch" aria-label="切换城市"><a href="./">杭州</a><a href="./shanghai.html">上海</a><a href="./wuhan.html">武汉</a><a href="./beijing.html">北京</a><a href="./shenzhen.html">深圳</a><a href="./shunde.html">顺德</a><a href="./guangzhou.html">广州</a><a href="./changsha.html" aria-current="page">长沙</a></nav><button id="night" aria-pressed="false" disabled>☾ 夜晚</button></header>
+  <main>
+    <section class="scene-stage" aria-label="长沙旅行星球">
+      <div class="scene-heading"><p>山水洲城、湖湘风物</p><h1>长沙</h1><span class="preview-label">长沙 · 湘江之间</span></div>
+      <canvas id="destination" tabindex="0" aria-label="长沙星球，可拖动旋转、滚轮缩放，方向键旋转，加减键缩放，0 恢复全景" aria-busy="true"></canvas>
+      <div id="loading" role="status"><span>正在载入长沙地标…</span><button id="retry" hidden>重新载入</button></div>
+      <aside class="landmark-detail" id="detail" hidden aria-live="polite"><p id="detail-area"></p><h2 id="detail-name"></h2><p id="detail-description"></p><a id="detail-source" target="_blank" rel="noopener noreferrer">查看实景参考 ↗</a></aside>
+      <div class="scene-controls" role="group" aria-label="景观控制"><button type="button" id="manage-landmarks" disabled>管理景点</button><button id="overview" disabled>↺ 全景</button><button id="rotate" aria-pressed="false" disabled>开始旋转</button><button id="zoom-out" aria-label="缩小" disabled>−</button><button id="zoom-in" aria-label="放大" disabled>＋</button></div>
+      <p class="scene-instruction">拖动旋转 · 滚轮缩放</p>
+    </section>
+    <nav id="landmarks" class="landmark-nav" aria-label="近看长沙地标"></nav>
+  </main>
+  <script type="module">import {mountCity} from "./destination-viewer.js";import {LANDMARKS} from "./changsha-landmarks.js";import {createChangshaScene} from "./changsha-scene.js";mountCity({id:"changsha",name:"长沙",landmarks:LANDMARKS,createScene:createChangshaScene,overview:{position:[1.9,7.6,4.8],target:[0,.40,0]}});</script>
+</body></html>
