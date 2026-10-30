@@ -43,3 +43,26 @@ test('Guangzhou riverbank walks join the bridge and three plaza landmarks withou
     for(const id of [...scene.landmarks.keys()])scene.setLandmarkEnabled(id,false);assert.equal(walks.parent,scene.root,'The shared riverbanks survive landmark removal');
   }finally{scene.dispose();}
 });
+
+test('Opera House curved roofs stay closed and the entrance promenade stays dry and clear',async()=>{
+  const T=await import('three'),{createGuangzhouScene,RADIUS}=await import('../web/guangzhou-scene.js'),scene=createGuangzhouScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('opera'),bent=([x,y,z])=>new T.Vector3(x,y-RADIUS+Math.sqrt(RADIUS*RADIUS-x*x-z*z),z).applyMatrix4(g.matrixWorld);
+    for(const [x,z,s] of [[.23,-.045,.91],[-.48,-.115,.47]])for(const [dx,dz] of [[-.20,-.10],[0,-.10],[.12,.08]]){
+      const p=bent([x+dx*s,.55*s+.008,z+dz*s]),normal=g.position.clone().normalize(),ray=new T.Raycaster(p,normal.clone().negate()),hits=ray.intersectObject(g,true);
+      assert.ok(hits.length,'Each pebble needs a closed roof under a downward ray');
+      assert.ok(hits[0].object.material.userData.operaSurface,'Roof ray must meet the shell before the pool or plaza');
+      assert.ok(hits[0].distance<.28*s,'The roof must cover the central occupied volume');
+    }
+    for(const point of g.userData.walkSamples){
+      const floor=bent(point),normal=g.position.clone().normalize(),ray=new T.Raycaster(floor.clone().addScaledVector(normal,.8),normal.clone().negate()),hits=ray.intersectObject(g,true);
+      assert.ok(hits.length&&hits[0].point.distanceTo(floor)<.012,'Promenade should reach both entrances without water or an overhead shell blocking the route');
+    }
+    const water=[];g.traverse(o=>{if(o.material?.userData.operaPool)water.push(o);});assert.ok(water.length);
+    for(const r of [.15,.5,.85])for(let i=0;i<24;i++){
+      const a=i/24*Math.PI*2,p=bent([Math.cos(a)*.70*r,.019,Math.sin(a)*.532*r]),normal=g.position.clone().normalize();
+      const ray=new T.Raycaster(p.clone().addScaledVector(normal,.2),normal.clone().negate()),hits=ray.intersectObjects(water);
+      assert.ok(hits.length&&hits[0].point.distanceTo(p)<.001,'Pool must remain a continuous outward-facing surface after spherical bending');
+    }
+  }finally{scene.dispose();}
+});

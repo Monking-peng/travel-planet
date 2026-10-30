@@ -37,3 +37,10 @@
 ![海心桥弯曲桥面、单斜拱和分叉坡道](images/guangzhou-haixin.png)
 
 ![花城广场林荫、浮岛水景与场馆步道](images/guangzhou-huacheng-night.png)
+
+
+0.28.0 对照 [ZHA 设计团队大剧院照片](https://www.zha.com/projects/architecture/guangzhou-opera-house?disclaimer=true)及[整体航拍](https://artswise.blogspot.com/2012/10/zaha-hadid-sings-guangzhou-opera-house.html)，重做深灰大砾与浅色小砾、圆角石壳、倾斜玻璃带、三角框架和低位步道灯光。水池与铺装分开建模，修正球面贴合后的放射状交错；入口步道连通两座场馆，人物站在铺装表面。模型保留主要外观关系，未复刻完整建筑结构与内部空间；观众厅照片没有作为外观依据。
+
+![广州大剧院白天](images/guangzhou-opera.png)
+
+![广州大剧院夜景](images/guangzhou-opera-night.png)

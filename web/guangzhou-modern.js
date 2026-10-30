@@ -43,27 +43,6 @@ export function twins(k){
   return k.merge(g);
 }
 
-function facet(k,g,a,b,c,n,mat,seam,wire){
-  const map=(u,v)=>a.map((q,i)=>q+(b[i]-q)*u+(c[i]-q)*v),p=[],ix=[],id=(i,j)=>i*(n+1)-i*(i-1)/2+j;
-  for(let i=0;i<=n;i++)for(let j=0;j<=n-i;j++)p.push(...map(i/n,j/n));
-  for(let i=0;i<n;i++)for(let j=0;j<n-i;j++){ix.push(id(i,j),id(i+1,j),id(i,j+1));if(j<n-i-1)ix.push(id(i+1,j),id(i+1,j+1),id(i,j+1));}
-  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(p,3));geo.setIndex(ix);geo.computeVertexNormals();mat.side=THREE.DoubleSide;k.mesh(g,geo,mat);
-  for(let i=0;i<=n;i++){const t=i/n;for(const [u,v]of [[map(t,0),map(t,1-t)],[map(0,t),map(1-t,t)],[map(t,0),map(0,t)]])k.beam(g,u,v,wire,seam,4);}
-}
-function pebble(k,g,x,z,s,glass,stone,frame){
-  const v=[[-.47,.025,.29],[.40,.025,.28],[.45,.055,-.27],[-.40,.025,-.31],[-.52,.36,-.06],[.12,.43,.12],[.32,.31,-.23],[-.34,.35,-.25],[-.08,.43,-.05],[-.30,.28,.17],[.29,.15,.25]].map(p=>[x+p[0]*s,p[1]*s+.018,z+p[2]*s]);
-  const faces=[[0,1,9,1],[1,10,9,1],[10,5,9,1],[1,5,10,0],[9,5,4,0],[0,9,4,0],[1,2,6,0],[1,6,5,0],[2,3,7,0],[2,7,6,0],[3,0,4,1],[3,4,7,1],[4,5,8,0],[5,6,8,0],[6,7,8,0],[7,4,8,0]];
-  faces.forEach(([a,b,c,w])=>facet(k,g,v[a],v[b],v[c],w?7:8,w?glass:stone,frame,w?.0017:.0005));
-}
-export function opera(k){
-  const g=new THREE.Group(),base=plaza(k,g,.77,.59),stone=k.mat('#b1b6ad',.82),frame=k.mat('#637d79',.5,.3),glass=k.mat('#537c79',.3,.24,'#a7d5c9'),water=k.mat('#4d7d79',.31,.2);glass.userData.night.intensity=.68;
-  const pool=k.cyl(g,.70,.70,.012,water,0,.022,0,80);pool.scale.z=.76;
-  pebble(k,g,.20,-.02,.96,glass,stone,frame);pebble(k,g,-.43,-.12,.49,glass,stone,frame);
-  k.box(g,.58,.018,.12,base,-.25,.037,.40);for(let i=0;i<4;i++)k.box(g,.30,.008*(i+1),.024,base,-.10,.004*(i+1),.51-i*.024);
-  bollards(k,g,[[-.49,.36],[-.28,.41],[.18,.43],[.52,.34]],'#dcebc7');people(k,g,[[-.31,.40],[-.20,.43],[-.12,.40]]);
-  return k.merge(g);
-}
-
 export function museum(k){
   const g=new THREE.Group(),base=plaza(k,g,.66,.53),gray=k.mat('#717d7e',.78,.22),seam=k.mat('#556566'),red=k.mat('#9c4050',.72,.14,'#b95954'),dark=k.glass('#334a52','#d2c8af',63);red.userData.night.intensity=.24;
   k.box(g,.50,.15,.36,dark,0,.10,0);for(const x of [-.22,.22])k.box(g,.058,.17,.30,gray,x,.105,0);
