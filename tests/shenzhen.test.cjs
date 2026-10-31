@@ -104,3 +104,16 @@ test('Cultural pair leaves a clear public axis, closes its folded roofs and carr
   assert.ok(k.materials.some(m=>m.transparent&&m.opacity<.5),'Glazing must preserve views of the branching columns');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Spring Cocoon keeps a genuinely porous shell, open stadium, closed halls and clear public entries',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{cocoon}=await import('../web/shenzhen-civic.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=cocoon(k);g.updateMatrixWorld(true);
+ const down=(x,z)=>new T.Raycaster(new T.Vector3(x,.6,z),new T.Vector3(0,-1,0)).intersectObject(g,true);
+ try{
+  for(const [x,z]of [[-.34,0],[-.56,.15]]){const hits=down(x,z);assert.ok(hits.length&&hits[0].point.y<.04,'Open stadium and lattice holes must not be sealed by a shell');}
+  for(const [x,z]of [[.22,-.025],[.50,.015]])for(const dx of [-.05,0,.05]){const hits=down(x+dx,z);assert.ok(hits.length&&hits[0].point.y>.15&&hits.some(h=>h.object.material.userData.cocoonClosedRoof),'Both indoor halls need closed outward-facing roofs');}
+  for(const side of [-1,1]){const hits=new T.Raycaster(new T.Vector3(0,.06,side*.5),new T.Vector3(0,0,-side),0,.27).intersectObject(g,true);assert.equal(hits.length,0,'The raised middle arch must leave a real approach under the roof');}
+  const lights=[];g.traverse(o=>{if(o.isPointLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
