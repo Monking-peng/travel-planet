@@ -103,3 +103,23 @@ test('Shamian has a recessed chapel entrance, open red-house galleries and close
     for(const x of [-.60,-.30,0,.30,.60]){const hits=segment([x,.13,.44],[x,.010,.44]);assert.ok(hits.length&&hits[0].point.distanceTo(bent([x,.018,.44]))<.008,'Pedestrian strip stays unblocked');}
   }finally{scene.dispose();}
 });
+
+
+test('Guangdong Museum keeps a level roof, recessed atrium and deep facade cuts above a clear entrance',async()=>{
+  const T=await import('three'),{createGuangzhouScene}=await import('../web/guangzhou-scene.js'),scene=createGuangzhouScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('museum'),world=p=>new T.Vector3(...p).applyMatrix4(g.matrixWorld);
+    const segment=(a,b)=>{const start=world(a),end=world(b),d=end.clone().sub(start);return new T.Raycaster(start,d.clone().normalize(),0,d.length()).intersectObject(g,true);};
+    for(const [x,z] of [[-.42,.10],[.42,.10],[0,.30],[0,-.30]]){
+      const hits=segment([x,.65,z],[x,.45,z]);assert.ok(hits.length&&hits[0].object.material.userData.museumShell,'The roof frame needs a closed horizontal surface');
+      assert.ok(Math.abs(g.worldToLocal(hits[0].point.clone()).y-.535)<.001,'The suspended roof must stay level instead of bending with the planet');
+    }
+    const atrium=segment([.028,.65,.027],[.028,.46,.027]);assert.ok(atrium.length&&atrium[0].object.material.userData.museumGlass,'A downward ray must reach recessed atrium glazing, not a solid roof');
+    assert.ok(g.worldToLocal(atrium[0].point.clone()).y<.515);
+    for(const [x,y]of [[-.432,.40],[.161,.40],[.31,.25]]){
+      const h=segment([x,y,.42],[x,y,.24]);assert.ok(h.length&&h[0].object.material.userData.museumGlass,'Facade cut should remain open until recessed glass');assert.ok(h[0].distance>.11,'Red reveal has actual depth');
+    }
+    assert.equal(segment([0,.085,.30],[0,.085,.135]).length,0,'The entrance approach remains clear below the suspended box');
+    assert.ok(segment([0,.085,.135],[0,.085,.10]).length,'The recessed entrance closes at the core');
+  }finally{scene.dispose();}
+});

@@ -42,20 +42,3 @@ export function twins(k){
   bollards(k,g,[[-.50,.32],[.50,.32],[0,.35]]);people(k,g,[[-.08,.24],[.03,.30],[.10,.32]]);
   return k.merge(g);
 }
-
-export function museum(k){
-  const g=new THREE.Group(),base=plaza(k,g,.66,.53),gray=k.mat('#717d7e',.78,.22),seam=k.mat('#556566'),red=k.mat('#9c4050',.72,.14,'#b95954'),dark=k.glass('#334a52','#d2c8af',63);red.userData.night.intensity=.24;
-  k.box(g,.50,.15,.36,dark,0,.10,0);for(const x of [-.22,.22])k.box(g,.058,.17,.30,gray,x,.105,0);
-  k.box(g,1.01,.37,.67,red,0,.36,0);k.box(g,1.04,.022,.70,gray,0,.55,0);
-  const holes=new Set(['1,1','1,2','2,1','3,1','2,5','3,5','4,5','4,6','4,8','5,8','0,9','1,9','2,9','3,11','3,12','4,12','5,12','1,14','2,14','2,15','4,2','5,2','0,6','0,7']);
-  for(const side of [-1,1])for(let row=0;row<6;row++)for(let col=0;col<17;col++){
-    if(holes.has(row+','+col)){k.box(g,.051,.052,.003,dark,(col-8)*.061,.195+row*.061,side*.342);continue;}
-    k.box(g,.060,.060,.045,gray,(col-8)*.061,.195+row*.061,side*.372);
-    for(let line=0;line<3;line++)k.box(g,.059,.0005,.001,seam,(col-8)*.061,.178+row*.061+line*.017,side*.395);
-  }
-  for(const side of [-1,1])for(let row=0;row<6;row++)for(let col=0;col<11;col++)if(!holes.has(row+','+col))k.box(g,.045,.060,.060,gray,side*.516,.195+row*.061,(col-5)*.061);
-  for(let i=0;i<10;i++)k.box(g,.40,.007*(i+1),.026,base,0,.0035*(i+1),.49-i*.026);
-  for(const x of [-.41,.41])k.box(g,.18,.022,.25,k.mat('#60806a'),x,.028,.36);
-  bollards(k,g,[[-.26,.42],[.26,.42],[-.52,-.36],[.52,-.36]]);people(k,g,[[-.08,.38],[.04,.40],[.13,.40]]);
-  return k.merge(g);
-}

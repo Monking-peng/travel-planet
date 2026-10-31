@@ -58,3 +58,10 @@
 ![沙面历史街区白天](images/guangzhou-shamian.png)
 
 ![沙面历史街区夜景](images/guangzhou-shamian-night.png)
+
+
+0.40.0 对照[设计方供稿的广东省博物馆落成实拍](https://www.gooood.cn/guangdong-museum-by-rocco-design-architects-ltd.htm)，重做方正悬挑主体、石材板缝、带真实进深的深红切口、突出玻璃展廊、内退底层和入口缓坡。建筑主体保持刚性，地面随星球弯曲，屋顶不再变成拱面。玻璃中庭结合室内实拍与设计示意提炼；设计鸟瞰图没有当成落成照片。夜间红色内壁和柔和室内光是艺术化表达，未复刻真实运营照明。
+
+![广东省博物馆白天](images/guangzhou-museum.png)
+
+![广东省博物馆夜景](images/guangzhou-museum-night.png)
