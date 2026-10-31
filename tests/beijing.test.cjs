@@ -123,3 +123,18 @@ test('Beijing axis preserves the north-south order with grounded links and night
     s.setLandmarkEnabled('jingshan',false);assert.equal(axis.parent,s.root);s.setNight(false);assert.equal(soil.color.getHexString(),'ffffff');
   }finally{s.dispose();}
 });
+
+
+test('Prayer Hall has twelve outer columns, an open entrance and three closed blue roofs',async()=>{
+  const T=await import('three'),{createBeijingScene,RADIUS}=await import('../web/beijing-scene.js'),scene=createBeijingScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('heaven'),bent=([x,y,z])=>new T.Vector3(x,y-RADIUS+Math.sqrt(RADIUS*RADIUS-x*x-z*z),z).applyMatrix4(g.matrixWorld);
+    const segment=(a,b)=>{const start=bent(a),end=bent(b),delta=end.clone().sub(start);return new T.Raycaster(start,delta.clone().normalize(),0,delta.length()).intersectObject(g,true);};
+    for(let i=0;i<12;i++){const a=(i+.5)/12*Math.PI*2,hits=segment([Math.sin(a)*.154,.172,Math.cos(a)*.154],[Math.sin(a)*.135,.172,Math.cos(a)*.135]);assert.ok(hits.length&&hits[0].object.material.color.getHexString()==='933e32','Each of the twelve outer structural bays has a red column');}
+    assert.equal(segment([0,.160,.155],[0,.160,.105]).length,0,'Entrance must remain open between the door panels');
+    for(const [radius,top,bottom]of [[.19,.32,.248],[.15,.42,.351],[.10,.59,.455]])for(let i=0;i<12;i++){
+      const a=(i+.27)/12*Math.PI*2,x=Math.sin(a)*radius,z=Math.cos(a)*radius,hits=segment([x,top,z],[x,bottom,z]);
+      assert.ok(hits.some(h=>h.object.material.userData.prayerRoof),'Every roof tier must cover its perimeter with outward-facing blue tiles');
+    }
+  }finally{scene.dispose();}
+});

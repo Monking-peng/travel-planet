@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {prayerHall} from './beijing-prayer-hall.js';
 import {foxiang} from './beijing-foxiang.js';
 import {roof,stairs,rail,tree,plaque} from './wuhan-architecture.js';
 
@@ -53,12 +54,6 @@ export function palace(k){
   for(const x of [-.13,-.065,0,.065,.13]){k.box(g,.039,.012,.09,p.stone,x,.028,.33);for(const s of [-1,1])k.box(g,.002,.015,.09,p.stone,x+s*.018,.04,.33);}
   return k.merge(g);
 }
-function circularRoof(k,g,r,y,h,material,trim,n=64){
-  const profile=[[0,y+h],[r*.12,y+h*.96],[r*.35,y+h*.63],[r*.65,y+h*.28],[r*.94,y],[r,y+.008]].map(p=>new THREE.Vector2(...p));
-  k.mesh(g,new THREE.LatheGeometry(profile,n),material);k.ring(g,r,.0025,trim,y+.008);
-  const ribs=n===8?8:48;
-  for(let i=0;i<ribs;i++){const a=i/ribs*Math.PI*2;k.line(g,profile.slice(1).map(p=>[Math.cos(a)*p.x,p.y+.001,Math.sin(a)*p.x]),.0009,material);}
-}
 export function heaven(k){
   const g=new THREE.Group(),p=palette(k);court(k,g,p,.78,.86);
   for(let level=0;level<3;level++){
@@ -67,11 +62,7 @@ export function heaven(k){
     for(let i=0;i<56;i++){const a=i/56*Math.PI*2;if(Math.abs(Math.sin(a*2))<.16)continue;k.cyl(g,.002,.0025,.028,p.stone,Math.cos(a)*(r-.005),y+.021,Math.sin(a)*(r-.005),6);}
   }
   for(let i=0;i<4;i++){const sg=new THREE.Group();sg.rotation.y=i*Math.PI/2;g.add(sg);stairs(k,sg,.055,.18,.10,p.stone,0,.36,15);}
-  k.cyl(g,.139,.143,.146,p.red,0,.18,0,64);
-  for(let i=0;i<28;i++){const a=i/28*Math.PI*2,x=Math.sin(a)*.146,z=Math.cos(a)*.146;k.cyl(g,.004,.0045,.145,p.red,x,.18,z,8);const panel=k.box(g,.023,.082,.003,p.dark,Math.sin(a)*.141,.17,Math.cos(a)*.141);panel.rotation.y=a;}
-  for(const [r,y,h] of [[.205,.252,.074],[.166,.329,.065],[.118,.397,.073]]){k.cyl(g,r*.78,r*.78,.027,p.trim,0,y-.008,0,64);circularRoof(k,g,r,y,h,p.blue,p.blue);k.ring(g,r*.81,.005,p.gold,y-.018);}
-  k.cyl(g,.008,.013,.033,p.gold,0,.480,0,16);k.ball(g,.010,p.gold,0,.503,0);
-  plaque(k,g,'祈年殿',.058,.024,0,.269,.185);
+  g.add(prayerHall(k));
   for(const x of [-.31,.31])hall(k,g,{...p,tile:p.blue},{x,z:.12,w:.10,d:.32,h:.055});
   hall(k,g,{...p,tile:p.blue},{z:-.36,w:.26,d:.09,h:.06});hall(k,g,{...p,tile:p.blue},{z:.36,w:.23,d:.08,h:.045});
   for(const x of [-.43,.43])for(let i=0;i<8;i++)cypress(k,g,x,0,(i/7-.5)*.88,.065);
