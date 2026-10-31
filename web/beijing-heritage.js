@@ -108,22 +108,6 @@ export function summer(k){
   }
   return g;
 }
-export function greatWall(k){
-  const g=new THREE.Group(),p=palette(k),rock=k.mat('#a2a18e'),wall=k.mat('#b2ac93',.93),dark=k.mat('#5f6457');
-  const pts=Array.from({length:81},(_,i)=>{const t=i/80;return new THREE.Vector3((t-.5)*1.42,.10+.15*Math.sin(t*Math.PI)+.075*Math.sin(t*3*Math.PI),.16*Math.sin(t*Math.PI*2));});
-  const mountain=new THREE.PlaneGeometry(1.78,1.02,100,50);mountain.rotateX(-Math.PI/2);const mp=mountain.attributes.position;
-  const colors=[],base=new THREE.Color('#8f9c79'),ridgeColor=new THREE.Color('#687e56');
-  for(let i=0;i<mp.count;i++){const x=mp.getX(i),z=mp.getZ(i),t=THREE.MathUtils.clamp(x/1.42+.5,0,1),ridge=.16*Math.sin(t*Math.PI*2),height=.10+.15*Math.sin(t*Math.PI)+.075*Math.sin(t*3*Math.PI),edge=Math.max(0,1-(Math.abs(x)/.89)**8)*Math.max(0,1-(Math.abs(z)/.51)**8),rise=(height-.028)*Math.exp(-(((z-ridge)/.22)**2))*edge;mp.setY(i,.002+rise);const c=base.clone().lerp(ridgeColor,Math.min(1,rise/.12));colors.push(c.r,c.g,c.b);}
-  mountain.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));mountain.computeVertexNormals();const hillside=k.mat('#ffffff',.98);hillside.vertexColors=true;k.mesh(g,mountain,hillside);
-  for(let i=0;i<80;i++){
-    const a=pts[i],b=pts[i+1],mid=a.clone().add(b).multiplyScalar(.5),sg=new THREE.Group();sg.position.copy(mid);sg.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);g.add(sg);
-    k.box(sg,.071,.055,a.distanceTo(b)+.006,wall,0,-.021,0);k.box(sg,.053,.005,.022,dark,0,.009,0);
-    for(const s of [-1,1]){k.box(sg,.009,.038,.025,wall,s*.035,.025,0);if(i%2===0)k.box(sg,.01,.016,.013,wall,s*.035,.051,0);}
-    if(i%10===0)k.box(sg,.055,.001,.002,rock,0,.012,0);
-  }
-  for(const i of [7,31,53,73]){const t=pts[i],sg=new THREE.Group();sg.position.copy(t);sg.rotation.y=Math.atan2(pts[i+1].x-pts[i-1].x,pts[i+1].z-pts[i-1].z);g.add(sg);k.box(sg,.13,.11,.12,wall,0,.038,0);k.box(sg,.14,.012,.13,p.stone,0,.10,0);for(const s of [-1,1]){for(let j=0;j<4;j++){const v=(j/3-.5)*.12;k.box(sg,.018,.029,.013,wall,v,.12,s*.06);k.box(sg,.013,.029,.018,wall,s*.065,.12,v);}for(const x of [-.035,0,.035]){k.box(sg,.015,.035,.001,dark,x,.06,s*.061);}}}
-  return k.merge(g);
-}
 export function beihai(k){
   const g=new THREE.Group(),p=palette(k);lake(k,g,.43,.36,0,.08);hill(k,g,0,-.05,.25,.23,.19);
   for(let i=0;i<32;i++){const a=i*2.4,r=.11+.12*(i%5)/5,x=Math.cos(a)*r,z=-.05+Math.sin(a)*r;tree(k,g,x,.19*Math.sqrt(Math.max(0,1-(x/.25)**2-((z+.05)/.23)**2)),z,.055);}

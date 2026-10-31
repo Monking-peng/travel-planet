@@ -1,6 +1,26 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Badaling walk passes through four hollow towers on a continuous supported ridge',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{greatWall}=await import('../web/beijing-greatwall.js'),k=makeKit({time:{value:0},night:{value:0}}),g=greatWall(k);g.updateMatrixWorld(true);
+  try{
+    const soil=g.children.find(o=>o.material?.userData.terrainTint);assert.ok(soil);assert.equal(g.userData.towers.length,4);
+    for(const t of g.userData.towers){
+      const along=new T.Vector3(Math.sin(t.angle),0,Math.cos(t.angle)),origin=new T.Vector3(t.x,t.y+.105,t.z).addScaledVector(along,-.085);
+      assert.equal(new T.Raycaster(origin,along,0,.17).intersectObject(g,true).length,0,'opposing doors must be open, not painted or blocked by treads');
+      for(const dx of [-.06,0,.06])for(const dz of [-.06,0,.06]){
+        const x=t.x+dx*Math.cos(t.angle)+dz*Math.sin(t.angle),z=t.z-dx*Math.sin(t.angle)+dz*Math.cos(t.angle),hit=new T.Raycaster(new T.Vector3(x,1.5,z),new T.Vector3(0,-1,0)).intersectObject(soil)[0];
+        assert.ok(hit&&Math.abs(hit.point.y-t.y)<.014,'tower foundation must meet the mountain');
+      }
+      const top=new T.Raycaster(new T.Vector3(t.x,1.5,t.z),new T.Vector3(0,-1,0)).intersectObject(g,true)[0];assert.ok(top&&Math.abs(top.point.y-(t.y+.1825))<.002,'tower needs a closed rooftop');
+    }
+    for(const [x,y,z] of g.userData.walk){
+      const hit=new T.Raycaster(new T.Vector3(x,y+.025,z),new T.Vector3(0,-1,0),0,.032).intersectObject(g,true)[0];assert.ok(hit&&Math.abs(hit.point.y-y)<.008,'stone tread must support every segment of the walking route');
+    }
+    const heights=g.userData.walk.map(p=>p[1]);assert.ok(Math.max(...heights)-Math.min(...heights)>.35,'terrain must form recognisable high and low ridges');
+  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Water Cube membranes cover every face outward and keep smooth normals after spherical bending',async()=>{
   const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{foamFace}=await import('../web/beijing-watercube.js'),{createBeijingScene}=await import('../web/beijing-scene.js');
   const k=makeKit({time:{value:0},night:{value:0}}),mat=k.mat('#8faebc'),groups=[];

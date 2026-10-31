@@ -1,4 +1,5 @@
-import {palace,tiananmen,heaven,summer,greatWall,beihai,drumBell} from './beijing-heritage.js';
+import {greatWall} from './beijing-greatwall.js';
+import {palace,tiananmen,heaven,summer,beihai,drumBell} from './beijing-heritage.js';
 import {jingshan} from './beijing-jingshan.js';
 import {nest,theatre,cctv} from './beijing-modern.js';
 import {watercube} from './beijing-watercube.js';
@@ -13,7 +14,7 @@ export const LANDMARKS=[
   {id:'theatre',name:'国家大剧院',area:'长安街 · 钛与玻璃',x:-1.32,z:1.28,height:.25,distance:2.4,view:[.4,.48,1.2],description:'银色钛金属半椭球，中央玻璃幕墙如拉开的帷幕。低矮舒展的壳体位于独立水池中，灯光以温柔透光为主。',source:'https://www.chncpa.org/cgylx/jyjg/'},
   {id:'cctv',name:'央视总部',area:'国贸 · 立体环形',x:1.45,z:-.60,height:.78,distance:2.6,view:[.8,.35,1.3],description:'两座倾斜玻璃塔身在顶部错位相连，留下巨大的中央空洞。深色菱形结构网格和缓慢变化的窗灯强调立体环形轮廓。',source:'https://www.turnerconstruction.com/projects/china-central-television-headquarters-cctv'},
   {id:'summer',name:'颐和园',area:'西郊 · 昆明湖与万寿山',x:-.77,z:.65,hemisphere:-1,height:.80,distance:3.1,view:[.45,.9,1.3],description:'佛香阁以八面三层四重檐呈现：橙黄瓦心与深绿脊边、朱柱回廊、青蓝金色梁枋和内收窗棂。下方石台、白石栏杆与山坡分层，长廊和昆明湖保留园林关系；为主要景观缩影。',source:'https://s.visitbeijing.com.cn/index.php/line/463'},
-  {id:'wall',name:'八达岭长城',area:'北部山地 · 关城',x:-.40,z:-1.10,hemisphere:-1,height:.44,distance:3.2,view:[.4,.9,1.3],description:'沿起伏山脊连续延伸的灰砖城墙、垛口、石阶和四座敌楼。山势与城墙共同变化，步道保持通透，不以平直围墙代替。',source:'https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html'},
+  {id:'wall',name:'八达岭长城',area:'北部山地 · 关城',x:-.40,z:-1.10,hemisphere:-1,height:.80,distance:2.95,view:[.65,.7,1.3],description:'灰褐色砖墙沿连续山脊起伏，石阶穿过四座开有真实拱洞的敌楼；垛口、石基、灌木与裸露岩壁呈现长城和山林的层次。按实拍提炼的景观缩微，不作实际游览路线。',source:'https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html'},
   {id:'nest',name:'鸟巢',area:'奥林匹克 · 国家体育场',x:.85,z:.73,hemisphere:-1,height:.32,distance:2.4,view:[.45,.75,1.2],description:'椭圆体育场以交织的银灰钢构包覆红色看台，屋顶中央开口。外壳、入口和内碗分层制作，夜间让暖红内场透过钢网。',source:'https://www.l-a-v-a.net/projects/beijing-watercube/'},
   {id:'watercube',name:'水立方',area:'奥林匹克 · 国家游泳中心',x:1.44,z:-.52,hemisphere:-1,height:.25,distance:2.1,view:[.65,.5,1.2],description:'浅蓝灰气枕覆盖扁平屋面与四侧，膜块轻微鼓起，细接缝围合不规则多边形。夜间边缘呈柔和亮蓝，中心保持较暗的层次；底部玻璃入口带与独立雨棚分开表现。',source:'https://www.l-a-v-a.net/projects/beijing-watercube/'},
 ].map(item=>({...item,grounded:true}));

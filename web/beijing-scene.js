@@ -13,7 +13,7 @@ export function createBeijingScene(){
   const ground=k.mat('#8f9c79',.97),terrain=k.mesh(root,new THREE.SphereGeometry(RADIUS,160,128),ground);terrain.name='beijing-terrain';terrain.receiveShadow=true;surfaceDetail(ground,clock);
   for(const item of LANDMARKS){
     const model=createLandmark(k,item.id);model.name=item.id;
-    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position,normals=o.geometry.attributes.normal,smooth=o.material.userData.cushion;
+    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position,normals=o.geometry.attributes.normal,smooth=o.material.userData.cushion||o.material.userData.preserveSmooth;
       for(let i=0;i<a.count;i++){
         const x=a.getX(i),z=a.getZ(i);a.setY(i,a.getY(i)-sag(x,z));
         // Inverse-transpose of the spherical bend preserves shared smooth normals.

@@ -47,3 +47,10 @@
 ![水立方白天](images/beijing-watercube.png)
 
 ![水立方夜景](images/beijing-watercube-night.png)
+
+
+0.34.0 对照[北京市八达岭全景](https://english.beijing.gov.cn/specials/wanderinginbeijing/route4/scenicspots/202304/t20230427_3082028.html)、[北京日报山林实拍](https://xinwen.bjd.com.cn/channels/5b165687a010550e5ddc0e6a/contentShare/5de8be9be4b0fe93cc167bbc/AP64524bd6e4b05339adcd025c.html)和[步道游记照片](https://www.zhangchengwei.work/camera/beijing-3)，重做长城的连续山脊、灰褐砖石、阶梯、垛口和贯通拱门敌楼。灌木沿坡组织，塔基与地形相接。采用低亮度路径灯和暖色建筑照明，不复刻实际夜游安排；山势和路线为艺术化压缩。
+
+![八达岭山脊与城墙](images/beijing-wall.png)
+
+![长城夜间建筑与石阶](images/beijing-wall-night.png)
