@@ -1,6 +1,6 @@
 # 广州地图与造型参考
 
-广州入口为 `guangzhou.html`，含十组可独立增删的地标。当前为景观地图，未接入广州多人旅行目录；杭州、上海和武汉旅行保持。
+广州入口为 `guangzhou.html`，含十一组可独立增删的地标。当前为景观地图，未接入广州多人旅行目录；杭州、上海和武汉旅行保持。
 
 ## 实景与模型
 
@@ -51,3 +51,10 @@
 ![石室圣心大教堂白天](images/guangzhou-cathedral.png)
 
 ![石室圣心大教堂侧面夜景](images/guangzhou-cathedral-night.png)
+
+
+0.35.0 新增沙面历史街区，对照[广州市政府露德圣母堂实拍](https://www.gz.gov.cn/zlgz/gzly/wzgz/zjcs/tzj/content/post_7760626.html)、[南方都市报海关红楼照片](https://www.sohu.com/a/354692892_161795)及[红楼外廊细节照片](https://www.chinajourneyguide.com/tw/shamian-island/)，提炼浅米黄单尖塔、圆窗、尖拱、深灰坡屋顶和红砖三层外廊。深色铁栏、白色线脚和有进深的入口保持可见，低位暖光沿林荫步道分布。两座代表建筑经过位置压缩，不宣称为沙面岛完整平面；未采用另一座沙面堂的误标照片。
+
+![沙面历史街区白天](images/guangzhou-shamian.png)
+
+![沙面历史街区夜景](images/guangzhou-shamian-night.png)

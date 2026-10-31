@@ -11,7 +11,7 @@ test('Guangzhou landmarks stay on land, above the globe and separated on two hem
 
 test('Guangzhou complete landmark modules detach with their lighting and release resources once',async()=>{
   const {createGuangzhouScene}=await import('../web/guangzhou-scene.js'),{LANDMARKS}=await import('../web/guangzhou-landmarks.js');const scene=createGuangzhouScene(),original=new Map(scene.landmarks),geometries=new Set();
-  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,10);
+  assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,11);
   scene.root.traverse(o=>{if(!o.isMesh)return;geometries.add(o.geometry);for(const key of ['position','normal'])for(const v of o.geometry.attributes[key].array)assert.ok(Number.isFinite(v),`${o.name} ${key}`);});
   scene.setNight(true);
   for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(scene.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);scene.root.traverse(o=>assert.ok(!lights.includes(o)));assert.equal(scene.setLandmarkEnabled(id,true),true);assert.equal(scene.landmarks.get(id),g);}
@@ -87,5 +87,19 @@ test('Cathedral side aisles have covered roofs, open flying buttresses and detac
     scene.setNight(true);assert.ok(lights.every(l=>l.intensity>0&&l.target.parent===g));
     scene.setLandmarkEnabled('cathedral',false);scene.root.traverse(o=>assert.ok(!lights.includes(o)));scene.setLandmarkEnabled('cathedral',true);assert.equal(g.parent,scene.root);
     scene.setNight(false);assert.ok(lights.every(l=>l.intensity===0));
+  }finally{scene.dispose();}
+});
+
+
+test('Shamian has a recessed chapel entrance, open red-house galleries and closed roofs',async()=>{
+  const T=await import('three'),{createGuangzhouScene,RADIUS}=await import('../web/guangzhou-scene.js'),scene=createGuangzhouScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('shamian'),bent=([x,y,z])=>new T.Vector3(x,y-RADIUS+Math.sqrt(RADIUS*RADIUS-x*x-z*z),z).applyMatrix4(g.matrixWorld);
+    const segment=(a,b)=>{const start=bent(a),end=bent(b),delta=end.clone().sub(start);return new T.Raycaster(start,delta.clone().normalize(),0,delta.length()).intersectObject(g,true);};
+    for(const dx of [-.018,0,.018])assert.equal(segment([-.40+dx,.118,.280],[-.40+dx,.118,.146]).length,0,'Chapel porch should have real depth before the recessed door');
+    assert.ok(segment([-.40,.118,.146],[-.40,.118,.111]).length,'A recessed door closes the end of the entrance');
+    for(const x of [-.215,-.073,.073,.215])for(let floor=0;floor<3;floor++)assert.equal(segment([.38+x,.020+.024+floor*.115+.066,.15],[.38+x,.020+.024+floor*.115+.066,.005]).length,0,'Each arcade bay remains open from the street to its back wall');
+    for(const [x,z,y]of [[-.40,-.23,.46],[.38,-.12,.60]]){const hits=segment([x,y,z],[x,.20,z]);assert.ok(hits.length&&hits[0].object.material.userData.shamianRoof,'Nave and red house must have complete sloping roofs');}
+    for(const x of [-.60,-.30,0,.30,.60]){const hits=segment([x,.13,.44],[x,.010,.44]);assert.ok(hits.length&&hits[0].point.distanceTo(bent([x,.018,.44]))<.008,'Pedestrian strip stays unblocked');}
   }finally{scene.dispose();}
 });

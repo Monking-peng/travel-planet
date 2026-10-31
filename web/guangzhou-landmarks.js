@@ -1,3 +1,4 @@
+import {shamian} from './guangzhou-shamian.js';
 import {opera} from './guangzhou-opera.js';
 import {canton,twins,museum} from './guangzhou-modern.js';
 import {memorial,chen,rams} from './guangzhou-heritage.js';
@@ -15,6 +16,7 @@ export const LANDMARKS=[
   {id:'rams',name:'五羊石像',area:'越秀山 · 羊城象征',x:1.03,z:-1.05,hemisphere:-1,height:.85,distance:2.6,view:[.45,.60,1.6],description:'五只姿态不同的石羊围绕山石，主羊高立、其余四羊环绕；雕塑以浅色石材、花坛和林荫组织成完整景点。',source:'https://www.gzass.gd.cn/whzc/wenhuaziyuan/wenhuajingguan/129.html'},
   {id:'haixin',name:'海心桥',area:'珠江 · 步行桥',x:0,z:-.61,height:.44,distance:2.5,view:[.30,1.1,1.6],description:'单道白色斜拱与弯曲步道跨过珠江，细钢索连接桥面，两端分叉坡道接入江岸。暖色栏杆和白色拱灯形成清晰的夜间轮廓。',source:'https://www.haizhu.gov.cn/hzdt/ztlm/tzhz/rjhj/lyjd/csmp/content/post_9195706.html'},
   {id:'huacheng',name:'花城广场',area:'珠江新城 · 城市绿轴',x:.78,z:.10,height:.16,distance:2.25,view:[.35,1.4,1.2],description:'林荫步行轴串起花坛、喷泉和浮岛水景，连接东西塔与江岸。用暖色树下照明、低位地灯和水面倒影表现夜间层次，不复刻临时活动灯光。',source:'https://www.gdfao.gov.cn/zwgk/zdly/gzscfd/content/post_1333472.html'},
+  {id:'shamian',name:'沙面历史街区',area:'荔湾 · 露德堂与海关红楼',x:-1.1,z:1.60,height:.86,distance:3.1,view:[.48,.72,1.8],description:'浅米黄的露德圣母堂与红砖海关红楼相对展开，尖拱、圆窗、外廊和铁栏保留各自形制。林荫步道串起两座建筑，夜间以暖色低位灯和窗光呈现。两处代表建筑组合为缩微场景，不是沙面街区完整平面。',source:'https://www.gz.gov.cn/zlgz/gzly/wzgz/zjcs/tzj/content/post_7760626.html'},
 ].map(item=>({...item,grounded:true}));
-const builders={canton,twins,opera,museum,memorial,chen,cathedral,rams,haixin,huacheng};
+const builders={shamian,canton,twins,opera,museum,memorial,chen,cathedral,rams,haixin,huacheng};
 export function createLandmark(k,id){if(!builders[id])throw new Error(`Unknown Guangzhou landmark: ${id}`);return builders[id](k);}
