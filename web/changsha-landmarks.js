@@ -1,4 +1,5 @@
-import {yuelu,aiwan,dufu,tianxin} from './changsha-heritage.js';
+import {dufu} from './changsha-dufu.js';
+import {yuelu,aiwan,tianxin} from './changsha-heritage.js';
 import {ifs,hunanMuseum,xie} from './changsha-modern.js';
 import {meixi} from './changsha-meixi.js';
 import {juzhouBridge} from './changsha-bridge.js';
@@ -6,7 +7,7 @@ import {juzizhou} from './changsha-juzizhou.js';
 
 export const LANDMARKS=[
   {id:'juzizhou',name:'橘子洲·青年雕塑',area:'橘子洲头 · 山水中的石雕',x:.054,z:1.012,height:.24,focusY:.095,distance:1.18,view:[.12,.42,1.65],waterfront:true,description:'青年毛泽东艺术雕塑以宽阔肩部、侧扬的发束和浅灰粉花岗岩形成洲头轮廓。草坪与低矮花境留出正面视线，夜间用柔和暖光照亮石材；据实拍制作的艺术化缩微模型。原作：黎明、胡建国。',source:'https://www.icswb.com/h/160/20231205/843614.html'},
-  {id:'dufu',name:'杜甫江阁',area:'湘江东岸 · 飞檐与江灯',x:1.26,z:.78,height:.94,distance:3.0,view:[.40,.62,1.7],description:'临江楼阁以层层飞檐、红柱、白色回廊和宽石阶构成。夜间用檐线、灯笼和楼内暖光分出层次，灯光缓慢变化。',source:'https://enghunan.gov.cn/hneng/News/UpcomingEvents/202408/t20240801_33417827.html'},
+  {id:'dufu',name:'杜甫江阁',area:'湘江东岸 · 飞檐与江灯',x:1.26,z:.78,height:.94,distance:3.0,view:[.40,.62,1.7],description:'深灰瓦歇山顶、红柱、白色回廊与宽石阶分出主楼层次，两侧游廊连接小亭。白天保留深瓦底色，夜间以暖金屋面、檐下灯笼和窗灯照亮临江楼阁。',source:'https://www.enghunan.gov.cn/hneng/Tourism/TourHunan/Changsha_55545/TouristAttractions/201507/t20150723_1805308.html'},
   {id:'yuelu',name:'岳麓书院',area:'岳麓山东麓 · 千年庭院',x:-1.27,z:.78,height:.43,distance:3.0,view:[.25,1.24,1.4],description:'书院沿山麓展开，灰瓦白墙的多进庭院串起讲学轴线，侧院文庙保留赭黄色屋顶。御书楼、门楼、游廊、古树和石阶共同组成书院。',source:'https://ylsy.hnu.edu.cn/info/1011/9009.htm'},
   {id:'aiwan',name:'爱晚亭',area:'岳麓山 · 绿瓦枫林',x:-1.10,z:-1.01,height:.70,distance:2.8,view:[.45,.68,1.5],description:'绿琉璃瓦重檐、灰色外柱与红色内柱，藏在起伏的枫林中。石阶随山坡下降，夜间只照亮亭子和主要步道；秋色为艺术化场景。',source:'https://whhlyt.hunan.gov.cn/ggwh/201408/t20140804_5430585.html'},
   {id:'tianxin',name:'天心阁',area:'城南 · 古城墙上的楼阁',x:1.03,z:.77,hemisphere:-1,height:.89,distance:2.9,view:[.45,.58,1.7],description:'三层主阁和两侧小阁立在厚重城墙上，保留垛口、砖石纹理、拱洞与山坡。深色木构和瓦顶以暖色檐光衬托。',source:'https://www.highspeed.mtr.com.hk/en/travel/changsha.html'},

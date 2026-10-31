@@ -52,3 +52,14 @@
 ![橘子洲雕塑日景](images/changsha-juzizhou.png)
 
 ![橘子洲雕塑夜景](images/changsha-juzizhou-night.png)
+
+
+## 杜甫江阁外观与夜景（0.38.0）
+
+根据[湖南省政府收录的湖南日报与长沙市文旅局照片](https://www.enghunan.gov.cn/hneng/Tourism/TourHunan/Changsha_55545/TouristAttractions/201507/t20150723_1805308.html)及[游廊近照](https://www.hunan.gov.cn/hnszf/hnyw/jdt2/202605/t20260531_33990224.html)，将白天的金黄屋顶改为深灰瓦，顶层采用带三角山墙与上翘正脊的歇山造型。底层入口与上部三层分开，门窗退入红柱外廊，白色回廊、前后台阶、两侧长廊和小亭共同组成临江景观。
+
+夜间以暖金屋面、檐下灯笼、回廊与窗灯分层；缓慢变化遵循系统减少动态效果设置。照片仅供造型核对，不作为贴图或公开附件。模型压缩了完整场地，不宣称室内测绘或复刻真实夜游演出。
+
+![杜甫江阁灰瓦与开放回廊](images/changsha-dufu.png)
+
+![杜甫江阁暖金夜景](images/changsha-dufu-night.png)

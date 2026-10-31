@@ -117,3 +117,20 @@ test('Orange Isle sculpture keeps a solid head, a projected facial profile and a
     const bounds=new T.Box3();stone.forEach(mesh=>bounds.expandByObject(mesh));const size=bounds.getSize(new T.Vector3());assert.ok(size.x/size.y>2.2,'Long shoulders are essential to the actual sculpture silhouette');
   }finally{g.traverse(o=>o.geometry?.dispose());kit.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Du Fu Pavilion has deep open galleries, closed grey roofs and continuous entry stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{dufu}=await import('../web/changsha-dufu.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=dufu(k);g.updateMatrixWorld(true);
+ const down=(x,z)=>new T.Raycaster(new T.Vector3(x,1.2,z),new T.Vector3(0,-1,0)).intersectObject(g,true);
+ try{
+  for(const [x,min,max]of [[.39,.326,.4],[.355,.536,.615],[.10,.746,.94]]){const hits=down(x,0);assert.ok(hits.length&&hits[0].point.y>=min&&hits[0].point.y<=max,'Each projecting roof must cover its floor');assert.ok(hits.some(h=>h.object.material.userData.dufuRoof));}
+  for(const [y,z,d]of [[.23,.30,.14],[.45,.26,.12],[.66,.23,.10]])for(const side of [-1,1]){
+   const hits=new T.Raycaster(new T.Vector3(.045,y,side*z),new T.Vector3(0,0,-side),0,d).intersectObject(g,true);assert.equal(hits.length,0,'Inner windows must leave real space behind the red colonnade');
+  }
+  let previous=0;for(let i=0;i<8;i++){const hits=down(0,.47-i*.02);assert.ok(hits.length&&hits[0].point.y>=previous&&hits[0].point.y<.17);previous=hits[0].point.y;}
+  for(const side of [-1,1]){const hits=new T.Raycaster(new T.Vector3(side*.5,.84,0),new T.Vector3(-side,0,0)).intersectObject(g,true);assert.ok(hits.length,'The triangular gable ends must close below the roof');}
+  assert.ok(k.materials.some(m=>m.userData.dufuRoof&&m.color.getHexString()==='555b58'),'Daylight tiles must remain dark grey');
+  const lights=[];g.traverse(o=>{if(o.isPointLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

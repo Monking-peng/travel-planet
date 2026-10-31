@@ -79,17 +79,6 @@ function pavilion(k,g,p,{x=0,z=0,w=.58,d=.40,base=.10,levels=3,step=.205}={}){
     for(const side of [-1,1])for(const s of [-1,1]){const lamp=k.ball(g,.010,p.lamp,x+s*width*.37,y+step*.71,z+side*depth*.49);lamp.scale.y=1.2;}
   }
 }
-export function dufu(k){
-  const g=new THREE.Group(),p=palette(k);p.red=k.mat('#9f513d');p.wall=k.mat('#dbd4b9');p.tile=k.mat('#8f7950');p.stone=k.mat('#b8b59f');p.edge=glow(k,'#e7b561',1.0);p.lamp=glow(k,'#f1af55',1.20,1,.44);
-  const base=plaza(k,g,.67,.58,'#aeae96');base.userData.groundSurface=true;k.box(g,.72,.10,.50,p.stone,0,.065,0);
-  for(let i=0;i<9;i++)k.box(g,.42,.010*(i+1),.027,base,0,.005*(i+1),.50-i*.027);
-  pavilion(k,g,p,{base:.12,levels:3,step:.24,w:.64,d:.43});
-  plaque(k,g,'杜甫江阁',.22,.054,0,.738,.165);
-  for(const x of [-.47,.47])courtHall(k,g,{...p,edge:p.edge},{x,z:-.13,w:.17,d:.31,h:.12,tile:p.tile});
-  for(const s of [-1,1])k.line(g,[[s*.28,.104,.29],[s*.28,.07,.39],[s*.28,.025,.51]],.004,p.stone);
-  bollards(k,g,[[-.55,.29],[.55,.29],[-.33,.45],[.33,.45]]);people(k,g,[[-.16,.39],[.10,.43],[.23,.38],[-.49,.27],[.48,.30]]);
-  return k.merge(g);
-}
 export function tianxin(k){
   const g=new THREE.Group(),p=palette(k);p.tile=k.mat('#615e4d');p.red=k.mat('#594133');p.wall=k.mat('#d7d1b6');p.stone=k.mat('#727c70');p.edge=glow(k,'#c49a57',.55);p.lamp=glow(k,'#e2bd85',.48);
   const elevation=hill(k,g,.77,.65,.17,'#708162');
