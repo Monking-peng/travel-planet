@@ -65,3 +65,10 @@
 ![祈年殿蓝瓦与十二柱门窗](images/beijing-heaven.png)
 
 ![祈年殿夜间材质层次](images/beijing-heaven-night.png)
+
+
+0.41.0 依据[国家大剧院官方建筑介绍](https://www.chncpa.org/cgylx/jyjg/)、[摄影师的正面日落实拍](https://dp.pconline.com.cn/photo/list_3216707.html)和[游客夜景照片](https://www.tripadvisor.cn/Attraction_Review-g294212-d968205-Reviews-National_Center_for_the_Performing_Arts-Beijing.html)，重做宽阔渐开的玻璃帷幕、平滑钛金属曲面、细密横向分缝、内层暖金剧场与回廊。稀疏外壳灯点与玻璃后透光分开处理，环绕水面改为连续网格，修正贴球面后产生的细裂纹。模型保留建筑比例与主要形态，内部剧场是缩微提炼，不是结构复原；日落照没有作为夜景依据。
+
+![国家大剧院白天](images/beijing-theatre.png)
+
+![国家大剧院夜景](images/beijing-theatre-night.png)

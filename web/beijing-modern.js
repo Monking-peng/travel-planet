@@ -25,21 +25,6 @@ export function nest(k){
   return k.merge(g);
 }
 
-export function theatre(k){
-  const g=new THREE.Group(),stone=k.mat('#c7c7ba'),water=k.mat('#507d89',.29,.2),metal=k.mat('#a3afb4',.40,.57),glass=k.mat('#567d8d',.25,.4,'#b8d6db'),seam=k.mat('#758d98',.55,.28);glass.userData.night.intensity=.42;
-  const ground=k.cyl(g,.66,.66,.014,stone,0,.007,0,96);ground.scale.z=.77;const pool=k.cyl(g,.60,.60,.013,water,0,.019,0,96);pool.scale.z=.73;
-  const point=(a,t)=>[Math.cos(a)*Math.sin(t)*.48,.024+Math.cos(t)*.218,Math.sin(a)*Math.sin(t)*.325];
-  for(let sector=0;sector<72;sector++){
-    const verts=[],idx=[];for(let row=0;row<=24;row++)for(let col=0;col<2;col++)verts.push(...point((sector+col)/72*Math.PI*2,row/24*Math.PI/2));
-    for(let j=0;j<24;j++){const a=j*2;idx.push(a,a+2,a+1,a+1,a+2,a+3);}const geom=new THREE.BufferGeometry();geom.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geom.setIndex(idx);geom.computeVertexNormals();const angle=(sector+.5)/72*Math.PI*2,glazed=Math.abs(Math.cos(angle))<.31;
-    const m=glazed?glass:metal;m.side=THREE.DoubleSide;k.mesh(g,geom,m);
-    if(sector%3===0)k.line(g,Array.from({length:25},(_,j)=>point(sector/72*Math.PI*2,j/24*Math.PI/2)),.0009,seam);
-  }
-  for(let j=2;j<24;j+=2)k.line(g,Array.from({length:96},(_,i)=>point(i/96*Math.PI*2,j/24*Math.PI/2)),.0008,seam,true);
-  for(const s of [-1,1]){k.box(g,.18,.004,.09,stone,0,.028,s*.42);k.box(g,.14,.005,.04,k.mat('#304c58'),0,.024,s*.41);}
-  return k.merge(g);
-}
-
 function slantedVolume(k,g,a,b,w,d,mat,ribs){
   const v=[];for(const p of [a,b])for(const [x,z] of [[-1,-1],[1,-1],[1,1],[-1,1]])v.push(p[0]+x*w/2,p[1],p[2]+z*d/2);
   const ix=[0,2,1,0,3,2,4,5,6,4,6,7,0,1,5,0,5,4,1,2,6,1,6,5,2,3,7,2,7,6,3,0,4,3,4,7];const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));geo.setIndex(ix);geo.computeVertexNormals();k.mesh(g,geo,mat);

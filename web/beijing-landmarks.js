@@ -1,7 +1,8 @@
+import {theatre} from './beijing-theatre.js';
 import {greatWall} from './beijing-greatwall.js';
 import {palace,tiananmen,heaven,summer,beihai,drumBell} from './beijing-heritage.js';
 import {jingshan} from './beijing-jingshan.js';
-import {nest,theatre,cctv} from './beijing-modern.js';
+import {nest,cctv} from './beijing-modern.js';
 import {watercube} from './beijing-watercube.js';
 
 export const LANDMARKS=[
@@ -11,7 +12,7 @@ export const LANDMARKS=[
   {id:'beihai',name:'北海·白塔',area:'皇家园林 · 琼华岛',x:-1.45,z:-.10,height:.60,distance:2.3,view:[.3,.6,1.2],description:'白色覆钵式塔身、层叠相轮与金色宝顶，置于湖心林丘。永安寺山门、石桥与湖面构成前后层次，不做普通楼阁塔。',source:'https://www.beijing.gov.cn/tsbj/sxym/202512/t20251212_4338563.html'},
   {id:'jingshan',name:'景山·五亭',area:'中轴线 · 御苑山林',x:0,z:-1.07,height:.66,distance:3.2,view:[.38,.90,1.35],description:'中央万春亭以三重黄瓦檐为主，两侧绿瓦八角亭与蓝瓦圆亭依次降落在林坡上。南麓绮望楼、北麓寿皇殿和林间登山路组成完整御苑缩影；沿中轴连接故宫与钟鼓楼。',source:'https://gygl.beijing.gov.cn/mlgy/mlgy_lsmy/201911/t20191129_732675.html'},
   {id:'drum',name:'钟鼓楼',area:'中轴线 · 晨钟暮鼓',x:0,z:-1.99,height:.48,distance:2.3,view:[.55,.65,1.1],description:'前方朱红鼓楼与后方灰砖钟楼独立成组，保留厚重台座、通高门洞、绿瓦重檐和两楼之间的广场。',source:'https://www.beijing.gov.cn/renwen/rwzyd/qxdw/zmzhzhpgj/zhgl/202309/t20230919_3262298.html'},
-  {id:'theatre',name:'国家大剧院',area:'长安街 · 钛与玻璃',x:-1.32,z:1.28,height:.25,distance:2.4,view:[.4,.48,1.2],description:'银色钛金属半椭球，中央玻璃幕墙如拉开的帷幕。低矮舒展的壳体位于独立水池中，灯光以温柔透光为主。',source:'https://www.chncpa.org/cgylx/jyjg/'},
+  {id:'theatre',name:'国家大剧院',area:'长安街 · 钛与玻璃',x:-1.32,z:1.28,height:.25,distance:2.4,view:[.4,.48,1.2],description:'银灰钛金属半椭球包裹宽阔玻璃帷幕，内部暖金剧场与多层回廊透出层次。细分缝和稀疏灯点勾出曲面，独立水池下可见玻璃通道顶。',source:'https://www.chncpa.org/cgylx/jyjg/'},
   {id:'cctv',name:'央视总部',area:'国贸 · 立体环形',x:1.45,z:-.60,height:.78,distance:2.6,view:[.8,.35,1.3],description:'两座倾斜玻璃塔身在顶部错位相连，留下巨大的中央空洞。深色菱形结构网格和缓慢变化的窗灯强调立体环形轮廓。',source:'https://www.turnerconstruction.com/projects/china-central-television-headquarters-cctv'},
   {id:'summer',name:'颐和园',area:'西郊 · 昆明湖与万寿山',x:-.77,z:.65,hemisphere:-1,height:.80,distance:3.1,view:[.45,.9,1.3],description:'佛香阁以八面三层四重檐呈现：橙黄瓦心与深绿脊边、朱柱回廊、青蓝金色梁枋和内收窗棂。下方石台、白石栏杆与山坡分层，长廊和昆明湖保留园林关系；为主要景观缩影。',source:'https://s.visitbeijing.com.cn/index.php/line/463'},
   {id:'wall',name:'八达岭长城',area:'北部山地 · 关城',x:-.40,z:-1.10,hemisphere:-1,height:.80,distance:2.95,view:[.65,.7,1.3],description:'灰褐色砖墙沿连续山脊起伏，石阶穿过四座开有真实拱洞的敌楼；垛口、石基、灌木与裸露岩壁呈现长城和山林的层次。按实拍提炼的景观缩微，不作实际游览路线。',source:'https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html'},

@@ -138,3 +138,21 @@ test('Prayer Hall has twelve outer columns, an open entrance and three closed bl
     }
   }finally{scene.dispose();}
 });
+
+
+test('NCPA keeps an outward continuous shell, broad glazing and unbroken curved water',async()=>{
+  const T=await import('three'),{createBeijingScene,RADIUS}=await import('../web/beijing-scene.js'),s=createBeijingScene();s.root.updateMatrixWorld(true);
+  try{
+    const g=s.landmarks.get('theatre'),shell=[],water=[];g.traverse(o=>{if(o.material?.userData.ncpaShell||o.material?.userData.ncpaCurtain)shell.push(o);if(o.material?.userData.ncpaPool)water.push(o);});
+    const bend=([x,y,z])=>new T.Vector3(x,y-RADIUS+Math.sqrt(RADIUS*RADIUS-x*x-z*z),z).applyMatrix4(g.matrixWorld),normal=g.position.clone().normalize();
+    for(let i=0;i<24;i++)for(const t of [.25,.7,1.15,1.48]){
+      const a=(i+.37)/24*Math.PI*2,p=bend([Math.cos(a)*Math.sin(t)*.50,.031+Math.cos(t)*.220,Math.sin(a)*Math.sin(t)*.339]),hits=new T.Raycaster(p.clone().addScaledVector(normal,.45),normal.clone().negate()).intersectObjects(shell);
+      assert.ok(hits.length&&hits[0].point.distanceTo(p)<.003,'Curved shell must be closed and visible from the outside without reversed faces');
+    }
+    const front=bend([Math.cos(.90)*Math.sin(1.30)*.50,.031+Math.cos(1.30)*.220,Math.sin(.90)*Math.sin(1.30)*.339]),ray=new T.Raycaster(front.clone().addScaledVector(normal,.4),normal.clone().negate()),hit=ray.intersectObjects(shell)[0];assert.ok(hit&&hit.object.material.userData.ncpaCurtain,'The glass curtain must extend beyond a narrow central triangle');
+    for(const r of [.3,.65,.91])for(let i=0;i<32;i++){
+      const a=(i+.29)/32*Math.PI*2,p=bend([Math.cos(a)*.62*r,.026,Math.sin(a)*.477*r]),hits=new T.Raycaster(p.clone().addScaledVector(normal,.3),normal.clone().negate()).intersectObjects(water);
+      assert.ok(hits.length&&hits[0].point.distanceTo(p)<.001,'Uniform pool mesh must remain continuous after bending');
+    }
+  }finally{s.dispose();}
+});
