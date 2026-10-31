@@ -1,11 +1,12 @@
-import {qinghui,bijiang} from './shunde-gardens.js';
+import {bijiang} from './shunde-gardens.js';
+import {qinghui} from './shunde-qinghui.js';
 import {baolin} from './shunde-temple.js';
 import {fengjian,huagai} from './shunde-streets.js';
 import {shunfeng} from './shunde-park.js';
 import {hem,theatre} from './shunde-modern.js';
 
 export const LANDMARKS=[
-  {id:'qinghui',name:'清晖园',area:'大良 · 岭南园林',x:-.99,z:.66,height:.36,distance:2.65,view:[.45,1.0,1.4],description:'以庭院水池、曲折游廊、临水小亭、山石和竹木组织园林；保留碧溪草堂圆洞花窗等特征。这里是压缩后的园林景观表达，并非完整测绘复原。',source:'https://www.sdqinghuiyuan.cn/list/foldId/20.html'},
+  {id:'qinghui',name:'清晖园',area:'大良 · 岭南园林',x:-.99,z:.66,height:.43,distance:2.65,view:[.45,1.0,1.4],description:'双层船厅以灰砖、赭红木窗和细栏杆临水展开；澄漪亭架在方池边，碧溪草堂圆洞竹纹、六角亭、荷叶与游廊形成前后层次。依据实拍压缩主要景观，并非完整测绘复原。',source:'https://www.sdqinghuiyuan.cn/list/foldId/20.html'},
   {id:'shunfeng',name:'顺峰山公园',area:'大良 · 湖山与古塔',x:1.18,z:.70,height:.82,distance:3.5,view:[.45,1.10,1.5],description:'五行桥和牌坊连接开阔湖景，青龙阁伸入水面，九曲桥通向青云塔与林丘。保留红白塔身、灰绿檐口和橙瓦楼阁，夜间以桥栏、檐下和路径暖光呈现层次。景观为艺术化压缩，并非实际导览地图。',source:'https://cj.sina.com.cn/articles/view/5787187353/158f1789902001c98z'},
   {id:'hem',name:'和美术馆',area:'北滘 · 当代建筑',x:.83,z:-1.75,height:.51,distance:2.45,view:[.7,.75,1.4],description:'错位叠加的圆形楼层逐层外扩，细密竖向构件、低层方形展厅与水池共同表现建筑。采用灰白混凝土、银色格栅和深色玻璃。',source:'https://hem.org/zh/about/architecture'},
   {id:'huagai',name:'华盖路步行街',area:'大良 · 骑楼街景',x:-1.05,z:-1.13,height:.67,distance:2.75,view:[.40,1.0,1.4],description:'沿步行街排列的拱廊骑楼、粉彩立面、钟楼入口与灯笼。街道作为完整景点呈现，保留贯通的柱廊和可行走的中间空间。',source:'https://shundeplus.shundecity.com/index.php/phone/index/article?id=190752'},

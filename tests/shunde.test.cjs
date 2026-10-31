@@ -72,3 +72,23 @@ test('Baolin courts sit on a continuous hill and three gate portals remain open'
     const a=soil.geometry.attributes.normal;for(let i=0;i<a.count;i++)assert.ok(a.getY(i)>0,'terrain normals must face skyward');
   }finally{temple.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Qinghui pond remains open and its boat roof, pierced screen and waterside pavilion are real geometry',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{qinghui}=await import('../web/shunde-qinghui.js'),k=makeKit({time:{value:0},night:{value:0}}),garden=qinghui(k);garden.updateMatrixWorld(true);
+  try{
+    const down=(x,z,y=1)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,-1,0)).intersectObject(garden,true)[0];
+    for(const [x,z]of [[.04,.16],[.15,.25],[.26,.34],[.10,.36]]){const hit=down(x,z);assert.ok(hit&&Math.abs(hit.point.y-.025)<.002,'pond must not be filled by paving or stray architecture');}
+    for(const x of [-.16,.08,.32])for(const z of [-.40,-.323,-.25]){const hit=down(x,z);assert.ok(hit&&hit.point.y>.34,'boat hall must have a closed, continuous upper roof');}
+    const screen=new T.Raycaster(new T.Vector3(-.31,.079,.031),new T.Vector3(-1,0,0),0,.045);assert.equal(screen.intersectObject(garden,true).length,0,'the circular screen must have a real opening between its bamboo stems');
+    const below=new T.Raycaster(new T.Vector3(.27,.043,.13),new T.Vector3(1,0,0),0,.18);assert.equal(below.intersectObject(garden,true).length,0,'water must remain visible below the raised pavilion');
+    for(const x of [.350,.466])for(const z of [.043,.217]){const hit=down(x,z,.055);assert.ok(hit&&hit.point.y>.048,'waterside deck needs masonry piers');}
+    const paving=garden.children.filter(o=>o.material?.userData.qinghuiPaving);
+    for(const [x,y,z]of garden.userData.pavingSamples){const hit=new T.Raycaster(new T.Vector3(x,.06,z),new T.Vector3(0,-1,0)).intersectObjects(paving)[0];assert.ok(hit&&hit.point.y>=y-.002&&hit.point.y<y+.008,'visitor route must meet solid paving');}
+  }finally{garden.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Qinghui curved water keeps continuous upward normals after sphere placement',async()=>{
+  const T=await import('three'),{createShundeScene,RADIUS}=await import('../web/shunde-scene.js'),scene=createShundeScene();
+  try{let checked=0;scene.landmarks.get('qinghui').traverse(o=>{if(!o.material?.userData.preserveSmooth)return;const a=o.geometry.attributes.position,n=o.geometry.attributes.normal;for(let i=0;i<a.count;i++){if(n.getY(i)<.8)continue;const x=a.getX(i),z=a.getZ(i),r=Math.sqrt(RADIUS**2-x*x-z*z),expected=new T.Vector3(x/r,1,z/r).normalize(),actual=new T.Vector3().fromBufferAttribute(n,i);assert.ok(expected.dot(actual)>.9999,'water has a visible tessellation seam');checked++;}});assert.ok(checked>100);}
+  finally{scene.dispose();}
+});

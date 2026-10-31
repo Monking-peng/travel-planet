@@ -1,43 +1,7 @@
 import * as THREE from 'three';
 import {roof,tree,plaque} from './wuhan-architecture.js';
 import {people,bollards,skin} from './shenzhen-forms.js';
-import {palette,footing,lattice,balcony,lantern,hall,moonWall,bridge} from './shunde-kit.js';
-
-export function qinghui(k){
-  const g=new THREE.Group(),p=palette(k);footing(k,g,1.24,1.16,p);
-  // An enclosed Lingnan garden, with a central pond and several connected courts.
-  for(const x of [-.60,.60])k.box(g,.018,.14,1.12,p.wall,x,.086,0);
-  for(const z of [-.56,.56])k.box(g,1.20,.14,.018,p.wall,0,.086,z);
-  const pond=k.cyl(g,.35,.35,.008,p.water,.14,.024,.04,72);pond.scale.z=1.13;
-  const rim=k.mesh(g,new THREE.TorusGeometry(.352,.011,6,72),p.stone,.14,.024,.04);rim.rotation.x=Math.PI/2;rim.scale.y=1.13;
-  hall(k,g,p,{x:-.33,z:.31,w:.37,d:.22,h:.19});
-  plaque(k,g,'清晖园',.14,.037,-.33,.177,.448);
-  hall(k,g,p,{x:-.32,z:-.32,w:.34,d:.25,h:.19});
-  plaque(k,g,'碧溪草堂',.14,.030,-.32,.175,-.158);
-  // The circular bamboo-pattern opening is set into a real hollow front screen.
-  moonWall(k,g,p,{x:-.32,z:-.154,w:.30,h:.18,r:.066});
-  for(let i=0;i<7;i++){const x=-.32+(i-3)*.016,span=Math.sqrt(Math.max(0,.060**2-(x+.32)**2));k.box(g,.0015,span*2,.002,p.green,x,.092,-.142);}
-  for(const z of [-.46,.43]){
-    const w=z<0?.77:.56,xc=z<0?.12:.20;
-    k.box(g,w,.016,.105,p.stone,xc,.028,z);
-    for(let i=0;i<=9;i++){const x=xc+(i/9-.5)*w;k.cyl(g,.003,.004,.12,p.red,x,.092,z+.032,8);}
-    roof(k,g,w+.04,.14,.048,.155,p.tile,p.tile,xc,z);
-    balcony(k,g,xc,z+.039,w,.037,p.wood);k.box(g,w,.002,.002,p.warm,xc,.154,z+.070);
-  }
-  const corridor=new THREE.Group();k.box(corridor,.84,.016,.09,p.stone,0,.03,0);
-  for(let i=0;i<=10;i++)k.cyl(corridor,.003,.004,.11,p.red,(i/10-.5)*.84,.093,.039,8);
-  roof(k,corridor,.90,.15,.045,.15,p.tile,p.tile);balcony(k,corridor,0,.039,.84,.038,p.wood);
-  k.box(corridor,.84,.003,.003,p.warm,0,.148,.077);corridor.rotation.y=Math.PI/2;corridor.position.set(.50,0,0);g.add(corridor);
-  // Waterside pavilion and pierced rockery retain a clear view across the pool.
-  const pav=new THREE.Group();hall(k,pav,p,{w:.19,d:.20,h:.14});pav.position.set(.31,0,-.26);g.add(pav);
-  bridge(k,g,p,{x:.06,z:.15,w:.075,length:.40,rise:.055});
-  const rock=k.mat('#969886',.98);for(let i=0;i<14;i++){const a=i*2.4,s=.03+(i%4)*.014,m=k.mesh(g,new THREE.IcosahedronGeometry(s,1),rock,-.10+Math.cos(a)*.09,.025+s*1.8,.00+Math.sin(a)*.11);m.scale.set(.68,1.8,.70);}
-  for(const [x,z,s]of [[-.48,-.06,.16],[-.50,.10,.12],[-.04,-.36,.14],[.40,.30,.13],[.46,-.34,.15],[-.45,-.46,.14],[.02,.35,.09]])tree(k,g,x,.02,z,s);
-  for(let i=0;i<8;i++){const x=-.51+i*.017;k.cyl(g,.0018,.002,.15+(i%3)*.018,p.green,x,.10,-.23,5);k.beam(g,[x,.15,-.23],[x+.024,.18,-.22],.004,p.green,5);}
-  for(const [x,z]of [[-.4,.43],[.1,-.41],[.35,.4]])lantern(k,g,x,.13,z,p);
-  bollards(k,g,[[-.55,.48],[.53,.48],[-.55,-.48],[.53,-.48]]);people(k,g,[[-.30,.46],[-.36,.47],[.36,.37],[.43,.38]]);
-  return k.merge(g);
-}
+import {palette,footing,lattice,balcony,lantern,moonWall} from './shunde-kit.js';
 
 export function bijiang(k){
   const g=new THREE.Group(),p=palette(k);footing(k,g,1.04,.94,p);
