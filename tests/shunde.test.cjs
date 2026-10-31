@@ -92,3 +92,21 @@ test('Qinghui curved water keeps continuous upward normals after sphere placemen
   try{let checked=0;scene.landmarks.get('qinghui').traverse(o=>{if(!o.material?.userData.preserveSmooth)return;const a=o.geometry.attributes.position,n=o.geometry.attributes.normal;for(let i=0;i<a.count;i++){if(n.getY(i)<.8)continue;const x=a.getX(i),z=a.getZ(i),r=Math.sqrt(RADIUS**2-x*x-z*z),expected=new T.Vector3(x/r,1,z/r).normalize(),actual=new T.Vector3().fromBufferAttribute(n,i);assert.ok(expected.dot(actual)>.9999,'water has a visible tessellation seam');checked++;}});assert.ok(checked>100);}
   finally{scene.dispose();}
 });
+
+test('HEM keeps its skylight open, entry bridge continuous and water free of tessellation cracks',async()=>{
+  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{hem}=await import('../web/shunde-hem.js'),k=makeKit({time:{value:0},night:{value:0}}),museum=hem(k);museum.updateMatrixWorld(true);
+  try{
+    const down=(x,z,y=1,far=2)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,-1,0),0,far);
+    const slab=museum.children.filter(o=>o.material?.userData.hemSlab),pool=museum.children.find(o=>o.material?.userData.hemPool),sky=museum.children.find(o=>o.material?.userData.hemSkylight);
+    assert.equal(down(.025,-.065,.6,.22).intersectObjects(slab).length,0,'roof must not cover the central glazed skylight');
+    for(const [x,z]of [[.30,-.07],[-.25,-.07],[.065,-.39]])assert.ok(down(x,z).intersectObjects(slab)[0]?.point.y>.38,'annular roof must stay closed outside its opening');
+    assert.ok(sky.material.transparent&&sky.material.opacity<.4);
+    for(const z of [.23,.30,.40,.50,.58]){const hit=down(0,z,.07,.06).intersectObject(museum,true)[0];assert.ok(hit&&hit.point.y>.033&&hit.point.y<.049,'bridge must connect the entrance to the outer path');}
+    for(const [x,z]of [[-.23,.30],[-.30,.25],[.25,.29],[.17,.42]]){const hit=down(x,z).intersectObject(museum,true)[0];assert.ok(hit&&hit.object===pool,'courtyard water cannot be filled by paving');}
+    const a=pool.geometry.attributes.position,idx=pool.geometry.index;
+    for(let i=0;i<idx.count;i+=3)for(let j=0;j<3;j++){
+      const p=new T.Vector3().fromBufferAttribute(a,idx.getX(i+j)),q=new T.Vector3().fromBufferAttribute(a,idx.getX(i+(j+1)%3));assert.ok(p.distanceTo(q)<.055,'water triangles must not create adaptive subdivision T-junctions when bent onto the globe');
+    }
+    assert.equal(museum.children.filter(o=>o.isLight).length,2);
+  }finally{museum.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

@@ -1,27 +1,5 @@
 import * as THREE from 'three';
 import {glow,plaza,bollards,people,skin} from './shenzhen-forms.js';
-import {tree} from './wuhan-architecture.js';
-
-export function hem(k){
-  const g=new THREE.Group(),stone=plaza(k,g,.67,.62,'#b2b7ac'),white=k.mat('#cfcec3',.75,.1),silver=k.mat('#aebbb7',.48,.25),dark=k.glass('#4e6969','#d7c5a1',5),water=k.mat('#577d7f',.34,.24),light=glow(k,'#eadcc3',1.25),shadow=k.mat('#456162');
-  const pool=k.cyl(g,.55,.55,.010,water,0,.024,0,80);pool.scale.z=.94;
-  // Offset circular floors expand upward; the square wing is deliberately lower.
-  k.box(g,.52,.115,.41,dark,-.29,.093,-.05);k.box(g,.56,.016,.45,white,-.29,.159,-.05);
-  for(let i=0;i<16;i++)k.box(g,.002,.106,.004,silver,-.53+i*.031,.094,.157);
-  const rings=[[.22,0,.031],[.26,.027,.135],[.30,.057,.239],[.335,.077,.343]];
-  for(const [r,x,y]of rings){
-    k.cyl(g,r,r,.014,white,x,y,0,96);k.cyl(g,r-.009,r-.009,.087,dark,x,y+.050,0,96);
-    for(let i=0;i<100;i++){const a=i/100*Math.PI*2;k.box(g,.002,.089,.006,silver,x+Math.cos(a)*(r-.001),y+.05,Math.sin(a)*(r-.001)).rotation.y=-a+Math.PI/2;}
-    const rim=k.mesh(g,new THREE.TorusGeometry(r-.003,.002,5,96),light,x,y+.092,0);rim.rotation.x=Math.PI/2;
-  }
-  k.cyl(g,.335,.335,.015,white,.077,.443,0,96);
-  k.cyl(g,.10,.10,.038,white,.025,.470,-.02,64);k.cyl(g,.085,.085,.005,shadow,.025,.492,-.02,64);
-  k.box(g,.13,.016,.35,white,0,.041,.38);
-  for(const s of [-1,1])k.box(g,.002,.001,.31,light,s*.066,.050,.38);
-  for(const [x,z]of [[-.54,-.32],[-.49,.33],[.49,.30],[.40,-.41]])tree(k,g,x,.02,z,.10);
-  bollards(k,g,[[-.15,.49],[.15,.49],[-.49,.31],[.49,.31]]);people(k,g,[[-.03,.48],[.02,.43],[-.34,.25],[.45,.31]]);
-  return k.merge(g);
-}
 
 export function theatre(k){
   const g=new THREE.Group(),concrete=k.mat('#c5c1ad',.9),frame=k.mat('#bdc6bf',.55,.17),glass=k.mat('#638080',.35,.15),sand=k.mat('#bdb39d'),red=k.mat('#a75d48'),shadow=k.mat('#456362'),light=glow(k,'#ead7b0',1.2),blue=glow(k,'#aecdd3',.36,1,.45),water=k.mat('#5d8987',.40,.12);
