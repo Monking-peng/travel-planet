@@ -31,3 +31,15 @@ test('Xian module lights detach together, night preserves colors and resources d
  for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let count=0;geos.forEach(g=>g.addEventListener('dispose',()=>count++));for(const id of original.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(count,geos.size);
 });
+
+test('Bell tower colonnades remain open around recessed rooms and supported balcony',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{bell}=await import('../web/xian-bell.js'),k=makeKit({time:{value:0},night:{value:0}}),g=bell(k);g.updateMatrixWorld(true);
+ const hits=(start,dir,length)=>new T.Raycaster(new T.Vector3(...start),new T.Vector3(...dir),0,length).intersectObject(g,true);
+ try{
+  assert.equal(hits([-.25,.28,.195],[1,0,0],.50).length,0,'front outer gallery must remain free of the interior wall');
+  assert.equal(hits([.195,.28,-.25],[0,0,1],.50).length,0,'side gallery must remain open');
+  assert.ok(hits([0,.28,.195],[0,0,-1],.40).length>0,'room wall must remain recessed behind gallery');
+  assert.ok(hits([.075,.28,.27],[0,0,-1],.06).length>0,'outer red columns must support the canopy');
+  assert.ok(hits([0,.44,.35],[0,0,-1],.70).length>0,'upper gallery has a continuous structural apron');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

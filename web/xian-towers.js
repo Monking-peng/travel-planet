@@ -2,25 +2,8 @@ import * as THREE from 'three';
 import {colors,terrace,steps,ledge,timberFloor,eave,hall,groves,finish,archWall,roof,masonry} from './xian-kit.js';
 import {plaque} from './wuhan-architecture.js';
 
-function crossBase(k,g,p,w,d,h){
-  // Four pierced perimeter walls and corner piers leave both axes open.
-  const r=.06,spring=.065;
-  for(const s of [-1,1]){archWall(k,g,{w,h,d:.028,z:s*(d/2-.014),y:.018,openings:[{r,spring,bottom:0}],mat:p.stone});const side=new THREE.Group();archWall(k,side,{w:d,h,d:.028,y:.018,openings:[{r,spring,bottom:0}],mat:p.stone});side.rotation.y=Math.PI/2;side.position.x=s*(w/2-.014);g.add(side);}
-  for(const x of [-1,1])for(const z of [-1,1])k.box(g,(w-.15)/2,h,(d-.15)/2,p.stone,x*(w+.15)/4,h/2+.018,z*(d+.15)/4);
-  k.box(g,w,.018,d,p.stone,0,h+.018,0);
-}
-export function bell(k){
-  const g=new THREE.Group(),p=colors(k);p.tile=k.mat('#3c6b4d',.65);p.tile.userData.night={color:new THREE.Color('#96b873'),intensity:.065};
-  for(const key of ['stone','red','wall','blue'])p[key].userData.night={color:new THREE.Color('#efb35e'),intensity:key==='stone'?.32:.20};terrace(k,g,p,.56,.53);
-  for(let i=0;i<48;i++){const a=i/48*Math.PI*2;k.box(g,.043,.012,.018,i%3?p.green:p.gold,Math.cos(a)*.46,.025,Math.sin(a)*.43).rotation.y=-a;}
-  crossBase(k,g,p,.62,.58,.18);ledge(k,g,p,.64,.60,.21);
-  timberFloor(k,g,p,{w:.43,d:.40,y:.23,h:.145});eave(k,g,p,.56,.53,.377,.075);
-  timberFloor(k,g,p,{w:.34,d:.32,y:.433,h:.115});eave(k,g,p,.45,.43,.55,.053);
-  k.box(g,.29,.045,.27,p.blue,0,.587,0);eave(k,g,p,.40,.38,.63,.105);
-  k.cyl(g,.012,.016,.034,p.gold,0,.75,0,12);k.ball(g,.011,p.gold,0,.773,0);plaque(k,g,'钟楼',.10,.033,0,.347,.21);
-  const b=new THREE.Group();k.cyl(b,.022,.028,.042,p.gold,0,.28,0);for(const s of [-1,1])k.box(b,.007,.08,.008,p.red,s*.033,.27,0);k.box(b,.09,.008,.02,p.red,0,.315,0);b.position.set(-.245,0,.21);g.add(b);
-  g.userData={roofTiers:3,crossPassages:true};return finish(k,g,p,{lamps:[[-.46,-.35],[.46,-.35],[-.46,.35],[.46,.35]],visitors:[[-.38,.13],[.36,.11],[.17,.42]]});
-}
+export {bell} from './xian-bell.js';
+
 export function drum(k){
   const g=new THREE.Group(),p=colors(k);p.red=k.mat('#51463b');p.tile=k.mat('#596052');terrace(k,g,p,.65,.49);
   p.stone.userData.night.intensity=.34;p.wall.userData.night.intensity=.24;p.red.userData.night={color:new THREE.Color('#e5b66e'),intensity:.22};
