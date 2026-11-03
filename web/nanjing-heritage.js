@@ -1,18 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,sign,finish,hall,hip,cornice,archWall,pond,bridge} from './nanjing-kit.js';
-export function mausoleum(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.68,.73);paving(k,g,p,.50,.59);
- // One continuous staircase rises to the ceremonial hall, with connected landings.
- for(let i=0;i<40;i++){const h=.224*(i+1)/40,z=.48-i*.019;k.box(g,.48,h,.0195,p.pale,0,.021+h/2,z);}
- const y=.245,z=-.29;k.box(g,.56,.035,.32,p.pale,0,y-.018,z);k.box(g,.46,.18,.20,p.pale,0,y+.09,z-.045);
- archWall(k,g,{w:.48,h:.17,d:.025,y,z:z+.085,mat:p.pale,openings:[-.15,0,.15].map(x=>({x,r:.035,spring:.070,bottom:.001}))});
- const recess=k.mat('#35423b',.93);for(const x of [-.15,0,.15]){const s=new THREE.Shape();s.moveTo(x-.035,.001);s.lineTo(x-.035,.070);s.absarc(x,.070,.035,Math.PI,0,true);s.lineTo(x+.035,.001);s.closePath();k.mesh(g,new THREE.ShapeGeometry(s),recess,0,y,z+.076);}
- for(const x of [-.285,.285]){k.box(g,.105,.18,.30,p.pale,x,y+.09,z+.015);k.box(g,.12,.014,.32,p.stone,x,y+.185,z+.015);}
- hip(k,g,.49,.25,.085,y+.18,p.blue,p.blue,0,z-.045);hip(k,g,.45,.14,.035,y+.13,p.blue,p.blue,0,z+.075);cornice(k,g,0,y+.172,z-.045,.46,.23,p.pale);
- sign(k,g,'中山陵',.10,.026,0,y+.163,z+.151,{background:'#d3d1bc',color:'#a47d36'});
- for(const s of [-1,1]){for(let i=0;i<18;i++){const zz=.46-i*.043,yy=.025+Math.min(.22,Math.max(0,(.37-zz)*.38));k.box(g,.007,.035,.007,p.pale,s*.235,yy+.018,zz);}grove(k,g,ground,Array.from({length:7},(_,i)=>[s*(.39+.03*Math.sin(i)),.44-i*.135,.13]));}
- return finish(k,g,{lamps:[[-.33,.28],[.33,.28],[-.22,-.43],[.22,-.43]],visitors:[[-.06,.40],[.07,.37]]});
-}
+export {mausoleum} from './nanjing-mausoleum.js';
+
 export function museum(k){
  const g=new THREE.Group(),p=palette(k),ground=site(k,g,.75,.59);paving(k,g,p,.65,.40);
  steps(k,g,p,0,.28,.60,12,.105,.22);k.box(g,.90,.106,.40,p.pale,0,.075,-.10);

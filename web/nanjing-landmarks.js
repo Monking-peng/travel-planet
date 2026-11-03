@@ -2,7 +2,7 @@ import {mausoleum,museum,fuzimiao} from './nanjing-heritage.js';
 import {zhonghua,jiming} from './nanjing-fortifications.js';
 import {baoen,zifeng,eye} from './nanjing-modern.js';
 export const LANDMARKS=[
- {id:'mausoleum',name:'中山陵',area:'钟山 · 蓝瓦白石',x:-1.08,z:.94,height:.66,distance:3.0,view:[.24,.8,1.8],description:'层层石阶沿中轴升起，祭堂保留蓝色琉璃瓦、白石立面、三座门洞与两侧石墙。两列林木围合庄重的登临路径。',source:'https://zschina.nanjing.gov.cn/lyzx/202504/t20250425_5135983.html'},
+ {id:'mausoleum',name:'中山陵',area:'钟山 · 蓝瓦白石',x:-1.08,z:.94,height:.83,distance:3.0,view:[.24,.8,1.8],description:'宽阔石阶沿林木围合的山坡上升，祭堂补齐蓝琉璃瓦、灰石斗拱、卷草石雕、三座真实门洞和青铜花窗。四角石阙围住主殿，夜间以克制白光照亮石材层次。',source:'https://zschina.nanjing.gov.cn/lyzx/202504/t20250425_5135983.html'},
  {id:'fuzimiao',name:'夫子庙·秦淮河',area:'秦淮 · 檐影画舫',x:1.08,z:.94,height:.49,distance:3.0,view:[.32,.83,1.8],description:'大成殿、两侧廊屋、临水亭与红色照壁围绕秦淮水面。石栏、木格窗和画舫保留尺度层次，夜间用檐下暖光照出水岸。',source:'https://js.cnr.cn/whly/20220418/t20220418_525798755.shtml'},
  {id:'zhonghua',name:'中华门瓮城',area:'明城墙 · 三重瓮城',x:-1.08,z:-.94,height:.42,distance:3.0,view:[.70,1.0,1.8],description:'三重内瓮城、贯通门洞、两层主城台、藏兵洞和两侧登城马道。按现存城台建模，城顶不加已经毁失的木构城楼。',source:'https://wlj.nanjing.gov.cn/ztzl/mcq/gzqk/202302/t20230228_3838766.html'},
  {id:'museum',name:'南京博物院',area:'历史馆 · 仿辽大殿',x:1.08,z:-.94,height:.47,distance:2.9,view:[.25,.68,1.8],description:'宽阔低缓的棕色瓦面、金色屋脊、朱红柱廊、木格门窗和白石台阶。以历史馆大殿为主体，保留两侧配殿与开阔前庭。',source:'https://zfgbpx.nju.edu.cn/7c/d1/c46023a556241/page.htm'},

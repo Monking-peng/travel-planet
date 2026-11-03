@@ -24,3 +24,14 @@
 ![中山陵模型](images/nanjing-mausoleum.png)
 
 ![南京博物院夜景模型](images/nanjing-museum-night.png)
+
+
+## 0.55.5 中山陵祭堂精修
+
+对照[祭堂正面近照](https://res.klook.com/image/upload/activities/ocvrupljaddkt5kmpfc9.jpg)、[石雕斗拱侧向近照](https://res.klook.com/image/upload/activities/sfhuuoocd5pxhjjwtbmr.jpg)及[周学鹰、达志翔、马晓的建筑分析](https://m.thepaper.cn/newsDetail_forward_28204567)，补齐歇山蓝瓦、前披檐、原色石斗拱与菱角牙子、卷草石雕和青铜花窗。三座门洞采用真实开口，中间门洞高于两侧；题字按照片位置呈现。四角阙形石块、连续石阶、柏树和承托坡面保持中轴关系。另检索到的「天下為公」照片属于陵门，未混用为祭堂。
+
+屋面和石雕为微缩概括，石阶数量与场地距离经过压缩，不宣称工程测绘精度。管理方图纸链接本轮返回 403，未取得图纸，不以其尺寸声称复原。夜间白光是本项目的展示照明，未声称现实开放或夜游状态。未增加祭堂内部展陈或现实票价信息。
+
+![祭堂侧向细节](images/nanjing-mausoleum-oblique.png)
+
+![祭堂夜间展示](images/nanjing-mausoleum-night.png)

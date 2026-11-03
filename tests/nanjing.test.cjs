@@ -1,6 +1,17 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Mausoleum has three open stone portals, a taller central arch and a closed rear wall',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{mausoleum}=await import('../web/nanjing-mausoleum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=mausoleum(k);g.updateMatrixWorld(true);
+ try{const walls=[];g.traverse(o=>{if(o.material?.userData.memorialFacade)walls.push(o);});
+  const front=(x,y)=>new T.Raycaster(new T.Vector3(x,y,.30),new T.Vector3(0,0,-1),0,.50).intersectObjects(walls);
+  for(const x of [-.18,0,.18])assert.equal(front(x,.36).length,0,'Portal must open into the room rather than use a black wall decal');
+  assert.ok(front(.09,.36).length>0,'Stone between the portals must remain solid');
+  assert.equal(front(0,.453).length,0,'The central arch rises above the side arches');assert.ok(front(.18,.453).length>0);
+  const rear=new T.Raycaster(new T.Vector3(0,.59,-.80),new T.Vector3(0,0,1),0,.40);assert.ok(rear.intersectObjects(walls).length>0,'Rear wall must meet the upper roof without a visible gap');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Nanjing gates preserve the full passage and both bridge eyes stay open above the deck',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{zhonghua}=await import('../web/nanjing-fortifications.js'),{eye}=await import('../web/nanjing-modern.js');
  const k=makeKit({time:{value:0},night:{value:0}}),gate=zhonghua(k),bridge=eye(k);gate.updateMatrixWorld(true);bridge.updateMatrixWorld(true);
