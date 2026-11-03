@@ -1,6 +1,6 @@
 # 一起去 · Travel Planet
 
-用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.42.0**，支持桌面和手机网页。
+用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.42.1**，支持桌面和手机网页。
 
 **[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)** · **[顺德地图](https://43.139.249.151/travel/shunde.html)** · **[广州地图](https://43.139.249.151/travel/guangzhou.html)** · **[长沙地图](https://43.139.249.151/travel/changsha.html)** · **[西安地图](https://43.139.249.151/travel/xian.html)**
 
@@ -16,6 +16,8 @@
 | 约束校验 | 游览时间、首末接驳、转场、过江、步行、餐饮和分项预算 |
 | 可选 AI | 整理自然语言想法、协助提出方案；未配置时使用明确标注的基础排程 |
 | 手机网页 | 单指拖动、双指缩放、可滑动的景点导航、底部表单和景点管理面板 |
+
+武汉地图顶部可以直接「选景点，发起旅行」「加入朋友的旅行」或打开「我的旅行」。从地标详情进入后，可以新建旅行，也可以把景点放进同城已有旅行的草稿；提交前不会更改旅伴看到的偏好。
 
 武汉保留 **17 组地标**，已接入 **16 个去处的多人旅行**；武汉站仅作交通地标，不自动安排观光。上海景观也是 17 组地标；模型数量与旅行目录并非一一对应。
 
@@ -75,7 +77,7 @@ npm run check
 
 自动测试覆盖业务规则、隐私、接口、规划限制、模型涉水与布局、整组资源生命周期、触屏误点和窄屏取景。GitHub Actions 在推送和拉取请求时执行以上检查。
 
-可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 和 `python tools/wuhan-flow-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing`、`python tools/destination-check.py shenzhen` 、`python tools/destination-check.py shunde`、`python tools/destination-check.py guangzhou` 、`python tools/destination-check.py changsha` 或 `python tools/destination-check.py xian`。详细范围见 [验收说明](docs/TESTING.md)。
+可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 、`python tools/wuhan-flow-check.py` 和 `python tools/wuhan-entry-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing`、`python tools/destination-check.py shenzhen` 、`python tools/destination-check.py shunde`、`python tools/destination-check.py guangzhou` 、`python tools/destination-check.py changsha` 或 `python tools/destination-check.py xian`。详细范围见 [验收说明](docs/TESTING.md)。
 
 ## 已知边界
 

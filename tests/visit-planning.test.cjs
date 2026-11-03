@@ -1,6 +1,15 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const d=require('../shared/domain.cjs'),planner=require('../shared/planner.cjs'),{getCatalog}=require('../shared/catalog.cjs');
 const {dateAt}=require('../shared/visit-rules.cjs');
+test('A destination can enter only an open trip in its own city; final, closed and unknown states stay read-only',async()=>{
+  const {tripsForPlace}=await import('../web/travel-place-selection.js');
+  const rooms=[{id:'a',city:'武汉',status:'ideas'},{id:'b',city:'武汉',status:'confirm'},{id:'c',city:'武汉',status:'final'},{id:'d',city:'武汉',status:'closed'},{id:'e',city:'上海',status:'ideas'},{id:'f',status:'ideas'},{id:'g',city:'武汉',status:'unknown'}];
+  const before=structuredClone(rooms);
+  assert.deepEqual(tripsForPlace(rooms,'武汉').map(r=>r.id),['a','b']);
+  assert.deepEqual(tripsForPlace(rooms,'上海').map(r=>r.id),['e']);
+  assert.deepEqual(tripsForPlace(rooms,'杭州').map(r=>r.id),['f']);
+  assert.deepEqual(rooms,before);
+});
 function room(extra={},prefs={}){const r=d.create('a',{city:'上海',startDate:'2026-11-08',days:1,...extra});d.apply(r,'a','preferences',{tags:[],wants:[],must:[],avoid:[],budget:2000,maxWalk:12,startHour:8,...prefs});return r;}
 test('All 17 miniature modules have valid scoped travel destinations; adding a choice preserves drafts and private limits',async()=>{
   const {SHANGHAI_PLACE_LINKS:links}=await import('../web/shanghai-place-links.js');

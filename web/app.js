@@ -1,5 +1,5 @@
 import {preferenceWarnings,canRespondToPlan} from './travel-preflight.js';
-import {selectPlace} from './travel-place-selection.js';
+import {selectPlace,tripsForPlace} from './travel-place-selection.js';
 import {createPlanetLoader} from './planet-loader.js';
 import {readScenery,setupScenery} from './planet-wardrobe.js';
 import {memberSummary,memberResponses} from './travel-members.js';
@@ -185,7 +185,25 @@ function addPlaceToIdeas(id){
   const removed=current.avoid?.includes(id);ideasPanel(null,selectPlace(current,id));saveDraft();
   toast('已选中「'+place.name+'」，提交后旅伴才能看到。'+(removed?'已取消该地点的「不去」。':''));
 }
-function placePanel(id,returnView=null){const p=byId(id);if(!p)return;rememberIdeasReturn();state.placeReturn=returnView;openPanel(p.name,`${returnView?'<button class="text-button itinerary-back" data-action="return-itinerary">← 返回当天行程</button>':'<button class="text-button itinerary-back" data-action="catalog">← 景点目录</button>'}${!returnView?ideasBackLink():''}<p class="muted">${esc(p.description)}</p><div class="tag-line">${p.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div><p class="section-title">安排时参考</p><p class="muted">${p.exclusiveDay?'单独安排一天；':''}游览约 ${p.minutes} 分钟，景点内步行约 ${p.walk} 公里。均为规划估算。</p>${p.visitNote?`<div class="inline-message">${esc(p.visitNote)}${p.closedWeekdays?.length?'<br>节假日与临时调整以官方公告为准。':''}</div>`:p.reservation?'<div class="inline-message">涉及票务或游船，出发前请核实开放、票价与预约。</div>':''}${p.costNote?`<p class="muted">${esc(p.costNote)}</p>`:''}<a class="text-button" href="${esc(p.source)}" target="_blank" rel="noopener">查看官方介绍与规则 ↗</a>${state.room?(!state.room.final&&!state.room.closed?`<div class="form-actions"><button class="primary" data-action="add-place" data-id="${esc(id)}">放进我的想法</button></div>`:'<p class="tiny">旅行已定稿或关闭，当前仅能查看。</p>'):`<div class="form-actions"><button class="primary" data-action="create-from-place" data-id="${esc(id)}">从这里发起旅行</button></div>`}`,'place');}
+async function chooseTripForPlace(id){
+  const place=byId(id);if(!place)return;
+  openPanel('选一趟'+currentCity+'旅行','<p class="empty" role="status" aria-busy="true">正在找回你的旅行…</p>','place-trips');
+  $('#close-sheet').focus({preventScroll:true});
+  const epoch=state.panelEpoch,seq=state.route,current=()=>state.panel==='place-trips'&&state.panelEpoch===epoch&&state.route===seq;
+  const back=`<button class="text-button itinerary-back" data-action="place" data-id="${esc(id)}">← 返回景点</button>`;
+  try{
+    const {rooms}=await api('/rooms');if(!current())return;
+    if(!Array.isArray(rooms))throw new Error('旅行列表没有加载完整，请重试。');
+    const available=tripsForPlace(rooms,currentCity);
+    $('#sheet-content').innerHTML=back+`<p class="muted">把「${esc(place.name)}」放进哪趟旅行？只加入你的草稿，提交后才与旅伴分享。</p>`+
+      (available.length?available.map(r=>`<button class="room-list" data-action="select-trip-for-place" data-id="${esc(r.id)}" data-place="${esc(id)}"><span class="place-icon">＋</span><span><strong>${esc(r.title)}</strong><small>${esc(dateLabel(r.startDate,r.days))} · ${r.members} 位旅伴</small></span><span class="chevron">→</span></button>`).join(''):'<p class="empty">还没有可以添加景点的'+currentCity+'旅行。<br>已定稿或关闭的旅行不会在这里修改。</p>')+
+      `<button class="secondary full-width section-gap" data-action="create-from-place" data-id="${esc(id)}">带上这个景点，发起新旅行</button>`;
+  }catch(error){
+    if(!current())return;
+    $('#sheet-content').innerHTML=back+`<p class="error-text" role="alert">${esc(error.message)}</p><button class="primary full section-gap" data-action="choose-trip-for-place" data-id="${esc(id)}">重新加载旅行</button>`;
+  }
+}
+function placePanel(id,returnView=null){const p=byId(id);if(!p)return;rememberIdeasReturn();state.placeReturn=returnView;openPanel(p.name,`${returnView?'<button class="text-button itinerary-back" data-action="return-itinerary">← 返回当天行程</button>':'<button class="text-button itinerary-back" data-action="catalog">← 景点目录</button>'}${!returnView?ideasBackLink():''}<p class="muted">${esc(p.description)}</p><div class="tag-line">${p.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div><p class="section-title">安排时参考</p><p class="muted">${p.exclusiveDay?'单独安排一天；':''}游览约 ${p.minutes} 分钟，景点内步行约 ${p.walk} 公里。均为规划估算。</p>${p.visitNote?`<div class="inline-message">${esc(p.visitNote)}${p.closedWeekdays?.length?'<br>节假日与临时调整以官方公告为准。':''}</div>`:p.reservation?'<div class="inline-message">涉及票务或游船，出发前请核实开放、票价与预约。</div>':''}${p.costNote?`<p class="muted">${esc(p.costNote)}</p>`:''}<a class="text-button" href="${esc(p.source)}" target="_blank" rel="noopener">查看官方介绍与规则 ↗</a>${state.room?(!state.room.final&&!state.room.closed?`<div class="form-actions"><button class="primary" data-action="add-place" data-id="${esc(id)}">放进我的想法</button></div>`:'<p class="tiny">旅行已定稿或关闭，当前仅能查看。</p>'):`<div class="form-actions"><button class="primary" data-action="create-from-place" data-id="${esc(id)}">从这里发起旅行</button></div><button class="secondary full-width section-gap" data-action="choose-trip-for-place" data-id="${esc(id)}">放进已有旅行</button>`}`,'place');}
 function proposal(id){return state.room.proposals.find(p=>p.id===id)||state.room.history.flatMap(h=>h.proposals||[h.proposal]).find(p=>p.id===id)||(state.room.final?.proposal?.id===id?state.room.final.proposal:null);}
 function plansPanel(){
   const r=state.room;if(!r)return;if(!r.proposals.length){if(r.closed){if(r.final)itineraryPanel(null,true);else opinionsPanel();}else generatePanel();return;}
@@ -329,6 +347,12 @@ async function handleAction(button){const action=button.dataset.action,id=button
   if(action==='adjust-budget'){const section=$('#preference-limits');if(section){section.open=true;section.scrollIntoView({block:'start'});section.querySelector('[name=budget]').focus({preventScroll:true});}return;}
   if(action==='add-place')return addPlaceToIdeas(id);
   if(action==='create-from-place')return createPanel(id);
+  if(action==='choose-trip-for-place')return chooseTripForPlace(id);
+  if(action==='select-trip-for-place'){
+    if(!byId(button.dataset.place))return;
+    state.pendingPlace={roomId:id,id:button.dataset.place};
+    closePanel();location.hash='#trip/'+id;return;
+  }
   if(action==='retry-draft')return saveDraft();
   if(action==='retry-invite')return invitePreview(id,button.dataset.token);
   if(action==='itinerary-day')return showItineraryDay(Number(id));
@@ -423,12 +447,15 @@ async function syncRoom(id,seq,{allowBusy=false}={}){
   finally{if(pendingPoll===owner)pendingPoll=null;}
 }
 async function route({keepScenery=false}={}){const seq=++state.route,hash=location.hash||'#travel';state.ideasReturn=null;if(!(keepScenery&&state.panel==='scenery'&&['#travel','#portfolio'].includes(hash)))closePanel();clearInterval(state.poll);state.room=null;state.syncFailed=false;$('#more').disabled=false;$('#main').classList.remove('loading-page');state.view='travel';render();
+  if(state.pendingPlace&&hash!=='#trip/'+state.pendingPlace.roomId)state.pendingPlace=null;
   const trip=hash.match(/^#trip\/([a-z0-9-]+)$/),invite=hash.match(/^#join\/([a-z0-9-]+)\/([\w-]+)$/);
   if(hash==='#about'){state.view='travel';render();aboutPanel();return;}
   if(!state.ready)return start();
   if(invite)return invitePreview(invite[1],invite[2]);
+  const entry={'#catalog':catalogPanel,'#join':joinPanel,'#create':createPanel,'#mytrips':myTrips}[hash];
+  if(entry){entry();return;}
   const place=hash.match(/^#place\/([a-z0-9-]+)$/);if(place&&byId(place[1])){placePanel(place[1]);return;}
-  if(trip){$('#main').classList.add('loading-page');$('#more').disabled=true;$('#heading').innerHTML='<p class="eyebrow">一起去</p><h1>正在打开旅行</h1><p class="subline">找回大家的想法…</p>';$('#action-area').innerHTML='<button class="primary" disabled>稍等一下</button>';try{const {room}=await api('/rooms/'+trip[1]);if(seq!==state.route)return;if(redirectCity(room.city))return;state.room=room;render();if(state.pendingInvite===room.id){state.pendingInvite=null;if(state.pendingPlace?.roomId===room.id){const id=state.pendingPlace.id;state.pendingPlace=null;addPlaceToIdeas(id);}else invitePanel();}state.poll=setInterval(()=>syncRoom(trip[1],seq),4500);}catch(e){if(seq===state.route){render();openPanel('暂时无法打开旅行',`<p class="error-text">${esc(e.message)}</p><button class="primary full" data-action="retry-room">重新打开旅行</button><button class="text-button full-width" data-action="mytrips">查看我的旅行</button>`,'room-error');}}finally{if(seq===state.route){$('#main').classList.remove('loading-page');$('#more').disabled=false;}}}
+  if(trip){$('#main').classList.add('loading-page');$('#more').disabled=true;$('#heading').innerHTML='<p class="eyebrow">一起去</p><h1>正在打开旅行</h1><p class="subline">找回大家的想法…</p>';$('#action-area').innerHTML='<button class="primary" disabled>稍等一下</button>';try{const {room}=await api('/rooms/'+trip[1]);if(seq!==state.route)return;if(redirectCity(room.city))return;state.room=room;render();if(state.pendingPlace?.roomId===room.id){const id=state.pendingPlace.id;state.pendingPlace=null;state.pendingInvite=null;addPlaceToIdeas(id);}else if(state.pendingInvite===room.id){state.pendingInvite=null;invitePanel();}state.poll=setInterval(()=>syncRoom(trip[1],seq),4500);}catch(e){if(seq===state.route){render();openPanel('暂时无法打开旅行',`<p class="error-text">${esc(e.message)}</p><button class="primary full" data-action="retry-room">重新打开旅行</button><button class="text-button full-width" data-action="mytrips">查看我的旅行</button>`,'room-error');}}finally{if(seq===state.route){$('#main').classList.remove('loading-page');$('#more').disabled=false;}}}
 }
 window.addEventListener('hashchange',route);window.addEventListener('offline',()=>toast('网络断开了，可以先写想法；提交需等网络恢复。'));window.addEventListener('online',()=>{if(!state.ready)start();else{toast('网络恢复了，可以继续提交。');if(state.room)syncRoom(state.room.id,state.route);}});window.addEventListener('beforeunload',saveDraft);
 async function start(){if(state.connecting)return;state.connecting=true;state.connectionError='';state.view='travel';render();try{const status=await api('/status');const catalog=await api('/catalog?city='+encodeURIComponent(currentCity));if(!status?.user?.id||!Array.isArray(catalog?.places)||!catalog.places.length||!Array.isArray(catalog.tags))throw new Error('旅行资料没有加载完整，请重新连接。');state.user=status.user;state.ai=Boolean(status.ai);state.places=catalog.places;state.tags=catalog.tags;state.ready=true;await route({keepScenery:true});}catch(e){state.ready=false;state.connectionError=e.message;}finally{state.connecting=false;if(!state.ready)render();}}

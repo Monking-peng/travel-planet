@@ -8,3 +8,25 @@ body.night #night{color:#21414b}
 /* Seventeen destinations remain within two desktop rows. */
 .landmark-nav{grid-template-columns:repeat(9,minmax(0,1fr))}.landmark-nav button:nth-child(8n){border-right:1px solid var(--line)}.landmark-nav button:nth-child(9n){border-right:0}
 @media(max-width:1100px){.landmark-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.landmark-nav button:nth-child(6n){border-right:0}}
+
+/* Travel actions remain outside the canvas and the scrolling city navigation. */
+.city-header .city-switch{min-width:0;overflow-x:auto;scrollbar-width:thin}
+.city-header .city-switch a{white-space:nowrap;flex:0 0 auto;padding-inline:15px}
+.city-header .brand,.city-header #night{flex-shrink:0}
+.wuhan-travel-entry{display:flex;align-items:center;gap:22px;padding:16px 44px;border-bottom:1px solid var(--line);background:var(--panel)}
+.wuhan-travel-entry>div{display:flex;align-items:baseline;gap:16px;margin-right:auto}
+.wuhan-travel-entry strong{font-size:17px;white-space:nowrap}
+.wuhan-travel-entry span{color:var(--muted);font-size:12px}
+.wuhan-travel-entry .trip-entry{min-height:44px;white-space:nowrap}
+.wuhan-travel-entry .travel-secondary{display:inline-flex;align-items:center;min-height:44px;font-size:13px;white-space:nowrap;text-decoration:underline;text-underline-offset:4px}
+.wuhan-travel-entry~.scene-stage{height:calc(100vh - 312px)}
+@media(max-width:1100px){.wuhan-travel-entry{padding-inline:28px;gap:16px}.wuhan-travel-entry>div{display:block}.wuhan-travel-entry span{display:block;margin-top:6px}}
+@media(max-width:760px){
+  .city-header .city-switch{max-width:100%}
+  .wuhan-travel-entry{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;padding:12px 16px}
+  .wuhan-travel-entry>div{grid-column:1/-1;margin:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
+  .wuhan-travel-entry strong{font-size:16px}.wuhan-travel-entry span{margin:0;font-size:11px}
+  .wuhan-travel-entry .trip-entry{grid-column:1/-1;margin-top:6px}
+  .wuhan-travel-entry .travel-secondary{justify-content:center}
+  .wuhan-travel-entry~.scene-stage{height:auto;min-height:0}
+}
