@@ -123,14 +123,14 @@ export const LANDMARKS=[
   "x": 1.49691,
   "z": 0.09617,
   "hemisphere": -1,
-  "height": 1.44,
+  "height": 1.55,
   "distance": 3.2,
   "view": [
    0.45,
    0.65,
    1.9
   ],
-  "description": "金色莲瓣塔身从窄腰向上展开，下方是拼花反光曲面基座；细密窗格和暖金色灯光保留昼夜的材质关系。",
+  "description": "窄腰托起中部外扩、顶部逐级收拢的莲瓣塔身，金色横向幕墙包裹完整侧面。三角玻璃基座映衬入口，夜晚由纤细弧线灯和拼面灯光缓慢变换。",
   "source": "https://bbs.voc.com.cn/topic-3742324-1-1.html",
   "grounded": true,
   "facesHarbour": true

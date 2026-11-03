@@ -26,3 +26,21 @@ test('Macau keeps St Paul doorways and all three Morpheus tunnels genuinely open
   assert.ok(new T.Raycaster(new T.Vector3(.29,.7,.3),new T.Vector3(0,0,-1),0,.6).intersectObject(m,true).length>0);
  }finally{models.forEach(g=>g.traverse(o=>o.geometry?.dispose()));k.materials.forEach(m=>m.dispose());}
 });
+
+test('Grand Lisboa has a narrow waist, stepped-in crown, solid side walls and an open recessed entrance',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{createLandmark}=await import('../web/macau-landmarks.js');
+ const clock={time:{value:0},night:{value:0}},k=makeKit(clock);k.clock=clock;const g=createLandmark(k,'lisboa');g.updateMatrixWorld(true);
+ const ray=(origin,direction,distance)=>new T.Raycaster(new T.Vector3(...origin),new T.Vector3(...direction),0,distance).intersectObject(g,true);
+ try{
+  const halfWidth=y=>{const hits=ray([1,y,0],[-1,0,0],2);assert.ok(hits.length,'Side views must see a closed tower, not disconnected petal sheets');return hits[0].point.x;};
+  const waist=halfWidth(.65),shoulder=halfWidth(1.045),crown=halfWidth(1.37);
+  assert.ok(shoulder>waist*2.3&&shoulder>crown*1.2,'The shoulder must be wider than both the waist and upper crown');
+  for(const y of [.6,.95,1.30])for(const side of [-1,1]){
+   const hits=ray([0,y,side*.4],[0,0,-side],.8);assert.ok(hits.length&&hits[0].distance<.31,'Both glass faces must close the depth of the building');
+  }
+  assert.equal(ray([0,.10,.46],[0,0,-1],.13).length,0,'The lobby opening must not be covered by a filled arch');
+  assert.ok(ray([.11,.10,.46],[0,0,-1],.13).length>0,'The entrance surround remains solid');
+  const materials=new Set();g.traverse(o=>{if(o.isMesh)materials.add(o.material);});
+  for(const m of materials){if(!m.customProgramCacheKey().startsWith('lisboa-'))continue;const s={uniforms:{},vertexShader:'#include <begin_vertex>',fragmentShader:'#include <color_fragment>\n#include <emissivemap_fragment>'};m.onBeforeCompile(s);assert.equal(s.uniforms.lisboaTime,clock.time);assert.equal(s.uniforms.lisboaNight,clock.night);}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

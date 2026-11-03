@@ -8,20 +8,7 @@ export function tower(k){const g=new THREE.Group(),p=palette(k);site(k,g,p);cons
  for(let i=0;i<40;i++){const a=i/40*TAU;k.beam(g,[.111*Math.cos(a),1.22,.111*Math.sin(a)],[.111*Math.cos(a),1.286,.111*Math.sin(a)],.0012,p.steel);}
  for(let j=0;j<5;j++)k.cyl(g,.008-j*.0013,.010-j*.0013,.065,p.pale,0,1.355+j*.065,0,12);
  k.ball(g,.003,lit(k,'#b95643',.7,1),0,1.65,0);return finish(k,g,{lamps:[[-.19,.025,.15],[.19,.025,.15]],visitors:[[-.18,.026,.20],[.22,.026,.25]]});}
-export function lisboa(k){const g=new THREE.Group(),p=palette(k);site(k,g,p);const gold=windowGlass(k,'#bb9851',52,'#f1cc72');gold.roughness=.47;gold.metalness=.30;
- const base=k.mat('#bda96b',.46,.30);base.onBeforeCompile=s=>{s.vertexShader='varying vec3 vGold;\n'+s.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvGold=position;');s.fragmentShader='varying vec3 vGold;\n'+s.fragmentShader;s.fragmentShader=s.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
- vec2 c=vec2(atan(vGold.z,vGold.x)*22.,vGold.y*65.);float q=fract(sin(dot(floor(c),vec2(43.7,89.3)))*43758.5);diffuseColor.rgb*=mix(vec3(.48,.58,.60),vec3(1.13,.99,.64),q);float seam=min(fract(c.x+c.y),fract(c.x-c.y));diffuseColor.rgb*=mix(.60,1.,step(.06,seam));`);};base.customProgramCacheKey=()=> 'lisboa-mosaic';
- ellipsoid(k,g,base,0,.255,0,.49,.235,.33);k.box(g,.21,.12,.07,p.dark,0,.09,.30);sign(k,g,'GRAND LISBOA',.20,.025,0,.176,.331,{background:'#5b3526',color:'#e6cf8c'});
- // The flower opens upward around a narrow stem. Seven staggered ribs are
- // separate stepped petals rather than a cylinder with a painted gold skin.
- const stem=(u,v)=>{const a=u*TAU,r=.13+.10*v*v;return [Math.cos(a)*r,.31+.53*v,Math.sin(a)*r*.58];};skin(k,g,stem,36,64,gold);frame(k,g,stem,14,24,p.gold,.0012);
- for(let j=0;j<6;j++){
-  const bottom=.60+j*.08,top=1.04+j*.050,width=.29+j*.010;
-  const front=(u,v)=>{const xx=(u-.5)*2,rx=.125+(width-.125)*v,yy=bottom+(top-bottom)*v+.07*v**4*xx*xx;return [xx*rx,yy,.115+.022*(5-j)+.025*Math.sin(v*Math.PI)*(1-xx*xx)];};
-  for(const side of [-1,1]){const f=(u,v)=>{const a=front(u,v);a[2]*=side;return a;};skin(k,g,f,24,32,gold);frame(k,g,f,12,12,p.gold,.001);k.line(g,Array.from({length:48},(_,i)=>f(i/47,1)),.0035,p.gold);for(const edge of [0,1])k.line(g,Array.from({length:24},(_,i)=>f(edge,i/23)),.0025,p.gold);}
- }
- k.cyl(g,.02,.055,.055,p.gold,0,1.33,0,24);for(let i=0;i<8;i++){const a=i/8*TAU;k.line(g,[[Math.cos(a)*.035,1.35,Math.sin(a)*.035],[Math.cos(a)*.018,1.41,Math.sin(a)*.018],[0,1.43,0]],.0015,p.pale);}
- return finish(k,g,{lamps:[[-.50,.026,.22],[.50,.026,.22]],visitors:[[-.20,.026,.39],[.21,.026,.39]]});}
+export {lisboa} from './macau-lisboa.js';
 export const MORPHEUS_HOLES=[{x:0,y:.43,rx:.108,ry:.126,phase:.4},{x:.022,y:.76,rx:.113,ry:.145,phase:2},{x:-.015,y:1.055,rx:.073,ry:.077,phase:4}];
 function holePoint(h,a){const r=1+.15*Math.sin(a*3+h.phase);return [h.x+Math.cos(a)*h.rx*r,h.y+Math.sin(a)*h.ry*r];}
 function holeDistance(x,y,h){const a=Math.atan2((y-h.y)/h.ry,(x-h.x)/h.rx),r=1+.15*Math.sin(a*3+h.phase);return Math.hypot((x-h.x)/h.rx,(y-h.y)/h.ry)-r;}
