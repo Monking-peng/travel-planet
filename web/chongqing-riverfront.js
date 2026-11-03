@@ -22,24 +22,7 @@ export function raffles(k){
  return finish(k,g,{lamps:[[-.28,.35],[.28,.35],[-.57,.04],[.57,.04]],visitors:[[-.14,.35],[.16,.34],[0,.39]]});
 }
 
-export function hongya(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.80,.60);const cliff=k.mat('#7a7968',.98),cream=k.mat('#b79e72',.89),tiles=k.mat('#504d3e',.87),windows=glow(k,'#e4ad60',.42,1,.35);
- // Cliff and terraces explain the multi-level streets, without anonymous buildings.
- for(let j=0;j<5;j++)k.box(g,1.20-j*.06,.065,.33,cliff,0,.052+j*.065,-.18-j*.035);
- const blocks=[[-.48,.15,.22,.22,3],[-.25,.12,.24,.25,5],[.02,.08,.28,.27,6],[.31,.04,.27,.28,8],[.52,.02,.17,.23,5],[-.41,-.20,.25,.21,6],[-.12,-.22,.28,.22,7],[.19,-.24,.32,.23,9]];
- for(const [x,z,w,d,floors]of blocks){const bottom=.065,fh=.065,h=fh*floors;k.box(g,w*.88,h,d*.78,cream,x,bottom+h/2,z);
-  for(let n=0;n<floors;n++){const y=bottom+n*fh;for(const sx of [-1,1]){k.box(g,.006,fh,.006,p.wood,x+sx*w*.45,y+fh/2,z+d*.43);k.beam(g,[x+sx*w*.48,y,z+d*.49],[x,y+.045,z+d*.42],.002,p.wood);}k.box(g,w,.008,d,p.wood,x,y,z);facade(k,g,w*.80,.045,x,y+.033,z+d*.403,p.wood,p.wood,{bays:5,rows:1,lit:windows});balcony(k,g,x,z+d*.54,w*.98,y+.005,p.wood);k.box(g,w*.98,.0015,.002,p.warm,x,y+.008,z+d*.55);
-   if(n%2===0){const ln=glow(k,'#d65c35',.55,n,.35);for(const side of [-1,1])k.ball(g,.0055,ln,x+side*w*.37,y+.041,z+d*.53);}
-  }
-  hip(k,g,w*1.23,d*1.18,.044,bottom+h+.005,tiles,p.warm,x,z);
-  if(floors>=6)hip(k,g,w*1.12,d*.84,.037,bottom+h-.14,tiles,p.warm,x,z+.04);
-  for(const side of [-1,1])k.beam(g,[x+side*w*.42,.022,z+d*.46],[x+side*w*.42,.20,z+d*.46],.004,p.wood);
- }
- for(let j=0;j<13;j++)k.box(g,.16,.010,.025,p.stone,-.57,.04+j*.020,.25-j*.025);
- sign(k,g,'洪崖洞',.19,.050,.31,.56,.20,{background:'#9e392c',color:'#ffe1a0'});quay(k,g,p,1.28,.36);
- for(let i=0;i<7;i++){const x=-.56+i*.18;k.box(g,.10,.04,.045,p.wood,x,.047,.28);hip(k,g,.12,.07,.016,.073,tiles,p.warm,x,.28);}
- return finish(k,g,{lamps:[[-.60,.41],[0,.41],[.60,.41]],visitors:Array.from({length:19},(_,i)=>[-.54+(i%10)*.12,.41+Math.floor(i/10)*.04])});
-}
+export {hongya} from './chongqing-hongya.js';
 
 export function qiansimen(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,.88,.54);disc(k,g,.83,.48,.020,p.water);const white=k.mat('#d1d2c5',.7),red=k.mat('#bf5834',.6,.20),steel=k.mat('#57625f',.61,.34),light=glow(k,'#f2a763',1.1,.5,.42);white.userData.bridgeTower=true;

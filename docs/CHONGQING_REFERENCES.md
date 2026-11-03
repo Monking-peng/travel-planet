@@ -4,7 +4,7 @@
 
 | 地标 | 已核看的形态 | 参考 |
 | --- | --- | --- |
-| 洪崖洞 | 依崖错层的吊脚楼、木格立面、连续露台、深色屋面、暖金檐灯与红灯笼 | [游客夜景实拍](https://kr.trip.com/moments/detail/chongqing-158-130928534/) |
+| 洪崖洞 | 临江三角山墙、黑木框架与浅色墙板、错层开放露台、右侧高阁、暗窗、金色檐灯与红灯笼 | [正面日景报道](https://www.thepaper.cn/newsDetail_forward_28863739)、[游客夜景实拍](https://kr.trip.com/moments/detail/chongqing-158-130928534/) |
 | 来福士·朝天门 | 八座塔楼、前排四塔上的圆弧玻璃连廊、两座后排高塔、银灰竖框与深色玻璃、收拢的裙楼 | [Safdie Architects 项目资料](https://www.safdiearchitects.com/projects/raffles-city-chongqing)、[The Crystal 实拍](https://int.design/fr/projets/the-crystal-the-conservatory-raffles-city-chongqing/) |
 | 千厮门大桥 | 白色天梭形独塔、塔身中部开口、红色单索面斜拉索、上下两层桥面与钢桁架 | [设计单位资料与照片](https://www.cmct.cn/index.php?c=show&id=557) |
 | 重庆大剧院 | 石材平台、倾斜浅绿玻璃壳体、两座较高舞台体量、细密玻璃分缝与折面轮廓 | [gmp 建筑师资料与摄影](https://www.gmp.de/en/projects/472/chongqing-grand-theater) |
@@ -24,3 +24,12 @@
 ![洪崖洞夜景模型](images/chongqing-hongya-night.png)
 
 ![人民大礼堂模型](images/chongqing-great-hall.png)
+
+
+## 洪崖洞细化（0.55.1）
+
+对照正面日景与沿街夜照，替换重复楼块和沿街小房子：临江屋顶增加前向山墙，后方保留连续退台廊道；木框、浅墙板、深窗、吊脚支撑、转折楼梯和入口券洞分别建模。金色灯光落在檐边、立柱和廊下，减少整面窗墙发亮。模型背面的崖坡是适应球面的连续地形，不声称还原背街道路及精确楼层。
+
+![洪崖洞日景模型](images/chongqing-hongya-day.png)
+
+![洪崖洞侧向模型](images/chongqing-hongya-oblique.png)

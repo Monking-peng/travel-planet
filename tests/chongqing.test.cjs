@@ -1,6 +1,21 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Hongya galleries have actual setback depth and the riverfront entrance stays open',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{hongya}=await import('../web/chongqing-hongya.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=hongya(k);g.updateMatrixWorld(true);
+ try{
+  const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+  const gallery=new T.Raycaster(new T.Vector3(-.49,.083,.32),new T.Vector3(0,0,-1),0,.079);
+  assert.equal(gallery.intersectObjects(meshes).length,0,'Balcony must have clear depth ahead of the recessed room');
+  gallery.far=.15;assert.ok(gallery.intersectObjects(meshes).length>0,'Recessed room must still exist behind the balcony');
+  const masonry=meshes.filter(o=>o.material.userData.hongyaStone);
+  const entry=new T.Raycaster(new T.Vector3(.602,.080,.28),new T.Vector3(0,0,-1),0,.11);
+  assert.equal(entry.intersectObjects(masonry).length,0,'Street arch must not be a painted opening');
+  entry.ray.origin.x=.665;assert.ok(entry.intersectObjects(masonry).length>0,'Arch side pier must remain solid');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Chongqing landmarks occupy both hemispheres with clear ground margins and finite surfaces',async()=>{
  const T=await import('three'),{createChongqingScene,RADIUS}=await import('../web/chongqing-scene.js'),s=createChongqingScene();s.root.updateMatrixWorld(true);
  try{const caps=[];for(const [id,g]of s.landmarks){const normal=g.position.clone().normalize();let radius=0;g.traverse(m=>{if(!m.isMesh)return;const a=m.geometry.attributes.position;for(let i=0;i<a.count;i++){const p=new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld);assert.ok(p.length()>RADIUS-.002,`${id} sinks below the sphere`);radius=Math.max(radius,normal.angleTo(p));}for(const key of ['position','normal'])for(const v of m.geometry.attributes[key].array)assert.ok(Number.isFinite(v));});caps.push({id,normal,radius});}
