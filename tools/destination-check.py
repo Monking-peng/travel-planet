@@ -9,6 +9,7 @@ configs={'beijing':{'count':12,'focus':'theatre','first':'palace','night':['pala
 configs['shunde']={'count':8,'focus':'hem','first':'qinghui','night':['qinghui','shunfeng','hem','huagai','fengjian','theatre','bijiang','baolin'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html']}
 configs['guangzhou']={'count':11,'focus':'museum','first':'canton','night':['canton','twins','opera','museum','memorial','chen','cathedral','rams','haixin','huacheng','shamian'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html','shunde.html']}
 configs['changsha']={'count':10,'focus':'dufu','first':'dufu','night':['juzizhou','dufu','yuelu','aiwan','tianxin','juzhouBridge','ifs','museum','meixi','xie'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html','shunde.html','guangzhou.html']}
+configs['xian']={'count':8,'focus':'bell','first':'bell','night':['bell','drum','wall','pagoda','smallPagoda','museum','furong','warriors'],'routes':['','shanghai-trip.html','wuhan-trip.html','shanghai.html','wuhan.html','beijing.html','shenzhen.html','shunde.html','guangzhou.html','changsha.html']}
 assert city in configs, 'Unknown city viewer'
 config=configs[city];count=config['count'];focus=config['focus'];first=config['first']
 out=root/'test-results'/('destination-'+city);out.mkdir(parents=True,exist_ok=True)
