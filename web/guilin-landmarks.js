@@ -1,0 +1,147 @@
+import {elephant,moon,xingping} from './guilin-karst.js';
+import {twins,jingjiang,xiaoyao} from './guilin-heritage.js';
+import {fuli,longji} from './guilin-terraces.js';
+export const LANDMARKS=[
+ {
+  "id": "elephant",
+  "name": "象鼻山·水月洞",
+  "area": "漓江水岸 · 石山穿洞",
+  "x": -1.08,
+  "z": 0.94,
+  "height": 0.64,
+  "distance": 3.15,
+  "view": [
+   -0.65,
+   0.72,
+   1.9
+  ],
+  "description": "石灰岩山体俯向漓江，水月洞贯通山脚，灰白崖壁、青绿山顶和竹筏构成桂林的山水轮廓。",
+  "source": "https://www.pelago.com/en-AU/activity/p0zy70bfn-private-guilin-half-day-tour-fubo-mountain-reed-flute-cave-and-elephant-hill-guilin/",
+  "grounded": true
+ },
+ {
+  "id": "twins",
+  "name": "杉湖·日月双塔",
+  "area": "九层铜塔 · 七层琉璃塔",
+  "x": 1.08,
+  "z": 0.94,
+  "height": 1.13,
+  "distance": 3.2,
+  "view": [
+   0.7,
+   0.75,
+   1.9
+  ],
+  "description": "铜色日塔与青灰色月塔隔水相映，八角回廊与层层翘檐逐渐收分，夜晚呈现金色与冷白色的灯光层次。",
+  "source": "https://www.glljsh.com/products/60.html?page=2&per-page=10",
+  "grounded": true
+ },
+ {
+  "id": "jingjiang",
+  "name": "靖江王府·独秀峰",
+  "area": "王城门楼 · 孤峰拔地",
+  "x": -1.08,
+  "z": -0.94,
+  "height": 0.77,
+  "distance": 3.3,
+  "view": [
+   0.42,
+   0.87,
+   1.9
+  ],
+  "description": "黄色王府门楼、灰瓦飞檐和贯通拱门朝向石阶，后方独秀峰拔地而起，峰顶小亭点出山城相依的尺度。",
+  "source": "https://gs.ctrip.com/html5/you/sight/guilin28/5066548.html",
+  "grounded": true
+ },
+ {
+  "id": "xiaoyao",
+  "name": "逍遥楼",
+  "area": "漓江楼阁 · 三重檐顶",
+  "x": 1.08,
+  "z": -0.94,
+  "height": 0.85,
+  "distance": 3.15,
+  "view": [
+   0.3,
+   0.65,
+   1.9
+  ],
+  "description": "深色木构与三重灰瓦屋檐层层上收，入口门廊、白石栏杆和宽石阶面向楼前广场。",
+  "source": "https://k.sina.cn/article_1608094690_5fd993e200100xofg.html",
+  "grounded": true
+ },
+ {
+  "id": "xingping",
+  "name": "阳朔·兴坪漓江",
+  "area": "峰林倒影 · 竹筏缓行",
+  "x": -1.08,
+  "z": 0.94,
+  "height": 0.86,
+  "distance": 3.4,
+  "view": [
+   0.25,
+   0.8,
+   1.9
+  ],
+  "description": "高低不同的喀斯特山峰沿岸展开，灰岩崖面与绿色山脊相间，竹筏穿过宽阔平静的江面。",
+  "source": "https://www.traveliszen.com/stories/2018/four-days-in-yangshuo-guangxi-china",
+  "grounded": true,
+  "hemisphere": -1
+ },
+ {
+  "id": "fuli",
+  "name": "阳朔·富里桥",
+  "area": "单孔石拱 · 遇龙河源流",
+  "x": 1.08,
+  "z": 0.94,
+  "height": 0.51,
+  "distance": 3.2,
+  "view": [
+   0.3,
+   0.65,
+   1.9
+  ],
+  "description": "高拱石桥从两岸拾级而上，放射状拱石围住桥洞，桥旁古树和河上竹筏映衬山水。",
+  "source": "https://www.sohu.com/a/433593049_120792640",
+  "grounded": true,
+  "hemisphere": -1
+ },
+ {
+  "id": "longji",
+  "name": "龙胜·龙脊梯田",
+  "area": "等高田埂 · 层层山田",
+  "x": -1.08,
+  "z": -0.94,
+  "height": 0.4,
+  "distance": 3.3,
+  "view": [
+   0.3,
+   1.55,
+   1.7
+  ],
+  "description": "金绿相间的梯田沿山势起伏，宽窄不同的田面与土埂形成真实高差，木质观景台朝向连续山田。位于桂林市龙胜各族自治县。",
+  "source": "https://gs.ctrip.com/html5/you/sight/longsheng1445120/137435.html",
+  "grounded": true,
+  "hemisphere": -1
+ },
+ {
+  "id": "moon",
+  "name": "阳朔·月亮山",
+  "area": "天然石拱 · 青峰如月",
+  "x": 1.08,
+  "z": -0.94,
+  "height": 0.8,
+  "distance": 3.25,
+  "view": [
+   0.1,
+   0.65,
+   1.9
+  ],
+  "description": "灰白岩壁上的月形石洞贯穿山脊，连绵绿坡托起天然石拱，前景树冠压低，让山体成为主角。",
+  "source": "https://www.visitourchina.com/yangshuo/attraction/the-moon-hill.html",
+  "grounded": true,
+  "hemisphere": -1
+ }
+];
+const builders={elephant,moon,xingping,twins,jingjiang,xiaoyao,fuli,longji};
+export function createLandmark(k,id){if(!builders[id])throw new Error('Unknown Guilin landmark: '+id);return builders[id](k);}
