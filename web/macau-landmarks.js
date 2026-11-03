@@ -9,14 +9,14 @@ export const LANDMARKS=[
   "x": 0.37111,
   "z": 1.45337,
   "hemisphere": 1,
-  "height": 1.02,
+  "height": 1.23,
   "distance": 3.2,
   "view": [
    0.48,
    0.62,
    1.9
   ],
-  "description": "独立石立面保留层叠柱式、透空门窗、侧卷涡与三角山花，前方长阶通向遗址前场。后方保留遗址轮廓，不补造整座教堂。",
+  "description": "五层灰色花岗岩立面逐级收窄，矩形入口、透空上窗、成对柱式与深色铜像壁龛层层展开。长阶通向遗址前场，后侧保留残墙和支撑，不补造完整教堂。",
   "source": "https://www.macaotourism.gov.mo/en/sightseeing/churches/ruins-of-st-pauls",
   "grounded": true,
   "facesHarbour": true

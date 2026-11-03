@@ -1,19 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,disc,siteHeight,steps,sign,finish,extrude,archPath,column,pediment,panel,balustrade,calçada,hip,lit,TAU,archOpening} from './macau-kit.js';
-export function paul(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,p);steps(k,g,p,0,.53,.95,12,.11,.35);
- const z=-.03,y=.135,s=new THREE.Shape();s.moveTo(-.49,y);s.lineTo(.49,y);s.lineTo(.49,y+.48);s.lineTo(.37,y+.48);s.lineTo(.34,y+.63);s.lineTo(.23,y+.63);s.lineTo(.23,y+.75);s.lineTo(0,y+.88);s.lineTo(-.23,y+.75);s.lineTo(-.23,y+.63);s.lineTo(-.34,y+.63);s.lineTo(-.37,y+.48);s.lineTo(-.49,y+.48);s.closePath();
- for(const x of [-.31,0,.31]){s.holes.push(archPath(x,y+.012,.115,x===0?.23:.20));s.holes.push(archPath(x,y+.32,.10,.13));}s.holes.push(archPath(0,y+.56,.08,.14));extrude(k,g,s,p.stone,.065,z);
- for(const [yy,w]of [[0,1.02],[.26,1.02],[.49,.99],[.65,.74],[.76,.49]]){k.box(g,w,.012,.093,p.pale,0,y+yy,z);k.box(g,w+.01,.004,.1,p.stone,0,y+yy+.01,z);}
- for(const yy of [y+.025,y+.285])for(const x of [-.435,-.405,-.19,-.16,.16,.19,.405,.435])column(k,g,p,x,yy,z+.05,.21,.009);
- for(const x of [-.20,-.10,.10,.20])column(k,g,p,x,y+.52,z+.05,.115,.006);
- for(const x of [-.265,.265,-.44,.44]){const yy=y+.54+(Math.abs(x)<.3?.13:0);k.cyl(g,.006,.012,.038,p.pale,x,yy,z,8);k.ball(g,.007,p.pale,x,yy+.026,z);}
- for(const x of [-.26,.26]){k.line(g,[[x*1.3,y+.50,z+.055],[x*1.27,y+.60,z+.055],[x,y+.62,z+.055],[x*.9,y+.55,z+.055]],.008,p.pale);}
- for(const x of [-.24,.24])for(const yy of [y+.11,y+.385]){k.cyl(g,.008,.013,.055,p.pale,x,yy,z+.044,8);k.ball(g,.009,p.pale,x,yy+.038,z+.045);}
- pediment(k,g,p,0,y+.765,z+.01,.46,.115);k.box(g,.007,.055,.01,p.pale,0,y+.905,z);k.box(g,.032,.007,.01,p.pale,0,y+.914,z);
- for(const x of [-.42,.42]){k.box(g,.035,.015,.33,p.stone,x,.04,-.25);k.box(g,.10,.015,.035,p.stone,x*.65,.04,-.39);}
- return finish(k,g,{lamps:[[-.50,.04,.07],[.50,.04,.07]],visitors:[[-.28,.026,.45],[.24,.026,.42],[.07,.026,.46]]});
-}
+export {paul} from './macau-paul.js';
 export function senado(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,p);disc(k,g,.64,.53,(x,z)=>siteHeight(x,z,.72,.62)+.004,calçada(k));
  const z=-.27; k.box(g,.98,.36,.30,p.wall,0,.21,z);hip(k,g,1.02,.34,.075,.39,p.tile,p.pale,0,z);

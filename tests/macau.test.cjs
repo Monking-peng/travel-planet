@@ -44,3 +44,18 @@ test('Grand Lisboa has a narrow waist, stepped-in crown, solid side walls and an
   for(const m of materials){if(!m.customProgramCacheKey().startsWith('lisboa-'))continue;const s={uniforms:{},vertexShader:'#include <begin_vertex>',fragmentShader:'#include <color_fragment>\n#include <emissivemap_fragment>'};m.onBeforeCompile(s);assert.equal(s.uniforms.lisboaTime,clock.time);assert.equal(s.uniforms.lisboaNight,clock.night);}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('St Paul preserves rectangular entrances, three open upper windows and recessed bronze niches',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{createLandmark}=await import('../web/macau-landmarks.js');const k=makeKit({time:{value:0},night:{value:0}}),g=createLandmark(k,'paul');g.updateMatrixWorld(true);
+ const ray=(x,y)=>new T.Raycaster(new T.Vector3(x,y,.16),new T.Vector3(0,0,-1),0,.23).intersectObject(g,true);
+ try{
+  for(const x of [-.058,.058])assert.equal(ray(x,.331).length,0,'The top corners of the central rectangular portal must remain open, not arched over');
+  assert.ok(ray(.078,.331).length>0,'The rectangular portal must have solid jambs');
+  for(const x of [-.3045,0,.3066])assert.equal(ray(x,.51).length,0,'The three second-tier windows remain open through the facade');
+  for(const x of [-.4284,-.1953,.1911,.42])assert.ok(ray(x,.535).length>0,'Each bronze niche has a recessed figure/back instead of another through-window');
+  assert.ok(ray(.12,.51).length>0,'The upper storey remains solid between its openings');
+  for(const y of [.79,1.0])assert.ok(ray(0,y).length>0,'Central upper tiers carry figures rather than empty holes');
+  const lights=[];g.traverse(o=>{if(o.isSpotLight)lights.push(o);});assert.ok(lights.length>0);assert.ok(lights.every(o=>o.intensity===0&&o.target.parent===g),'Facade washes stay inside the removable module and start off in daylight');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
