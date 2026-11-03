@@ -83,3 +83,4 @@
 @media(max-width:360px){.brand span{display:none}.scene-controls{gap:4px;padding-inline:8px}.scene-controls button,.scene-controls #manage-landmarks{padding-inline:9px}.planet-controls{gap:4px}.sheet-content{padding-inline:16px}}
 
 .trip-entry{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:20px;background:#345c4b;color:#fff;text-decoration:none;font-size:13px;font-weight:600}.landmark-detail .trip-entry{margin-top:12px}.city-header{flex-wrap:wrap}@media(max-width:760px){.city-header>.trip-entry{order:4;flex-basis:100%;padding:9px 12px}}
+@media(min-width:761px){.city-header{flex-wrap:nowrap;gap:18px}.city-header>.brand,.city-header>#night,.city-header>.trip-entry{flex-shrink:0;white-space:nowrap}.city-header>.city-switch{flex:1;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}.city-header>.city-switch a{flex:0 0 auto;white-space:nowrap;padding-inline:15px}}
