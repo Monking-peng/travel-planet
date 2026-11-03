@@ -1,5 +1,13 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
+
+test('Suzhou Museum entrance stays open and the recessed skylight is not covered by an opaque roof',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{museum}=await import('../web/suzhou-museum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=museum(k);g.updateMatrixWorld(true);
+ try{const opaque=[];g.traverse(o=>{if(o.material?.userData.museumOpaque)opaque.push(o);});
+  const gate=new T.Raycaster(new T.Vector3(0,.10,.64),new T.Vector3(0,0,-1),0,.16);assert.equal(gate.intersectObjects(opaque).length,0,'Entrance canopy must leave an open path toward the main hall');gate.ray.origin.x=.20;assert.ok(gate.intersectObjects(opaque).length>0,'Entrance side wall must remain present');
+  const sky=new T.Raycaster(new T.Vector3(.01,.42,.28),new T.Vector3(0,-1,0),0,.10);assert.equal(sky.intersectObjects(opaque).length,0,'Skylight needs an actual recess');sky.ray.origin.set(.15,.42,.275);sky.far=.20;assert.ok(sky.intersectObjects(opaque).length>0,'Stone roof around the skylight must remain present');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
 test('Suzhou keeps the Gate of East, Panmen passages and Taihu stone holes physically open',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{orient}=await import('../web/suzhou-modern.js'),{panmen}=await import('../web/suzhou-heritage.js'),{lingering}=await import('../web/suzhou-gardens.js');
  const k=makeKit({time:{value:0},night:{value:0}}),models=[orient(k),panmen(k),lingering(k)];models.forEach(g=>g.updateMatrixWorld(true));

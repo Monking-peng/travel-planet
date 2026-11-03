@@ -14,3 +14,18 @@
 | 平江路胡厢使桥 | 石拱桥、相连小桥、水巷、白墙灰瓦和临水木格窗。少量街屋属于这段具名历史街景，不作无名填充建筑。 | [两桥关系说明](https://swzfw.suzhou.gov.cn/swzfw/pasz/202309/ae5591e44c534d26ae81e329c43a0396.shtml)、[水巷实拍](https://jp.trip.com/travel-guide/attraction/suzhou/pingjiang-road-87769/) |
 
 八组地标分布在两半球，提供日夜切换、自由旋转、逐景近看和整组添加或移除。苏州当前为景观地图，未接入多人旅行。
+
+
+## 0.55.6 苏州博物馆主庭院精修
+
+继续核看[设计事务所项目](https://pei-architects.com/projects/suzhou-museum/)、[设计方航拍](https://pei-architects.com/wp-content/uploads/suzhou_IMG_0812.jpg)与上表馆方入口、菱格屋面及玻璃连廊近照。主厅改为八角体量，灰石坡顶接到有真实凹口的玻璃天窗；侧翼展厅通过玻璃连廊衔接，入口采用通透门庭与双层玻璃雨棚。白墙深灰收边和石材菱格区分墙面、屋面与玻璃。
+
+主水院保留宽阔水面，片石采用不同轮廓、前后错位与灰色层次；细栏折桥连接八角平台，浮叶集中成小片，竹丛留在外围。夜间玻璃内侧用低亮暖光，白墙与灰顶保留日景原色，片石墙使用静态白光。灯光是项目的展示设计，不声称重现现实开放时段或灯光节目。
+
+这是主水院及相连门庭的压缩表达，不是全馆平面或工程模型。原八组景点位置、其他城市与三城多人旅行不变。
+
+![苏博主庭院](images/suzhou-museum.png)
+
+![苏博侧向连廊](images/suzhou-museum-oblique.png)
+
+![苏博夜间展示](images/suzhou-museum-night.png)

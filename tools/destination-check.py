@@ -24,6 +24,7 @@ configs['sanya']={'count': 8, 'focus': 'phoenix', 'first': 'nanshan', 'night': [
 configs['hongkong']={'count': 10, 'focus': 'boc', 'first': 'boc', 'night': ['ifc', 'hsbc', 'cec', 'peak', 'icc', 'clock', 'mplus', 'chilin', 'buddha', 'boc'], 'routes': ['', 'shanghai-trip.html', 'wuhan-trip.html', 'shanghai.html', 'wuhan.html', 'beijing.html', 'shenzhen.html', 'shunde.html', 'guangzhou.html', 'changsha.html', 'xian.html', 'chengdu.html', 'chongqing.html', 'nanjing.html', 'suzhou.html', 'xiamen.html', 'quanzhou.html', 'qingdao.html', 'tianjin.html', 'dali.html', 'guilin.html', 'sanya.html']}
 configs['macau']={'count': 10, 'focus': 'paul', 'first': 'paul', 'night': ['paul', 'senado', 'dominic', 'ama', 'guia', 'tower', 'lisboa', 'taipa', 'science', 'morpheus'], 'routes': ['beijing.html', 'changsha.html', 'chengdu.html', 'chongqing.html', 'dali.html', 'guangzhou.html', 'guilin.html', 'hongkong.html', '', 'nanjing.html', 'qingdao.html', 'quanzhou.html', 'sanya.html', 'shanghai-trip.html', 'shanghai.html', 'shenzhen.html', 'shunde.html', 'suzhou.html', 'tianjin.html', 'wuhan-trip.html', 'wuhan.html', 'xiamen.html', 'xian.html']}
 assert city in configs, 'Unknown city viewer'
+configs['suzhou']['motion']='orient'
 config=configs[city];count=config['count'];focus=config['focus'];first=config['first']
 out=root/'test-results'/('destination-'+city);out.mkdir(parents=True,exist_ok=True)
 report={'startedAt':datetime.datetime.now().astimezone().isoformat(),'city':city,'errors':[],'writes':[],'checks':[],'inspected':False}
@@ -51,6 +52,7 @@ try:
         page.locator('#night').click();expect(canvas).to_have_attribute('data-night','true');page.locator('#overview').click();shot('desktop-night')
         for id in config['night']:
             page.locator('[data-landmark='+id+']').click();shot('night-'+id)
+        page.locator('[data-landmark='+config.get('motion',config['night'][-1])+']').click()
         page.emulate_media(reduced_motion='no-preference');page.wait_for_timeout(800);before=canvas.screenshot();page.wait_for_timeout(1800);assert before!=canvas.screenshot();page.emulate_media(reduced_motion='reduce')
         page.set_viewport_size({'width':390,'height':844});page.locator('[data-landmark='+focus+']').click();shot('390-'+focus+'-night')
         page.locator('#manage-landmarks').click();expect(page.locator('#landmark-manager')).to_be_visible();assert page.locator('#landmark-manager').evaluate('(e)=>e.getBoundingClientRect().bottom<=innerHeight+1')

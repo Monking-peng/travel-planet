@@ -2,7 +2,7 @@ import {museum,orient} from './suzhou-modern.js';
 import {humble,lingering} from './suzhou-gardens.js';
 import {tiger,hanshan,panmen,pingjiang} from './suzhou-heritage.js';
 export const LANDMARKS=[
- {id:'museum',name:'苏州博物馆',area:'东北街 · 几何水院',x:-1.08,z:.94,height:.48,distance:2.95,view:[.33,1.05,1.8],description:'白墙灰边、几何坡顶、菱形小窗与玻璃天窗围合主庭院。片石山水靠墙展开，折线桥与八角平台穿过水面。',source:'https://pei-architects.com/projects/suzhou-museum/'},
+ {id:'museum',name:'苏州博物馆',area:'东北街 · 几何水院',x:-1.08,z:.94,height:.48,distance:2.95,view:[.33,1.05,1.8],description:'八角主厅、灰石菱格坡顶、下沉玻璃天窗与通透连廊围住主水院。片石山水靠白墙展开，细栏折桥连接八角平台，竹丛与少量浮叶衬托留白。',source:'https://pei-architects.com/projects/suzhou-museum/'},
  {id:'humble',name:'拙政园',area:'江南园林 · 荷风四面',x:1.08,z:.94,height:.44,distance:2.85,view:[.35,.95,1.8],description:'以荷塘、六角荷风四面亭和远香堂为核心，补入曲桥、廊屋、竹丛与临水树冠。保留园林的水面和留白，不把庭园铺成密集房屋。',source:'https://lhsr.sh.gov.cn/jnylwh/20230731/97e84acfec034f0a930b23fdadbe390f.html'},
  {id:'lingering',name:'留园·冠云峰',area:'太湖石 · 一峰三叠',x:-1.08,z:-.94,height:.50,distance:2.75,view:[.25,.80,1.8],description:'冠云峰、两侧配石、浣云沼、冠云楼与围廊构成层次。太湖石保留穿透孔洞，月洞门和木格窗围住安静的庭院。',source:'https://ylj.suzhou.gov.cn/szsylj/sjyc/201905/b7c0f2058c75498c9ecbacf234e25b08.shtml'},
  {id:'tiger',name:'虎丘·云岩寺塔',area:'虎丘山 · 七层砖塔',x:1.08,z:-.94,height:1.15,distance:2.9,view:[.4,.74,1.8],description:'七层八角砖塔略向一侧倾斜。灰褐砖、浅色壁面、券窗、密叠砖檐与收束塔顶，区别于宽大木檐的寺院宝塔。',source:'https://www.trip.com/travel-guide/attraction/suzhou/tiger-hill-scenic-area-76159/'},
