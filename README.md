@@ -1,8 +1,8 @@
 # 一起去 · Travel Planet
 
-用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.42.1**，支持桌面和手机网页。
+用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.43.0**，支持桌面和手机网页。
 
-**[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)** · **[顺德地图](https://43.139.249.151/travel/shunde.html)** · **[广州地图](https://43.139.249.151/travel/guangzhou.html)** · **[长沙地图](https://43.139.249.151/travel/changsha.html)** · **[西安地图](https://43.139.249.151/travel/xian.html)**
+**[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)** · **[顺德地图](https://43.139.249.151/travel/shunde.html)** · **[广州地图](https://43.139.249.151/travel/guangzhou.html)** · **[长沙地图](https://43.139.249.151/travel/changsha.html)** · **[西安地图](https://43.139.249.151/travel/xian.html)** · **[成都地图](https://43.139.249.151/travel/chengdu.html)**
 
 这些是公开测试入口。测试时请创建自己的旅行；无需配置密钥即可使用「基础排程」。线上演示不是订票或支付服务。
 
@@ -10,8 +10,8 @@
 
 | 功能 | 当前范围 |
 | --- | --- |
-| 3D 城市浏览 | 杭州、上海、武汉、北京、深圳、顺德、广州、长沙、西安；旋转、缩放、近看地标、日夜切换 |
-| 景点模块 | 上海、武汉、北京、深圳、顺德、广州、长沙、西安整组添加或移除；杭州装扮；设置保存在当前浏览器 |
+| 3D 城市浏览 | 杭州、上海、武汉、北京、深圳、顺德、广州、长沙、西安、成都；旋转、缩放、近看地标、日夜切换 |
+| 景点模块 | 上海、武汉、北京、深圳、顺德、广州、长沙、西安、成都整组添加或移除；杭州装扮；设置保存在当前浏览器 |
 | 多人旅行 | 杭州、上海、武汉；选点、邀请加入、偏好提交、方案比较、明确接受、共同定稿 |
 | 约束校验 | 游览时间、首末接驳、转场、过江、步行、餐饮和分项预算 |
 | 可选 AI | 整理自然语言想法、协助提出方案；未配置时使用明确标注的基础排程 |
@@ -32,6 +32,8 @@
 长沙包含 **10 组具名地标**：岳麓书院、爱晚亭、杜甫江阁、天心阁、湖南博物院、梅溪湖艺术中心、谢子龙影像艺术馆、国金中心双塔、橘子洲大桥和青年毛泽东艺术雕塑。杜甫江阁补齐深灰瓦歇山顶、红柱白回廊、双向台阶与两侧游廊小亭，夜间以暖金屋面与窗灯分层。雕塑包含横向肩部、立体面部与侧扬发束，洲头草坪和环形步道置于两侧水道之间；两岸建筑已避让扩展后的河道。梅溪湖按四瓣大剧场、三瓣艺术馆和单瓣小剧场分出轮廓与翻卷屋盖。包含连续山地、山林、跨江低拱与环形匝道、两岸步道和湘江洲地、双半球布局、日夜、自由旋转、手机与整组管理；长沙尚未接入多人旅行。详见 [长沙造型参考](docs/CHANGSHA_REFERENCES.md)。
 
 西安新增 **8 组具名地标**：钟楼、鼓楼、永宁门城墙、大雁塔与大慈恩寺、小雁塔与荐福寺、陕西历史博物馆、大唐芙蓉园紫云楼、秦始皇帝陵博物院。保留贯通券洞、砖塔收分、柱廊、临水园林和保护展馆大跨度拱壳，提供双半球布局、日夜、逐景近看、手机触控和整组管理。西安当前为景观地图，未接入多人旅行。详见 [西安实拍参考](docs/XIAN_REFERENCES.md)。
+
+成都新增 **8 组具名地标**：武侯祠汉昭烈庙入口、杜甫草堂茅屋故居、安顺廊桥、IFS 爬墙熊猫、熊猫基地熊猫塔、天府美术馆、金沙遗址博物馆陈列馆、东安湖主体育场。区分茅草、木构、铜色外肋、花瓣曲面与玻璃幕墙；日夜保留建筑原色，体育场屋面和商业街有缓慢灯光变化。提供双半球、自由旋转、手机触控与整组管理；成都尚未接入多人旅行。[查看实拍参考](docs/CHENGDU_REFERENCES.md)。
 
 ## 界面预览
 
@@ -77,7 +79,7 @@ npm run check
 
 自动测试覆盖业务规则、隐私、接口、规划限制、模型涉水与布局、整组资源生命周期、触屏误点和窄屏取景。GitHub Actions 在推送和拉取请求时执行以上检查。
 
-可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 、`python tools/wuhan-flow-check.py` 和 `python tools/wuhan-entry-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing`、`python tools/destination-check.py shenzhen` 、`python tools/destination-check.py shunde`、`python tools/destination-check.py guangzhou` 、`python tools/destination-check.py changsha` 或 `python tools/destination-check.py xian`。详细范围见 [验收说明](docs/TESTING.md)。
+可选浏览器验收脚本：安装 Python 与 Playwright 后运行 `python tools/mobile-check.py` 、`python tools/travel-flow-check.py` 、`python tools/wuhan-flow-check.py` 和 `python tools/wuhan-entry-check.py`。默认使用本机 Edge，也可通过 `BROWSER_CHANNEL=chromium` 使用已安装的 Playwright Chromium。脚本自动启动独立内存服务，不连接公开测试数据，不调用付费模型，结果写入 `test-results/`。新城市地图运行 `python tools/destination-check.py beijing`、`python tools/destination-check.py shenzhen` 、`python tools/destination-check.py shunde`、`python tools/destination-check.py guangzhou` 、`python tools/destination-check.py changsha` 、`python tools/destination-check.py xian` 或 `python tools/destination-check.py chengdu`。详细范围见 [验收说明](docs/TESTING.md)。
 
 ## 已知边界
 
