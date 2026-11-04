@@ -1,0 +1,74 @@
+name: Attach verified source archive
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Existing draft release ID
+        required: true
+      commit:
+        description: Full source commit SHA
+        required: true
+      sha256:
+        description: Expected archive SHA256 from local verification
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: release-asset-${{ inputs.release_id }}
+  cancel-in-progress: false
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_ID: ${{ inputs.release_id }}
+      SOURCE_COMMIT: ${{ inputs.commit }}
+      EXPECTED_SHA256: ${{ inputs.sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Build and attach only an exact verified archive
+        shell: python
+        run: |
+          import hashlib, json, os, pathlib, re, subprocess, zipfile
+          rid, commit, expected = [os.environ[k] for k in ['RELEASE_ID', 'SOURCE_COMMIT', 'EXPECTED_SHA256']]
+          assert re.fullmatch(r'\d+', rid) and re.fullmatch(r'[a-f0-9]{40}', commit) and re.fullmatch(r'[a-f0-9]{64}', expected)
+          repo = os.environ['GH_REPO']
+          def gh(*args):
+              return subprocess.check_output(['gh', *args], text=True)
+          release = json.loads(gh('api', f'repos/{repo}/releases/{rid}'))
+          assert release['draft'] and release['target_commitish'] == commit
+          version = json.loads(subprocess.check_output(['git', 'show', commit+':package.json']))['version']
+          assert re.fullmatch(r'\d+\.\d+\.\d+', version) and release['tag_name'] == 'v'+version
+          filename = f'一起去-GitHub版-{version}.zip'
+          if release['assets']:
+              assert len(release['assets']) == 1
+              asset = release['assets'][0]
+              assert asset['name'] == filename and asset['state'] == 'uploaded' and asset['digest'] == 'sha256:'+expected
+              print('Existing asset already matches; no upload performed.')
+              raise SystemExit(0)
+          archive = pathlib.Path(os.environ['RUNNER_TEMP']) / filename
+          subprocess.run(['git', 'archive', '--format=zip', '--output='+str(archive), commit], check=True)
+          actual = hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert actual == expected, f'Archive digest mismatch: {actual}'
+          tracked = subprocess.check_output(['git', 'ls-tree', '-r', '-z', commit]).split(b'\0')
+          with zipfile.ZipFile(archive) as z:
+              names = []
+              for entry in filter(None, tracked):
+                  meta, path = entry.split(b'\t', 1)
+                  mode, kind, oid = meta.split()
+                  assert kind == b'blob' and mode in [b'100644', b'100755']
+                  name = path.decode(); names.append(name); data = z.read(name)
+                  digest = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+                  assert digest == oid.decode(), name
+              assert sorted(names) == sorted(i.filename for i in z.infolist() if not i.is_dir())
+          subprocess.run(['gh', 'release', 'upload', 'v'+version, str(archive), '--repo', repo], check=True, timeout=240)
+          updated = json.loads(gh('api', f'repos/{repo}/releases/{rid}'))
+          assert len(updated['assets']) == 1
+          asset = updated['assets'][0]
+          assert asset['state'] == 'uploaded' and asset['size'] == archive.stat().st_size and asset['digest'] == 'sha256:'+expected
+          print(json.dumps({'releaseId':rid, 'assetId':asset['id'], 'bytes':asset['size'], 'digest':asset['digest'], 'files':len(names)}))
