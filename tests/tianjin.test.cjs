@@ -78,3 +78,13 @@ test('Minyuan has open passages, continuous entrance levels and glass pavilion r
   for(let i=3;i<=15;i++){const z=(i/19-.5)*.36;const roof=ray(.455,.3,z,0,-1,0,.25,glass),rib=ray(.455,.3,z,0,-1,0,.25,frames);assert.ok(roof.length&&rib.length,'Glass and roof rib both exist');assert.ok(rib[0].point.y>roof[0].point.y+.001,'White ribs are not buried under the glass roof');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Jiefang has continuous river crossings, clear traffic lanes and a concave upper steel profile',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jiefang}=await import('../web/tianjin-jiefang.js'),k=makeKit({time:{value:0},night:{value:0}}),g=jiefang(k);g.updateMatrixWorld(true);const decks=[],steel=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.jiefangDeck)decks.push(o);if(o.material.userData.jiefangSteel)steel.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(objects,false);
+ try{
+  for(const z of [-.126,0,.126]){let previous;for(let i=0;i<=401;i++){const x=-.82+i*1.64/401,hits=ray(x,.2,z,0,-1,0,.2,decks);assert.ok(hits.length,`Deck has a gap at ${x}/${z}`);const y=hits[0].point.y;if(i)assert.ok(Math.abs(y-previous)<.005,`Approach discontinuity at ${x}/${z}`);previous=y;}}
+  assert.equal(ray(-.65,.21,0,1,0,0,1.3,steel).length,0,'Main traffic lane is not blocked by cross-bracing');
+  const center=ray(0,.6,.103,0,-1,0,.5,steel),shoulder=ray(.32,.6,.103,0,-1,0,.5,steel);assert.ok(center.length&&shoulder.length);assert.ok(shoulder[0].point.y-center[0].point.y>.07,'Upper plate girder must dip toward the center');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

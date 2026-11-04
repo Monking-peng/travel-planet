@@ -77,3 +77,14 @@
 ![民园广场日景](images/tianjin-minyuan-day.png)
 
 ![民园广场夜景](images/tianjin-minyuan-night.png)
+
+
+## 0.55.62 解放桥
+
+依据 [天津日报航拍转载](https://tj.sina.com.cn/news/m/2022-11-11/detail-imqqsmrp5726600.shtml)、[南开大学开桥夜景](https://sie.nankai.edu.cn/info/1038/1470.htm) 和 [游客拍摄的桥身细部](https://you.ctrip.com/sight/tianjin154/1556051.html)，补出两座高门架、向中间下凹的板式上弦梁、工字形梁、节点板、铆钉和双侧栏杆。桥面与两岸坡道保持连续，横梁留出道路净空。
+
+日景保留灰色钢材，夜景采用暖金色结构光。模型是固定闭合状态的缩微外观，没有实现开桥机构或模拟实际交通。参考照片仅供研究，不随项目分发。
+
+![解放桥日景](images/tianjin-jiefang-day.png)
+
+![解放桥夜景](images/tianjin-jiefang-night.png)

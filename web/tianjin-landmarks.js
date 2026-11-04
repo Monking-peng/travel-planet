@@ -83,7 +83,7 @@ export const LANDMARKS=[
    0.85,
    1.8
   ],
-  "description": "灰色钢桁架、门式横梁、交叉撑杆和贯通桥面跨过水面。暖金灯光勾勒结构，桥头石碑标记这座海河老桥。",
+  "description": "灰色铆接钢架跨过海河，两座高门架与下凹的板式上弦梁形成独特轮廓。细密交叉撑、双侧人行栏杆和桥头石碑保留近看细节，夜间采用暖金结构照明。",
   "source": "https://you.ctrip.com/sight/tianjin154/1556051.html",
   "grounded": true,
   "hemisphere": -1
