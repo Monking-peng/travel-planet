@@ -55,3 +55,16 @@ test('Maritime entrance follows the ground continuously and the central atrium s
  const water=[];g.traverse(o=>{if(o.isMesh&&o.material===k.materials.find(m=>m.userData.water))water.push(o);});assert.equal(down(0,.45,water).length,0,'Arrival plaza does not sit in a circular water moat');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Dule preserves solid red side walls, recessed upper windows, balcony ends and a continuous approach',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{dule}=await import('../web/tianjin-dule.js'),k=makeKit({time:{value:0},night:{value:0}}),g=dule(k);g.updateMatrixWorld(true);const red=[],stone=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.duleWall)red.push(o);if(o.material.userData.dulePaving)stone.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(objects,false);
+ try{
+  assert.equal(ray(0,.12,.19,0,0,-1,.15,red).length,0,'Center entrance is an opening');
+  assert.ok(ray(.24,.12,.19,0,0,-1,.15,red).length,'Front wall beside entry stays solid');
+  assert.equal(ray(0,.435,.13,0,0,-1,.06,red).length,0,'Upper window is recessed into the facade');
+  assert.ok(ray(.45,.435,-.06,-1,0,0,.16,red).length,'Side wall must not become a fake full-height window');
+  assert.ok(ray(.45,.434,-.06,-1,0,0,.09,red).length,'End of balcony has a handrail');
+  for(const x of [-.16,.16]){let previous=.020;for(let i=0;i<=241;i++){const z=.365-i*.23/241,hit=ray(x,.16,z,0,-1,0,.18,stone),y=hit.length?hit[0].point.y:.020;assert.ok(y>=previous-.0001&&y-previous<.006,`Approach has a gap or jump at ${x}/${z}: ${y-previous}`);previous=y;}assert.ok(Math.abs(previous-.058)<.0001);}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

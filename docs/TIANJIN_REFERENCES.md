@@ -55,3 +55,14 @@
 ![国家海洋博物馆日景](images/tianjin-maritime-day.png)
 
 ![国家海洋博物馆夜景](images/tianjin-maritime-night.png)
+
+
+## 0.55.60 独乐寺观音阁
+
+对照 [天津政务正面照片](https://www.tj.gov.cn/sq/yztj/jgtp/202005/t20200520_2468035.html)、[新华社斗拱与瓦面近照](https://www.xinhuanet.com/20251107/b84304589ffd47088f682be77d0a9bfe/c.html) 和 [建筑研究侧立面照片](https://architecturasinica.org/place/000024c)，修正过窄的体量及满墙窗格。改用宽红墙与低窗，补三层木斗拱、灰瓦歇山顶、木山花、瓦当、四面回廊及镂空香炉。入口十级浅石阶接通前院与台基。
+
+五张实拍用于外观研究；建筑研究页面本轮返回 403，侧立面照片可直接读取。模型不复刻室内造像；夜间仅用克制的暖光呈现木构，照片不作为贴图分发。
+
+![独乐寺日景](images/tianjin-dule-day.png)
+
+![独乐寺夜景](images/tianjin-dule-night.png)

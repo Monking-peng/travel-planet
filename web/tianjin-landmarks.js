@@ -137,7 +137,7 @@ export const LANDMARKS=[
    0.8,
    1.8
   ],
-  "description": "灰瓦重檐、暗红木柱、厚重斗拱与上层回廊构成观音阁，前方石台与香炉保留古寺院落的安静尺度。",
+  "description": "宽阔红墙、低窗与三层木斗拱支起灰瓦深檐，歇山顶两端露出木构山花。四面回廊、瓦当、脊饰和镂空香炉丰富近景，连续石阶接向前院。",
   "source": "https://www.tj.gov.cn/sq/yztj/jgtp/202005/t20200520_2468035.html",
   "grounded": true,
   "hemisphere": -1
