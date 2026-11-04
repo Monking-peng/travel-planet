@@ -25,15 +25,15 @@ export const LANDMARKS=[
   "area": "九层铜塔 · 七层琉璃塔",
   "x": 1.08,
   "z": 0.94,
-  "height": 1.13,
-  "distance": 3.2,
+  "height": 1.22,
+  "distance": 3.45,
   "view": [
    0.7,
    0.75,
    1.9
   ],
-  "description": "铜色日塔与青灰色月塔隔水相映，八角回廊与层层翘檐逐渐收分，夜晚呈现金色与冷白色的灯光层次。",
-  "source": "https://www.glljsh.com/products/60.html?page=2&per-page=10",
+  "description": "九层铜色日塔与七层青瓦月塔隔水相映，八角回廊、格窗、栏杆与瓦脊逐层收分。夜间金色与冷白色柔光映入杉湖，水纹随视角缓慢变化。",
+  "source": "https://www.glljsh.com/tms/ticket/81.html",
   "grounded": true
  },
  {
@@ -95,7 +95,7 @@ export const LANDMARKS=[
   "x": 1.08,
   "z": 0.94,
   "height": 0.51,
-  "distance": 3.2,
+  "distance": 3.45,
   "view": [
    0.3,
    0.65,

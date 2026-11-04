@@ -1,36 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,lake,paving,steps,grove,siteHeight,peak,roof,story,lantern,railing,archOpening,sign,skin,lit,polygonRoof,finish,TAU} from './guilin-kit.js';
 import {lattice} from './shunde-kit.js';
-function octagonalRoof(k,g,p,r,h,y,color){
- const N=8,mat=lit(k,p.tile.color,.42,color);mat.userData.pulse={speed:.40,phase:y*3};
- const pt=(u,v)=>{const a=u*TAU,s=TAU/N,b=((a+s/2)%s)-s/2,radius=r*Math.cos(s/2)/Math.cos(b),t=.001+.999*v;return [Math.sin(a)*radius*t,y+h*(1-t)**1.45+.011*t**6*(Math.abs(b)/(s/2))**7,Math.cos(a)*radius*t];};
- skin(k,g,pt,10,96,p.tile);k.line(g,Array.from({length:96},(_,i)=>pt(i/96,1)),.0022,mat,true);
- for(let i=0;i<48;i++)k.line(g,Array.from({length:7},(_,j)=>{const a=pt(i/48,.06+.94*j/6);a[1]+=.001;return a;}),.0007,p.tile);
-}
-function tower(k,g,p,{x,z,n,scale,gold}){
- const t=new THREE.Group();t.position.set(x,0,z);t.scale.setScalar(scale);g.add(t);
- const q={...p,tile:gold?k.mat('#967b46',.56,.26):k.mat('#52726a',.77,.12),wood:gold?k.mat('#b39659',.74,.16):k.mat('#afa98f',.83),pale:gold?k.mat('#c7b27c',.78):p.pale};const tone=gold?'#f4b548':'#afdce1',window=lit(k,'#38443d',.28,tone);
- k.cyl(t,.182,.19,.028,p.stone,0,.044,0,8);k.cyl(t,.164,.17,.020,p.pale,0,.066,0,8);
- for(let j=0;j<n;j++){
-  const y=.076+j*.082,r=.139-j*.0072,h=.067;
-  k.cyl(t,r*.78,r*.84,h,q.wood,0,y+h/2,0,8);
-  for(let i=0;i<8;i++){
-   const a=i/8*TAU,b=a+TAU/16;const panel=k.box(t,r*.49,h*.57,.0026,window,Math.sin(b)*r*.785,y+h*.48,Math.cos(b)*r*.785);panel.rotation.y=b;
-   k.cyl(t,.0025,.003,h,q.wood,Math.sin(a)*r*.97,y+h/2,Math.cos(a)*r*.97,6);
-   for(const dy of [.014,.030])k.beam(t,[Math.sin(a)*r*.98,y+dy,Math.cos(a)*r*.98],[Math.sin(a+TAU/8)*r*.98,y+dy,Math.cos(a+TAU/8)*r*.98],.0014,q.pale);
-   for(let b=1;b<4;b++){const aa=a+b*TAU/32;k.beam(t,[Math.sin(aa)*r*.93,y+.010,Math.cos(aa)*r*.93],[Math.sin(aa)*r*.93,y+.032,Math.cos(aa)*r*.93],.001,q.wood);}
-  }
-  octagonalRoof(k,t,q,r*1.22,.032,y+h,tone);
- }
- const y=.076+n*.082;for(let j=0;j<6;j++)k.cyl(t,.008-j*.001,.013-j*.0015,.010,q.wood,0,y+j*.011,0,12);k.cyl(t,0,.005,.052,q.wood,0,y+.084,0,10);
-}
-export function twins(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.79,.65);lake(k,g,p,.75,.59);
- tower(k,g,p,{x:.24,z:.07,n:9,scale:1.16,gold:true});tower(k,g,p,{x:-.28,z:-.10,n:7,scale:.98,gold:false});
- // Each tower has its own small lake island; the lake stays visibly open.
- for(const [x,z,rx]of [[.24,.07,.225],[-.28,-.10,.19]]){k.cyl(g,rx,rx*.98,.018,p.pale,x,.037,z,32);railing(k,g,p,Array.from({length:33},(_,i)=>[x+Math.sin(i/32*TAU)*rx,.048,z+Math.cos(i/32*TAU)*rx]),.026);}
- return finish(k,g);
-}
+export {twins} from './guilin-twins.js';
 export function jingjiang(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,.79,.65);paving(k,g,p,.61,.42);
  peak(k,g,{x:.14,z:-.29,h:.69,rx:.19,rz:.16,seed:2,id:'duxiu-peak'});

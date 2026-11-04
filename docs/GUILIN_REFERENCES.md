@@ -5,7 +5,7 @@
 | 模块 | 实拍与资料 | 主要识别点 |
 | --- | --- | --- |
 | 象鼻山·水月洞 | [漓江水岸实拍](https://www.pelago.com/en-AU/activity/p0zy70bfn-private-guilin-half-day-tour-fubo-mountain-reed-flute-cave-and-elephant-hill-guilin/) | 灰白石灰岩崖面、绿色山顶、向水面垂落的象鼻轮廓与贯通水月洞，顶部保留小型普贤塔。洞口为完整山体上的实际开口。 |
-| 杉湖·日月双塔 | [日景实拍](https://www.travelchinaguide.com/cityguides/guangxi/guilin/weather-june.htm)、[两江四湖官方夜景](https://www.glljsh.com/products/60.html?page=2&per-page=10)、[官方塔体资料](https://www.glljsh.com/tms/ticket/81.html) | 九层铜色日塔、七层青灰月塔，八角回廊、细柱和逐级收分的翘檐；夜间分别用金色和冷白灯光。本模型依据既有照片，不提供入塔营业或预约承诺。 |
+| 杉湖·日月双塔 | [日景实拍](https://www.travelchinaguide.com/cityguides/guangxi/guilin/weather-june.htm)、[两江四湖官方夜景](https://www.glljsh.com/tms/ticket/81.html)、[官方塔体资料](https://www.glljsh.com/tms/ticket/81.html) | 九层铜色日塔、七层青灰月塔，八角回廊、细柱和逐级收分的翘檐；夜间分别用金色和冷白灯光。本模型依据既有照片，不提供入塔营业或预约承诺。 |
 | 靖江王府·独秀峰 | [王府门楼近景](https://gs.ctrip.com/html5/you/sight/guilin28/5066548.html)、[独秀峰摄影](https://dp.pconline.com.cn/dphoto/2375124_17.html) | 黄色门楼、深灰瓦顶、红木格窗、竖向匾额与贯通门洞；独秀峰在门楼后方拔地而起，峰顶有小亭。只表现代表性门楼与孤峰，不宣称复原整个王府。 |
 | 逍遥楼 | [完整立面实拍](https://k.sina.cn/article_1608094690_5fd993e200100xofg.html) | 三重深灰屋檐、深色木柱、入口门廊、白石栏杆和宽石阶，保留底层开敞空间。 |
 | 阳朔·兴坪漓江 | [兴坪峰林摄影](https://www.traveliszen.com/stories/2018/four-days-in-yangshuo-guangxi-china) | 高低、宽窄不同的石峰、绿色山脊与石灰岩断面，宽阔江面与小尺度竹筏；没有用普通村屋代替山水。 |
@@ -14,3 +14,16 @@
 | 阳朔·月亮山 | [山脊与天然石拱实拍](https://www.visitourchina.com/yangshuo/attraction/the-moon-hill.html) | 连续山体上部的月形石洞、灰白崖壁与绿色坡面；洞口穿过整个山体，不是贴在表面的黑色圆片。 |
 
 提供两半球布局、逐景近看、日夜、自由旋转、整组增删保存和手机触控。桂林当前是景观地图，尚未接入多人旅行；未套用其他城市的旅行目录、门票、开放时间或预约信息。
+
+
+## 0.55.12 日月双塔精修
+
+依据上表日夜实拍及两江四湖官方结构资料，重做九层铜色日塔与七层琉璃月塔。日塔采用暗铜瓦面、浅铜构件；月塔保留青绿瓦与浅色栏杆。八角回廊增加独立柱、格窗、栏板、简化斗拱、瓦脊与塔刹，底部设置石质八角台座。两塔几何高度之比约 0.853，接近官方 35 米与 41 米的关系。
+
+夜间金色与冷白色照明缓慢变化，湖面增加随视角调整的双色水纹光影。水纹属于简化光影表达，不是真实镜面倒影，也不代表景区灯光秀排期；「减弱动态」会固定动画时间。参考照片没有进入公开贴图或提交包。此前夜景介绍页失效，现已改为仍可访问的官方景点页。
+
+![双塔日景](images/guilin-twins.png)
+
+![双塔背面](images/guilin-twins-back.png)
+
+![双色夜景与水纹](images/guilin-twins-night.png)
