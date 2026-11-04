@@ -83,8 +83,8 @@ export const LANDMARKS=[
    0.8,
    1.9
   ],
-  "description": "高低不同的喀斯特山峰沿岸展开，灰岩崖面与绿色山脊相间，竹筏穿过宽阔平静的江面。",
-  "source": "https://www.traveliszen.com/stories/2018/four-days-in-yangshuo-guangxi-china",
+  "description": "高低错落的灰岩峰林保留宽阔山肩和陡直崖面，斑驳绿意沿石缝展开；连绵竹林贴着弯曲江岸，竹筏驶过开阔漓江。",
+  "source": "https://www.news.cn/photo/2022-10/10/c_1129058493_3.htm",
   "grounded": true,
   "hemisphere": -1
  },
@@ -119,8 +119,8 @@ export const LANDMARKS=[
    1.55,
    1.7
   ],
-  "description": "金绿相间的梯田沿山势起伏，宽窄不同的田面与土埂形成真实高差，木质观景台朝向连续山田。位于桂林市龙胜各族自治县。",
-  "source": "https://gs.ctrip.com/html5/you/sight/longsheng1445120/137435.html",
+  "description": "起伏山脊上铺开金绿相间的等高稻田，宽窄不同的田面与土埂连成层次；步道跨过山田，通向高处的观景台。位于桂林市龙胜各族自治县。",
+  "source": "https://www.news.cn/photo/20261015/91606c04821f40df9dab9de3b2d471a5/c.html",
   "grounded": true,
   "hemisphere": -1
  },

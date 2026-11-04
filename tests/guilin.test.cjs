@@ -72,3 +72,20 @@ test('Fuli has a genuine arch, continuous usable stairs and dry grounded bridge 
   for(const side of [-1,1])for(const x of [.65,.67,.70]){const d=ray(side*x,.6,0,[0,-1,0],1,deck),b=ray(side*x,.6,0,[0,-1,0],1,bank);assert.ok(d.length&&b.length&&Math.abs(d[0].point.y-b[0].point.y)<.018,'Entry paving follows the river bank');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Longji has multiple stepped ridges and a continuous path supported above the rice terraces',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{longji,LONGJI_ROUTE}=await import('../web/guilin-longji.js'),k=makeKit({time:{value:0},night:{value:0}}),g=longji(k);g.updateMatrixWorld(true);const field=[],path=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.terrace)field.push(o);if(o.material.userData.longjiPath)path.push(o);});const down=(x,z,objs)=>new T.Raycaster(new T.Vector3(x,.8,z),new T.Vector3(0,-1,0),0,1).intersectObjects(objs,false)[0]?.point.y;
+ try{
+  const peaks=[[.18,-.12],[-.33,.18],[-.34,-.28]].map(([x,z])=>down(x,z,field));assert.ok(peaks.every(h=>h>.22),'Three terrain ridges retain raised stepped farmland');assert.ok(Math.max(...peaks)-Math.min(...peaks)>.08,'Ridges have varied height');
+  let previous;for(let n=1;n<LONGJI_ROUTE.length;n++){const a=new T.Vector2(...LONGJI_ROUTE[n-1]),b=new T.Vector2(...LONGJI_ROUTE[n]),dir=b.clone().sub(a).normalize(),N=Math.ceil(a.distanceTo(b)/.009);for(let i=0;i<=N;i++){const q=a.clone().lerp(b,i/N);for(const side of [-1,0,1]){const x=q.x+dir.y*side*.013,z=q.y-dir.x*side*.013,h=down(x,z,path),base=down(x,z,field);assert.ok(h!==undefined,`Path is continuous at ${x},${z}`);if(base!==undefined)assert.ok(h>base+.001,`No rice tread through the walkway at ${x},${z}: ${h}/${base}`);if(side===0){if(previous!==undefined)assert.ok(Math.abs(h-previous)<.028,`Stair steps are continuous: ${h}/${previous}`);previous=h;}}}}
+  const deck=down(.18,-.12,path),top=down(.18,-.12,field);assert.ok(deck>top+.002&&deck-top<.027,'Summit deck stays close to the actual terrain');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Xingping retains broad upper cliffs and a continuous dry bank beside open river water',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{xingping,XINGPING_PEAKS,xingpingShore}=await import('../web/guilin-xingping.js'),k=makeKit({time:{value:0},night:{value:0}}),g=xingping(k);g.updateMatrixWorld(true);const cliffs=[],bank=[],water=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.xingpingCliff)cliffs.push(o);if(o.material.userData.xingpingBank)bank.push(o);if(o.material.userData.water)water.push(o);});const ray=(x,y,z,d,objs)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,2).intersectObjects(objs,false);
+ try{assert.equal(cliffs.length,7);for(let n=0;n<cliffs.length;n++){const [x,z,h,rx]=XINGPING_PEAKS[n];let baseWidth=0,upperWidth=0;for(let i=0;i<100;i++){const xx=x-rx*1.5+i/99*rx*3;if(ray(xx,h*.25,1,[0,0,-1],[cliffs[n]]).length)baseWidth++;if(ray(xx,h*.85,1,[0,0,-1],[cliffs[n]]).length)upperWidth++;}assert.ok(upperWidth/baseWidth>.46,'Upper cliff must remain broad rather than an identical pointed cone');}
+ for(let i=0;i<80;i++){const x=-.65+i/79*1.3,z=xingpingShore(x),dry=ray(x,.3,z-.015,[0,-1,0],bank)[0],wet=ray(x,.3,z-.015,[0,-1,0],water)[0];assert.ok(dry&&wet&&dry.point.y>wet.point.y+.002,'Bank has a continuous surface above water');assert.equal(ray(x,.3,z+.06,[0,-1,0],bank).length,0,'Bank cannot cover the open river');}
+ for(const x of [-.4,0,.4])assert.equal(ray(x,.8,.30,[0,-1,0],cliffs).length,0,'Foreground river stays clear of cliffs');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

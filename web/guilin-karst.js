@@ -17,11 +17,4 @@ export function moon(k){
  const land=(x,z)=>siteHeight(x,z,.79,.65);grove(k,g,land,[[-.49,.22,.17],[-.38,.31,.13],[.46,.25,.16],[.31,.36,.13],[-.62,-.03,.12],[.57,-.06,.14]]);
  return finish(k,g);
 }
-export function xingping(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.79,.65);lake(k,g,p,.75,.59);
- const forms=[[-.50,-.18,.43,.14,.18,1],[-.30,-.29,.61,.18,.17,3],[-.04,-.28,.82,.23,.18,6],[.25,-.26,.69,.20,.17,4],[.48,-.15,.48,.15,.17,7],[-.57,.06,.28,.12,.14,8],[.56,.10,.25,.10,.12,9]];
- for(const [x,z,h,rx,rz,seed]of forms)peak(k,g,{x,z,h,rx,rz,seed,id:'xingping-peak'});
- for(let i=0;i<19;i++){const x=-.60+i*.066,z=-.012+.025*Math.sin(i*.7);const m=k.mesh(g,new THREE.DodecahedronGeometry(.030,0),p.stone,x,.040,z);m.scale.set(1.5,.55,1);}
- raft(k,g,p,-.18,.28,-.4);raft(k,g,p,.28,.33,.55);
- return finish(k,g);
-}
+export {xingping} from './guilin-xingping.js';

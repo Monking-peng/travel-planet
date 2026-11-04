@@ -58,3 +58,21 @@
 ![富里桥白天](images/guilin-fuli-day.png)
 
 ![富里桥夜间](images/guilin-fuli-night.png)
+
+
+## 0.55.74 龙脊梯田
+
+对照[新华社 2026 年秋季航拍](https://www.news.cn/photo/20261015/91606c04821f40df9dab9de3b2d471a5/c.html)，将规则层叠圆盘改为沿三道山脊展开的等高田面，补充土埂、稻穗和随坡木阶。连续步道通向峰顶观景台；夜间只保留平台灯光，稻田保持自然暗部。金黄配色表现收获季，不代表全年景色；照片未进入公开资源。
+
+![龙脊梯田日景](images/guilin-longji-day.png)
+
+![龙脊梯田夜间](images/guilin-longji-night.png)
+
+
+## 0.55.75 兴坪漓江
+
+核看[新华社兴坪航拍](https://www.news.cn/photo/2022-10/10/c_1129058493_3.htm)、[新华社漓江岸线照片](https://www.news.cn/20240425/1ed2fb3d4d5546349ffed4d171209ff2/c.html)及此前峰林摄影。峰林改为宽肩陡壁的灰岩山体，七座峰体高度和轮廓不同，补充石纹与斑驳绿意；连续弯曲岸线配成簇竹林，保留开阔前景江面和竹筏。夜间保留自然暗部，没有虚构山体灯光秀。
+
+![兴坪日景](images/guilin-xingping-day.png)
+
+![兴坪夜间](images/guilin-xingping-night.png)
