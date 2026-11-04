@@ -9,7 +9,7 @@ export const LANDMARKS=[
  {id:'hanshan',name:'寒山寺·普明宝塔',area:'枫桥 · 黄墙木塔',x:-1.08,z:.94,hemisphere:-1,height:1.22,distance:3.10,view:[.42,.75,1.8],description:'五层方塔以宽挑灰瓦檐、红褐木构和粉色墙面逐级收束。四面回廊、深窗栅、斗拱和高石台围绕塔身，石阶接入矩形山门；夜间暖光沿檐口与栏杆展开。',source:'https://www.szscgj.com/a/list_29/204.html'},
  {id:'orient',name:'东方之门',area:'金鸡湖 · 城市之门',x:1.08,z:.94,hemisphere:-1,height:1.44,distance:3.05,view:[.46,.65,1.8],description:'双塔在高处合拢，留下尖拱形通透空间。蓝灰玻璃、银色水平鳍片与圆润肩部还原轮廓，夜间窗灯和细轮廓光缓慢变化。',source:'https://rmjm.com/portfolio/gate-to-the-east-china/'},
  {id:'panmen',name:'盘门水陆城门',area:'古城南 · 水陆双门',x:-1.08,z:-.94,hemisphere:-1,height:.79,distance:2.95,view:[.55,.95,1.8],description:'两重水门贯通河道，错位陆门围出露天瓮城。灰砖券洞、内侧登城石阶与内门上的红柱灰瓦城楼共同表现水陆双门；瓦垄、雕饰屋脊和藤蔓保留近看细节。',source:'https://www.suzhou.gov.cn/szwgjyhsj/yhsjjbgk/202110/3ad7341d62c24548bd075701ca6bbeda.shtml'},
- {id:'pingjiang',name:'平江路·胡厢使桥',area:'水巷 · 白墙灰瓦',x:1.08,z:-.94,hemisphere:-1,height:.46,distance:2.9,view:[.5,1.0,1.8],description:'石拱桥跨过狭长水巷，白墙灰瓦、木格门窗与沿河石路贴水展开。街屋只组成这段具名历史街景，夜间以门窗和红灯笼点亮。',source:'https://swzfw.suzhou.gov.cn/swzfw/pasz/202309/ae5591e44c534d26ae81e329c43a0396.shtml'}
+ {id:'pingjiang',name:'平江路·胡厢使桥',area:'水巷 · 白墙灰瓦',x:1.08,z:-.94,hemisphere:-1,height:.46,distance:2.9,view:[1.0,.85,1.8],description:'厚石拱、实心石栏和两侧台阶组成胡厢使桥，与相邻唐家平桥形成转角。白墙灰瓦、凹进木窗、沿河石路与摇橹船围住这段水巷，夜间以暖色拱券光和门窗灯点亮。',source:'https://dfzb.suzhou.gov.cn/dfzb/szdq/201811/93f014f81a794a7292a8b29a427149d0.shtml'}
 ].map(item=>({...item,grounded:true}));
 const builders={museum,humble,lingering,tiger,hanshan,orient,panmen,pingjiang};
 export function createLandmark(k,id){if(!builders[id])throw new Error(`Unknown Suzhou landmark: ${id}`);return builders[id](k);}

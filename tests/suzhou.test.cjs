@@ -65,3 +65,15 @@ test('Panmen keeps an open barbican, offset land gates and an unobstructed water
   let previous=.0355;for(let z=.192;z>-.169;z-=.002){const hit=all([.375,.37,z],[0,-1,0],.38)[0];assert.ok(hit,'Inner stair must have no open gap');assert.ok(Math.abs(hit.point.y-previous)<.016,'Stair rises must join the courtyard to the rear terrace continuously');previous=hit.point.y;}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Pingjiang has open intersecting canals, connected stone bridge steps and recessed street windows',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{pingjiang}=await import('../web/suzhou-pingjiang.js'),k=makeKit({time:{value:0},night:{value:0}}),g=pingjiang(k);g.updateMatrixWorld(true);
+ try{
+  const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  assert.equal(ray([-.08,.115,.15],[0,0,-1],.28).length,0,'The masonry arch must leave a real navigable opening');assert.ok(ray([.085,.115,.15],[0,0,-1],.28).length>0,'The masonry beside the arch must remain solid');
+  assert.equal(ray([.60,.055,.225],[-1,0,0],.52).length,0,'The side canal must remain open under Tangjia Bridge');
+  let previous=.107;for(let x=-.405;x<.25;x+=.002){const hit=ray([x,.4,-.024],[0,-1,0],.42)[0];assert.ok(hit,'Both stair flights must have continuous support');assert.ok(Math.abs(hit.point.y-previous)<.018,'Bridge steps must meet the bank without abrupt rises or gaps');previous=hit.point.y;}
+  for(let z=.10;z<.35;z+=.002){const hit=ray([.18,.13,z],[0,-1,0],.15)[0];assert.ok(hit&&hit.point.y>.102,'The flat bridge must join both banks without dropping into the water');}
+  const window=ray([-.30,.163,-.3173],[-1,0,0],.15)[0];assert.ok(window&&window.distance>.065,'Street windows must sit behind genuine openings in the plaster wall');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
