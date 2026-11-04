@@ -27,3 +27,12 @@
 ![石塔侧面](images/quanzhou-kaiyuan-oblique.png)
 
 ![开元寺夜间展示](images/quanzhou-kaiyuan-night.png)
+
+
+## 0.55.46 洛伽寺院落与屋脊
+
+对照[闽南网航拍](https://www.mnw.cn/shishi/news/2946517.html)、[游客屋脊近照](https://hk.trip.com/moments/detail/shishi-245-123995279/)、[殿宇及石阶实拍](https://you.ctrip.com/travels/fujian100038/4143418.html)和[前殿照片](https://www.trip.com/moments/detail/shishi-245-122654953/)，重新整理临海院落。降低原来过高的主殿，扩大前庭，补黄墙绿瓦山门、两层长廊、低前殿、钟鼓楼，以及圆通宝殿的重檐、山墙、石柱、剪瓷龙脊与瓦垄。
+
+步桥与海堤衔接处留出入口，山门拱洞为真实贯通几何。修复屋檐相碰和正中柱子挡住主殿入口，补背面窗格、石砌接缝和檐下暖灯；夜间保持橙瓦与黄墙本色。
+
+模型依据参考照片时的外观作微缩表达，不声称反映实时修缮状态、完整寺院或真实夜间开放。研究照片只在本地使用，不随源码和提交包分发。中宏网照片服务器返回 403，未作为已核看依据。

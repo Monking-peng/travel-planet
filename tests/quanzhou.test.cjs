@@ -27,3 +27,13 @@ test('Quanzhou module lighting preserves daylight materials, honors reduced moti
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+test('Luojia bridge joins its island without a blocking seawall rail, temple portico and green gate stay open',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{luojia}=await import('../web/quanzhou-luojia.js'),k=makeKit({time:{value:0},night:{value:0}}),g=luojia(k);g.updateMatrixWorld(true);const structures=[],gate=[];g.traverse(o=>{if(o.material?.userData.luojiaStructure)structures.push(o);if(o.material?.userData.luojiaGate)gate.push(o);});
+ try{
+  for(let i=0;i<=100;i++){const z=.695-i*.003,ray=new T.Raycaster(new T.Vector3(-.43,.18,z),new T.Vector3(0,-1,0),0,.18),hits=ray.intersectObjects(structures);assert.ok(hits.length,'Approach bridge must meet the island');assert.ok(Math.abs(hits[0].point.y-.103)<.003,'No seawall post or rail blocks the bridge entry');}
+  let previous=0;for(let i=0;i<=50;i++){const z=.080-i*.0019,ray=new T.Raycaster(new T.Vector3(.07,.22,z),new T.Vector3(0,-1,0),0,.22),hits=ray.intersectObjects(structures);assert.ok(hits.length);const y=hits[0].point.y;assert.ok(y>=.102&&y<=.140,'Stair is above court and below the portico');if(i)assert.ok(Math.abs(y-previous)<.008,'Stair treads meet continuously');previous=y;}
+  const r=new T.Raycaster(new T.Vector3(.07,.197,.045),new T.Vector3(0,0,-1),0,.10);assert.equal(r.intersectObjects(structures).length,0,'An open central bay reaches the recessed doorway');
+  const arch=new T.Raycaster(new T.Vector3(-.65,.15,.27),new T.Vector3(1,0,0),0,.35);assert.equal(arch.intersectObjects(gate).length,0,'The green gate is a genuine arch passage');arch.ray.origin.z=.32;assert.ok(arch.intersectObjects(gate).length,'Gate piers remain beside the opening');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

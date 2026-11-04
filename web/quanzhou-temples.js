@@ -24,16 +24,4 @@ export function wenmiao(k){
  grove(k,g,h,[[-.39,.29,.20],[.39,.29,.20],[-.48,-.27,.14],[.48,-.27,.14]]);
  return finish(k,g,{lamps:[[-.20,.023,.40],[.20,.023,.40],[-.28,.023,-.06],[.28,.023,-.06]],visitors:[[-.08,.023,.40],[.07,.023,.37],[-.24,.023,-.06]]});
 }
-export function luojia(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.71,.59);sea(k,g,p,.66,.54);p.tile=k.mat('#bd764d',.85);p.wall=k.mat('#d5b66a',.94);
- // The temple rests on a granite island with a sea wall and an elevated approach.
- const shape=new THREE.Shape();[[-.43,-.24],[-.25,-.37],[.23,-.36],[.43,-.20],[.44,.19],[.28,.30],[-.28,.30],[-.44,.13]].forEach(([x,z],i)=>i?shape.lineTo(x,-z):shape.moveTo(x,-z));shape.closePath();const geo=new THREE.ExtrudeGeometry(shape,{depth:.071,bevelEnabled:false});geo.rotateX(-Math.PI/2);k.mesh(g,geo,p.stone,0,.025,0);const deck=new THREE.ShapeGeometry(shape);deck.rotateX(-Math.PI/2);k.mesh(g,deck,p.pale,0,.097,0);
- hall(k,g,p,{y:.117,z:-.12,w:.36,d:.25,h:.22,double:true,ornate:true});hall(k,g,p,{y:.117,z:.20,w:.29,d:.10,h:.10,ornate:true});
- hall(k,g,p,{y:.117,x:-.32,z:-.07,w:.13,d:.33,h:.10});hall(k,g,p,{y:.117,x:.32,z:-.04,w:.13,d:.15,h:.18,double:true});for(const x of [-.32,.32])hall(k,g,p,{y:.117,x,z:.18,w:.14,d:.10,h:.07});
- const wall=[[-.43,-.24],[-.25,-.37],[.23,-.36],[.43,-.20],[.44,.19],[.28,.30],[-.28,.30],[-.44,.13],[-.43,-.24]];railing(k,g,p,wall.map(([x,z])=>[x,.098,z]),.035);
- k.box(g,.105,.024,.30,p.stone,-.13,.087,.43);for(const x of [-.181,-.079])railing(k,g,p,[[x,.10,.30],[x,.10,.57]],.037);
- const rocks=k.mat('#817f6d',.99);for(let i=0;i<30;i++){const a=i/30*TAU,r=.43+.035*Math.sin(i*7);const o=k.mesh(g,new THREE.DodecahedronGeometry(.038+(i%4)*.008,0),rocks,Math.sin(a)*r,.046,Math.cos(a)*r*.77);o.scale.set(1.1,.73,.85);o.rotation.set(i*.31,i*.67,i*.21);}
- for(let i=0;i<8;i++){const a=i/8*TAU;k.line(g,Array.from({length:12},(_,j)=>{const t=a+(j/11-.5)*.19;return [Math.sin(t)*.52,.029,Math.cos(t)*.45];}),.0015,k.mat('#b9cebd',.8));}
- sign(k,g,'洛伽寺',.067,.026,0,.216,.263,{background:'#754739',color:'#ead4a6'});
- return finish(k,g,{lamps:[[-.28,.099,.26],[.28,.099,.26],[-.28,.099,-.30],[.28,.099,-.30]],visitors:[[-.12,.10,.47],[-.08,.10,.10],[.10,.10,.07],[.18,.10,.16],[-.22,.10,-.20]]});
-}
+export {luojia} from './quanzhou-luojia.js';
