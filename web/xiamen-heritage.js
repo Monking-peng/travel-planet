@@ -17,23 +17,7 @@ export function putuo(k){
  grove(k,g,(x,z)=>ground(x,z)+.018,[[-.46,-.32,.23],[.45,-.32,.22],[-.28,-.46,.21],[.28,-.47,.22],[-.45,.16,.16],[.44,.17,.15]]);
  return finish(k,g,{lamps:[[-.25,.025,.29],[.25,.025,.29],[-.25,.025,-.22],[.25,.025,-.22]],visitors:[[-.06,.025,.27],[.12,.025,.27],[.22,.025,.02],[-.10,.025,-.16]]});
 }
-export function jiannan(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.68,.58);paving(k,g,p,.56,.47);
- const base=.145;steps(k,g,p,0,.39,.92,16,.12,.24);k.box(g,.94,.12,.49,p.stone,0,.081,-.095);
- // Three heights reproduce the central hall, wings and two lower terraces.
- for(const x of [-.31,.31]){k.box(g,.24,.265,.24,p.wall,x,base+.1325,-.10);minnanRoof(k,g,p,.30,.29,.065,base+.265,x,-.10);for(let j=0;j<3;j++)for(let i=0;i<3;i++)window(k,g,p,x+(i-1)*.064,base+.055+j*.084,.023,.030,.055);}
- k.box(g,.38,.36,.29,p.wall,0,base+.18,-.12);minnanRoof(k,g,p,.46,.36,.075,base+.36,0,-.12);
- // Recessed upper balcony and a small upper roof keep the roof hierarchy legible.
- k.box(g,.20,.082,.005,p.wood,0,base+.304,.027);for(const x of [-.09,0,.09])k.cyl(g,.0038,.0048,.087,p.pale,x,base+.304,.047,8);railing(k,g,p,[[-.10,base+.263,.047],[.10,base+.263,.047]],.022);minnanRoof(k,g,p,.25,.21,.055,base+.428,0,-.10);
- for(const x of [-.145,.145])for(let i=0;i<3;i++)window(k,g,p,x,base+.067+i*.086,.028,.032,.056);
- for(const x of [-.07,0,.07])window(k,g,p,x,base+.188,.028,.03,.052);
- // Four Ionic entrance columns stand forward of the central wall.
- k.box(g,.51,.014,.15,p.pale,0,base+.147,.088);for(const x of [-.195,-.065,.065,.195]){k.cyl(g,.008,.010,.135,p.pale,x,base+.0675,.14,12);k.box(g,.025,.009,.022,p.pale,x,base+.13,.14);for(const s of [-1,1]){const t=k.mesh(g,new THREE.TorusGeometry(.005,.0015,5,12),p.stone,x+s*.010,base+.129,.153);t.rotation.y=0;}}
- for(const x of [-.10,0,.10]){k.box(g,.043,.076,.008,p.red,x,base+.039,.032);k.mesh(g,new THREE.CircleGeometry(.0215,24,0,Math.PI),p.red,x,base+.077,.037);}
- sign(k,g,'建南大会堂',.17,.029,0,base+.388,.067,{background:'#d9d2b6',color:'#564d38'});
- for(const x of [-.41,-.29,.29,.41])palm(k,g,p,x,base,-.005,.16);
- return finish(k,g,{lamps:[[-.47,.025,.40],[.47,.025,.40]],visitors:[[0,.035,.37],[-.14,.075,.28],[.15,.11,.20],[.24,.145,.10]]});
-}
+export {jiannan} from './xiamen-jiannan.js';
 function campusWing(k,g,p,x,z,w=.30){
  k.box(g,w,.25,.14,p.brick,x,.16,z);for(const side of [-1,1]){for(let j=0;j<3;j++)for(let i=0;i<6;i++)window(k,g,p,x+(i/5-.5)*w*.88,.079+j*.076,z+side*.071,.020,.045);for(let i=0;i<7;i++)k.box(g,.009,.25,.012,p.pale,x+(i/6-.5)*w,.16,z+side*.071);}minnanRoof(k,g,p,w+.065,.20,.065,.285,x,z);
 }

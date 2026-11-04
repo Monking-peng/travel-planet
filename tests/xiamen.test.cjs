@@ -28,3 +28,16 @@ test('Bagua House has deep open front and side porticoes and genuine arched drum
  try{assert.equal(hits([0,.16,.36],[0,0,-1],.12),0,'The front colonnade has real depth');assert.ok(hits([.0532,.16,.36],[0,0,-1],.12)>0,'Front columns remain substantial');assert.equal(hits([.46,.16,0],[-1,0,0],.12),0,'The side colonnade is also recessed');assert.ok(hits([.46,.16,.055],[-1,0,0],.12)>0);assert.equal(hits([0,.57,.16],[0,0,-1],.09),0,'The arched drum is not a painted solid cylinder');assert.ok(hits([.014,.57,.16],[0,0,-1],.09)>0,'Masonry survives between the drum windows');}
  finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Jiannan has an open two-storey portico, recessed return windows and a continuous central stair',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jiannan}=await import('../web/xiamen-jiannan.js'),k=makeKit({time:{value:0},night:{value:0}}),g=jiannan(k);g.updateMatrixWorld(true);
+ try{
+  const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  assert.equal(ray([0,.28,.26],[0,0,-1],.16).length,0,'The entrance porch must stay open in front of the recessed rear wall');
+  assert.ok(ray([.08,.28,.26],[0,0,-1],.1).length>0,'The porch must still have solid columns');
+  for(const [p,d,min]of [[[.395,.297,.18],[0,0,-1],.050],[[.40,.295,-.36],[-1,0,0],.056],[[.01,.265,-.70],[0,0,1],.070]]){const hit=ray(p,d,.13)[0];assert.ok(hit&&hit.distance>min&&!hit.object.material.userData.jiannanStone,'A solid building core must not cover recessed front, side or back windows');}
+  for(const x of [.022,.37]){let last=.027;for(let z=.619;z>.28;z-=.002){const hit=ray([x,.18,z],[0,-1,0],.18)[0];assert.ok(hit,'The stone stair must have continuous support');assert.ok(Math.abs(hit.point.y-last)<.014,'Stair risers must meet the raised landing without an abrupt jump');last=hit.point.y;}assert.ok(last>.14);}
+  const landing=ray([.50,.18,.31],[0,-1,0],.06);const top=landing[0],under=landing.find(h=>h.object.material!==top.object.material);assert.ok(top&&under&&Math.abs(top.point.y-under.point.y)>.0015,'The paving and podium must not occupy the same plane and flicker');
+  for(const z of [-.29,-.45,-.61])assert.ok(ray([0,.8,z],[0,-1,0],.3).length>0,'The rear auditorium must have a continuous roof volume beyond the shallow front building');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
