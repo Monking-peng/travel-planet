@@ -71,3 +71,21 @@ test('Wild Goose Pagoda has deep arched openings, a level plinth and continuous 
   const box=new T.Box3().setFromObject(g);assert.ok(box.max.y>1.22&&box.max.y<1.30,'seven-storey silhouette keeps its finial and proportions');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+
+test('Small Wild Goose Pagoda has north-south recessed windows, broken crown and connected court',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{smallPagoda}=await import('../web/xian-small.js'),k=makeKit({time:{value:0},night:{value:0}}),g=smallPagoda(k);g.updateMatrixWorld(true);
+ const hit=(p,d,n=2)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  for(const sign of [-1,1]){
+   const window=hit([0,.528,sign*.4-.12],[0,0,-sign]),wall=hit([.055,.528,sign*.4-.12],[0,0,-sign]);assert.ok(window&&wall);assert.ok(sign*(wall.point.z-window.point.z)>.007,'north-south arches must be recessed in masonry');
+   const solid=hit([sign*.4,.528,-.12],[-sign,0,0]);assert.ok(solid&&Math.abs(solid.point.x)>.13,'east-west sides retain solid brick walls');
+   let previous=.013;for(let i=0;i<7;i++){const step=hit([0,.09,sign*(.380-i*.020)-.12],[0,-1,0],.1);assert.ok(step);assert.ok(Math.abs(step.point.y-previous-.010)<1e-5,'north-south steps rise continuously');previous=step.point.y;}
+   const deck=hit([.05,.09,sign*.22-.12],[0,-1,0],.1);assert.ok(deck&&Math.abs(deck.point.y-previous)<1e-5,'last tread meets the level plinth');
+  }
+  const well=hit([.012,1.5,-.12+.012],[0,-1,0]);for(const x of [-.053,.053])for(const z of [-.053,.053]){const pier=hit([x,1.5,z-.12],[0,-1,0]);assert.ok(pier.point.y-well.point.y>.020,'four surviving corner piers enclose an open crown');}
+  assert.equal(hit([0,.060,.65],[0,0,-1],.42),undefined,'central temple entrance must remain a usable passage');
+  g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.smallPagodaRigid,'court lamps and buildings use the same level foundation');});
+  const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>1.27&&bounds.max.y<1.31,'tower retains thirteen-storey height without a fictitious spire');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
