@@ -49,7 +49,7 @@ export const LANDMARKS=[
    0.6,
    1.9
   ],
-  "description": "相连的双鳍塔身向上收拢，连续浅色阳台环绕蓝绿玻璃，顶部暖金灯光与低矮旋涡式门厅相接。",
+  "description": "高低双鳍与金色楼冠连成弧形塔身，连续阳台包围蓝绿玻璃；低矮旋涡屋盖、玻璃门厅与水庭相接，夜间客房暖光和细密楼冠保持层次。",
   "source": "https://www.hok.com/projects/view/atlantis-sanya-resort/",
   "grounded": true
  },
@@ -66,7 +66,7 @@ export const LANDMARKS=[
    1.4,
    1.8
   ],
-  "description": "一期双馆以连续白色曲面屋顶和四处采光穹顶围合中庭，玻璃立面与跨院连桥相连，夜景以冷蓝檐边和暖金室内分层。",
+  "description": "一期双叶形馆体由前后拱形屋盖连成一体，四座玻璃采光顶围绕露天中庭；细密幕墙、暖色室内光与浅蓝檐口点光形成日夜层次。",
   "source": "https://www.cdfg.com.cn/5257/5257.html",
   "grounded": true
  },
@@ -119,8 +119,8 @@ export const LANDMARKS=[
    0.95,
    1.9
   ],
-  "description": "红色木栈桥从沙滩伸向海上岩礁，心形栏板、露出水面的桥墩和双檐亭形成完整海岸景观。",
-  "source": "https://www.haihua365.com/diyu/5542",
+  "description": "红木栈桥经台阶从沙滩伸向海上岩礁，双心栏板、石砌桥墩和双檐亭相连；细密瓦肋与温暖栏边光勾勒海岸轮廓。",
+  "source": "https://www.wuzhizhou.com/islandStyle/detail_9959.html",
   "grounded": true,
   "hemisphere": -1
  },
@@ -137,7 +137,7 @@ export const LANDMARKS=[
    0.95,
    1.9
   ],
-  "description": "细窄木桥跨越两座林坡，桥面与侧索随跨度下垂，网状护栏、端部锚座和谷地高差共同呈现雨林步桥。",
+  "description": "细长木桥悬跨真实山谷，桥面与细网随跨度下垂；两端短平台接入山坡，疏密有致的雨林树冠围绕桥身，保留开阔的步行净空。",
   "source": "https://www.ylwpark.com/news/detail/id/195.html",
   "grounded": true,
   "hemisphere": -1

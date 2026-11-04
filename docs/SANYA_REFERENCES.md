@@ -31,3 +31,35 @@
 ![弧塔背面](images/sanya-phoenix-back.png)
 
 ![动态灯带一帧](images/sanya-phoenix-night.png)
+
+
+## 0.55.77 亚特兰蒂斯与国际免税城一期
+
+对照 [HOK 亚特兰蒂斯项目照片](https://www.hok.com/projects/view/atlantis-sanya-resort/)，重做双鳍之间连续的弧形阳台、玻璃幕墙、不等高金色楼冠和两侧卷曲裙房，补上玻璃入口及楼冠细肋。以楼层窗光和边缘灯光表现夜景，保留白色结构本色。
+
+对照 [中免集团项目照片](https://www.cdfg.com.cn/5257/5257.html)与[海南日报白天实拍](https://news.hndaily.cn/html/2019-11/04/content_3_2.htm)，免税城一期改为两翼相连的曲面双馆，四处玻璃采光顶环绕露天天井，前后拱形屋盖与实际屋面接合。细化幕墙分格、局部暖窗和蓝色点光；未把二期等其他项目混入一期。
+
+![亚特兰蒂斯白天](images/sanya-atlantis-day.png)
+
+![亚特兰蒂斯夜景](images/sanya-atlantis-night.png)
+
+![免税城一期白天](images/sanya-dutyfree-day.png)
+
+![免税城一期夜景](images/sanya-dutyfree-night.png)
+
+
+## 0.55.79 海岸情人桥与雨林索桥
+
+对照[蜈支洲岛官方照片](https://www.wuzhizhou.com/islandStyle/detail_9959.html)，情人桥重做深红木材、双心栏板、石砌桥墩、双檐亭瓦肋与桥头台阶，补足连续桥面和亭内地面。官方页面正文讲述情人石传说，本次仅采用其桥梁照片作为造型参考。
+
+对照[亚龙湾景区的过江龙索桥实拍](https://www.ylwpark.com/news/detail/id/195.html)，将硕大圆球树冠改成随山坡展开的细小组合树冠；细化下垂桥面、三排菱形护网、支索与短入口平台。保留真实谷地，并清除伸入桥面通道的枝叶。夜景只表达柔和路径照明，不代表景区实际夜游安排。
+
+0.55.77 的亚特兰蒂斯与免税城改进合并于本版发布，未单独发布中间版本。
+
+![情人桥白天](images/sanya-lovers-day.png)
+
+![情人桥夜景](images/sanya-lovers-night.png)
+
+![过江龙索桥白天](images/sanya-dragon-day.png)
+
+![过江龙索桥夜景](images/sanya-dragon-night.png)

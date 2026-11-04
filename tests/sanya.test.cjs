@@ -36,3 +36,50 @@ test('Phoenix Island has separated broad towers and stable facade coordinates th
  s.setLandmarkEnabled('phoenix',false);s.setLandmarkEnabled('phoenix',true);assert.equal(s.landmarks.get('phoenix'),g);s.setNight(false);lights.forEach(m=>assert.equal(m.material.emissiveIntensity,0));
  }finally{s.dispose();}
 });
+
+test('Atlantis retains a continuous curved tower, attached balcony floors and a connected entrance',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{atlantis,atlantisFront,atlantisBack,atlantisTop}=await import('../web/sanya-atlantis.js'),k=makeKit({time:{value:0},night:{value:0}}),g=atlantis(k);g.updateMatrixWorld(true);const all=[],body=[],balconies=[],walk=[],crowns=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.atlantisFin)body.push(o);if(o.material.userData.atlantisBalcony)balconies.push(o);if(o.material.userData.atlantisWalk)walk.push(o);if(o.material.userData.atlantisCrown)crowns.push(o);});const ray=(x,y,z,d,list)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,3).intersectObjects(list,false);
+ try{
+ for(const x of [-.25,-.1,0,.1,.25])for(const y of [.16,.5,.94]){
+  for(const [fn,dir]of [[atlantisFront,-1],[atlantisBack,1]]){const hits=ray(x,y,dir<0?1:-1,[0,0,dir],body);assert.ok(hits.some(hit=>Math.abs(hit.point.z-fn(x))<.012),'Front and rear glass must follow the actual facade rather than leave a blank offset wall');}
+ }
+ for(const x of [-.25,0,.25])for(const level of [5,18,32,42])for(const [fn,side]of [[atlantisFront,1],[atlantisBack,-1]]){const y=.05+level*.0245,hit=ray(x,y+.012,fn(x)+side*.010,[0,-1,0],balconies)[0];assert.ok(hit&&Math.abs(hit.point.y-y)<.003,'Occupied levels must have attached projecting balcony floors');}
+ for(const x of [-.05,0,.05])for(let i=0;i<=24;i++){const z=.42+i*.11/24,hit=ray(x,.1,z,[0,-1,0],walk)[0];assert.ok(hit&&Math.abs(hit.point.y-.030)<.003,'Lobby entrance must have a continuous paved approach');}
+ assert.ok(atlantisTop(-.205)>atlantisTop(.205)+.05&&atlantisTop(0)<atlantisTop(.205)-.15,'Two fins need unequal crests with a visible saddle');
+ for(const x of [-.26,.27]){const hit=ray(x,.2,.20,[0,-1,0],all)[0];assert.ok(hit&&hit.point.y<.08,'Low spiral wings keep their courtyard openings');}
+ for(const x of [-.205,.205])assert.ok(ray(x,atlantisTop(x)-.04,1,[0,0,-1],crowns).length,'Each fin crest has real crown ribs above the occupied floors');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('CDF phase-one mall keeps four skylights, two connected canopies and an open central courtyard',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{dutyfree,cdfCanopy}=await import('../web/sanya-dutyfree.js'),k=makeKit({time:{value:0},night:{value:0}}),g=dutyfree(k);g.updateMatrixWorld(true);const all=[],roof=[],dome=[],canopy=[],court=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);const d=o.material.userData;if(d.cdfRoof)roof.push(o);if(d.cdfDome)dome.push(o);if(d.cdfCanopy)canopy.push(o);if(d.cdfCourt)court.push(o);});const ray=(x,y,z,list)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,-1,0),0,2).intersectObjects(list,false);
+ try{
+ for(const x of [-.295,.295])for(const z of [-.17,.17]){const h=ray(x,.4,z,dome)[0];assert.ok(h&&h.point.y>.243,'Each hall retains two raised glazed skylights');}
+ for(const side of [-1,1])for(const u of [0,1])for(const v of [.10,.5,.9]){const q=cdfCanopy(u,v,side),hit=ray(q[0],q[1]+.03,q[2],roof)[0];assert.ok(hit&&Math.abs(hit.point.y-q[1])<.008,'Canopy ends must meet the actual roof without hovering');}
+ for(const side of [-1,1]){const q=cdfCanopy(.5,.5,side),h=ray(q[0],.5,q[2],canopy)[0];assert.ok(h&&h.point.y>.29,'Canopy must rise above the entrance rather than block it');}
+ for(const x of [-.08,0,.08])for(const z of [-.06,0,.06]){assert.equal(ray(x,.5,z,roof.concat(canopy,dome)).length,0,'Central courtyard must remain open to the sky');const h=ray(x,.1,z,court)[0];assert.ok(h&&h.point.y>.018);}
+ for(const x of [-.06,.06])for(let i=0;i<40;i++){const z=-.47+i/39*.94,h=ray(x,.10,z,court)[0];assert.ok(h&&h.point.y>.018&&h.point.y<.032,'Central pedestrian route stays continuous');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Lovers Bridge keeps a continuous beach approach, open sea spans and a usable pavilion floor',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{lovers}=await import('../web/sanya-lovers.js'),k=makeKit({time:{value:0},night:{value:0}}),g=lovers(k);g.updateMatrixWorld(true);const decks=[],piers=[],all=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.loversDeck)decks.push(o);if(o.material.userData.loversPier)piers.push(o);});const cast=(x,y,z,d,objs)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,2).intersectObjects(objs,false);
+ try{
+ for(const x of [-.05,0,.05]){let previous=null;for(let i=0;i<=240;i++){const z=.599-i*1.03/240,hit=cast(x,.30,z,[0,-1,0],decks)[0];assert.ok(hit,'Every part of the approach, bridge and pavilion needs a real supporting floor');assert.ok(hit.point.y>=.048&&hit.point.y<.16);if(previous!==null)assert.ok(Math.abs(hit.point.y-previous)<.021,'No oversized step or missing bridge-to-pavilion seam');previous=hit.point.y;}}
+ for(const z of [-.30,-.12,.06,.24,.405]){const hit=cast(0,.2,z,[0,-1,0],piers)[0];assert.ok(hit&&hit.point.y>.139,'Masonry supports must reach the structural beams');}
+ assert.equal(cast(0,.085,.16,[0,0,-1],piers).filter(h=>h.distance<.07).length,0,'Between piers there is an open sea span');
+ for(const x of [-.05,0,.05])assert.equal(cast(x,.23,-.22,[0,0,-1],all).filter(h=>h.distance<.15).length,0,'Pavilion entry stays open above the walking surface');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Dragon Bridge has supported landings, fine open nets and an unobstructed suspended walking route',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{dragon}=await import('../web/sanya-dragon.js'),k=makeKit({time:{value:0},night:{value:0}}),g=dragon(k);g.updateMatrixWorld(true);const decks=[],land=[],canopy=[],all=[];
+ g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.suspensionDeck)decks.push(o);if(o.material.userData.dragonGround)land.push(o);if(o.material.userData.dragonCanopy)canopy.push(o);});
+ const point=t=>[(-.50+t)*1.12,.385-.126*Math.sin(Math.PI*t)+t*.035,.015-.055*t],cast=(x,y,z,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,-1,0),0,2).intersectObjects(objects,false);
+ try{
+ for(let i=0;i<76;i++){const q=point((i+.5)/76);for(const side of [-1,0,1]){const z=q[2]+side*.035,hit=cast(q[0],q[1]+.05,z,decks)[0];assert.ok(hit&&Math.abs(hit.point.y-q[1]-.003)<.001,'Every plank has a stable walking surface');const trees=cast(q[0],1,z,canopy);assert.ok(!trees.length||trees[0].point.y<q[1]-.015,'Canopy must not grow through the bridge');}}
+ for(const t of [0,1]){const q=point(t);for(const side of [-1,0,1]){const hit=cast(q[0],.7,q[2]+side*.052,land)[0];assert.ok(hit&&Math.abs(hit.point.y-(q[1]-.007))<.013,'Each landing is supported across its width');}}
+ for(const t of [.25,.5,.75]){const q=point(t),hit=cast(q[0],q[1]-.02,q[2],land)[0];assert.ok(hit&&q[1]-hit.point.y>.05,'The bridge spans a real valley');}
+ for(const t of [.2,.4,.6,.8]){const q=point(t),hits=new T.Raycaster(new T.Vector3(q[0],q[1]+.04,q[2]-.040),new T.Vector3(0,0,1),0,.08).intersectObjects(all,false);assert.equal(hits.length,0,'No branch, railing or column blocks the walking lane');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
