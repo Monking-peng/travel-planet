@@ -1,6 +1,19 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Puming Pagoda has a recessed entrance, connected stone stairs and clear four-sided galleries',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{hanshan}=await import('../web/suzhou-hanshan.js'),k=makeKit({time:{value:0},night:{value:0}}),g=hanshan(k);g.updateMatrixWorld(true);
+ try{
+  const entry=new T.Raycaster(new T.Vector3(0,.16,.20),new T.Vector3(0,0,-1),0,.22);assert.equal(entry.intersectObject(g,true).length,0,'The front entrance must open into a real recess');entry.far=.45;assert.ok(entry.intersectObject(g,true).length>0,'A dark interior wall must close the distant rear of the entrance');
+  let previous=.024;for(let z=.326;z>.10;z-=.002){const hit=new T.Raycaster(new T.Vector3(0,.098,z),new T.Vector3(0,-1,0),0,.10).intersectObject(g,true)[0];assert.ok(hit,'The stair approach must be continuous');assert.ok(Math.abs(hit.point.y-previous)<.012,'Each rise must connect without a sudden podium step');previous=hit.point.y;}
+  for(let floor=1;floor<5;floor++)for(let side=0;side<4;side++){
+   const w=.350-floor*.035,base=.088+floor*.177+.022,rotation=new T.Matrix4().makeRotationY(side*Math.PI/2),point=new T.Vector3(.014,base+.003,w/2+.024).applyMatrix4(rotation);point.z-=.08;
+   const hit=new T.Raycaster(point,new T.Vector3(0,-1,0),0,.04).intersectObject(g,true)[0];assert.ok(hit&&Math.abs(hit.point.y-base)<.001,'The gallery floor must sit above the lower roof on every side');
+   const origin=new T.Vector3(.014,base+.055,w/2+.08).applyMatrix4(rotation);origin.z-=.08;const direction=new T.Vector3(0,0,-1).transformDirection(rotation),window=new T.Raycaster(origin,direction,0,.13).intersectObject(g,true)[0];assert.ok(window&&window.distance>.085,'Upper grilles must be behind the columns, rather than pasted onto a flat wall');
+  }
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Tiger Hill tower keeps seven recessed openings and a continuous level stair approach',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tiger}=await import('../web/suzhou-tiger.js'),k=makeKit({time:{value:0},night:{value:0}}),g=tiger(k);g.updateMatrixWorld(true);
  try{const walls=[];g.traverse(o=>{if(o.material?.userData.tigerMasonry)walls.push(o);});const transform=new T.Matrix4().makeRotationZ(-.041);transform.setPosition(0,.068,0);let y=0,floor=0;

@@ -2,23 +2,7 @@ import * as THREE from 'three';
 import {palette,site,disc,pond,steps,grove,hall,hip,archWall,bridge,balcony,sign,finish,lit,edgeLight,TAU} from './suzhou-kit.js';
 
 export {tiger} from './suzhou-tiger.js';
-export function hanshan(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.63,.57),yellow=k.mat('#be973d',.95),wood=k.mat('#633d30',.89),panel=k.mat('#cfb6a1',.91);disc(k,g,.45,.37,.022,p.pale);
- const tower=new THREE.Group();tower.position.z=-.12;g.add(tower);
- for(let i=0;i<5;i++){
-  const w=.305-i*.032,y=.045+i*.146,h=.104;
-  k.box(tower,w,h,w,panel,0,y+h/2,0);
-  for(const side of [-1,1]){for(let j=0;j<5;j++)k.box(tower,.006,h,.008,wood,(j/4-.5)*w*.94,y+h/2,side*(w/2+.002));for(const yy of [y+.022,y+.075,y+h])k.box(tower,w+.02,.007,.007,wood,0,yy,side*(w/2+.005));balcony(k,tower,0,side*(w*.63),w*1.24,y-.006,p.pale);}
-  for(let j=0;j<4;j++){const a=j*Math.PI/2,face=new THREE.Group();face.rotation.y=a;tower.add(face);for(let n=0;n<9;n++){const x=(n/8-.5)*w;k.box(face,.013,.009,.035,wood,x,y+h-.003,w*.51);k.box(face,.021,.005,.047,wood,x,y+h+.006,w*.51);}}
-  hip(k,tower,w*1.50,w*1.50,.067,y+h+.009,p.tile,edgeLight(k,p.tile));
- }
- k.cyl(tower,.002,.005,.16,p.gold,0,.89,0,10);for(let i=0;i<8;i++)k.ring(tower,.020-i*.0016,.002,p.gold,.825+i*.016);k.ball(tower,.007,p.gold,0,.975,0);
- for(const side of [-1,1]){k.box(g,.021,.15,.55,yellow,side*.39,.10,0);k.box(g,.038,.015,.58,p.tile,side*.39,.183,0);hall(k,g,p,{x:side*.275,z:.17,w:.14,d:.20,h:.12,wall:yellow});}
- archWall(k,g,{w:.72,h:.17,d:.025,y:.023,z:.32,openings:[{r:.065,spring:.070,bottom:.001}],mat:yellow});hip(k,g,.28,.14,.07,.21,p.tile,edgeLight(k,p.tile),0,.32);
- sign(k,g,'寒山寺',.10,.028,0,.165,.336,{background:'#b69843',color:'#3c392c'});sign(k,tower,'普明宝塔',.092,.023,0,.113,.158,{background:'#60392e',color:'#dbc085'});
- grove(k,g,height,[[-.49,-.25,.23],[.49,-.26,.22]]);
- return finish(k,g,{lamps:[[-.20,.025,.24],[.20,.025,.24]],visitors:[[-.04,.025,.40],[.06,.025,.43]]});
-}
+export {hanshan} from './suzhou-hanshan.js';
 
 export function panmen(k){
  const g=new THREE.Group(),p=palette(k),height=site(k,g,.69,.57);pond(k,g,p,.55,.34,0,.09);
