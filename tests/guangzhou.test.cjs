@@ -9,6 +9,28 @@ test('Guangzhou landmarks stay on land, above the globe and separated on two hem
   }finally{scene.dispose();}
 });
 
+test('Memorial Hall has four deep porticoes, closed level roof valleys and stairs reaching the curved plaza',async()=>{
+  const T=await import('three'),{createGuangzhouScene,RADIUS}=await import('../web/guangzhou-scene.js'),scene=createGuangzhouScene();scene.root.updateMatrixWorld(true);
+  try{
+    const g=scene.landmarks.get('memorial'),world=p=>new T.Vector3(...p).applyMatrix4(g.matrixWorld);
+    const ray=(a,b,objects=[g])=>{const start=world(a),end=world(b),d=end.clone().sub(start);return new T.Raycaster(start,d.clone().normalize(),0,d.length()).intersectObjects(objects,true);};
+    const spin=(p,a)=>new T.Vector3(...p).applyAxisAngle(new T.Vector3(0,1,0),a).toArray();
+    const levels=[];
+    for(let side=0;side<4;side++){
+      const a=side*Math.PI/2;
+      assert.equal(ray(spin([0,.224,.50],a),spin([0,.224,.400],a)).length,0,'Portico has clear depth in front of the recessed windows');
+      assert.ok(ray(spin([0,.224,.400],a),spin([0,.224,.370],a)).length,'Recessed window closes the back of each portico');
+      const h=ray(spin([.10,.445,.47],a),spin([.10,.31,.47],a));assert.ok(h.length&&h[0].object.material.userData.memorialRoof,'Each wing must have a complete blue roof');levels.push(g.worldToLocal(h[0].point.clone()).y);
+    }
+    assert.ok(Math.max(...levels)-Math.min(...levels)<.0001,'Four equal roof sections must remain level instead of sagging with the sphere');
+    for(const x of [-.29,-.25,.25,.29])for(const dz of [-.001,.001]){const z=Math.abs(x)+dz,h=ray([x,.45,z],[x,.31,z]);assert.ok(h.some(hit=>hit.object.material.userData.memorialRoof),'Valleys between adjacent wings must not leave a hole');}
+    const stairs=[];g.traverse(o=>{if(o.material?.userData.memorialSteps)stairs.push(o);});assert.ok(stairs.length);
+    let last=-Infinity;
+    for(const i of [0,2,4,6,9]){const z=.62-i*.016,h=ray([0,.20,z],[0,-.15,z],stairs);assert.ok(h.length);const y=g.worldToLocal(h[0].point.clone()).y;assert.ok(y>last,'Approach steps must climb continuously');last=y;if(i===0){const ground=Math.sqrt(RADIUS*RADIUS-z*z)-RADIUS+.013;assert.ok(y-ground<.03&&y>ground,'First step should meet the plaza rather than stand above a tall blank wall');}}
+    assert.ok(Math.abs(last-.058)<.001,'Final step meets the portico floor');
+  }finally{scene.dispose();}
+});
+
 test('Guangzhou complete landmark modules detach with their lighting and release resources once',async()=>{
   const {createGuangzhouScene}=await import('../web/guangzhou-scene.js'),{LANDMARKS}=await import('../web/guangzhou-landmarks.js');const scene=createGuangzhouScene(),original=new Map(scene.landmarks),geometries=new Set();
   assert.equal(original.size,LANDMARKS.length);assert.equal(original.size,11);

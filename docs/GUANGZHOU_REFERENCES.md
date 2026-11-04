@@ -65,3 +65,16 @@
 ![广东省博物馆白天](images/guangzhou-museum.png)
 
 ![广东省博物馆夜景](images/guangzhou-museum-night.png)
+
+
+## 0.55.16 中山纪念堂
+
+对照[越秀区官方航拍](https://www.yuexiu.gov.cn/jjjc/ljjy/jyjd/content/post_10259721.html)、[2025 年近景](https://commons.wikimedia.org/wiki/File:20250222_Guangzhou_Sun_Yat-sen_Memorial_Hall_03.jpg)与[历史夜景](https://bbs.zol.com.cn/dcbbs/d33991_10689.html)，补四面重檐抱厦、八角高窗、蓝金彩绘梁、斗拱和内退红柱门廊。屋檐在屋谷相接，台阶由曲面庭院升到水平门廊。
+
+[广州档案馆的修缮报道](https://www.gzdaj.gov.cn/gzdt/gnxw/content/post_256825.html)用于核对岭南博古脊饰，模型没有套用宫殿神兽。夜景保留蓝瓦，暖光落在檐下与窗棂。四翼、花纹和脊饰为缩微表达，不是测绘复原；实拍照片没有作为贴图或收入公开包。
+
+![纪念堂日景](images/guangzhou-memorial.png)
+
+![纪念堂背面](images/guangzhou-memorial-back.png)
+
+![纪念堂夜景](images/guangzhou-memorial-night.png)

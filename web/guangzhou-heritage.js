@@ -3,26 +3,7 @@ import {roof,tree,plaque} from './wuhan-architecture.js';
 import {plaza,bollards,people,glow,skin} from './shenzhen-forms.js';
 import {lattice,balcony} from './shunde-kit.js';
 
-function polyRoof(k,g,r,y,h,mat,trim){
-  const point=(u,v)=>{const a=Math.floor(u*8)%8*Math.PI/4,b=a+Math.PI/4,t=u*8%1,xx=(1-t)*Math.cos(a)+t*Math.cos(b),zz=(1-t)*Math.sin(a)+t*Math.sin(b);return [xx*r*v,y+h*(1-v)**1.3+.018*v**6*Math.abs(t*2-1)**6,zz*r*v];};
-  skin(k,g,point,16,96,mat);k.line(g,Array.from({length:97},(_,i)=>point(i/96,1)),.0026,trim,true);
-  for(let i=0;i<96;i++)k.line(g,Array.from({length:13},(_,j)=>point(i/96,.12+j*.88/12)),.0007,mat);
-}
-export function memorial(k){
-  const g=new THREE.Group(),stone=plaza(k,g,.68,.64),wall=k.mat('#c1ac80'),red=k.mat('#854b40'),blue=k.mat('#335576'),tile=k.mat('#344e6e',.57),gold=k.mat('#baac75'),warm=glow(k,'#d4bb85',.9),wood=k.mat('#48483d');
-  k.cyl(g,.43,.43,.043,stone,0,.035,0,8).rotation.y=Math.PI/8;k.cyl(g,.36,.36,.20,wall,0,.15,0,8).rotation.y=Math.PI/8;
-  for(let i=0;i<8;i++){const a=(i+.5)*Math.PI/4;for(let j=-2;j<=2;j++){const x=Math.cos(a)*.338+Math.sin(a)*j*.048,z=Math.sin(a)*.338-Math.cos(a)*j*.048;const win=k.box(g,.035,.17,.006,wood,x,.19,z);win.rotation.y=-a+Math.PI/2;}}
-  polyRoof(k,g,.43,.270,.080,tile,warm);k.cyl(g,.30,.30,.140,red,0,.360,0,8).rotation.y=Math.PI/8;polyRoof(k,g,.365,.430,.115,tile,warm);
-  k.cyl(g,.013,.014,.022,gold,0,.551,0,12);k.ball(g,.014,gold,0,.569,0);
-  // Broad front portico with painted bracket bands, red columns and a blue tiled roof.
-  k.box(g,.74,.047,.22,stone,0,.039,.33);k.box(g,.70,.043,.17,blue,0,.283,.34);
-  for(let i=0;i<8;i++){const x=(i-3.5)*.091;k.cyl(g,.009,.010,.235,red,x,.177,.41,10);k.cyl(g,.014,.014,.014,stone,x,.067,.41,12);lattice(k,g,x,.172,.291,.066,.18,wood);k.box(g,.059,.013,.014,gold,x,.276,.427);}
-  roof(k,g,.86,.31,.060,.285,tile,warm,0,.34);k.box(g,.48,.060,.012,blue,0,.395,.348);plaque(k,g,'天下为公',.22,.044,0,.395,.356);
-  for(const y of [.266,.286])for(let i=0;i<26;i++){const x=(i-12.5)*.027;k.box(g,.014,.006,.025,gold,x,y,.43);if(i%2===0)k.box(g,.006,.015,.026,blue,x,y-.007,.431);}
-  for(let i=0;i<8;i++)k.box(g,.57,.006*(i+1),.022,stone,0,.003*(i+1),.59-i*.022);
-  for(const x of [-.55,.55])tree(k,g,x,.015,-.20,.15);
-  bollards(k,g,[[-.40,.49],[.40,.49],[-.52,-.36],[.52,-.36]]);people(k,g,[[-.19,.53],[.13,.55],[.18,.51]]);return k.merge(g);
-}
+export {memorial} from './guangzhou-memorial.js';
 
 function hardRoof(k,g,x,z,w,d,y,h,tile,ridge){
   tile.side=THREE.DoubleSide;const shape=new THREE.Shape();shape.moveTo(-d/2,0);shape.lineTo(0,h);shape.lineTo(d/2,0);shape.closePath();const wall=k.mesh(g,new THREE.ExtrudeGeometry(shape,{depth:w,bevelEnabled:false}),tile,x-w/2,y,z);wall.rotation.y=Math.PI/2;wall.position.x=x-w/2;wall.position.z=z;
