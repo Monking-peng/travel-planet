@@ -36,3 +36,31 @@ test('Chongqing module lighting preserves daylight materials, honors reduced mot
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+test('Raffles has eight separate tower frames, open Crystal gardens and continuous pedestrian connections',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{raffles}=await import('../web/chongqing-raffles.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=raffles(k);g.updateMatrixWorld(true);
+ try{
+  const meshes=[],towers=[];g.traverse(o=>{if(o.isMesh){meshes.push(o);if(Number.isInteger(o.material.userData.rafflesTower))towers.push(o);}});
+  assert.equal(new Set(towers.map(o=>o.material.userData.rafflesTower)).size,8);
+  const heights=towers.map(o=>new T.Box3().setFromObject(o).max.y);assert.equal(heights.filter(y=>y>1.5).length,2);assert.equal(heights.filter(y=>y<1.3).length,6);
+  for(const side of [-1,1]){
+   const clear=new T.Raycaster(new T.Vector3(side*.76,1.28,.162),new T.Vector3(-side,0,0),0,.14);
+   assert.equal(clear.intersectObjects(meshes).length,0,'Crystal end garden must remain open, not a capped pipe');
+   const deck=new T.Raycaster(new T.Vector3(side*.69,1.28,.16),new T.Vector3(0,-1,0),0,.10).intersectObjects(meshes);
+   assert.ok(deck.length>0 && Math.abs(deck[0].point.y-1.20)<.003,'End garden needs a walkable deck');
+  }
+  const shell=meshes.filter(o=>o.material.userData.crystalShell);
+  assert.ok(new T.Raycaster(new T.Vector3(0,1.24,.50),new T.Vector3(0,0,-1),0,.30).intersectObjects(shell).length>0,'Central conservatory must retain glazing');
+  for(const x of [-.205,.205])for(let z=-.18;z<=.07;z+=.01){
+   const hits=new T.Raycaster(new T.Vector3(x,1.30,z),new T.Vector3(0,-1,0),0,.14).intersectObjects(meshes);
+   assert.ok(hits.length>0,`Conservatory bridge has a gap at ${x},${z.toFixed(2)}`);
+  }
+  for(let i=0;i<12;i++){
+   const z=.745-i*.014,top=.031+(i+1)*.0108;
+   const hits=new T.Raycaster(new T.Vector3(0,.19,z),new T.Vector3(0,-1,0),0,.20).intersectObjects(meshes);
+   assert.ok(hits.length>0 && Math.abs(hits[0].point.y-top)<.001,`Podium step ${i} must not be buried`);
+  }
+  for(let z=.53;z<=.59;z+=.005){const hits=new T.Raycaster(new T.Vector3(0,.19,z),new T.Vector3(0,-1,0),0,.04).intersectObjects(meshes);assert.ok(hits.length>0,'Upper stair must connect to roof park');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

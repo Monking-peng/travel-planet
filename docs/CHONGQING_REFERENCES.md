@@ -33,3 +33,15 @@
 ![洪崖洞日景模型](images/chongqing-hongya-day.png)
 
 ![洪崖洞侧向模型](images/chongqing-hongya-oblique.png)
+
+## 来福士·朝天门细化（0.55.31）
+
+对照 [Safdie Architects 的六张日夜、裙楼及水晶连廊近照](https://www.safdiearchitects.com/projects/raffles-city-chongqing)，保留六座较低塔楼与两座较高塔楼的层次，增加微弯楼身、粗横框、凹入深色玻璃和设备层斜撑。玻璃水晶连廊中部为封闭展厅，两端是钢肋围合的露天花园，下腹保持实体；短连桥接向高塔。裙楼改为向两江交汇处收拢的曲面退台，补屋顶花园、玻璃天窗与连续宽阶。
+
+夜间灯窗对齐楼层，保留暗窗与材料底色；连廊肋条、商场和庭灯分层发光，缓慢变化的相位错开。减少动态效果时静止。八座塔楼随来福士模块整体增删，未拆成八项管理功能。模型是按实拍特征制作的缩微表达，不代表精确楼层、测绘或当天灯光秀，摄影作品仅作内部参考。
+
+![来福士日景](images/chongqing-raffles.png)
+
+![连廊露天花园及短桥](images/chongqing-raffles-oblique.png)
+
+![来福士夜景](images/chongqing-raffles-night.png)
