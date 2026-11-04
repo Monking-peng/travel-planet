@@ -64,3 +64,23 @@ test('Raffles has eight separate tower frames, open Crystal gardens and continuo
   for(let z=.53;z<=.59;z+=.005){const hits=new T.Raycaster(new T.Vector3(0,.19,z),new T.Vector3(0,-1,0),0,.04).intersectObjects(meshes);assert.ok(hits.length>0,'Upper stair must connect to roof park');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Grand Theater keeps panel coordinates, recessed foyers, supported windows and continuous podium stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{theatre}=await import('../web/chongqing-theatre.js');
+ const k=makeKit({time:{value:0},night:{value:0}}),g=theatre(k);g.updateMatrixWorld(true);
+ try{
+  const meshes=[],cladding=[],stages=[],slots=[];g.traverse(o=>{if(!o.isMesh)return;meshes.push(o);if(o.material.userData.theatreGlass)cladding.push(o);if(o.material.userData.theatreStage)stages.push(o);if(o.material.userData.theatreSlot)slots.push(o);});
+  assert.equal(stages.length,2);assert.ok(Math.abs(new T.Box3().setFromObject(stages[0]).max.y-.72)<.002);assert.ok(Math.abs(new T.Box3().setFromObject(stages[1]).max.y-.55)<.002);
+  for(const o of cladding){assert.equal(o.geometry.attributes.uv.count,o.geometry.attributes.position.count);assert.ok(o.geometry.attributes.uv.array.some(v=>v>2),'Glass joints must survive mesh merging');}
+  for(const x of [-.11,.11]){
+   const ray=new T.Raycaster(new T.Vector3(x,.15,.80),new T.Vector3(0,0,-1),0,.205);assert.equal(ray.intersectObjects(meshes).length,0,'Foyer entrance must have actual depth');ray.far=.29;assert.ok(ray.intersectObjects(meshes).length>0,'Entrance needs recessed glazing');
+  }
+  assert.ok(slots.length>0);
+  for(const o of slots){const a=o.geometry.attributes.position;for(let i=0;i<a.count;i+=24){
+   const b=new T.Box3();for(let j=0;j<24;j++)b.expandByPoint(new T.Vector3().fromBufferAttribute(a,i+j));const c=b.getCenter(new T.Vector3()),side=Math.sign(c.x);
+   for(const y of [c.y,b.max.y-.001]){const ray=new T.Raycaster(new T.Vector3(c.x+side*.01,y,c.z),new T.Vector3(-side,0,0),0,.02);assert.ok(ray.intersectObjects(cladding).length>0,`Window at ${c.x.toFixed(2)},${y.toFixed(2)},${c.z.toFixed(2)} must touch its glass facade`);}
+  }}
+  for(let i=0;i<9;i++){const top=.018+(i+1)*.0098,z=.936-i*.018,hits=new T.Raycaster(new T.Vector3(0,.16,z),new T.Vector3(0,-1,0),0,.15).intersectObjects(meshes);assert.ok(hits.length&&Math.abs(hits[0].point.y-top)<.001,`Podium step ${i} is blocked`);}
+  for(let z=.72;z<.80;z+=.005)assert.ok(new T.Raycaster(new T.Vector3(0,.16,z),new T.Vector3(0,-1,0),0,.06).intersectObjects(meshes).length>0,'Stairs must reach the upper plaza');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

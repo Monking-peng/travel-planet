@@ -45,3 +45,15 @@
 ![连廊露天花园及短桥](images/chongqing-raffles-oblique.png)
 
 ![来福士夜景](images/chongqing-raffles-night.png)
+
+## 重庆大剧院细化（0.55.32）
+
+对照 [gmp 设计方的日景、夜景、航拍与门厅照片](https://www.gmp.de/en/projects/472/chongqing-grand-theater)，六条高低错落的玻璃折面围绕前后两座舞台体量展开。保留浅玉色玻璃、细板缝、窄窗组和厚石台；两处入口真实凹入，门厅有倾斜构架，前方九级宽阶连续接入广场。扩大场地并调整本组位置，保持与邻近地标的间距。
+
+夜间玻璃透光、屋顶、门厅和庭灯分层，缓慢错相变化，不把整个建筑统一染色；减少动态效果时静止。摄影作品仅内部参照。模型是提炼实拍特征的缩微表达，不代表测绘复原或实时灯光。
+
+![重庆大剧院日景](images/chongqing-theatre.png)
+
+![玻璃折面与窄窗](images/chongqing-theatre-oblique.png)
+
+![重庆大剧院夜景](images/chongqing-theatre-night.png)

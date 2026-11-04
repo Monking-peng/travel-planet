@@ -32,15 +32,4 @@ export function monument(k){
  for(let i=0;i<24;i++){const a=i/24*TAU;k.ball(g,.017,k.mat(i%3?'#6e8352':'#bf975d',.95),.19*Math.sin(a),.051,.19*Math.cos(a));}
  return finish(k,g,{lamps:[[-.3,-.20],[.3,-.20],[-.3,.20],[.3,.20]],visitors:[[.25,.20],[-.22,.28],[.1,.31],[-.25,-.16],[.28,-.12]]});
 }
-export function theatre(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.77,.60);paving(k,g,p,.68,.49);k.box(g,1.08,.052,.64,p.pale,0,.052,0);const glass=k.mat('#8da99c',.38,.26),frames=k.mat('#627d73',.59,.22),dark=k.mat('#3b5954',.36,.3);glass.userData.night={color:new THREE.Color('#b8d6bd'),intensity:.50};glass.userData.pulse={phase:2,speed:.28};
- // Distinct inclined glass shells sit around two higher stage houses.
- for(const [x,w,h,z,d]of [[-.35,.28,.31,.05,.46],[-.04,.33,.35,.02,.56],[.29,.30,.29,.05,.46]]){
-  const pts=[[x-w/2,.08,z+d/2],[x+w/2,.08,z+d/2],[x+w/2,.08,z-d/2],[x-w/2,.08,z-d/2],[x-w*.62,h,z+d*.67],[x+w*.62,h,z+d*.67],[x+w*.43,h+.06,z-d*.38],[x-w*.43,h+.06,z-d*.38]];prism(k,g,pts,glass);
-  const faces=[[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7],[4,5,6,7]];for(const f of faces){for(const axis of [0,1])for(let j=0;j<=10;j++){const t=j/10,a=new THREE.Vector3(...pts[f[axis?0:0]]).lerp(new THREE.Vector3(...pts[f[axis?3:1]]),t),b=new THREE.Vector3(...pts[f[axis?1:3]]).lerp(new THREE.Vector3(...pts[f[axis?2:2]]),t);k.beam(g,a.toArray(),b.toArray(),.0008,frames);}}
-  for(let j=0;j<5;j++){const yy=.10+j*.045;k.box(g,.007,.022,.002,dark,x+w*.22,yy,z+d*.5+.004+(yy-.08)*.25);}
- }
- for(const [x,z,w,h]of [[-.12,-.10,.27,.58],[.30,-.13,.19,.45]]){const pts=[[x-w/2,.20,z+.10],[x+w/2,.20,z+.10],[x+w/2,.20,z-.10],[x-w/2,.20,z-.10],[x-w*.45,h,z+.075],[x+w*.45,h,z+.075],[x+w*.42,h,z-.09],[x-w*.42,h,z-.09]];prism(k,g,pts,glass);for(let i=0;i<=10;i++)k.beam(g,[x-w/2+i*w/10,.22,z+.102],[x-w*.45+i*w*.9/10,h,z+.078],.0015,frames);for(let i=0;i<=12;i++)k.box(g,w*.9,.001,.003,frames,x,.22+i*(h-.22)/12,z+.085);}
- k.box(g,.33,.048,.020,dark,-.08,.101,.335);for(let i=0;i<9;i++)k.box(g,.003,.049,.023,p.pale,-.24+i*.04,.101,.335);steps(k,g,p,-.08,.41,.45,5,.035,.075);sign(k,g,'重庆大剧院',.20,.025,-.08,.157,.337,{background:'#8da99c',color:'#34534c'});
- return finish(k,g,{lamps:[[-.52,.37],[.48,.37],[-.56,-.33],[.56,-.33]],visitors:[[-.18,.37],[.12,.38],[.4,.29]]});
-}
+export {theatre} from "./chongqing-theatre.js";
