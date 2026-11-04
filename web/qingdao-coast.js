@@ -26,18 +26,4 @@ export function wind(k){
  k.cyl(g,.085,.102,.22,red,0,.17,0,48);for(let i=0;i<3;i++){const q=k.box(g,.023,.080-i*.011,.022,red,(i-1)*.025,.632+i*.020,0);q.rotation.z=-.10;}
  return finish(k,g,{lamps:[[-.38,.023,.28],[.38,.023,.28]],visitors:[[-.12,.024,.41],[.12,.024,.40]]});
 }
-function sailboat(k,g,p,x,z,size=1,angle=0){
- const q=new THREE.Group();q.position.set(x,.031,z);q.scale.setScalar(size);q.rotation.y=angle;g.add(q);const hull=new THREE.Shape();hull.moveTo(0,.100);hull.quadraticCurveTo(.040,.065,.037,-.06);hull.quadraticCurveTo(0,-.083,-.037,-.06);hull.quadraticCurveTo(-.04,.06,0,.10);hull.closePath();const boat=k.mesh(q,new THREE.ExtrudeGeometry(hull,{depth:.026,bevelEnabled:true,bevelSize:.004,bevelThickness:.004,bevelSegments:2}),p.pale);boat.rotation.x=-Math.PI/2;boat.position.y=.014;k.box(q,.027,.018,.047,p.blue,0,.045,-.020);k.beam(q,[0,.030,0],[0,.25,0],.0016,p.pale);k.beam(q,[0,.082,0],[.077,.082,0],.0013,p.pale);
- const main=skin(k,q,(u,v)=>[u*.077*(1-v),.08+.16*v,.008*Math.sin(u*Math.PI)*Math.sin(v*Math.PI)],10,14,p.pale);main.material.side=THREE.DoubleSide;skin(k,q,(u,v)=>[-u*.048*(1-v),.06+.17*v,.004*Math.sin(u*Math.PI)*Math.sin(v*Math.PI)],8,12,p.pale);
-}
-export function marina(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.69,.63);sea(k,g,p,.68,.62);
- k.box(g,1.01,.045,.10,p.stone,0,.048,-.36);k.box(g,.12,.045,.66,p.stone,.445,.048,-.025);k.cyl(g,.117,.117,.045,p.stone,.445,.048,.305,48);k.box(g,.93,.010,.086,p.pale,0,.076,-.36);
- k.box(g,.14,.035,.59,p.stone,-.40,.054,-.015);k.cyl(g,.085,.09,.035,p.stone,-.40,.054,.285,40);
- const torch=new THREE.Group();torch.position.set(-.40,.073,.27);g.add(torch);const red=lit(k,'#b6352d',.16),silver=k.mat('#d4d1bf',.5,.24);red.userData.night.color.copy(red.color);k.cyl(torch,.029,.018,.34,red,0,.17,0,32);k.cyl(torch,.032,.029,.15,silver,0,.415,0,32);k.ball(torch,.032,silver,0,.49,0).scale.y=.25;for(let j=0;j<9;j++)for(let i=0;i<6;i++){const a=i/6*TAU+j*.17,yy=.351+j*.014;const q=k.mesh(torch,new THREE.TorusGeometry(.006,.001,4,16),red,Math.sin(a)*.032,yy,Math.cos(a)*.032);q.rotation.y=a;}
- const white=lit(k,'#e4dfcb',.16),blue=lit(k,'#6e91a0',.14);k.cyl(g,.025,.044,.24,white,.445,.205,.305,32);k.cyl(g,.038,.038,.045,blue,.445,.347,.305,20);k.cyl(g,0,.052,.043,p.red,.445,.391,.305,20);k.cyl(g,.052,.052,.009,white,.445,.323,.305,32);k.ball(g,.009,p.warm,.445,.37,.305);
- for(let j=0;j<7;j++){const z=-.30+j*.073;for(const x of [-.455,-.345]){k.beam(g,[x,.074,z],[x,.20,z],.0015,p.pale);k.box(g,.029,.019,.001,p.pale,x+.015,.187,z);}}
- for(const [x,z,s,a]of [[-.15,-.16,.75,.4],[.10,-.09,.82,-.4],[-.13,.13,1.0,.3],[.20,.21,.70,-.7],[.01,.39,.65,.5]])sailboat(k,g,p,x,z,s,a);
- railing(k,g,p,[[.40,.075,-.33],[.40,.075,.28]],.029);
- return finish(k,g,{lamps:[[-.42,.074,-.31],[.43,.074,-.29],[.43,.074,.19]],visitors:[[-.40,.074,.05],[-.40,.074,-.07]]});
-}
+export {marina} from './qingdao-marina.js';

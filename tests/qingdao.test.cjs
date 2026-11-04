@@ -74,3 +74,14 @@ test('Taiqing gate retains open side passages and continuous stairs into the cou
   }
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+
+test('Olympic marina keeps continuous pier decks and an open approach to the lighthouse apron',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{marina}=await import('../web/qingdao-marina.js'),k=makeKit({time:{value:0},night:{value:0}}),g=marina(k);g.updateMatrixWorld(true);
+ const decks=[],rails=[],hulls=[];g.traverse(o=>{if(o.material?.userData.marinaPaving)decks.push(o);if(o.material?.userData.marinaRails)rails.push(o);if(o.material?.userData.marinaHull)hulls.push(o);});
+ try{
+  for(const [x,end]of [[.424,.19],[-.392,.16]])for(let i=0;i<=200;i++){const z=-.38+(end+.38)*i/200,h=new T.Raycaster(new T.Vector3(x,.15,z),new T.Vector3(0,-1,0),0,.10).intersectObjects(decks);assert.ok(h.length,`Pier gap at ${x}/${z}`);assert.ok(Math.abs(h[0].point.y-.078)<.0001);}
+  const approach=new T.Raycaster(new T.Vector3(.424,.10,-.29),new T.Vector3(0,0,1),0,.49).intersectObjects(rails);assert.equal(approach.length,0,'The circular railing must open toward the pier, not toward the sea');
+  assert.equal(hulls.length,5);for(const m of hulls){m.geometry.computeBoundingBox();const h=m.geometry.boundingBox.max.y-m.geometry.boundingBox.min.y;assert.ok(h<.050,'Sailboat hulls stay low in the water instead of becoming tall blocks');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

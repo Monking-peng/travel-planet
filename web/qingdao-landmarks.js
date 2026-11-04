@@ -66,7 +66,7 @@ export const LANDMARKS=[
    1.1,
    1.8
   ],
-  "description": "白帆与桅杆立在港池中，情人坝白灯塔和火炬码头分居两侧，沿石砌堤岸展开滨海视野。",
+  "description": "银色云纹火炬与白色灯塔分立港湾两端，环形挑台、栏杆和消波块围合情人坝。低船舷帆船带有甲板、双帆与索具，夜间用柔紫塔光和暖色步道灯勾勒轮廓。",
   "source": "https://www.qosmcareas.com/scenic.html",
   "grounded": true
  },

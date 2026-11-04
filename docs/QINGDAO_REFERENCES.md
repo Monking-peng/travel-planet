@@ -68,3 +68,20 @@
 ![太清宫日景](images/qingdao-taiqing-day.png)
 
 ![太清宫夜景](images/qingdao-taiqing-night.png)
+
+
+## 0.55.56 奥帆中心灯塔、火炬与帆船
+
+2026-11-05 对照白天港湾、火炬近照、灯塔紫色夜景与暖白暮色照片，修正错误红顶。白色塔身增加收分、叠涩环台、金属栏杆、分格灯室与灰绿塔帽，圆形基座外补消波块。火炬改为近半高银色云纹上段与红色下段，增加阶台与保护栏。帆船改为弧形低船舷、甲板、舱窗、双帆及索具，码头补石板接缝与低位灯光。
+
+- [信网港湾日景](https://m.qdxin.cn/picture/3190.html)
+- [火炬近照](https://touch.travel.qunar.com/comment/4822262?ie=utf-8)
+- [情人坝灯塔紫色夜景照片](https://you.ctrip.com/sight/qingdao5/114419.html)
+- [灯塔暖白暮色照片](https://us.trip.com/moments/detail/qingdao-5-147802222/)
+- [大众网夜间步道照片](https://qingdao.dzwww.com/shinan/201905/t20190527_16927165.htm)
+
+范围是港湾、火炬码头与情人坝的微缩组合，不代表奥帆中心全区或完整城市天际线。灯光取实拍中的一种展示状态，不承诺现场节目时间；云纹由几何生成，照片不作为贴图分发。旗帜为简化装饰色块，不表示特定国家阵列。
+
+![奥帆中心日景](images/qingdao-marina-day.png)
+
+![奥帆中心夜景](images/qingdao-marina-night.png)
