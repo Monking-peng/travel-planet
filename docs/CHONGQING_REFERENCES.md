@@ -57,3 +57,15 @@
 ![玻璃折面与窄窗](images/chongqing-theatre-oblique.png)
 
 ![重庆大剧院夜景](images/chongqing-theatre-night.png)
+
+## 人民大礼堂细化（0.55.33）
+
+对照[重庆市政府的正面、侧面与广场实拍](https://www.cq.gov.cn/zjcq/cycq/jplyxl/dsy/dsjp/202608/t20260826_15982334.html)和[重庆市文旅委的正面近照](https://whlyw.cq.gov.cn/zjwl/yzq/cqwlzy/zqwwzy/202405/t20240514_13203775.html)，将原先压扁的亭式体量改为高大入口柱廊、上部三重琉璃屋面和金色宝顶。补齐两翼三层长楼、双檐端塔、白色栏杆、门厅小阁与侧后窗。前方三门牌楼有错落屋顶和彩绘梁枋；台地、中央宽阶及两侧阶梯连续连接。
+
+夜景保留孔雀蓝屋面与红柱，以暖窗、细檐灯和庭灯分层，屋面仅作微弱补光。现场照片不是深夜灯光秀，夜景为产品照明设计；不用于推断实际开放时段。模型压缩了广场距离，仍属实拍特征的艺术化缩微，摄影作品不公开打包。
+
+![人民大礼堂日景](images/chongqing-great-hall.png)
+
+![三层翼楼与台地](images/chongqing-great-hall-oblique.png)
+
+![人民大礼堂夜景](images/chongqing-great-hall-night.png)

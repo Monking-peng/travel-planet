@@ -84,3 +84,13 @@ test('Grand Theater keeps panel coordinates, recessed foyers, supported windows 
   for(let z=.72;z<.80;z+=.005)assert.ok(new T.Raycaster(new T.Vector3(0,.16,z),new T.Vector3(0,-1,0),0,.06).intersectObjects(meshes).length>0,'Stairs must reach the upper plaza');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Great Hall ceremonial portals stay open and terraces continuously reach the columned entry',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{greatHall}=await import('../web/chongqing-hall.js'),k=makeKit({time:{value:0},night:{value:0}}),g=greatHall(k);g.updateMatrixWorld(true);const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+ try{
+  for(const x of [-.23,0,.23])assert.equal(new T.Raycaster(new T.Vector3(x,.12,1.02),new T.Vector3(0,0,-1),0,.30).intersectObjects(meshes).length,0,'Ceremonial portal must be traversable');
+  let previous=0;
+  for(let z=.91;z>=.14;z-=.005){const hit=new T.Raycaster(new T.Vector3(0,.13,z),new T.Vector3(0,-1,0),0,.15).intersectObjects(meshes)[0];assert.ok(hit,'Main approach must have a walking surface');assert.ok(hit.point.y>=.015&&hit.point.y<=.115,'Main approach must not fall into terrain or hit a wall');assert.ok(Math.abs(hit.point.y-previous)<.025,'Terraces must connect without an abrupt step');previous=hit.point.y;}
+  const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>1.12&&bounds.max.y<1.15);assert.ok(bounds.max.x>.89&&bounds.min.x<-.89);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
