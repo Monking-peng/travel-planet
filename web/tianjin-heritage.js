@@ -18,33 +18,7 @@ export function xikai(k){
  for(const side of [-1,1]){const t=new THREE.Group();t.rotation.y=side*Math.PI/2;t.position.x=side*.242;g.add(t);for(let i=0;i<5;i++)archPane(k,t,{...p,pale:cream},-.23+i*.083,.15,.003,.047,.17);}
  steps(k,g,p,0,.285,.49,5,.025,.095);return finish(k,g,{lamps:[[-.29,.023,.27],[.29,.023,.27]],visitors:[[-.13,.023,.38],[.09,.023,.32]]});
 }
-function hexLattice(k,g,p,x,y,z,w,h){
- for(let j=0;j<Math.ceil(h/.023);j++)for(let i=0;i<Math.ceil(w/.021);i++){const xx=x-w/2+.012+i*.021+(j%2)*.0105,yy=y-h/2+.012+j*.020;if(xx>x+w/2-.006||yy>y+h/2-.006)continue;const pts=[];for(let n=0;n<6;n++){const a=n/6*TAU;pts.push([xx+Math.sin(a)*.011,yy+Math.cos(a)*.011,z]);}k.line(g,pts,.0011,p,true);}
-}
-export function porcelain(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.66,.57);paving(k,g,p,.56,.48);const mosaic=ceramic(k),blue=ceramic(k,'#a8b5bb'),orange=k.mat('#a85b3d',.92),glass=lit(k,'#3f4847',.065),porcelain=k.mat('#c4c9b8',.63,.12);
- for(let level=0;level<3;level++){const y=.055+level*.16,w=.46-level*.025;k.box(g,w,.151,.29,orange,0,y+.075,-.10);k.box(g,w+.065,.015,.34,mosaic,0,y+.157,-.10);
-  for(let i=0;i<4;i++){const x=(i-1.5)*w*.22;archPane(k,g,{...p,pale:mosaic},x,y+.022,.051,.068,.116);hexLattice(k,g,porcelain,x,y+.081,.061,.062,.102);}
-  for(let i=0;i<5;i++){const x=(i-2)*w*.22;k.cyl(g,.008,.008,.148,mosaic,x,y+.074,.064,12);vase(k,g,blue,x,y+.02,.079,.065,.010);}
- }
- // A glazed hipped roof and terrace retain the mansion silhouette under the ceramic ornament.
- hip(k,g,.48,.34,.105,.548,mosaic,mosaic,0,-.10);
- for(let i=0;i<19;i++)vase(k,g,i%3?mosaic:blue,-.235+i*.026,.551,.079,.040,.009);
- for(const y of [.215,.375]){k.box(g,.18,.012,.26,mosaic,-.295,y,-.02);for(const x of [-.37,-.23])k.cyl(g,.006,.007,.145,mosaic,x,y-.075,.078,12);for(let i=0;i<7;i++)vase(k,g,mosaic,-.37+i*.023,y+.006,.106,.037,.0075);}
- // The roof inscription is a continuous porcelain sculpture, not a floating label.
- const letters=[[[.050,.080],[.027,.099],[.003,.082],[-.003,.044],[.014,.014],[.050,.025]],[[.060,.012],[.077,.115],[.068,.057],[.090,.069],[.101,.057],[.091,.010]],[[.111,.012],[.123,.060]],[[.134,.014],[.142,.061],[.149,.026],[.168,.063],[.181,.060],[.174,.013]],[[.211,.061],[.194,.053],[.190,.021],[.202,.011],[.218,.037],[.224,.061],[.218,.016],[.233,.014]]];
- for(const line of letters)k.line(g,line.map(v=>[v[0]-.10,.659+v[1],-.079]),.009,mosaic);k.ball(g,.009,mosaic,.027,.738,-.079);
- for(let j=0;j<3;j++)k.cyl(g,.022+j*.012,.029+j*.012,.018,mosaic,-.177,.684-j*.026,-.10,32);k.beam(g,[-.177,.690,-.10],[-.177,.776,-.10],.004,mosaic,12);
- const dragon=[[.21,.73,-.08],[.28,.74,-.02],[.28,.62,.05],[.34,.59,.05],[.38,.51,.04],[.29,.44,.10],[.36,.36,.10],[.32,.22,.14]];k.line(g,dragon,.013,mosaic);
- // Tall vase-filled boundary wall, undulating top, and a true central opening.
- for(const side of [-1,1]){for(let i=0;i<12;i++){const x=side*(.126+i*.026),top=.22+.052*Math.cos(i/11*TAU);for(let j=0;j<3;j++)vase(k,g,(i+j)%4?blue:mosaic,x,.024+j*(top-.024)/3,.315,(top-.024)/3,.0115);}
-  k.line(g,Array.from({length:40},(_,i)=>{const t=i/39;return [side*(.115+t*.30),.22+.052*Math.cos(t*TAU),.315];}),.012,mosaic);
- }
- const entrance=[];for(let i=0;i<=40;i++){const a=i/40*Math.PI;entrance.push([Math.cos(a)*.125,.22+Math.sin(a)*.105,.315]);}k.line(g,entrance,.014,mosaic);
- for(const x of [-.12,.12])k.cyl(g,.012,.014,.20,mosaic,x,.123,.315,14);for(const x of [-.05,.05]){k.box(g,.004,.19,.004,p.wood,x,.118,.315);for(let j=0;j<5;j++)k.mesh(g,new THREE.TorusGeometry(.018,.0015,4,20),p.wood,x,.06+j*.031,.315);}
- for(const x of [-.43,.43]){k.box(g,.055,.017,.060,p.stone,x,.030,.34);k.ball(g,.018,porcelain,x,.062,.34).scale.y=1.5;}
- return finish(k,g,{lamps:[[-.43,.022,.38],[.43,.022,.38]],visitors:[[-.13,.023,.43],[.14,.023,.42]]});
-}
+export {porcelain} from './tianjin-porcelain.js';
 export function dule(k){
  const g=new THREE.Group(),p=palette(k);const height=site(k,g,.64,.58);paving(k,g,p,.51,.46);p.tile.color.set('#66675c');p.wood.color.set('#57483a');p.red.color.set('#794c3c');const dim=lit(k,'#514136',.035),edge=lit(k,'#66675c',.12),bracket=k.mat('#8c795c',.92);
  k.box(g,.64,.046,.41,p.stone,0,.046,-.04);steps(k,g,p,0,.21,.42,4,.044,.09);

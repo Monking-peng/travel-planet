@@ -25,3 +25,10 @@ test('Tianjin module lighting preserves daylight materials, honors reduced motio
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
 
+
+test('Porcelain house has a passable gate, open side gallery and preserved vase decoration coordinates',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{porcelain}=await import('../web/tianjin-porcelain.js'),k=makeKit({time:{value:0},night:{value:0}}),g=porcelain(k);g.updateMatrixWorld(true);
+ const hits=(x,y,far)=>new T.Raycaster(new T.Vector3(x,y,.4),new T.Vector3(0,0,-1),0,far).intersectObject(g,true).filter(h=>h.object.isMesh);
+ try{assert.equal(hits(0,.12,.10).length,0,'Gate center remains open');assert.ok(hits(.10,.12,.10).length>0,'Gateposts remain solid');assert.equal(hits(-.33,.30,.50).length,0,'Balcony is not a solid projecting box');assert.ok(hits(.12,.30,.50).length>0,'The main house stays solid');let patterns=0;g.traverse(o=>{const uv=o.geometry?.attributes.vaseUv;if(uv){patterns++;assert.ok(uv.array.some(v=>v>0));assert.equal(uv.count,o.geometry.attributes.position.count);}});assert.equal(patterns,2,'Both blue and red vase motifs survive geometry merging');}
+ finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

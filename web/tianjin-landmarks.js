@@ -32,7 +32,7 @@ export const LANDMARKS=[
    0.65,
    1.85
   ],
-  "description": "青花瓷瓶、碎瓷镶嵌、曲线围墙与雕塑门头包围砖红色洋楼，屋顶保留瓷龙与 China 字样。",
+  "description": "砖红洋楼以凸弧窗面、左侧通透阳台和收坡阁楼错落组合；青花与红彩瓷瓶沿围墙起伏，细碎瓷片覆盖柱头、檐口与屋顶。瓷龙、雕像和 China 字样保留轮廓，夜间柔光显示瓷饰层次。",
   "source": "https://www.chinaservicesinfo.com/s/202505/27/WS6835552b498eec7e1f737ccc/crowds-flock-to-tianjins-porcelain-house.html",
   "grounded": true
  },
