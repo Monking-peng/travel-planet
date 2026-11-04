@@ -35,3 +35,14 @@
 ![祭堂侧向细节](images/nanjing-mausoleum-oblique.png)
 
 ![祭堂夜间展示](images/nanjing-mausoleum-night.png)
+
+
+## 0.55.34 南京博物院历史馆细化
+
+对照[南京大学夜景实拍](https://shpx.nju.edu.cn/9a/aa/c59556a694954/page.htm)、[维基小霸王拍摄的正面照片](https://commons.wikimedia.org/wiki/File:Nanjing_Museum_-_main_building.jpg)及[南京博物院2022年报第170页](https://www.njmuseum.org.cn/files/nb/news/files/2023/02/13/89d976f1cd9fff8638ea34ef842df434.pdf)的侧俯视，重新表现历史馆老大殿：深棕瓦面、金色脊饰与鸱尾、朱红前廊、石墙端间、木格门窗和低层侧馆。两段宽阶、休息平台及白石栏杆连接前庭；水庭与草地让中轴保持开敞。
+
+瓦垄使用按屏幕尺度柔化的程序纹理，避免远景出现摩尔纹。夜间檐线、窗灯和入口补光分层，建筑原色保留；缓慢变化属于产品展示设计，不代表现实夜游时间或固定灯光节目。本模块只概括历史馆及局部前庭，没有宣称完整还原“一院六馆”。参考照片仅供核看，未作为网页资产或收入源码包。
+
+![历史馆日景模型](images/nanjing-museum.png)
+
+![历史馆侧向细节](images/nanjing-museum-oblique.png)

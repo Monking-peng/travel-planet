@@ -2,15 +2,8 @@ import * as THREE from 'three';
 import {palette,site,paving,steps,grove,sign,finish,hall,hip,cornice,archWall,pond,bridge} from './nanjing-kit.js';
 export {mausoleum} from './nanjing-mausoleum.js';
 
-export function museum(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.75,.59);paving(k,g,p,.65,.40);
- steps(k,g,p,0,.28,.60,12,.105,.22);k.box(g,.90,.106,.40,p.pale,0,.075,-.10);
- const brown=k.mat('#956b42',.83);hall(k,g,p,{w:.82,d:.33,h:.20,y:.13,z:-.10,roof:brown,roofEdge:p.gold});
- for(const x of [-.48,.48])hall(k,g,p,{x,z:-.13,y:.045,w:.15,d:.31,h:.13,roof:brown,roofEdge:p.gold});
- for(const s of [-1,1]){for(let i=0;i<10;i++){const x=s*(.32+i*.013);k.box(g,.004,.042,.004,p.pale,x,.15,.096);}k.box(g,.15,.004,.006,p.pale,s*.39,.174,.096);}
- sign(k,g,'南京博物院',.19,.037,0,.299,.081,{background:'#284e6d',color:'#e8bf74'});grove(k,g,ground,[[-.59,.25,.13],[.59,.25,.13]]);
- return finish(k,g,{lamps:[[-.49,.30],[.49,.30],[-.30,-.35],[.30,-.35]],visitors:[[-.15,.31],[.12,.25],[.34,.25]]});
-}
+export {museum} from './nanjing-museum.js';
+
 export function fuzimiao(k){
  const g=new THREE.Group(),p=palette(k),ground=site(k,g,.73,.68);paving(k,g,p,.61,.53);
  hall(k,g,p,{w:.54,d:.25,h:.19,y:.05,z:-.30,double:true});sign(k,g,'大成殿',.11,.024,0,.27,-.149,{background:'#263b31',color:'#d9b66b'});

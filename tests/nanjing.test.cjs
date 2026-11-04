@@ -1,6 +1,16 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Museum approach reaches the recessed portico continuously and tiled roofs retain their sampling coordinates',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{museum}=await import('../web/nanjing-museum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=museum(k),meshes=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+ try{
+  let previous=.03;
+  for(let z=.78;z>=-.03;z-=.004){const hit=new T.Raycaster(new T.Vector3(0,.19,z),new T.Vector3(0,-1,0),0,.20).intersectObjects(meshes)[0];assert.ok(hit,'Arrival path must have a continuous walking surface');assert.ok(hit.point.y>.025&&hit.point.y<.16,'Stairs must stay above terrain and meet the portico floor');assert.ok(Math.abs(hit.point.y-previous)<.012,'No missing stair tread or disconnected landing');previous=hit.point.y;}
+  const portico=new T.Raycaster(new T.Vector3(0,.25,.035),new T.Vector3(0,0,-1),0,.20).intersectObjects(meshes)[0];assert.ok(portico&&portico.distance>.11&&portico.distance<.16,'Columns must sit in front of a genuinely recessed doorway');
+  const tiles=meshes.filter(o=>o.material.map?.isDataTexture);assert.equal(tiles.length,2);for(const o of tiles){assert.equal(o.geometry.attributes.uv.count,o.geometry.attributes.position.count);assert.ok(o.geometry.attributes.uv.array.some(v=>v>30),'Tile density must survive mesh consolidation');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
 test('Mausoleum has three open stone portals, a taller central arch and a closed rear wall',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{mausoleum}=await import('../web/nanjing-mausoleum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=mausoleum(k);g.updateMatrixWorld(true);
  try{const walls=[];g.traverse(o=>{if(o.material?.userData.memorialFacade)walls.push(o);});
