@@ -76,3 +76,16 @@
 ![爱晚亭背面](images/changsha-aiwan-back.png)
 
 ![爱晚亭夜景](images/changsha-aiwan-night.png)
+
+
+## 0.55.18 岳麓书院
+
+对照[湖南大学建筑资料](https://ylsy.hnu.edu.cn/info/1011/9009.htm)、[院落航拍](https://m.app.dawuhanapp.com/wuhan/p/31648525.html)、[大门实照](https://commons.wikimedia.org/wiki/File:Changsha_Yuelu_Shuyuan_2014.03.04_08-09-06.jpg)和[御书楼近照](https://www.sohu.com/a/485709800_815476)，重做将军门、三开间二门、讲堂、三层御书楼和侧院文庙。门洞实际贯通，主楼保持直立，独立台基和台阶衔接球面。灰瓦院落与黄瓦主殿分开，文庙侧廊恢复灰瓦。
+
+御书楼保留前侧层叠出檐、木格窗和高低层次，侧后立面沿用木构开间节奏作简化补全，未取得完整后立面测绘或实拍，不能视作精确复原。院树、小池与低位暖光补充空间关系；场地经过压缩重排，文字匾额为系统字体，夜景不代表现场开放情况。参考照片仅内部研究，未进入公开包。
+
+![岳麓书院日景](images/changsha-yuelu.png)
+
+![岳麓书院背面](images/changsha-yuelu-back.png)
+
+![岳麓书院夜景](images/changsha-yuelu-night.png)

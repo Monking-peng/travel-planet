@@ -26,25 +26,7 @@ function autumn(k,g,x,y,z,s,p,index){
   k.beam(g,[x,y,z],[x+.008,y+s*.78,z],.0037,p.bark,6);
   for(let j=0;j<5;j++){const a=j*2.4,leaf=k.mesh(g,new THREE.IcosahedronGeometry(s*.31,1),p.leaves[(index+j)%p.leaves.length],x+Math.cos(a)*s*.26,y+s*(.70+(j%3)*.12),z+Math.sin(a)*s*.24);leaf.scale.set(1,.85,1);}
 }
-export function yuelu(k){
-  const g=new THREE.Group(),p=palette(k);p.tile=k.mat('#626b65',.91);p.wall=k.mat('#e2dfca');p.edge=glow(k,'#d9bb80',.32);p.wood=k.mat('#53483a');
-  const base=plaza(k,g,.79,.73,'#b3b39a');base.userData.groundSurface=true;
-  // Main teaching axis plus the ochre-roofed Confucian temple seen in the aerial reference.
-  const mainX=-.20;
-  for(const [z,w,h,name] of [[.47,.50,.13,'岳麓书院'],[.10,.54,.15,'实事求是'],[-.32,.51,.21,'御书楼']])courtHall(k,g,p,{x:mainX,z,w,d:.19,h,name});
-  for(const x of [-.49,.09]){courtHall(k,g,p,{x,z:.29,w:.115,d:.26,h:.105});courtHall(k,g,p,{x,z:-.105,w:.115,d:.24,h:.105});}
-  const ochre=k.mat('#b99153',.80),red=k.mat('#a36958');
-  for(const z of [.36,-.10])courtHall(k,g,p,{x:.41,z,w:.30,d:.20,h:z>0?.14:.19,tile:ochre,wall:red,name:z>0?'文庙':'大成殿'});
-  for(const x of [.24,.58])courtHall(k,g,p,{x,z:.11,w:.075,d:.27,h:.092,tile:ochre,wall:red});
-  // The entrance screen has a genuine opening rather than a painted dark rectangle.
-  archWall(k,g,{w:.51,h:.136,d:.019,x:mainX,y:.035,z:.575,mat:p.wall,openings:[{r:.042,spring:.075}]});
-  for(const x of [mainX-.22,mainX+.22]){k.box(g,.018,.190,.025,p.wall,x,.130,.575);hip(k,g,.057,.057,.013,.225,p.tile,p.tile,x,.575);}
-  plaque(k,g,'岳麓书院',.15,.035,mainX,.147,.588);
-  for(let i=0;i<6;i++)k.box(g,.30,.005*(i+1),.018,base,mainX,.0025*(i+1),.690-i*.018);
-  for(const [x,z,s] of [[-.20,.29,.11],[-.20,-.10,.12],[-.63,-.34,.13],[-.61,.24,.11],[.68,-.36,.13],[.62,.46,.10],[.11,-.56,.14],[-.36,-.61,.14]])tree(k,g,x,.015,z,s);
-  bollards(k,g,[[-.38,.61],[-.04,.61],[.17,.39],[.16,-.25]],'#e3c48a');people(k,g,[[-.23,.62],[-.18,.65],[-.30,.29],[.42,.20]]);
-  return k.merge(g);
-}
+export {yuelu} from './changsha-yuelu.js';
 
 export {aiwan} from './changsha-aiwan.js';
 

@@ -1,6 +1,28 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Yuelu Academy has real axial doorways, closed library roofs and distinct temple tiles',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{yuelu}=await import('../web/changsha-yuelu.js');
+ const kit=makeKit({time:{value:0},night:{value:0}}),g=yuelu(kit);g.updateMatrixWorld(true);
+ const ray=(a,b,far=5)=>new T.Raycaster(new T.Vector3(...a),new T.Vector3(...b),0,far).intersectObject(g,true);
+ try{
+  for(const z of [.49,.245,-.035])assert.equal(ray([-.20,.08,z+.10],[0,0,-1],.20).length,0,'Gates and lecture hall must keep a real central passage');
+  for(const x of [-.29,-.20,-.11])assert.equal(ray([x,.08,.345],[0,0,-1],.20).length,0,'Second gate needs three independent doorways');
+  for(const x of [-.37,-.20,-.03])for(const z of [-.53,-.43,-.33]){
+   const hits=ray([x,1,z],[0,-1,0]);assert.ok(hits.some(h=>h.object.material.userData.academyRoof&&h.point.y>.33),'Main library roof must remain closed across its span');
+  }
+  const library=ray([-.20,1,-.43],[0,-1,0])[0],hall=ray([-.20,1,-.035],[0,-1,0])[0];assert.ok(library.point.y>hall.point.y+.17,'Library must have a distinct tall silhouette');
+  assert.ok(kit.materials.some(m=>m.userData.academyRoof&&m.color.getHexString()==='5e625d'));
+  assert.ok(kit.materials.some(m=>m.userData.academyRoof&&m.color.getHexString()==='ba8e3f'));
+  // Steps are pre-compensated for terrain: verify their final height in the rendered scene.
+  const {createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+  try{const model=scene.landmarks.get('yuelu');let last=null;
+   for(let i=0;i<6;i++){const z=.561+(5-i)*.013,hits=new T.Raycaster(model.localToWorld(new T.Vector3(-.20,1,z)),new T.Vector3(0,-1,0).transformDirection(model.matrixWorld)).intersectObject(model,true).filter(h=>h.object.material.userData.academyStep);assert.ok(hits.length,'Each entrance step must exist');const y=model.worldToLocal(hits[0].point.clone()).y;assert.ok(last===null||(y>last&&y-last<.020),'Entrance stair must rise continuously');last=y;}
+   const threshold=.026-(2.15-Math.sqrt(2.15**2-.055**2-.425**2));assert.ok(Math.abs(last-threshold)<.002,'Entrance stair must meet the floor in the final curved scene');
+  }finally{scene.dispose();}
+ }finally{g.traverse(o=>o.geometry?.dispose());kit.materials.forEach(m=>m.dispose());}
+});
+
 test('Changsha courtyard roofs are closed and the city-wall passage is not crossed by masonry trim',async()=>{
   const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{yuelu,tianxin}=await import('../web/changsha-heritage.js');
   const kit=makeKit({time:{value:0},night:{value:0}}),academy=yuelu(kit),wall=tianxin(kit);
