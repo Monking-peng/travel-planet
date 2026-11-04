@@ -46,3 +46,12 @@ test('Xikai has recessed front and side windows, solid rear walls and three cont
   for(const x of [-.22,0,.22]){let previous=0;for(let i=0;i<=201;i++){const z=.530-.17*i/201,hits=ray(x,.20,z,0,-1,0,.20,paving);assert.ok(hits.length,`Entry paving missing at ${x}/${z}`);const y=hits[0].point.y;if(i)assert.ok(y>=previous-.0001&&y-previous<.006,`Entry step discontinuity ${x}/${z}/${y-previous}`);previous=y;}assert.ok(Math.abs(previous-.055)<.0001);}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Maritime entrance follows the ground continuously and the central atrium stays glazed',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{maritime}=await import('../web/tianjin-maritime.js'),{siteHeight}=await import('../web/chengdu-kit.js');const k=makeKit({time:{value:0},night:{value:0}}),g=maritime(k);g.updateMatrixWorld(true);const paving=[],shell=[],glass=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.maritimePaving)paving.push(o);if(o.material.userData.maritimeShell)shell.push(o);if(o.material.userData.maritimeGlass)glass.push(o);});
+ const down=(x,z,objects)=>new T.Raycaster(new T.Vector3(x,.5,z),new T.Vector3(0,-1,0),0,.8).intersectObjects(objects,false);
+ try{let previous;for(let i=0;i<=301;i++){const z=.61-i*.33/301,terrain=siteHeight(0,z,.77,.64),hit=down(0,z,paving),height=Math.max(terrain,hit.length?hit[0].point.y:-Infinity);if(i)assert.ok(height>=previous-.0002&&height-previous<.010,`Entrance drop or jump at ${z}: ${height-previous}`);previous=height;}assert.ok(Math.abs(previous-.036)<.0005);assert.equal(down(0,0,shell).length,0,'Central atrium is not hidden under an opaque roof');assert.ok(down(0,0,glass).length,'Central glass roof exists');
+ const water=[];g.traverse(o=>{if(o.isMesh&&o.material===k.materials.find(m=>m.userData.water))water.push(o);});assert.equal(down(0,.45,water).length,0,'Arrival plaza does not sit in a circular water moat');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

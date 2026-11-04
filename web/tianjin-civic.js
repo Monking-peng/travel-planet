@@ -17,27 +17,4 @@ export function minyuan(k){
  for(const x of [-.39,.39])for(const z of [-.18,.18])k.box(g,.08,.018,.06,p.stone,x,.046,z);
  return finish(k,g,{lamps:[[-.32,.024,.40],[.32,.024,.40],[-.31,.024,-.40],[.31,.024,-.40]],visitors:[[-.13,.039,.15],[.08,.039,.11],[.23,.039,-.09],[-.24,.039,-.12],[.04,.039,-.17]]});
 }
-export function maritime(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.77,.64);sea(k,g,p,.76,.63);const white=lit(k,'#d0d3ca',.09),seam=k.mat('#a3b1ae',.75),glass=lit(k,'#405c67',.045),concrete=k.mat('#a8ae9f',.97);
- k.box(g,1.03,.030,.52,concrete,0,.045,.25);k.box(g,.33,.022,.29,p.pale,0,.048,.49);for(let j=0;j<9;j++)k.box(g,.28,.004,.014,concrete,0,.065+j*.002,.61-j*.022);
- k.box(g,.66,.14,.25,glass,0,.115,.22);for(let i=0;i<20;i++)k.box(g,.002,.14,.004,p.pale,-.32+i*.034,.115,.348);k.box(g,.70,.012,.29,white,0,.188,.22);
- const wings=[[-.40,-.58,.44,.16,.12],[-.20,-.33,.70,.21,.145],[.01,-.03,.76,.23,.15],[.22,.33,.70,.21,.145],[.41,.59,.54,.16,.12]];
- const section=[[-1,0],[-1,.25],[-.97,.55],[-.80,.88],[-.53,1],[.53,1],[.80,.88],[.97,.55],[1,.25],[1,0]];
- function contour(v){const t=v*(section.length-1),i=Math.min(section.length-2,Math.floor(t)),f=t-i;return [THREE.MathUtils.lerp(section[i][0],section[i+1][0],f),THREE.MathUtils.lerp(section[i][1],section[i+1][1],f)];}
- for(let n=0;n<wings.length;n++){const [root,end,L,w,h]=wings[n],cx=t=>root+(end-root)*(t*t*(3-2*t)),zz=t=>.27-L*t,yy=t=>.10+.040*t+.025*Math.sin(t*Math.PI),width=t=>w*(.91+.09*Math.sin(t*Math.PI));
-  const point=(t,v)=>{const [a,b]=contour(v);return [cx(t)+a*width(t)/2,yy(t)+b*h*(.83+.17*t),zz(t)];};
-  const mesh=skin(k,g,point,22,56,white);mesh.material.side=THREE.DoubleSide;
-  for(let i=0;i<=18;i++){const t=i/18;k.line(g,Array.from({length:20},(_,j)=>{const q=point(t,j/19);q[1]+=.0005;return q;}),.00055,seam);}
-  for(const v of [.22,.39,.61,.78])k.line(g,Array.from({length:28},(_,i)=>point(i/27,v)),.0005,seam);
-  // Flat, fully glazed terminal faces close the hull-shaped cantilevers.
-  for(const t of [0,1]){const shape=new THREE.Shape();section.forEach(([a,b],i)=>{const xx=a*width(t)/2,y=b*h*(.83+.17*t);i?shape.lineTo(xx,y):shape.moveTo(xx,y);});shape.closePath();const cap=k.mesh(g,new THREE.ShapeGeometry(shape),glass,cx(t),yy(t),zz(t)+(t?-.0005:.0005));if(t)cap.rotation.y=Math.PI;
-   for(let j=-2;j<=2;j++)k.box(g,.0015,h*.70,.002,p.pale,cx(t)+j*w*.13,yy(t)+h*.39,zz(t)+(t?-.001:.001));}
-  // Recessed supports expose the tips hovering over the harbor.
-  for(const t of [.15,.46])k.box(g,w*.43,.08,.035,concrete,cx(t),.068,zz(t));
- }
- // Elevated connections cross the gaps between the radiating exhibition wings.
- for(const z of [-.02,-.19])k.box(g,.77,.013,.031,p.pale,0,.160,z);
- for(let i=0;i<9;i++)k.box(g,.002,.034,.003,p.pale,-.36+i*.09,.184,-.19);
- k.box(g,.85,.002,.003,p.pale,0,.201,-.19);
- return finish(k,g,{lamps:[[-.40,.061,.40],[.40,.061,.40]],visitors:[[-.08,.061,.39],[.08,.061,.43]]});
-}
+export {maritime} from './tianjin-maritime.js';

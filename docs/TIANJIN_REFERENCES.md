@@ -43,3 +43,15 @@
 ![西开教堂日景](images/tianjin-xikai-day.png)
 
 ![西开教堂夜景](images/tianjin-xikai-night.png)
+
+
+## 0.55.59 国家海洋博物馆
+
+依据 [COX 设计方项目照片与立面图](https://www.coxarchitecture.com.au/project/national-maritime-museum-of-china/)，将原来五根近似均匀管状的展厅改成两对高低不同的弯折金属壳体与一处侧向短翼。中央增加有连续肋架的拱形玻璃大厅，两侧保留窄玻璃采光带。端面采用收分折角、凹进玻璃和水平遮檐，外墙增加局部切口及细板缝。
+
+到达广场位于陆地上，海水只保留在临港一侧；两个细码头接向水面，入口阶道适应星球坡面。夜间保留金属本色和克制的玻璃照明，不代表实际运营灯光节目。模型仅呈现建筑外观，展陈和馆藏未建模；没有复制照片作为贴图。
+
+
+![国家海洋博物馆日景](images/tianjin-maritime-day.png)
+
+![国家海洋博物馆夜景](images/tianjin-maritime-night.png)

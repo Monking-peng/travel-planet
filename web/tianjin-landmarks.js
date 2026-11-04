@@ -119,7 +119,7 @@ export const LANDMARKS=[
    1.1,
    1.65
   ],
-  "description": "五组银白展厅伸向海湾，展厅之间以连桥联系，玻璃端面藏在曲折金属外壳下。前方入口平台接向海洋广场。",
+  "description": "两对高低错落的折面展厅与侧向短翼伸向海湾，中央拱形玻璃大厅串联入口。凹进的玻璃端面、金属板缝、临水平台与窄码头保留实拍中的层次。",
   "source": "https://www.coxarchitecture.com.au/project/national-maritime-museum-of-china/",
   "grounded": true,
   "hemisphere": -1
