@@ -14,3 +14,16 @@
 | 崂山太清宫 | [山门实拍](https://sg.trip.com/travel-guide/attraction/qingdao/bay-of-taiqing-palace-24653096/)、[三清殿实拍](https://www.trip.com/travel-guide/attraction/qingdao/laoshan-taiqing-palace-76762/) | 蓝绿瓦三段山门、红墙、石狮、灰瓦殿堂、山石与古树。官方图片超时，改用上述游客实拍核看；未将网络介绍当作已看过图片。 |
 
 提供日夜、自由旋转、两半球分布、景点近看、整组增删保存与手机触控。青岛目前为景观地图，未接入多人旅行，不套用原三城目录，也不虚构票价、营业时间和预约信息。
+
+
+## 0.55.9 圣弥厄尔大教堂精修
+
+对照[摄影方的正侧背资料、钟楼与后殿近照](https://beyondvision.cn/show/956.html)及既有正面实拍，补全十字形侧翼、两侧低廊和两级半圆后殿。双塔改为红褐色百叶，补石砌转角、山花与金属十字架；入口采用三组凹入门洞、拱饰、红木门扇和石柱。中央玫瑰窗有实际墙洞和下沉玻璃，钟楼百叶与石柱保持进深。
+
+红瓦、浅黄色墙面和灰白石材保留日夜差异，展示照明只做低亮柔光。模型属于微缩表达，未逐块复原石雕，也不代表真实夜游或灯光活动。照片仅供内部观察，没有作为贴图或公开资源分发。
+
+![教堂日景](images/qingdao-church.png)
+
+![侧翼与后殿](images/qingdao-church-oblique.png)
+
+![夜间展示](images/qingdao-church-night.png)

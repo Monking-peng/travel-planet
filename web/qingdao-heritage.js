@@ -1,28 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,finish,archPane,gable,pyramid,cross,masonry,clockFace,lit,sign,TAU} from './qingdao-kit.js';
-export function church(k){
- const g=new THREE.Group(),p=palette(k),h=site(k,g,.63,.59);paving(k,g,p,.49,.46);
- k.box(g,.36,.34,.60,p.wall,0,.211,-.035);gable(k,g,p,.40,.62,.15,.381,0,-.035);
- for(const side of [-1,1]){
-  const x=side*.218;k.box(g,.166,.68,.18,p.wall,x,.379,.235);masonry(k,g,p,.166,.68,.18,x,.039,.235);
-  for(const y of [.215,.39,.55,.705])k.box(g,.181,.011,.192,p.pale,x,y,.235);
-  archPane(k,g,p,x,.041,.328,.092,.134,{door:true});archPane(k,g,p,x,.24,.328,.045,.11);archPane(k,g,p,x,.43,.328,.042,.087);
-  for(const y of [.565,.649])for(const dx of [-.034,.034])archPane(k,g,p,x+dx,y,.328,.041,.063);
-  pyramid(k,g,p,.189,.205,.719,x,.235);cross(k,g,p,x,.948,.235,.046);
-  const ped=new THREE.Shape();ped.moveTo(-.084,0);ped.lineTo(.084,0);ped.lineTo(0,.073);ped.closePath();k.mesh(g,new THREE.ShapeGeometry(ped),p.wall,x,.718,.331);k.mesh(g,new THREE.CircleGeometry(.018,32),p.red,x,.741,.334);
- }
- k.box(g,.273,.47,.025,p.wall,0,.273,.313);
- archPane(k,g,p,0,.042,.33,.145,.19,{door:true});
- const frame=[];for(let i=0;i<=30;i++){const a=i/30*Math.PI;frame.push([Math.cos(a)*.09,.155+Math.sin(a)*.09,.34]);}k.line(g,frame,.004,p.pale);
- k.beam(g,[-.105,.23,.339],[0,.33,.339],.004,p.pale);k.beam(g,[0,.33,.339],[.105,.23,.339],.004,p.pale);
- const rose=lit(k,'#536673',.04);k.mesh(g,new THREE.CircleGeometry(.056,48),rose,0,.375,.329);k.mesh(g,new THREE.TorusGeometry(.059,.004,6,48),p.pale,0,.375,.333);k.mesh(g,new THREE.TorusGeometry(.018,.0015,5,32),p.pale,0,.375,.338);
- for(let i=0;i<6;i++){const a=i/6*TAU;k.mesh(g,new THREE.TorusGeometry(.018,.0015,5,24),p.pale,Math.sin(a)*.033,.375+Math.cos(a)*.033,.338);}
- for(let i=0;i<3;i++)archPane(k,g,p,(i-1)*.044,.439,.331,.029,.055);
- for(let i=0;i<9;i++)archPane(k,g,p,(i-4)*.027,.506,.333,.017,.027);
- for(const side of [-1,1])for(let i=0;i<4;i++){const q=new THREE.Group();q.position.set(side*.181,.11,-.26+i*.13);q.rotation.y=side*Math.PI/2;g.add(q);archPane(k,q,p,0,0,0,.056,.14);}
- steps(k,g,p,0,.485,.63,5,.025,.075);grove(k,g,h,[[-.49,-.23,.14],[.48,-.25,.14]]);
- return finish(k,g,{lamps:[[-.40,.024,.39],[.4,.024,.39]],visitors:[[-.10,.046,.43],[.08,.046,.45],[.15,.046,.43]]});
-}
+export {church} from './qingdao-church.js';
 export function station(k){
  const g=new THREE.Group(),p=palette(k),h=site(k,g,.69,.48);paving(k,g,p,.60,.34);
  k.box(g,1.04,.25,.29,p.wall,0,.16,-.03);const roof=new THREE.Group();roof.position.z=-.03;roof.rotation.y=Math.PI/2;g.add(roof);gable(k,roof,p,.32,1.10,.12,.285);

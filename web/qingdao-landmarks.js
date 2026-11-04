@@ -49,8 +49,8 @@ export const LANDMARKS=[
    0.65,
    1.8
   ],
-  "description": "浅黄色石墙、两座红顶方塔、圆拱窗和玫瑰花窗，衬托三扇深色入口。夜晚的暖光从窗洞透出。",
-  "source": "https://you.ctrip.com/sight/qingdao5/5320.html",
+  "description": "红顶双塔以红褐百叶、石砌转角和金属十字架分层；正门补入雕饰、凹入的玫瑰窗与拱廊。侧翼、两侧低廊和半圆后殿组成完整轮廓，夜间柔光保留浅黄色墙面与红瓦。",
+  "source": "https://beyondvision.cn/show/956.html",
   "grounded": true
  },
  {
