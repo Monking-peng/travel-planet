@@ -89,3 +89,16 @@
 ![岳麓书院背面](images/changsha-yuelu-back.png)
 
 ![岳麓书院夜景](images/changsha-yuelu-night.png)
+
+
+## 0.55.19 湖南博物院
+
+对照[湖南文旅设计访谈](https://whhlyt.hunan.gov.cn/whhlyt/news/mtjj/201711/t20171130_5421790.html)、[新湖南的设计团队图文](https://www.hunantoday.cn/news/xhn/201802/14553101.html)及[开馆建筑实照](https://travel.voc.com.cn/article/201712/201712010956426419.html)，重做折面悬挑金属屋盖、玻璃大厅、两侧浅色展厅、细密百叶与成对外露白色框架。展厅、露台保持水平，台基底部与球面衔接，连续石阶接到露台，入口位于露台下方。
+
+直接核看正面实照、屋盖近照、框架细节，以及露台 GIF 的第一帧。侧后体量作艺术化简化，未取得完整测绘；夜间窗光不代表现实开放情况。屋面接缝适度简化，避免小尺寸画面中的条纹干扰。研究照片不进入公开包。
+
+![湖南博物院日景](images/changsha-museum.png)
+
+![湖南博物院背面](images/changsha-museum-back.png)
+
+![湖南博物院夜景](images/changsha-museum-night.png)

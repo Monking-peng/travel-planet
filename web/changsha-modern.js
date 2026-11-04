@@ -33,27 +33,7 @@ export function ifs(k){
   return k.merge(g);
 }
 
-export function hunanMuseum(k){
-  const g=new THREE.Group(),base=plaza(k,g,.76,.58,'#c0bcaa'),stone=k.mat('#c2bda8'),dark=k.mat('#5c6564',.66,.2),glass=k.mat('#7d9698',.35,.22,'#e5dcc0'),edge=glow(k,'#e4ce9c',.48);glass.userData.night.intensity=.14;
-  base.userData.groundSurface=true;
-  // Broad overhanging roof and central glazed atrium, distinct from a classical hip roof.
-  const outline=bevelRect(.79,.54,.065),lower=bevelRect(.50,.32,.028),p=[],idx=[];
-  for(let i=0;i<8;i++){p.push(outline[i][0],.47,outline[i][1]);p.push(lower[i][0],.385,lower[i][1]);}
-  for(let i=0;i<8;i++){const a=i*2,b=((i+1)%8)*2;idx.push(a,b,a+1,a+1,b,b+1);}idx.push(0,2,4,0,4,6,0,6,8,0,8,10,0,10,12,0,12,14);
-  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(p,3));geo.setIndex(idx);geo.computeVertexNormals();dark.side=THREE.DoubleSide;k.mesh(g,geo,dark);
-  k.box(g,.54,.28,.30,glass,0,.236,0);
-  for(let i=0;i<12;i++)k.box(g,.54,.002,.004,dark,0,.105+i*.023,.152);
-  for(let i=0;i<11;i++)k.box(g,.002,.278,.004,dark,(i-5)*.051,.236,.153);
-  for(const x of [-.18,.18]){k.box(g,.009,.37,.016,stone,x,.235,.19);k.box(g,.049,.005,.009,stone,x,.398,.204);for(const y of [.15,.27,.38])k.box(g,.047,.005,.009,stone,x,y,.206);for(const side of [-1,1])k.box(g,.005,.23,.009,stone,x+side*.024,.275,.206);}
-  for(const side of [-1,1]){k.box(g,.28,.27,.40,stone,side*.46,.285,-.035);k.box(g,.28,.014,.43,dark,side*.46,.43,-.035);for(let i=0;i<22;i++)k.box(g,.27,.0012,.002,dark,side*.46,.160+i*.012,.167);k.box(g,.27,.003,.004,edge,side*.46,.151,.170);}
-  k.box(g,1.12,.045,.13,dark,0,.13,.23);k.box(g,.70,.115,.28,dark,0,.06,.03);
-  for(const x of [-.30,0,.30]){k.box(g,.018,.11,.08,stone,x,.070,.24);k.box(g,.21,.071,.006,glass,x+.015,.053,.177);}
-  k.box(g,.72,.002,.004,edge,0,.108,.181);
-  for(let i=0;i<10;i++)k.box(g,.23,.012*(i+1),.024,base,-.41,.006*(i+1),.45-i*.024);
-  for(const x of [-.58,.58])k.box(g,.15,.03,.24,k.mat('#748367'),x,.031,.32);
-  plaque(k,g,'湖南博物院',.25,.045,0,.345,.157);
-  bollards(k,g,[[-.61,.40],[.61,.40],[-.20,.45],[.20,.45]]);people(k,g,[[-.19,.33],[.13,.37],[.25,.33]]);return k.merge(g);
-}
+export {hunanMuseum} from './changsha-museum.js';
 
 export function xie(k){
   const g=new THREE.Group(),base=plaza(k,g,.76,.62,'#b9c0ae'),white=k.mat('#d3d6c7',.92),seam=k.mat('#afb7ac'),glass=k.mat('#4e6e73',.30,.18,'#e1ceac'),warm=glow(k,'#e8cf9e',.58);glass.userData.night.intensity=.40;

@@ -1,6 +1,22 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Hunan Museum keeps a level terrace, supported wings, closed roof and continuous stairs',async()=>{
+ const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+ const g=scene.landmarks.get('museum'),ray=(a,b,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...a)),new T.Vector3(...b).transformDirection(g.matrixWorld),0,far).intersectObject(g,true),height=h=>g.worldToLocal(h.point.clone()).y;
+ try{
+  const terrace=[-.40,-.15,.15,.40].map(x=>ray([x,.22,.30],[0,-1,0])[0]);assert.ok(terrace.every(Boolean));assert.ok(Math.max(...terrace.map(height))-Math.min(...terrace.map(height))<.0001,'Terrace must stay flat instead of bending with the globe');
+  assert.equal(ray([.12,.07,.37],[0,0,-1],.14).length,0,'Lower entry approach must remain open under the terrace');
+  for(const x of [-.465,.465])assert.ok(ray([x,.08,.35],[0,0,-1],.30).length,'Both gallery wings need masonry below them');
+  for(const x of [-.30,0,.30])for(const z of [-.18,0,.18])assert.ok(ray([x,1,z],[0,-1,0]).some(h=>h.object.material.userData.museumRoof),'Crystalline roof must be closed');
+  let last=null;for(let i=0;i<12;i++){
+   const hits=ray([-.385,1,.51-i*.015],[0,-1,0]).filter(h=>h.object.material.userData.museumStep);assert.ok(hits.length,'Each stair tread must be reachable');const y=height(hits[0]);assert.ok(last===null||(y>last&&y-last<.032),'Entrance stair must rise without a broken step');last=y;
+  }
+  assert.ok(Math.abs(last-.154)<.002,'Top stair must meet the observation terrace');
+  const roofs=[];g.traverse(o=>{if(o.material?.userData.museumRoof)roofs.push(o.material);});assert.ok(roofs.length);scene.setNight(true);assert.ok(roofs.every(m=>m.color.getHexString()==='686f6d'),'Night lighting must preserve the metal roof colour');
+ }finally{scene.dispose();}
+});
+
 test('Yuelu Academy has real axial doorways, closed library roofs and distinct temple tiles',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{yuelu}=await import('../web/changsha-yuelu.js');
  const kit=makeKit({time:{value:0},night:{value:0}}),g=yuelu(kit);g.updateMatrixWorld(true);
