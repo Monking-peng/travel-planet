@@ -56,3 +56,14 @@ test('Luoyang approaches meet the slab bridge, pavilion stairs stay supported an
   const foundation=new T.Raycaster(new T.Vector3(0,.15,-.21),new T.Vector3(0,-1,0),0,.15),hit=foundation.intersectObjects(piers)[0];assert.ok(hit&&Math.abs(hit.point.y-.104)<.002,'Long pointed cutwater is lower than the rectangular upper pier');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+
+test('Wenmiao has a continuous gate-to-hall route, three real gate passages and an open pier-supported Pan bridge',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{wenmiao}=await import('../web/quanzhou-wenmiao.js'),k=makeKit({time:{value:0},night:{value:0}}),g=wenmiao(k),solid=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.material?.userData.wenmiaoStructure)solid.push(o);});
+ try{
+  let prev;for(let i=0;i<=390;i++){const z=.685-i*.975/390,ray=new T.Raycaster(new T.Vector3(0,.14,z),new T.Vector3(0,-1,0),0,.14),hit=ray.intersectObjects(solid)[0];assert.ok(hit,'Central route has a supporting surface');const y=hit.point.y;assert.ok(y>=.024&&y<=.076,`No object blocks path at ${z}: ${y}`);if(prev!==undefined)assert.ok(Math.abs(y-prev)<.010,`Connected steps and bridges at ${z}: ${prev} to ${y}`);prev=y;}
+  for(const x of [-.20,0,.20]){const ray=new T.Raycaster(new T.Vector3(x,.12,.65),new T.Vector3(0,0,-1),0,.16);assert.equal(ray.intersectObjects(solid).length,0,'Three gate bays remain genuinely open');}
+  const hall=new T.Raycaster(new T.Vector3(0,.14,-.12),new T.Vector3(0,0,-1),0,.24);assert.equal(hall.intersectObjects(solid).length,0,'Central hall entrance is recessed and open');
+  const under=new T.Raycaster(new T.Vector3(0,.044,.185),new T.Vector3(0,0,1),0,.23);assert.equal(under.intersectObjects(solid).length,0,'Water remains open below stone-beam bridge');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
