@@ -66,7 +66,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "深色木构与三重灰瓦屋檐层层上收，入口门廊、白石栏杆和宽石阶面向楼前广场。",
+  "description": "三重灰瓦深檐与木斗拱层层上收，白墙木窗和透空回廊围住二楼；底层门廊连通宽石阶，暖光勾勒木柱、屋檐和白石台座。",
   "source": "https://k.sina.cn/article_1608094690_5fd993e200100xofg.html",
   "grounded": true
  },
@@ -101,8 +101,8 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "高拱石桥从两岸拾级而上，放射状拱石围住桥洞，桥旁古树和河上竹筏映衬山水。",
-  "source": "https://www.sohu.com/a/433593049_120792640",
+  "description": "灰青石阶沿单拱逐级抬高，风化砌石和拱圈围住贯通河道；两岸古榕伸出层叠树冠，桥头铺面顺坡接地，竹筏穿行水面。",
+  "source": "https://www.weather.com.cn/guangxi/gxgqtp/3306066.shtml",
   "grounded": true,
   "hemisphere": -1
  },

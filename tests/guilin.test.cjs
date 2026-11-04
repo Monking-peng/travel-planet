@@ -51,3 +51,24 @@ test('Jingjiang preserves its complete arch passage and connected front and rear
   const rock=all.filter(o=>o.material.userData.naturalFeature==='duxiu-peak');assert.equal(rock.length,1);const b=new T.Box3().setFromObject(rock[0]);assert.ok(b.max.y>.62&&b.max.y<.72,'Limestone summit has the intended blunt peak scale');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Xiaoyao keeps an open lower hall, continuous entrance stairs and supported outer galleries',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{xiaoyao}=await import('../web/guilin-xiaoyao.js'),k=makeKit({time:{value:0},night:{value:0}}),g=xiaoyao(k);g.updateMatrixWorld(true);const decks=[],all=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.xiaoyaoDeck)decks.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(objects,false);
+ try{
+  for(const x of [-.10,0,.10]){let previous;for(let i=0;i<=360;i++){const z=.641-i/360*.38,h=ray(x,.16,z,0,-1,0,.4,decks);assert.ok(h.length,`Missing entrance tread ${x}/${z}`);const y=h[0].point.y;if(previous!==undefined){assert.ok(y>=previous-.002,'Approach cannot drop backward');assert.ok(y-previous<.012,'Stair risers must stay continuous');}previous=y;}assert.ok(Math.abs(previous-.134)<.001);}
+  for(const x of [-.08,.08])assert.equal(ray(x,.22,.45,0,0,-1,.75,all).length,0,'Lower hall stays open through the structure');
+  for(const x of [-.30,.30])for(let i=0;i<=80;i++){const z=-.205+i/80*.36,h=ray(x,.48,z,0,-1,0,.03,decks);assert.ok(h.length&&Math.abs(h[0].point.y-.464)<.001,'Side gallery has a continuous deck');}
+  for(const z of [-.205,.155])for(let i=0;i<=100;i++){const x=-.30+i/100*.60,h=ray(x,.48,z,0,-1,0,.03,decks);assert.ok(h.length&&Math.abs(h[0].point.y-.464)<.001,'Front and rear galleries join the sides');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Fuli has a genuine arch, continuous usable stairs and dry grounded bridge approaches',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{fuli}=await import('../web/guilin-fuli.js'),k=makeKit({time:{value:0},night:{value:0}}),g=fuli(k);g.updateMatrixWorld(true);const all=[],deck=[],bank=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.fuliDeck)deck.push(o);if(o.material.userData.fuliBank)bank.push(o);});const ray=(x,y,z,dir,far,objs)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...dir),0,far).intersectObjects(objs,false);
+ try{
+  for(const x of [-.12,0,.12])assert.equal(ray(x,.18,.15,[0,0,-1],.30,all).length,0,'River passage stays open');
+  assert.ok(ray(.34,.13,.15,[0,0,-1],.30,all).length,'Bridge pier stays solid');
+  for(const z of [-.075,0,.075]){let previous;for(let i=0;i<=900;i++){const x=-.715+i/900*1.43,h=ray(x,.6,z,[0,-1,0],1,deck);assert.ok(h.length,`No missing deck at ${x}/${z}`);const y=h[0].point.y;if(previous!==undefined)assert.ok(Math.abs(y-previous)<.017,`No abrupt stair step at ${x}`);previous=y;}}
+  for(const side of [-1,1])for(const x of [.65,.67,.70]){const d=ray(side*x,.6,0,[0,-1,0],1,deck),b=ray(side*x,.6,0,[0,-1,0],1,bank);assert.ok(d.length&&b.length&&Math.abs(d[0].point.y-b[0].point.y)<.018,'Entry paving follows the river bank');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

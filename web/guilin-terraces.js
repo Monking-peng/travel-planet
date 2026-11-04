@@ -1,18 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,siteHeight,lake,skin,raft,grove,railing,finish,TAU} from './guilin-kit.js';
-function bridgeHeight(x){return .070+Math.sqrt(Math.max(0,.38*.38-x*x));}
-export function fuli(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.79,.65);lake(k,g,p,.74,.58);
- const shape=new THREE.Shape();shape.moveTo(-.56,.032);shape.lineTo(-.323,.032);shape.lineTo(-.323,.070);shape.absarc(0,.070,.323,Math.PI,0,true);shape.lineTo(.323,.032);shape.lineTo(.56,.032);shape.lineTo(.56,.070);
- for(let i=0;i<=56;i++){const x=.56-1.12*i/56;shape.lineTo(x,bridgeHeight(x));}shape.closePath();
- k.mesh(g,new THREE.ExtrudeGeometry(shape,{depth:.17,bevelEnabled:false,curveSegments:48}),p.stone,0,0,-.085);
- // Radial voussoirs follow the single arch; the raised crown has stone steps.
- for(const s of [-1,1])for(let j=0;j<=29;j++){const a=j/29*Math.PI;k.beam(g,[Math.cos(a)*.326,.070+Math.sin(a)*.326,s*.086],[Math.cos(a)*.377,.070+Math.sin(a)*.377,s*.086],.0012,p.pale,5);}
- for(let i=0;i<46;i++){const x=-.553+(i+.5)*1.106/46,y=bridgeHeight(x);k.box(g,1.106/46,.007,.18,p.pale,x,y+.002,0);for(const s of [-1,1])k.box(g,.023,.023,.017,p.stone,x,y+.011,s*.094);}
- for(const x of [-.55,.55])for(let j=0;j<5;j++){const o=k.mesh(g,new THREE.DodecahedronGeometry(.025,0),p.stone,x+(j%2)*.02,.048,(j-2)*.055);o.scale.y=.5;}
- grove(k,g,(x,z)=>siteHeight(x,z,.79,.65),[[-.57,.25,.17],[-.62,-.18,.16],[.57,.22,.16],[.60,-.22,.18]]);raft(k,g,p,-.11,.32,1.35);raft(k,g,p,.20,.31,1.2);
- return finish(k,g,{visitors:[[-.16,bridgeHeight(-.16)+.010,0],[.06,bridgeHeight(.06)+.010,.02]]});
-}
+export {fuli} from './guilin-fuli.js';
 export function longji(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,.79,.65);
  const rice=['#a9ab64','#b5b36c','#b7b675','#a7ac62','#b5b16b'].map(c=>{const m=k.mat(c,.99);m.userData.landscape=true;m.userData.terrace=true;return m;});const bank=k.mat('#777e4b',1);bank.userData.landscape=true;bank.userData.terraceRiser=true;

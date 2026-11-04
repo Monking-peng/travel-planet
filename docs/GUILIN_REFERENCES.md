@@ -38,3 +38,23 @@
 ![靖江王府日景](images/guilin-jingjiang-day.png)
 
 ![靖江王府夜景](images/guilin-jingjiang-night.png)
+
+
+## 0.55.72 逍遥楼
+
+在原日景实拍基础上，核看[广西广播电视台的航拍报道](https://news.gxtv.cn/article/detail_2ada88bda3e249cb9f2c3cc0c9182c02.html)与[夜景照片](https://commons.wikimedia.org/wiki/File:桂林逍遥楼夜景.jpg)。楼体改为两层主体与低矮阁层、三重深檐；底层保持开敞，补齐简化斗拱、木格窗、上层通透回廊、白石台基栏板和入口山花门廊。台阶与随坡入口连续衔接。
+
+白天保留深灰瓦与深色木构；夜晚参照照片的金暖照明，木构、檐口和门廊较亮，石台与环境保持暗部。照片仅用于内部核对，夜间照明不代表实际开放时间或灯光排期。
+
+![逍遥楼日景](images/guilin-xiaoyao-day.png)
+
+![逍遥楼夜景](images/guilin-xiaoyao-night.png)
+
+
+## 0.55.73 富里桥
+
+对照[中国天气网广西 2020 年现场图集](https://www.weather.com.cn/guangxi/gxgqtp/3306066.shtml)的远景、桥侧和砌石近景，重做厚石拱、连续石阶、拱券砌石、桥头古榕及竹筏。入口铺面贴合河岸；夜间保持自然石色和暗部，不虚构整桥灯光秀。图片仅作造型参考，不随源码转载。
+
+![富里桥白天](images/guilin-fuli-day.png)
+
+![富里桥夜间](images/guilin-fuli-night.png)
