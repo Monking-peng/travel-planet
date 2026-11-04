@@ -23,3 +23,13 @@ test('HongKong module lighting preserves daylight materials, honors reduced moti
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+
+test('HSBC escalator treads rise through an open undercroft and night trusses preserve the daytime finish',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{hsbc}=await import('../web/hongkong-hsbc.js'),k=makeKit({time:{value:0},night:{value:0}}),g=hsbc(k);g.updateMatrixWorld(true);
+ try{let treads;g.traverse(o=>{if(o.material?.userData.hsbcEscalatorTreads)treads=o;});assert.ok(treads);
+  for(const x of [-.087*.78,.087*.78]){let previous=0;for(const j of [2,7,12,17]){const z=.28-j/19*.285,hit=new T.Raycaster(new T.Vector3(x,.3,z),new T.Vector3(0,-1,0)).intersectObject(treads)[0];assert.ok(hit);assert.ok(Math.abs(hit.point.y-(.047+j/19*.12))<.001);assert.ok(hit.point.y>previous);previous=hit.point.y;}}
+  for(const y of [.06,.09,.12])assert.equal(new T.Raycaster(new T.Vector3(0,y,.45),new T.Vector3(0,0,-1),0,1).intersectObject(g,true).length,0,'Central ground passage must remain unobstructed');
+  const truss=k.materials.find(m=>m.userData.hsbcTruss);assert.ok(truss&&truss.userData.night.color.r>truss.userData.night.color.g*3);assert.ok(truss.color.r<.7,'Daytime truss must remain silver, not red');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

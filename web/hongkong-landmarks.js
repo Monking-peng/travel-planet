@@ -47,15 +47,15 @@ export const LANDMARKS=[
   "x": 0.55404,
   "z": -1.39393,
   "hemisphere": 1,
-  "height": 1.0,
+  "height": 1.15,
   "distance": 3.2,
   "view": [
    0.5,
    0.6,
    1.9
   ],
-  "description": "高低三组玻璃体块由外露钢柱和三角悬吊桁架组织，地面层保留通透空间与扶梯。",
-  "source": "https://www.discoverhongkong.cn/china/place-to-go/hsbc-main-building.html",
+  "description": "高低三组玻璃体量由外露钢柱、大跨度悬吊桁架和侧面设备舱组织。圆弧顶冠、检修吊臂、双扶梯与门前铜狮补充建筑层次；夜间红色桁架与冷白窗灯缓慢变化，底层保持通透。",
+  "source": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-hsbc-main-building.html",
   "grounded": true,
   "facesHarbour": true
  },

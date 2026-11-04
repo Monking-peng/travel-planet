@@ -22,3 +22,16 @@
 ![中银大厦日景](images/hongkong-desktop.png)
 
 ![M+ 夜景](images/hongkong-night.png)
+
+
+## 0.55.14 汇丰总行大厦
+
+对照[香港旅发局正面日夜照片](https://www.discoverhongkong.com/eng/place-to-go/travel.guide-hsbc-main-building.html)及[汇丰官方四十周年近景](https://www.about.hsbc.com.hk/news-and-media/the-fourth-generation-hsbc-main-building-marks-40th-anniversary)，重新组织高低玻璃块体、悬吊桁架、侧面设备舱与八组外露桅杆。补充圆弧顶冠、检修吊臂、两座有实际台阶的扶梯及门前简化铜狮，保留通透底层。
+
+夜间以红色桁架与冷白窗灯形成层次，白天保持银灰结构。模型为缩微几何表达，不是工程复刻；照片只作研究，未加入公开贴图或提交包。尝试下载的工程 PDF 返回 403，未用于视觉核验。
+
+![汇丰日景](images/hongkong-hsbc.png)
+
+![背面与设备舱](images/hongkong-hsbc-back.png)
+
+![汇丰夜景](images/hongkong-hsbc-night.png)

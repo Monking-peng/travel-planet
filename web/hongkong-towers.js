@@ -46,23 +46,4 @@ export function icc(k){
  return finish(k,g,{lamps:[[-.38,.021,.32],[.38,.021,.32]],visitors:[[-.22,.021,.42],[.02,.021,.42],[.22,.021,.43]]});
 }
 
-export function hsbc(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,p);const glass=windowGlass(k,'#526b77',43),steel=lit(k,'#acbbb9',.28,6),red=lit(k,'#a83c35',.25);steel.userData.hsbcExoskeleton=true;
- // Three differently tall suspended blocks; an open public undercroft remains.
- for(const [x,w,h,z]of [[-.23,.19,.75,.015],[0,.24,.94,0],[.23,.19,.81,.015]]){
-  k.box(g,w,h-.16,.25,glass,x,.16+(h-.16)/2,z);
-  for(let j=0;j<Math.round(h/.024);j++){const y=.17+j*.024;if(y<h)for(const s of [-1,1])k.box(g,w,.0025,.004,p.steel,x,y,z+s*.129);}
-  k.box(g,w,.02,.25,p.steel,x,h+.008,z);
- }
- for(const x of [-.35,-.12,.12,.35])for(const z of [-.16,.16]){
-  const h=Math.abs(x)>.3?.84:1.00;for(const dx of [-.012,.012])k.cyl(g,.006,.006,h,steel,x+dx,.025+h/2,z,8);
-  for(let y=.07;y<h;y+=.043)k.box(g,.043,.009,.023,steel,x,y,z);
- }
- for(const y of [.23,.43,.63,.82])for(const z of [-.174,.174]){
-  const w=y>.8?.48:.70;k.box(g,w,.009,.012,steel,0,y,z);k.box(g,w,.009,.012,steel,0,y+.105,z);
-  for(let j=0;j<3;j++){const a=-w/2+j*w/3,b=a+w/3;k.beam(g,[a,y+.105,z],[(a+b)/2,y,z],.0045,steel);k.beam(g,[(a+b)/2,y,z],[b,y+.105,z],.0045,steel);}
- }
- for(const x of [-.09,.09]){const escalator=k.box(g,.043,.013,.20,p.steel,x,.10,.16);escalator.rotation.x=-.43;for(const z of [.04,.23])k.box(g,.051,.009,.05,p.steel,x,z===.04?.143:.057,z);}
- sign(k,g,'HSBC',.16,.04,0,.98,.16,{background:'#c2ccca',color:'#384f55'});for(const x of [.12,.145]){const q=k.box(g,.025,.025,.002,red,x,.98,.164);q.rotation.z=Math.PI/4;}
- return finish(k,g,{lamps:[[-.38,.021,.30],[.38,.021,.30]],visitors:[[-.18,.021,.30],[.04,.021,.31],[.23,.021,.28]]});
-}
+export {hsbc} from './hongkong-hsbc.js';
