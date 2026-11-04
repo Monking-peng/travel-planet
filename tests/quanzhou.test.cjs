@@ -67,3 +67,13 @@ test('Wenmiao has a continuous gate-to-hall route, three real gate passages and 
   const under=new T.Raycaster(new T.Vector3(0,.044,.185),new T.Vector3(0,0,1),0,.23);assert.equal(under.intersectObjects(solid).length,0,'Water remains open below stone-beam bridge');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Qingjing stone hall keeps real window bays, a roofless court and connected open gate route',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{qingjing}=await import('../web/quanzhou-qingjing.js'),k=makeKit({time:{value:0},night:{value:0}}),g=qingjing(k),solid=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.material?.userData.qingjingStructure)solid.push(o);});
+ try{
+  for(let i=0;i<7;i++){const x=-.27+((i+.5)/7-.5)*.50+.006,ray=new T.Raycaster(new T.Vector3(x,.16,.40),new T.Vector3(0,0,-1),0,.18);assert.equal(ray.intersectObjects(solid).length,0,`Window ${i+1} is a real opening between its thin bars`);}
+  for(const y of [.12,.18]){const ray=new T.Raycaster(new T.Vector3(.14,y,.44),new T.Vector3(0,0,-1),0,.60);assert.equal(ray.intersectObjects(solid).length,0,'The nested stone doorways are traversable');}
+  for(let i=0;i<=100;i++){const z=.44-i*.006,ray=new T.Raycaster(new T.Vector3(.14,.13,z),new T.Vector3(0,-1,0),0,.13),hit=ray.intersectObjects(solid)[0];assert.ok(hit&&hit.point.y>=.023&&hit.point.y<=.030,'Entry has a continuous unblocked floor');}
+  const sky=new T.Raycaster(new T.Vector3(-.34,.04,-.04),new T.Vector3(0,1,0),0,.8);assert.equal(sky.intersectObjects(solid).length,0,'Prayer hall remains open to the sky');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

@@ -1,20 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,paving,grove,finish,hall,lit,pointedPortal,sign,TAU,sea,railing,hip} from './quanzhou-kit.js';
-export function qingjing(k){
- const g=new THREE.Group(),p=palette(k),h=site(k,g,.62,.55);paving(k,g,p,.50,.43);p.stone=k.mat('#b6b8ab',.98);p.pale=k.mat('#d1cfbd',.95);
- pointedPortal(k,g,p,{x:.14,z:.23,w:.31,h:.45,d:.115,r:.086,spring:.225});pointedPortal(k,g,p,{x:.14,z:.155,w:.235,h:.335,d:.026,r:.066,spring:.13});
- k.box(g,.34,.22,.040,p.stone,-.185,.135,.23);k.box(g,.09,.22,.040,p.stone,.34,.135,.23);
- // The old prayer hall is roofless: perimeter masonry and freestanding columns.
- k.box(g,.46,.16,.035,p.stone,-.10,.105,-.30);k.box(g,.035,.16,.40,p.stone,-.33,.105,-.10);
- for(let j=0;j<6;j++){const xx=-.28+j*.067;k.box(g,.034,.086,.002,lit(k,'#687166',.12),xx,.093,-.281);k.mesh(g,new THREE.CircleGeometry(.017,16,0,Math.PI),p.wood,xx,.136,-.279);}
- for(const x of [-.22,-.06,.10])for(const z of [-.17,-.02]){k.cyl(g,.010,.013,.12,p.stone,x,.087,z,12);k.box(g,.034,.018,.034,p.pale,x,.150,z);}
- for(let j=1;j<9;j++)k.box(g,.34,.0008,.001,p.wood,-.185,.025+j*.025,.251);
- const frame=k.mat('#645845',.9);for(let i=0;i<13;i++)k.box(g,.0015,.17,.002,frame,.14+(i/12-.5)*.16,.111,.292);k.box(g,.17,.002,.003,frame,.14,.17,.293);
- // A modest later Chinese prayer hall is distinct from the medieval stone gate.
- const q={...p,tile:k.mat('#637065',.9),wall:k.mat('#d4cfad',.94)};hall(k,g,q,{x:.25,z:-.21,w:.21,d:.15,h:.10});
- sign(k,g,'清净寺',.055,.020,.34,.145,.252,{background:'#3c5151',color:'#ebdfb9'});grove(k,g,h,[[.46,-.23,.17],[-.47,-.20,.16],[.40,.02,.14],[-.40,.35,.12]]);
- return finish(k,g,{lamps:[[-.23,.023,.36],[.32,.023,.36],[.35,.023,-.07]],visitors:[[.13,.023,.37],[-.03,.023,.29],[.02,.023,-.12]]});
-}
+export {qingjing} from './quanzhou-qingjing.js';
 function clockFace(k,g,p,x,y,z,rotation){
  const c=new THREE.Group();g.add(c);c.position.set(x,y,z);c.rotation.y=rotation;
  const face=lit(k,'#d9dfcf',.36),ink=k.mat('#3e5d59',.87);k.mesh(c,new THREE.CircleGeometry(.042,48),face);k.mesh(c,new THREE.TorusGeometry(.042,.002,6,48),ink);
