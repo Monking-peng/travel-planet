@@ -13,7 +13,7 @@ export function createXiamenScene(){
    if(o.material.userData.landscape)o.material.userData.dayColor=o.material.color.clone();
    if(!o.material.userData.night&&!o.material.userData.landscape)o.material.userData.night={color:o.material.color.clone(),intensity:.065};
   });
-  const light=new THREE.PointLight('#ffdda9',0,1.4,2);light.position.set(.15,.35,.37);light.userData.nightIntensity=.040;model.add(light);
+  const light=new THREE.PointLight('#ffdda9',0,1.4,2);light.position.set(...(item.id==='sunlight'?[.32,.78,.48]:[.15,.35,.37]));light.userData.nightIntensity=item.id==='sunlight'?.024:.040;model.add(light);
   const n=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(n).multiplyScalar(RADIUS+.007);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
  }
  // A continuous waterway separates the landmark districts without cut-off ends.

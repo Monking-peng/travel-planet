@@ -86,3 +86,18 @@ test('Shuzhuang has a real stone arch and moon gate, continuous bridge deck and 
   for(let z=.28;z>.08;z-=.01){const x=.5+(.28-z)*.2,hit=ray([x,.23,z],[0,-1,0],.2)[0];assert.ok(hit&&hit.point.y<.16,'The route beside the pavilion stays clear of its columns');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Sunlight Rock stairs remain above the rock and pass through both viewing terrace entrances',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{sunlight}=await import('../web/xiamen-sunlight.js'),k=makeKit({time:{value:0},night:{value:0}}),g=sunlight(k);g.updateMatrixWorld(true);
+ try{
+  const structure=[],stairs=[],rocks=[];g.traverse(o=>{const d=o.material?.userData;if(d?.sunlightRock||d?.sunlightPlatform||d?.sunlightSteps)structure.push(o);if(d?.sunlightSteps)stairs.push(o);if(d?.sunlightRock)rocks.push(o);});
+  const route=[[.38,.028,.29],[.36,.15,.26],[.35,.30,.21],[.28,.44,.16],[.18,.51,.11],[.10,.51,.08],[-.055,.665,-.07],[-.12,.71,-.10]];
+  for(let j=1;j<route.length;j++)for(let i=1;i<31;i++){
+   const p=new T.Vector3(...route[j-1]).lerp(new T.Vector3(...route[j]),i/31),ray=new T.Raycaster(new T.Vector3(p.x,1,p.z),new T.Vector3(0,-1,0),0,1),step=ray.intersectObjects(stairs)[0],top=ray.intersectObjects(structure)[0],rock=ray.intersectObjects(rocks)[0];
+   assert.ok(step&&top&&rock,'Every flight must have a tread and supporting rock');
+   assert.ok(Math.abs(step.point.y-p.y)<.018,'Successive flights meet at a continuous height');
+   assert.ok(top.point.y-step.point.y<.003,'Terrace parapets and rock cannot block the stair');
+   assert.ok(Math.abs(step.point.y-.014-rock.point.y)<.018,'The steps cannot float above unsupported gaps');
+  }
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
