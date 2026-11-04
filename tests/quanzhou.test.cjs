@@ -77,3 +77,18 @@ test('Qingjing stone hall keeps real window bays, a roofless court and connected
   const sky=new T.Raycaster(new T.Vector3(-.34,.04,-.04),new T.Vector3(0,1,0),0,.8);assert.equal(sky.intersectObjects(solid).length,0,'Prayer hall remains open to the sky');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Clock tower has an open four-legged base and deeply recessed vertical facade panels on all sides',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{clock}=await import('../web/quanzhou-clock.js'),k=makeKit({time:{value:0},night:{value:0}}),g=clock(k),solid=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.material?.userData.clockStructure)solid.push(o);});
+ try{
+  for(let side=0;side<4;side++){
+   const a=side*Math.PI/2,n=new T.Vector3(Math.sin(a),0,Math.cos(a)),t=new T.Vector3(Math.cos(a),0,-Math.sin(a));
+   const ray=new T.Raycaster(n.clone().multiplyScalar(.2).add(new T.Vector3(0,.125,0)),n.clone().negate(),0,.4);
+   assert.equal(ray.intersectObjects(solid).length,0,'Each side has a genuinely open passage beneath the tower');
+   ray.ray.origin.addScaledVector(t,.065);assert.ok(ray.intersectObjects(solid).length,'Substantial corner columns support the upper body');
+   ray.ray.origin.copy(n).multiplyScalar(.2).y=.43;const recess=ray.intersectObjects(solid)[0];assert.ok(recess);
+   ray.ray.origin.addScaledVector(t,.080);const frame=ray.intersectObjects(solid)[0];assert.ok(frame&&recess.distance-frame.distance>.012,'Facade recess remains visibly behind the broad corner frames');
+   const ground=new T.Raycaster(new T.Vector3(n.x*.065,.045,n.z*.065),new T.Vector3(0,-1,0),0,.04);assert.ok(ground.intersectObjects(solid).length,'Open base is supported by a continuous circular plinth');
+  }
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
