@@ -18,17 +18,4 @@ export function putuo(k){
  return finish(k,g,{lamps:[[-.25,.025,.29],[.25,.025,.29],[-.25,.025,-.22],[.25,.025,-.22]],visitors:[[-.06,.025,.27],[.12,.025,.27],[.22,.025,.02],[-.10,.025,-.16]]});
 }
 export {jiannan} from './xiamen-jiannan.js';
-function campusWing(k,g,p,x,z,w=.30){
- k.box(g,w,.25,.14,p.brick,x,.16,z);for(const side of [-1,1]){for(let j=0;j<3;j++)for(let i=0;i<6;i++)window(k,g,p,x+(i/5-.5)*w*.88,.079+j*.076,z+side*.071,.020,.045);for(let i=0;i<7;i++)k.box(g,.009,.25,.012,p.pale,x+(i/6-.5)*w,.16,z+side*.071);}minnanRoof(k,g,p,w+.065,.20,.065,.285,x,z);
-}
-export function jimei(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.66,.56);paving(k,g,p,.50,.40);sea(k,g,p,.49,.21,0,.22);k.box(g,.92,.015,.04,p.stone,0,.032,-.01);railing(k,g,p,[[-.46,.04,.015],[.46,.04,.015]],.035);
- campusWing(k,g,p,-.18,-.18,.38);campusWing(k,g,p,.28,-.18,.22);
- const tower=new THREE.Group();tower.position.set(.09,.035,-.18);g.add(tower);
- for(const [y,w,h]of [[0,.18,.39],[.39,.15,.12],[.51,.12,.095],[.605,.087,.075]]){k.box(tower,w,h,w,p.wall,0,y+h/2,0);for(const side of [-1,1])for(let j=0;j<Math.max(1,Math.round(h/.065));j++)for(let i=0;i<3;i++)window(k,tower,p,(i-1)*w*.25,y+(j+.5)*h/Math.max(1,Math.round(h/.065)),side*(w/2+.001),w*.13,.035);for(const x of [-1,1])for(const z of [-1,1])k.box(tower,.008,h,.008,p.pale,x*w/2,y+h/2,z*w/2);if(y>.50)minnanRoof(k,tower,p,w+.030,w+.030,.030,y+h);else {k.box(tower,w+.020,.012,w+.020,p.pale,0,y+h,0);for(const side of [-1,1])railing(k,tower,p,[[-w/2,y+h,side*w/2],[w/2,y+h,side*w/2]],.022);}}
- k.cyl(tower,.002,.007,.041,p.gold,0,.730,0,8);
- for(const x of [-.20,.27]){const pag=new THREE.Group();pag.position.set(x,.033,.24);g.add(pag);k.box(pag,.145,.017,.14,p.pale,0,.01,0);for(const xx of [-.050,.05])for(const zz of [-.05,.05])k.cyl(pag,.0035,.0045,.09,p.red,xx,.063,zz,8);minnanRoof(k,pag,p,.18,.18,.06,.115);k.box(g,.018,.018,.23,p.pale,x,.044,.11);}
- for(const x of [-.43,-.29,.38])palm(k,g,p,x,.025,-.045,.17);
- grove(k,g,(x,z)=>ground(x,z)+.018,[[-.48,-.26,.14],[.45,-.29,.15]]);sign(k,g,'集美学村',.12,.025,-.2,.245,-.104);
- return finish(k,g,{lamps:[[-.43,.025,-.03],[.42,.025,-.03]],visitors:[[-.17,.043,.21],[.28,.043,.21],[-.34,.025,-.045]]});
-}
+export {jimei} from './xiamen-nanxun.js';

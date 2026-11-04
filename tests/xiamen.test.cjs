@@ -41,3 +41,18 @@ test('Jiannan has an open two-storey portico, recessed return windows and a cont
   for(const z of [-.29,-.45,-.61])assert.ok(ray([0,.8,z],[0,-1,0],.3).length>0,'The rear auditorium must have a continuous roof volume beyond the shallow front building');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Nanxun keeps the uninstalled-clock opening and wind pavilion genuinely open and both wings grounded',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jimei}=await import('../web/xiamen-nanxun.js'),k=makeKit({time:{value:0},night:{value:0}}),g=jimei(k);g.updateMatrixWorld(true);
+ try{
+  const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  const cy=.055+.735+.145*.53;
+  assert.equal(ray([0,cy,.02],[0,0,-1],.09).length,0,'The round opening is not a painted clock or a glass circle on a solid wall');
+  assert.ok(ray([.030,cy,.02],[0,0,-1],.09).length>0,'Stone must remain beside the round opening');
+  assert.equal(ray([0,1.05,.05],[0,0,-1],.28).length,0,'The top wind pavilion is open from front to back');
+  assert.ok(ray([.050,1.05,.05],[0,0,-1],.28).length>0,'The pavilion still has structural corner posts');
+  const pane=ray([0,.055+.43+.16/6,.05],[0,0,-1],.2)[0];assert.ok(pane&&!pane.object.material.userData.nanxunStone,'Upper windows are recessed rather than painted onto a solid core');
+  for(const side of [-1,1]){const a=side*Math.PI/6,origin=new T.Vector3(side*.305,.075,-.30).add(new T.Vector3(Math.sin(a)*.14,0,Math.cos(a)*.14)),direction=new T.Vector3(-Math.sin(a),0,-Math.cos(a));const hit=new T.Raycaster(origin,direction,0,.15).intersectObject(g,true);assert.ok(hit.length,'Raised wings need a solid plinth instead of floating over the terrace');}
+  for(const x of [-.12,.12])assert.equal(ray([x,.075,.37],[0,0,-1],.20).length,0,'Water between the detached pavilions remains open');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
