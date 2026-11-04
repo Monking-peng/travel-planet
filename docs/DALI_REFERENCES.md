@@ -27,3 +27,25 @@
 ![塔身与塔檐](images/dali-pagodas-oblique.png)
 
 ![夜间展示](images/dali-pagodas-night.png)
+
+
+## 0.55.64 五华楼
+
+根据 [2026 年正面实拍](https://commons.wikimedia.org/wiki/File:Wuhua_Tower_20260220_135004.jpg)、[楼阁与城台细部](https://pc.dllyjszx.com/article-466.html) 和 [日夜照片](https://www.sightunpacked.com/destinations/china/dali/dali-old-town/)，补出三层彩绘梁枋、层叠斗拱、木格门窗、石栏、拱门饰圈与屋顶宝瓶。回廊退进柱网，门洞保持真实贯通。
+
+保留红柱、蓝绿彩绘与灰瓦的日间颜色，夜间暖光集中在檐下和门洞。模型为缩微表达，后侧细节依据可见构件补全，不宣称每面均有照片佐证；参考照片不随项目分发。
+
+![五华楼日景](images/dali-wuhua-day.png)
+
+![五华楼夜景](images/dali-wuhua-night.png)
+
+
+## 0.55.65 大理古城南门
+
+对照[正面日景实拍](https://www.feastographyblog.com/blog/dali-ancient-city)、[夜间斜俯视照片](https://www.loongwander.com/article/dali-ancient-town)和[城门与广场照片](https://h5.ifeng.com/c/vivoArticle/v002oEry0CoaqSklCrsofWI0XUouEj00JOOAWniIbpliAbM__?isNews=1&showComments=0)，补出宽石墙、中央与侧门、双层挑檐、蓝绿彩绘斗拱、红柱木窗、灯笼、花坛和四块独立的「文献名邦」匾额。匾额沿传统方向从右向左排列，字形为简化表达。
+
+入口采用贴合球面地形的连续缓坡，门洞内铺地保持平整；修复承托沉入球面、坡道与广场重叠以及单字被横版贴图压窄的问题。夜间暖光照向檐下和砖石，不改变日间材质。参考照片不随项目分发；模型为缩微景观，不代表测绘复原。五华楼的 0.55.64 修改合并于此版本交付。
+
+![南门日景](images/dali-south-day.png)
+
+![南门夜景](images/dali-south-night.png)

@@ -32,7 +32,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "石砌城台托起双层城楼，朱柱与青蓝彩梁之间悬挂红灯笼，文献名邦匾额和贯通城门面向石板广场。",
+  "description": "宽阔石砌城墙托起双层挑檐城楼，蓝绿彩绘斗拱、朱柱与红灯笼围绕四块「文献名邦」竖匾。中央和两侧门洞连接缓坡石径，夜间暖光照亮檐下与砖石。",
   "source": "https://www.feastographyblog.com/blog/dali-ancient-city",
   "grounded": true
  },
@@ -49,7 +49,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "三重灰瓦飞檐逐层收进，彩绘斗拱、回廊与石栏勾勒楼阁层次，下方拱门连通古城街道。",
+  "description": "三重灰瓦飞檐和顶端宝瓶勾勒楼阁轮廓，红柱、蓝绿彩梁、层叠斗拱与木格门窗围合回廊。下方石砌拱门连通街道，夜间暖光照亮檐下和门洞。",
   "source": "https://www.visitourchina.com/dali/attraction/the-ancient-city-of-dali.html",
   "grounded": true
  },

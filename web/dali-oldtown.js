@@ -1,24 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,roof,story,lit,sign,archOpening,railing,finish,wallPattern,lantern} from './dali-kit.js';
-function gate(k,three){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.72,.59);paving(k,g,p,.58,.48);
- const width=three?.87:1.12,h=three?.28:.32,d=.34,open=three?.22:.24;
- archOpening(k,g,p.stone,{w:width,h,opening:open,rise:h*.79,d,y:.03});
- for(const side of [-1,1]){const span=(width-open)/2;k.box(g,span,.002,.002,p.pale,side*(width+open)/4,h*.48,d/2+.002);wallPattern(k,g,p,span,h,d,side*(width+open)/4,.03+h/2,0);}
- // A clear vaulted passage continues through the masonry base.
- for(let j=0;j<19;j++){const a=j/18*Math.PI,rad=open/2+.009;k.box(g,.012,.015,.004,p.pale,Math.cos(a)*rad,.03+h*.79-open/2+Math.sin(a)*rad,d/2+.003).rotation.z=a-Math.PI/2;}
- k.box(g,width+.055,.021,d+.08,p.pale,0,.041+h,0);
- if(three)railing(k,g,p,[[-width/2,.052+h,.205],[width/2,.052+h,.205]],.046);
- else for(let i=0;i<13;i++){const xx=-width/2+i*width/12;k.box(g,.052,.045,.029,p.stone,xx,h+.067,.19);}
- const levels=three?3:2;
- for(let i=0;i<levels;i++){const w=(three?.64:.82)*(.79**i),dd=(three?.36:.35)*(.83**i);story(k,g,p,{w,d:dd,y:h+.06+i*.162,h:.132,lanterns:true});}
- sign(k,g,three?'五华楼':'文献名邦',three?.14:.23,.039,0,h+.06+(levels-1)*.162+.086,(three?.36:.35)*(.83**(levels-1))*.48+.012,{background:'#242d2a',color:'#c9bb87'});
- sign(k,g,three?'五华楼':'大理',.13,.048,0,h*.83,d/2+.005,{background:'#72796d',color:'#d4bd6c'});
- grove(k,g,height,[[-.54,.28,.20],[.52,-.25,.18]]);
- return finish(k,g,{lamps:[[-.28,.024,.40],[.28,.024,.40]],visitors:[[-.055,.025,.29],[.11,.025,.39],[.31,.025,.29]]});
-}
-export const south=k=>gate(k,false);
-export const wuhua=k=>gate(k,true);
+export {south} from './dali-south.js';
+export {wuhua} from './dali-wuhua.js';
 function baiBlock(k,g,p,x,z,w,d){
  const b=new THREE.Group();b.position.set(x,.031,z);g.add(b);k.box(b,w,.225,d,p.wall,0,.1125,0);
  for(const side of [-1,1]){for(const y of [.065,.177]){for(let i=0;i<5;i++){const xx=(i-2)*w*.17;k.box(b,w*.115,.071,.004,p.wood,xx,y,side*(d/2+.002));for(let j=0;j<4;j++)k.box(b,w*.105,.0014,.002,p.pale,xx,y-.025+j*.017,side*(d/2+.005));}k.box(b,w,.005,.005,p.wood,0,y-.045,side*(d/2+.008));}
