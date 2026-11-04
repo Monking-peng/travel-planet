@@ -78,3 +78,23 @@ test('Yan courtyard keeps a connected entrance, recessed galleries and a clear w
   for(const x of [.40,.48,.56])for(const z of [-.47,-.40,-.33]){const hits=ray(x,1,z,0,-1,0,1);assert.ok(hits.length);assert.ok(hits[0].point.y>.38&&hits[0].point.y<.40,'Terrace remains clear, level and separate from the old roof');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Small Putuo keeps its shore stair connected, open shrine entrance and pierced stone parapet',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{putuo}=await import('../web/dali-putuo.js'),k=makeKit({time:{value:0},night:{value:0}}),g=putuo(k);g.updateMatrixWorld(true);const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObjects(meshes,false);
+ try{let previous;for(let i=0;i<=240;i++){const x=.43-i/240*.29,h=ray([x,.24,.154],[0,-1,0],.22);assert.ok(h.length,'No water gap in the landing-to-temple stair');const y=h[0].point.y;if(previous!==undefined){assert.ok(y-previous<.013,'Risers remain small and continuous');assert.ok(y>=previous-.002,'No backward drop near the top landing');}previous=y;}assert.ok(previous>.157);
+  assert.equal(ray([-.085,.23,.18],[0,0,-1],.22).length,0,'Main shrine entrance is open instead of a doorway painted over a wall');
+  const a=.61+4/9*2.25,x=-.075+Math.cos(a)*.302,z=-.012+Math.sin(a)*.223,n=[Math.cos(a),0,Math.sin(a)];
+  assert.equal(ray([x+n[0]*.015,.182,z+n[2]*.015],n.map(v=>-v),.025).length,0,'Stone railing medallion is physically pierced');assert.ok(ray([x+n[0]*.015,.165,z+n[2]*.015],n.map(v=>-v),.025).length,'Stone remains below the opening');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Xingsheng keeps five open spans, hollow pylons and uninterrupted deck-to-bank stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{xingsheng}=await import('../web/dali-xingsheng.js'),k=makeKit({time:{value:0},night:{value:0}}),g=xingsheng(k);g.updateMatrixWorld(true);const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+ const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObjects(meshes,false);
+ try{
+  for(const x of [-.56,-.28,0,.28,.56])assert.equal(ray([x,.10,.4],[0,0,-1],.8).length,0,'Each water passage passes through every rib');
+  for(const x of [-.42,-.14,.14,.42]){const sy=Math.abs(x)<.2?.7:.574;assert.equal(ray([x,.25+.173*sy,.4],[0,0,-1],.8).length,0,'Pylon center must be a real opening');assert.ok(ray([x,.10,.4],[0,0,-1],.8).length,'Masonry pier remains solid');}
+  for(const x of [-.737,.737]){let previous;for(let i=0;i<=300;i++){const z=.37-i/300*.40,h=ray([x,.28,z],[0,-1,0],.4);assert.ok(h.length,'Every stair tread is supported by a continuous bank');const y=h[0].point.y;if(previous!==undefined){assert.ok(y>=previous-.002,'No reverse drop at the top landing');assert.ok(y-previous<.022,'No missing intermediate riser');}previous=y;}assert.ok(Math.abs(previous-.249)<.001,'Stair reaches the bridge sidewalk');}
+  for(let i=0;i<=300;i++){const x=-.70+i/300*1.4,h=ray([x,.27,.137],[0,-1,0],.10);assert.ok(h.length&&h[0].point.y>.245,'Footway must remain continuous across all five spans');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

@@ -83,7 +83,7 @@ export const LANDMARKS=[
    0.75,
    1.9
   ],
-  "description": "两层观音阁立在湖中礁石上，灰瓦翘角、蓝白墙面与岛边古树相映，水面上点缀白鸥。",
+  "description": "双层观音阁坐落在不规则石岛上，灰瓦屋脊、蓝白圆形彩绘和红木门窗环绕开放前廊。石砌岸墙、透孔栏杆与短阶连接低处码头，岛边老树伸向湖面。",
   "source": "https://touch.travel.qunar.com/comment/5971508",
   "grounded": true,
   "hemisphere": -1
@@ -119,7 +119,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "浅色连拱桥身横跨西洱河，四座塔柱、栏杆与路灯沿桥展开，保留桥洞和宽阔水面。",
+  "description": "五跨浅色拱肋连起西洱河两岸，镂空石塔柱、层叠塔檐、金色纹饰和花纹栏杆沿桥展开。蓝灰拱肋与卷臂路灯保留日间色彩，夜间暖光突出桥拱与石檐。",
   "source": "https://touch.travel.qunar.com/comment/17114421",
   "grounded": true,
   "hemisphere": -1

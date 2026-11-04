@@ -8,9 +8,9 @@
 | 大理古城南门 | [正面日景实拍](https://www.feastographyblog.com/blog/dali-ancient-city) | 宽阔双层楼阁、灰瓦、红柱蓝绿梁枋、文献名邦匾额、石墙与贯通门洞。误标为南门的五华楼照片已排除。 |
 | 五华楼 | [古城楼阁实拍](https://www.visitourchina.com/dali/attraction/the-ancient-city-of-dali.html) | 三层逐级收分的灰瓦楼阁、红木柱网、回廊与石栏，门洞真实贯通。 |
 | 喜洲·严家大院 | [紫荆杂志记者实拍](https://bau.com.hk/web/article/1305292658495438848/web/content_1305292658495438848.html) | 三坊一照壁、蓝边福字照壁、雕花门楼、木窗回廊及后方西式小楼；本版呈现一组代表性院落，不宣称还原全部院落。 |
-| 洱海·小普陀 | [岛屿与观音阁实拍](https://touch.travel.qunar.com/comment/5971508) | 石灰岩小岛、双层灰瓦观音阁、蓝灰墙身与白色拱门、临水石岸和少量岛树。 |
+| 洱海·小普陀 | [岛屿与观音阁实拍](https://touch.travel.qunar.com/comment/5971508) | 不规则石岛、双层灰瓦观音阁、红木开敞前廊、蓝白彩绘墙面、透孔石栏及岸边老树。 |
 | 苍山·洗马潭 | [湖岸山脊实拍](https://gs.ctrip.com/html5/you/sight/dalicity1445616/1834533.html)、[新华社山景照片](https://www1.xinhuanet.com/photo/20240608/dd80239b0ac84e0dadf8fc9df1f04156/c.html) | 起伏高山草坡、裸露石块、低缓潭岸与折转木栈道。自然山体夜间保持暗色，不用整片自发光代替夜景；没有模拟索道。 |
-| 下关·兴盛大桥 | [桥体与洱河实拍](https://touch.travel.qunar.com/comment/17114421) | 浅色连续拱桥、四座装饰桥塔、蓝色窗面与栏杆，拱洞为真实开口，桥下有独立水面。 |
+| 下关·兴盛大桥 | [桥体与洱河实拍](https://touch.travel.qunar.com/comment/17114421) | 浅色五跨连拱、重复镂空石塔柱、层叠塔檐、金色纹饰与花纹铁栏，桥下保持真实开口。 |
 | 剑川沙溪·古戏台 | [完整戏台实拍](https://touch.go.qunar.com/poi/5942814) | 架空戏台、后方高阁、两侧廊房、灰瓦飞檐、木格窗与宽石阶。廊房属于戏台组合，不是随机填充住宅。 |
 
 提供两半球分布、日夜切换、自由旋转、逐景近看、整组增删保存与手机触控。大理当前为景观地图，未接入多人旅行；不复用其他城市的景点目录，不虚构票价、营业时间或预约信息。
@@ -71,3 +71,25 @@
 ![严家大院日景](images/dali-yan-day.png)
 
 ![严家大院夜景](images/dali-yan-night.png)
+
+
+## 0.55.68 洱海小普陀
+
+对照[岛屿侧面与码头实拍](https://touch.travel.qunar.com/comment/5971508)及[2019 年参访者的正面和岛岸照片](https://miaochuehtang.wordpress.com/2019/06/11/朝聖之行-觀音拋入洱海中的鎮海大印-小普陀/comment-page-1/)，重做不规则石灰岩岛岸、双层灰瓦观音阁、红柱木窗、蓝白圆形彩绘、镂空石栏和连续码头台阶。第二稿降低楼阁与屋脊，避免过度瘦高。
+
+前廊为真实开口，台阶与岛面相连；侧后部依据可见构件作简化补全，不宣称全部立面均有实拍或准确测绘。夜间暖光用于展示，不代表夜游开放；参考照片不进入公开素材。
+
+![小普陀日景](images/dali-putuo-day.png)
+
+![小普陀夜景](images/dali-putuo-night.png)
+
+
+## 0.55.69 下关兴盛大桥
+
+依据 [Kcx36 于 2023 年拍摄的完整桥景](https://commons.wikimedia.org/wiki/File:大理兴盛大桥_202307_01.jpg)及[桥塔与拱肋近景](https://touch.travel.qunar.com/comment/17114421)，将旧版三孔简化桥身改为五跨拱肋，补出拱上支撑、镂空塔柱、石材分缝、层叠塔檐、金色装饰、卷臂路灯和曲线铁栏。修正旧文案把开口误写成蓝色窗面的描述。
+
+参考[大理日报对夜景的描述](https://dalidaily.dlzrm.cn/202603/31/content_79352.html)，暖光集中在拱肋、石檐与路灯；没有宣称还原灯光排期或完整动态灯光秀。桥头以缩微台阶连接岸边，未复刻完整道路立交；装饰纹样为几何简化。参考照片没有作为公开贴图分发。小普陀的 0.55.68 修改合并于此版本交付。
+
+![兴盛大桥日景](images/dali-xingsheng-day.png)
+
+![兴盛大桥夜景](images/dali-xingsheng-night.png)
