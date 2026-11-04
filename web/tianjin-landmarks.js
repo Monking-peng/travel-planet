@@ -66,7 +66,7 @@ export const LANDMARKS=[
    1.25,
    1.8
   ],
-  "description": "两层连续拱廊环绕中央草坪，红瓦屋顶、正面大拱门与内侧步道形成完整的椭圆广场。夜间拱廊透出暖光。",
+  "description": "直廊红瓦屋顶与弧廊平顶围合中央草坪，砖石拱券、柱头和门户分层展开。叶形玻璃展亭、阶梯草坪与林荫步道补齐内院，夜间以暖光勾勒拱券和檐口。",
   "source": "https://m.thepaper.cn/wifiKey_detail.jsp?contid=7842004&from=wifiKey",
   "grounded": true
  },

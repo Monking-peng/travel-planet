@@ -7,7 +7,7 @@
 | 天津之眼·永乐桥 | [完整日景](https://www.visitourchina.com/tianjin/attraction/the-tientsin-eye.html)、[照明项目近景](https://www.baitrlighting.com/news/bairt-lighting-illuminates-tianjin-boosting-cultural-tourism-elevation-protecting-millennium-old-canal-golden-tourist-attraction-project/) | 桥面上的白色分叉支架、内外轮缘、细辐条、独立轿厢与海河水面。夜间轮缘采用缓慢变化的粉紫、青蓝和金色，未照搬实际灯光节目。 |
 | 瓷房子 | [2025 年完整正面实拍](https://www.chinaservicesinfo.com/s/202505/27/WS6835552b498eec7e1f737ccc/crowds-flock-to-tianjins-porcelain-house.html)、[旧照中的细部](https://dp.pconline.com.cn/dphoto/list_2406457.html) | 砖红洋楼、瓷瓶围墙、曲线门头、白色格窗、露台、瓷龙与屋顶 China 字样。以完整正面图为主，旧照施工架不进入模型；瓷片表面为程序纹理。 |
 | 西开教堂 | [游客正面实拍](https://gs.ctrip.com/html5/you/sight/tianjin154/10630.html) | 红黄相间砖墙、前方双塔与后方第三座绿穹顶、圆拱入口、高窄窗、山花和十字架。避免混成哥特式尖塔。 |
-| 五大道·民园广场 | [澎湃新闻航拍](https://m.thepaper.cn/wifiKey_detail.jsp?contid=7842004&from=wifiKey)、[天津图书馆图片资料](https://rwtj.tjl.tj.cn/pic/view/type2/164.html)、[夜景实拍](https://gs.ctrip.com/html5/you/sight/tianjin154/1513563.html) | 两层连续拱廊、红瓦椭圆屋顶、正面大拱门、中央草坪与内圈步道。保留真正贯通的拱洞，不用黑色窗片代替。 |
+| 五大道·民园广场 | [澎湃新闻航拍](https://m.thepaper.cn/wifiKey_detail.jsp?contid=7842004&from=wifiKey)、[天津图书馆图片资料](https://rwtj.tjl.tj.cn/pic/view/type2/164.html)、[夜景实拍](https://gs.ctrip.com/html5/you/sight/tianjin154/1513563.html) | 连续拱廊、直廊红瓦顶与弧廊平顶、正面大拱门、中央草坪、玻璃展亭与阶梯草坪。保留真正贯通的拱洞，不用黑色窗片代替。 |
 | 海河·解放桥 | [日景实拍](https://you.ctrip.com/sight/tianjin154/1556051.html)、[夜景近照](https://4travel.jp/os_shisetsu/10520215) | 灰色钢桁架、门式横梁、斜撑、石墩、贯通桥面和桥头石碑，夜间以暖金强调结构。本版没有模拟开桥动作。 |
 | 天塔·天塔湖 | [湖岸与塔身实拍](https://www.tripadvisor.com.au/Attraction_Review-g311293-d1814662-Reviews-Tianta_Lake_Scenic_Resort-Tianjin.html) | 湖中基座、细长收分塔身、层层展开的观景舱、细长天线和连接石堤；与东方明珠的球体结构区分。 |
 | 国家海洋博物馆 | [COX 设计方实拍与剖面](https://www.coxarchitecture.com.au/project/national-maritime-museum-of-china/) | 五组向海湾分叉的金属展厅、曲折壳体、玻璃端面、架空连桥和入口平台。根据实拍压低屋面比例，保持各展厅之间的水面与通廊关系。 |
@@ -66,3 +66,14 @@
 ![独乐寺日景](images/tianjin-dule-day.png)
 
 ![独乐寺夜景](images/tianjin-dule-night.png)
+
+
+## 0.55.61 民园广场
+
+依据 [澎湃新闻航拍](https://m.thepaper.cn/wifiKey_detail.jsp?contid=7842004&from=wifiKey)、[清华同衡照明设计方的三张夜景照片](https://so.thupdi.com/project/view?id=2161) 与 [游客拍摄的拱廊、阶梯草坪和玻璃展亭](https://you.ctrip.com/sight/tianjin154/1513563.html)，区分直廊的红瓦顶和弧廊的平顶、上层矩形窗。补砖墩、细柱、拱券线脚、门户层叠檐口和内院草坪。
+
+新增叶形玻璃展亭、外露白肋架及五层阶梯草坪；步道与树列按广场照片布置。夜间参照设计方暖色照明，以拱券和檐口为主，不把整片墙面照成霓虹。模型为缩微外观表达，未复刻地下空间、具体商铺或活动海报。参考照片仅用于研究，不作为贴图分发。
+
+![民园广场日景](images/tianjin-minyuan-day.png)
+
+![民园广场夜景](images/tianjin-minyuan-night.png)
