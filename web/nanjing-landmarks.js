@@ -8,7 +8,7 @@ export const LANDMARKS=[
  {id:'museum',name:'南京博物院',area:'历史馆 · 仿辽大殿',x:1.22,z:-1.09,height:.69,distance:3.65,view:[.25,.68,1.8],description:'深棕瓦顶、金色脊饰与红柱前廊构成历史馆大殿；低层侧馆、白石栏杆和两段宽阶围合前庭。夜间暖光沿檐口与门窗展开，保留白天材质。',source:'https://shpx.nju.edu.cn/9a/aa/c59556a694954/page.htm'},
  {id:'jiming',name:'鸡鸣寺·药师佛塔',area:'鸡笼山 · 黄墙古塔',x:-1.08,z:.94,hemisphere:-1,height:1.42,distance:3.65,view:[.45,.75,1.8],description:'密集黄墙殿堂沿山坡上升，七层八角佛塔补齐红色栏杆、浅色柱、格窗与高挑攒尖顶。山门和三段石阶连接庭院；夜间暖光勾出塔檐与屋脊。',source:'https://dfz.nanjing.gov.cn/gzdt/202503/t20250324_5101918.html'},
  {id:'baoen',name:'大报恩寺遗址新塔',area:'长干里 · 玻璃保护塔',x:1.08,z:.94,hemisphere:-1,height:1.14,distance:2.85,view:[.40,.68,1.8],description:'九层八角玻璃塔、纤细外框、层间透光平台与金色塔刹。表现遗址上的现代保护建筑，夜间分出暖金层灯和上层冷色玻璃。',source:'https://www.waclighting.com.cn/cases-detail/27'},
- {id:'zifeng',name:'紫峰大厦',area:'鼓楼 · 层叠天际线',x:-1.08,z:-.94,hemisphere:-1,height:1.59,distance:3.2,view:[.40,.64,1.8],description:'错开的上下玻璃体量、外露设备层、银色竖片、圆弧侧面和细长尖塔。夜景保留银灰建筑原色，窗灯缓慢明暗变化。',source:'https://www.smithgill.com/work/zifeng_tower/'},
+ {id:'zifeng',name:'紫峰大厦',area:'鼓楼 · 层叠天际线',x:-1.08,z:-.94,hemisphere:-1,height:1.64,distance:3.25,view:[.40,.64,1.8],description:'两组圆弧玻璃体量错叠，鳞片式幕墙、内凹百叶设备层与细柱形成层次。弧形塔冠连接纤细尖塔；夜间以分层暖光和稀疏窗灯保留蓝灰玻璃原色。',source:'https://www.smithgill.com/work/zifeng_tower/'},
  {id:'eye',name:'南京眼步行桥',area:'长江夹江 · 倾斜双环',x:1.08,z:-.94,hemisphere:-1,height:.72,distance:3.05,view:[1.0,.80,1.6],description:'两座倾斜椭圆钢塔、双索面细钢索与轻薄步行桥面。桥面从双环内部穿过，夜间以冷白轮廓光勾出桥塔与栏杆。',source:'https://gjzx.nanjing.gov.cn/xmqk/qabxq/202509/t20250903_5641986.html'}
 ].map(item=>({...item,grounded:true}));
 const builders={mausoleum,museum,fuzimiao,zhonghua,jiming,baoen,zifeng,eye};

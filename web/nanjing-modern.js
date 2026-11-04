@@ -10,17 +10,7 @@ export function baoen(k){
  for(const side of [-1,1]){k.box(g,.19,.056,.32,glass,side*.31,.051,-.05);for(let i=0;i<7;i++)k.box(g,.002,.056,.322,p.pale,side*.31+(i/6-.5)*.19,.051,-.05);}
  return finish(k,g,{lamps:[[-.26,.30],[.26,.30],[-.27,-.27],[.27,-.27]],visitors:[[-.11,.35],[.14,.29]]});
 }
-export function zifeng(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.59,.55);paving(k,g,p,.46,.39);const glass=k.glass('#82979c','#d4e4e3',169);glass.userData.night.intensity=.70;const silver=k.mat('#a9b8b8',.37,.48),dark=k.mat('#394c50',.65);
- k.box(g,.47,.045,.32,p.stone,0,.043,0);k.box(g,.31,.52,.24,glass,-.035,.326,0);k.cyl(g,.078,.078,.99,glass,.12,.552,-.016,40);
- // The upper block steps out, with a recessed mechanical band and narrow side blade.
- for(const x of [-.16,-.08,0,.08])k.box(g,.006,.095,.22,silver,x,.635,0);k.box(g,.32,.012,.24,dark,-.035,.592,0);k.box(g,.33,.012,.25,silver,-.035,.676,0);k.box(g,.33,.40,.25,glass,-.035,.883,0);
- for(let row=0;row<16;row++)for(let col=0;col<12;col++){const x=-.19+col*.028,y=.696+row*.024;for(const side of [-1,1]){const slab=k.box(g,.006,.019,.004,silver,x,y,side*.127);slab.rotation.y=(col%2?1:-1)*.27;}}
- for(let i=0;i<24;i++)k.box(g,.31,.0014,.242,silver,-.035,.087+i*.0205,0);
- k.box(g,.045,.28,.18,glass,.12,1.143,-.005);for(let i=0;i<12;i++)k.box(g,.046,.002,.183,silver,.12,1.007+i*.023,-.005);
- k.cyl(g,.052,.062,.24,glass,-.043,1.20,-.03,40);k.cyl(g,.004,.009,.30,silver,-.015,1.425,-.02,12);for(let i=0;i<9;i++)k.ring(g,.009,.0014,silver,1.34+i*.016).position.x=-.015;
- grove(k,g,ground,[[-.32,.24,.12],[.32,.24,.12],[-.33,-.25,.12],[.33,-.25,.12]]);return finish(k,g,{lamps:[[-.30,.30],[.30,.30]],visitors:[[.08,.26],[-.17,.27]]});
-}
+export {zifeng} from './nanjing-zifeng.js';
 export function eye(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,.80,.48);pond(k,g,p,.72,.36);const white=k.mat('#d0d5cb',.56,.24),lit=glow(k,'#d7e9ee',.58,.6,.7);white.userData.eyeTower=true;
  // Two inclined transverse elliptical towers; the walkway passes through both eyes.

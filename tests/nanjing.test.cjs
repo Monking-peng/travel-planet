@@ -1,6 +1,15 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Zifeng retains a closed recessed mechanical level, continuous spire and facade coordinates after batching',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{zifeng}=await import('../web/nanjing-zifeng.js'),k=makeKit({time:{value:0},night:{value:0}}),g=zifeng(k);g.updateMatrixWorld(true);
+ try{const recess=[],facades=[];g.traverse(o=>{if(o.material?.userData.zifengRecess)recess.push(o);if(o.material?.userData.zifengFacade)facades.push(o);});
+  const hit=new T.Raycaster(new T.Vector3(0,.66,.20),new T.Vector3(0,0,-1),0,.40).intersectObjects(recess)[0];assert.ok(hit&&hit.distance>.10&&hit.distance<.13,'The mechanical band is recessed but must not be a hole through the building');
+  for(let y=1.16;y<1.605;y+=.009){const hits=new T.Raycaster(new T.Vector3(.035,y,.1),new T.Vector3(0,0,-1),0,.2).intersectObject(g,true);assert.ok(hits.length,'The mast must connect to the tower rather than float above it');}
+  assert.equal(facades.length,1);const geo=facades[0].geometry;assert.equal(geo.attributes.uv.count,geo.attributes.position.count);assert.ok(Math.max(...geo.attributes.uv.array)>60,'Curved faces need their full facade sampling coordinates after consolidation');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
 test('Museum approach reaches the recessed portico continuously and tiled roofs retain their sampling coordinates',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{museum}=await import('../web/nanjing-museum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=museum(k),meshes=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.isMesh)meshes.push(o);});
  try{
