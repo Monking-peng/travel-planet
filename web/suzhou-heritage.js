@@ -1,31 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,disc,pond,steps,grove,hall,hip,archWall,bridge,balcony,sign,finish,lit,edgeLight,TAU} from './suzhou-kit.js';
 
-export function tiger(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.57,.52);
- for(let i=0;i<3;i++)k.cyl(g,.32-i*.04,.35-i*.04,.023,p.stone,0,.03+i*.023,0,8);
- const tower=new THREE.Group();tower.position.y=.08;tower.rotation.z=-.041;g.add(tower);
- const brick=k.mat('#8c8370',.97),plaster=k.mat('#c8c4ad',.99),dark=k.mat('#464a42',.98),pane=lit(k,'#403f36',.16);
- for(let floor=0;floor<7;floor++){
-  const r=.183-floor*.0105,y=floor*.129,h=.106;
-  const drum=k.cyl(tower,r,r+.004,h,brick,0,y+h/2,0,8);drum.rotation.y=Math.PI/8;
-  for(let j=0;j<8;j++){
-   const face=new THREE.Group();face.rotation.y=j*TAU/8;face.position.set(Math.sin(j*TAU/8)*r*Math.cos(Math.PI/8),y,Math.cos(j*TAU/8)*r*Math.cos(Math.PI/8));tower.add(face);
-   const w=2*r*Math.sin(Math.PI/8)*.94;
-   k.box(face,w,h*.86,.006,plaster,0,h*.48,.003);
-   for(const side of [-1,1])k.box(face,.006,h*.94,.010,brick,side*w*.46,h*.47,.007);
-   const door=new THREE.Shape();door.moveTo(-w*.15,.008);door.lineTo(-w*.15,h*.58);door.quadraticCurveTo(-w*.15,h*.75,0,h*.79);door.quadraticCurveTo(w*.15,h*.75,w*.15,h*.58);door.lineTo(w*.15,.008);door.closePath();k.mesh(face,new THREE.ShapeGeometry(door,20),pane,0,0,.008);
-   for(let n=-1;n<=1;n++)k.box(face,.0012,h*.58,.002,dark,n*w*.08,h*.34,.010);
-   for(const side of [-1,1])k.box(face,w*.095,h*.26,.002,dark,side*w*.31,h*.52,.008);
-   for(let n=0;n<5;n++)k.box(face,.007,.016,.017,brick,(n/4-.5)*w*.88,h+.005,.004);
-  }
-  for(let j=0;j<3;j++){const o=k.cyl(tower,r+.008+j*.004,r+.008+j*.004,.006,dark,0,y+h+.003+j*.006,0,8);o.rotation.y=Math.PI/8;}
- }
- const cap=k.cyl(tower,.065,.119,.045,brick,0,.922,0,8);cap.rotation.y=Math.PI/8;
- steps(k,g,p,0,.39,.24,9,.065,.21);grove(k,g,height,[[-.40,-.12,.21],[.38,-.17,.20],[-.34,.27,.16],[.32,.29,.16]]);
- return finish(k,g,{lamps:[[-.22,.08,.17],[.22,.08,.17]],visitors:[[.08,.028,.43],[-.11,.027,.44]]});
-}
-
+export {tiger} from './suzhou-tiger.js';
 export function hanshan(k){
  const g=new THREE.Group(),p=palette(k),height=site(k,g,.63,.57),yellow=k.mat('#be973d',.95),wood=k.mat('#633d30',.89),panel=k.mat('#cfb6a1',.91);disc(k,g,.45,.37,.022,p.pale);
  const tower=new THREE.Group();tower.position.z=-.12;g.add(tower);

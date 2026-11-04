@@ -29,3 +29,11 @@
 ![苏博侧向连廊](images/suzhou-museum-oblique.png)
 
 ![苏博夜间展示](images/suzhou-museum-night.png)
+
+## 虎丘云岩寺塔精修（第 216 轮）
+
+直接核看[塔身正面实拍](https://www.trip.com/travel-guide/attraction/suzhou/tiger-hill-scenic-area-76159/)、[砖斗拱及壶门侧面近照](https://suzhoushenghuo.hatenablog.com/entry/2024/09/12/161606)，并以[苏州市园林局说明](https://ylj.suzhou.gov.cn/szsylj/ylwh/201604/f3f52d3ee502486b8a4873c36b0d24e0.shtml)核对七层八角、砖柱、壶门、砖斗拱和叠涩细檐。夜间暖光仅参考游客发布的实际夜景，不承诺当前开放时间或灯光活动。
+
+厚重的砖砌层间、略不均匀的浅色墙面、实际凹进的多瓣壶门、深处的棕红栏栅和密叠砖檐共同替换重复平面窗贴。塔身整体微倾，外侧前庭和登阶保持水平；基座增加低矮保护墙。塔顶采用实拍可见的紧凑收束，不另造宽木檐或金色塔刹。
+
+网上建筑史文章中的一个链接图带有完整木檐，不能作为现存塔形的直接复原依据，因此未用于本轮外观。模型仍为压缩比例的风格化表达，未复制完整文物内部结构；参考照片不随包分发。

@@ -1,6 +1,14 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Tiger Hill tower keeps seven recessed openings and a continuous level stair approach',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tiger}=await import('../web/suzhou-tiger.js'),k=makeKit({time:{value:0},night:{value:0}}),g=tiger(k);g.updateMatrixWorld(true);
+ try{const walls=[];g.traverse(o=>{if(o.material?.userData.tigerMasonry)walls.push(o);});const transform=new T.Matrix4().makeRotationZ(-.041);transform.setPosition(0,.068,0);let y=0,floor=0;
+  for(const h of [.169,.157,.151,.145,.139,.133,.127]){const origin=new T.Vector3(.003,y+.047+(h-.086)*.35,(.218-floor*.0117)*Math.cos(Math.PI/8)+.060).applyMatrix4(transform),direction=new T.Vector3(0,0,-1);const ray=new T.Raycaster(origin,direction,0,.16);assert.equal(ray.intersectObjects(walls).length,0,'Every storey needs a physical lobed opening instead of a dark mark on solid plaster');const all=ray.intersectObject(g,true);assert.ok(all.length&&all[0].distance>.074,'The grille or inner wall must be recessed behind the facade');y+=h;floor++;}
+  let previous=.024;for(let z=.416;z>.24;z-=.002){const hit=new T.Raycaster(new T.Vector3(0,.080,z),new T.Vector3(0,-1,0),0,.09).intersectObject(g,true)[0];assert.ok(hit,'Approach must remain grounded');assert.ok(Math.abs(hit.point.y-previous)<.010,'The stairs must meet the level base without a gap');previous=hit.point.y;}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
 test('Suzhou Museum entrance stays open and the recessed skylight is not covered by an opaque roof',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{museum}=await import('../web/suzhou-museum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=museum(k);g.updateMatrixWorld(true);
  try{const opaque=[];g.traverse(o=>{if(o.material?.userData.museumOpaque)opaque.push(o);});
