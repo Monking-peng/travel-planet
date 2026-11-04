@@ -27,3 +27,19 @@
 ![凸弧立面与侧廊](images/tianjin-porcelain-oblique.png)
 
 ![夜间展示](images/tianjin-porcelain-night.png)
+
+
+## 0.55.58 西开教堂
+
+2026-11-05 对照正面、立面近照、暮色、夜景与夜间航拍，重做三座略向上拉长的铜绿穹顶、后方八角鼓座、长堂及低侧廊。立面补三联拱窗、白色拱券和细柱、层叠门洞、四叶窗、连续小拱廊及收分墙柱。砖缝与铜板接缝由程序生成，入口三条石阶通路连续接入前平台。
+
+- [正面建筑照片](https://www.topchinatravel.com/china-attractions/xikai-church.htm)
+- [游客近照、暮色及夜景](https://gs.ctrip.com/html5/you/sight/tianjin154/10630.html)
+- [夜间航拍与建筑资料](https://www.wanyouzhenyuan.cn/index.php?a=content&id=44794&m=news&tm=2)
+
+夜景取暖色砖墙与绿色铜顶的实拍关系，保留日间材质本色。模型是建筑外观缩微，雕像、彩窗与后立面采用简化造型，未复刻宗教画作或室内；研究照片不作为贴图分发。
+
+
+![西开教堂日景](images/tianjin-xikai-day.png)
+
+![西开教堂夜景](images/tianjin-xikai-night.png)

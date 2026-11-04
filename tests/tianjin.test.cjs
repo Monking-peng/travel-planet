@@ -32,3 +32,17 @@ test('Porcelain house has a passable gate, open side gallery and preserved vase 
  try{assert.equal(hits(0,.12,.10).length,0,'Gate center remains open');assert.ok(hits(.10,.12,.10).length>0,'Gateposts remain solid');assert.equal(hits(-.33,.30,.50).length,0,'Balcony is not a solid projecting box');assert.ok(hits(.12,.30,.50).length>0,'The main house stays solid');let patterns=0;g.traverse(o=>{const uv=o.geometry?.attributes.vaseUv;if(uv){patterns++;assert.ok(uv.array.some(v=>v>0));assert.equal(uv.count,o.geometry.attributes.position.count);}});assert.equal(patterns,2,'Both blue and red vase motifs survive geometry merging');}
  finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Xikai has recessed front and side windows, solid rear walls and three continuous entrance approaches',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{xikai}=await import('../web/tianjin-xikai.js');const k=makeKit({time:{value:0},night:{value:0}}),g=xikai(k);g.updateMatrixWorld(true);const walls=[],paving=[];g.traverse(o=>{if(o.isMesh&&o.material.userData.xikaiWall)walls.push(o);if(o.isMesh&&o.material.userData.xikaiPaving)paving.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(objects,false);
+ try{
+  assert.equal(ray(0,.35,.45,0,0,-1,.10,walls).length,0,'Center stained-glass window has no brick backing');
+  assert.ok(ray(.10,.35,.45,0,0,-1,.10,walls).length,'Adjacent facade stays solid');
+  assert.equal(ray(-.22,.68,.45,0,0,-1,.11,walls).length,0,'Belfry lancet is recessed');
+  assert.equal(ray(.50,.14,-.065,-1,0,0,.25,walls).length,0,'Side aisle window is physically cut out');
+  assert.ok(ray(.11,.41,-.50,0,0,1,.13,walls).length,'Rear upper nave wall closes the former gap');
+  for(const x of [-.22,0,.22]){let previous=0;for(let i=0;i<=201;i++){const z=.530-.17*i/201,hits=ray(x,.20,z,0,-1,0,.20,paving);assert.ok(hits.length,`Entry paving missing at ${x}/${z}`);const y=hits[0].point.y;if(i)assert.ok(y>=previous-.0001&&y-previous<.006,`Entry step discontinuity ${x}/${z}/${y-previous}`);previous=y;}assert.ok(Math.abs(previous-.055)<.0001);}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

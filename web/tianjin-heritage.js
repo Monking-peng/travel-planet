@@ -1,23 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,finish,hip,sign,lit,archPane,gable,cross,dome,ceramic,vase,TAU} from './tianjin-kit.js';
 import {lattice} from './shunde-kit.js';
-export function xikai(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.61,.58);paving(k,g,p,.51,.48);const brick=k.mat('#b8825d',.95),cream=k.mat('#d5c6a5',.94),copper=lit(k,'#668e79',.08,'#a6baa2');
- function block(w,h,d,x,y,z){k.box(g,w,h,d,brick,x,y+h/2,z);for(let j=0;j<h/.029;j++)k.box(g,w+.002,.012,d+.002,cream,x,y+j*.029+.006,z);}
- block(.48,.39,.45,0,.05,-.08);for(const x of [-.175,.175]){block(.145,.65,.19,x,.05,.12);k.box(g,.163,.015,.209,cream,x,.704,.12);k.box(g,.151,.012,.20,cream,x,.609,.12);for(const side of [-1,1]){const t=new THREE.Group();t.position.set(x,.0,.12);t.rotation.y=side<0?Math.PI:0;g.add(t);for(const xx of [-.039,0,.039])archPane(k,t,{...p,pale:cream},xx,.612,.099,.028,.067);}
-  dome(k,g,copper,.083,.074,.718,x,.12);k.cyl(g,.005,.009,.025,cream,x,.805,.12,12);cross(k,g,p,x,.831,.12,.045);
-  for(const xx of [-.021,.021])archPane(k,g,{...p,pale:cream},x+xx,.35,.218,.031,.12);archPane(k,g,{...p,pale:cream},x,.068,.219,.070,.17,{door:true});
-  const q=k.mesh(g,new THREE.CircleGeometry(.021,24),lit(k,'#527483',.10),x,.548,.220);q.scale.y=.8;
- }
- const roofGroup=new THREE.Group();g.add(roofGroup);roofGroup.rotation.y=Math.PI/2;gable(k,roofGroup,{...p,tile:cream,red:cream},.45,.38,.08,.442,.08,0,cream);
- k.box(g,.18,.36,.025,cream,0,.250,.166);archPane(k,g,{...p,pale:cream},0,.072,.184,.105,.19,{door:true});archPane(k,g,{...p,pale:cream},0,.286,.184,.094,.15);
- const arch=[];for(let i=0;i<=40;i++){const a=i/40*Math.PI;arch.push([Math.cos(a)*.118,.347+Math.sin(a)*.118,.185]);}k.line(g,arch,.008,cream);for(let i=0;i<19;i++){const a=(i+.5)/19*Math.PI;k.beam(g,[Math.cos(a)*.111,.347+Math.sin(a)*.111,.192],[Math.cos(a)*.128,.347+Math.sin(a)*.128,.192],.003,i%2?brick:cream);}
- const ped=new THREE.Shape();ped.moveTo(-.14,0);ped.lineTo(.14,0);ped.lineTo(0,.09);ped.closePath();k.mesh(g,new THREE.ExtrudeGeometry(ped,{depth:.025,bevelEnabled:false}),brick,0,.536,.163);k.line(g,[[-.145,.535,.193],[0,.632,.193],[.145,.535,.193]],.006,cream);cross(k,g,{wood:p.pale},0,.588,.198,.046);
- for(let i=0;i<8;i++){const x=-.12+i*.034;k.cyl(g,.004,.004,.035,cream,x,.515,.19,8);}k.box(g,.27,.006,.018,cream,0,.537,.19);
- block(.16,.57,.16,0,.05,-.22);dome(k,g,copper,.099,.092,.637,0,-.22);cross(k,g,p,0,.768,-.22,.054);
- for(const side of [-1,1]){const t=new THREE.Group();t.rotation.y=side*Math.PI/2;t.position.x=side*.242;g.add(t);for(let i=0;i<5;i++)archPane(k,t,{...p,pale:cream},-.23+i*.083,.15,.003,.047,.17);}
- steps(k,g,p,0,.285,.49,5,.025,.095);return finish(k,g,{lamps:[[-.29,.023,.27],[.29,.023,.27]],visitors:[[-.13,.023,.38],[.09,.023,.32]]});
-}
+export {xikai} from './tianjin-xikai.js';
 export {porcelain} from './tianjin-porcelain.js';
 export function dule(k){
  const g=new THREE.Group(),p=palette(k);const height=site(k,g,.64,.58);paving(k,g,p,.51,.46);p.tile.color.set('#66675c');p.wood.color.set('#57483a');p.red.color.set('#794c3c');const dim=lit(k,'#514136',.035),edge=lit(k,'#66675c',.12),bracket=k.mat('#8c795c',.92);

@@ -42,14 +42,14 @@ export const LANDMARKS=[
   "area": "红黄砖墙 · 三座绿穹顶",
   "x": -1.08,
   "z": -0.94,
-  "height": 0.87,
+  "height": 1.04,
   "distance": 3.0,
   "view": [
    0.32,
    0.7,
    1.8
   ],
-  "description": "红黄相间的墙面、三座绿穹顶、圆拱入口和高窄窗，呈现西开教堂的层次。暖光沿入口与窗带展开。",
+  "description": "红黄砖墙围合长堂与低侧廊，三座拉长的铜绿穹顶保持品字布局。三联拱窗、层叠门洞、四叶窗与檐下小拱廊逐层展开，夜间以暖光照亮砖石、柔绿照亮铜顶。",
   "source": "https://gs.ctrip.com/html5/you/sight/tianjin154/10630.html",
   "grounded": true
  },
