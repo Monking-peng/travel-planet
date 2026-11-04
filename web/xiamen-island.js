@@ -1,25 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,sign,finish,hip,skin,TAU,edge,window,railing,palm,granite,sea,hall} from './xiamen-kit.js';
 
-export function bagua(k){
- const g=new THREE.Group(),p=palette(k),ground=site(k,g,.63,.53);paving(k,g,p,.48,.39);
- const terra=k.mat('#a7462b',.88);k.box(g,.66,.044,.42,p.stone,0,.045,0);k.box(g,.57,.28,.31,p.brick,0,.20,-.018);
- for(const y of [.075,.215,.355]){k.box(g,.68,.014,.43,p.pale,0,y,0);for(const z of [-.216,.216])k.box(g,.68,.004,.009,edge(k,p.pale.color),0,y-.002,z);}
- for(const y of [.078,.218])for(const s of [-1,1]){
-  for(let i=0;i<7;i++){const x=(i/6-.5)*.61;k.cyl(g,.009,.011,.13,p.pale,x,y+.065,s*.192,12);k.cyl(g,.013,.013,.009,p.pale,x,y+.121,s*.192,12);}
-  for(let i=0;i<6;i++)window(k,g,p,(i/5-.5)*.49,y+.065,s*.161,.048,.095);
-  for(const x of [-.307,.307])for(const z of [-.09,0,.09])k.cyl(g,.009,.011,.13,p.pale,x,y+.065,z,12);
- }
- for(const s of [-1,1])railing(k,g,p,[[-.32,.226,s*.204],[.32,.226,s*.204]],.032);
- skin(k,g,(u,v)=>{const a=u*TAU,c=Math.cos(a),s=Math.sin(a),norm=Math.max(Math.abs(c),Math.abs(s)),x=c/norm*.305,z=s/norm*.18;return [x*v+THREE.MathUtils.clamp(x,-.12,.12)*(1-v),.36+.07*(1-v),z*v];},8,96,terra);
- k.cyl(g,.128,.128,.105,p.pale,0,.455,0,8);k.cyl(g,.136,.136,.012,p.pale,0,.511,0,8);
- const dark=edge(k,'#4c3f35','#f1cd91',.26);for(let i=0;i<8;i++){const a=i/8*TAU+Math.PI/8,face=new THREE.Group();face.position.set(Math.sin(a)*.120,.465,Math.cos(a)*.120);face.rotation.y=a;g.add(face);for(const x of [-.030,0,.030]){k.box(face,.019,.063,.003,dark,x,0,0);k.mesh(face,new THREE.CircleGeometry(.0095,20,0,Math.PI),dark,x,.031,.001);}for(const x of [-.045,.045])k.cyl(face,.003,.003,.087,p.pale,x,0,0,8);}
- const dome=(u,v)=>{const a=u*TAU,local=((a+Math.PI/8)%(Math.PI/4))-Math.PI/8,r=.131*Math.cos(Math.PI/8)/Math.cos(local)*Math.cos(v*Math.PI/2);return [Math.sin(a)*r,.519+Math.sin(v*Math.PI/2)*.144,Math.cos(a)*r];};skin(k,g,dome,24,96,terra);
- for(let i=0;i<8;i++)k.line(g,Array.from({length:18},(_,j)=>dome((i+.5)/8,j/17)),.0018,k.mat('#884e32',.88));k.beam(g,[0,.66,0],[0,.713,0],.0015,p.gold);k.ball(g,.003,p.gold,0,.714,0);
- steps(k,g,p,0,.32,.22,9,.052,.10);sign(k,g,'八卦楼',.075,.026,0,.313,.164);
- grove(k,g,(x,z)=>ground(x,z)+.018,[[-.47,-.2,.19],[.46,-.16,.18],[-.37,.30,.12],[.37,.29,.13]]);
- return finish(k,g,{lamps:[[-.29,.025,.31],[.29,.025,.31]],visitors:[[-.08,.025,.35],[.14,.025,.30],[.23,.025,.31]]});
-}
+export {bagua} from './xiamen-bagua.js';
 export function sunlight(k){
  const g=new THREE.Group(),p=palette(k),ground=site(k,g,.64,.56);p.stone=k.mat('#b6b5a5',.98);
  granite(k,g,p,{x:-.15,y:.005,z:-.02,rx:.24,ry:.42,rz:.23,seed:2});granite(k,g,p,{x:.18,y:.005,z:.02,rx:.21,ry:.34,rz:.23,seed:4});

@@ -21,3 +21,10 @@ test('Xiamen module lighting preserves daylight materials, honors reduced motion
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+test('Bagua House has deep open front and side porticoes and genuine arched drum openings',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{bagua}=await import('../web/xiamen-bagua.js'),k=makeKit({time:{value:0},night:{value:0}}),g=bagua(k);g.updateMatrixWorld(true);const masonry=[];g.traverse(o=>{if(o.material?.userData.baguaMasonry)masonry.push(o);});
+ const hits=(origin,dir,far)=>new T.Raycaster(new T.Vector3(...origin),new T.Vector3(...dir),0,far).intersectObjects(masonry).length;
+ try{assert.equal(hits([0,.16,.36],[0,0,-1],.12),0,'The front colonnade has real depth');assert.ok(hits([.0532,.16,.36],[0,0,-1],.12)>0,'Front columns remain substantial');assert.equal(hits([.46,.16,0],[-1,0,0],.12),0,'The side colonnade is also recessed');assert.ok(hits([.46,.16,.055],[-1,0,0],.12)>0);assert.equal(hits([0,.57,.16],[0,0,-1],.09),0,'The arched drum is not a painted solid cylinder');assert.ok(hits([.014,.57,.16],[0,0,-1],.09)>0,'Masonry survives between the drum windows');}
+ finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

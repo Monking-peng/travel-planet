@@ -2,7 +2,7 @@ import {bagua,sunlight,shuzhuang} from './xiamen-island.js';
 import {putuo,jiannan,jimei} from './xiamen-heritage.js';
 import {twins,haicang} from './xiamen-modern.js';
 export const LANDMARKS=[
- {id:'bagua',name:'鼓浪屿·八卦楼',area:'红穹顶 · 环绕柱廊',x:-1.08,z:.94,height:.75,distance:2.9,view:[.45,.80,1.8],description:'红色八棱穹顶、奶白柱廊、红褐色门窗与层层收起的屋顶。按修缮后的配色表达，夜间保留墙体原色，以暖光点亮柱廊与窗内。',source:'https://www.glyylq.cn/article.php?id=156'},
+ {id:'bagua',name:'鼓浪屿·八卦楼',area:'红穹顶 · 环绕柱廊',x:-1.08,z:.94,height:.83,distance:2.9,view:[.45,.80,1.8],description:'红色八棱穹顶叠在八角顶座上，四面中央柱廊向内退进，奶白柱式与红褐色四段百叶门扇分出层次。补入瓦面、天窗、细栏与入口石阶；夜间以柔光呈现立面，保留红顶与浅色石材。',source:'https://www.glyylq.cn/article.php?id=156'},
  {id:'twins',name:'世茂海峡双子塔',area:'海湾 · 双帆',x:1.08,z:.94,height:1.40,distance:3.1,view:[.5,.62,1.8],description:'两片高低错落的玻璃帆，斜切圆弧顶部、细密水平分缝与低矮裙房相连。夜景用紫蓝细边与缓慢变化的窗灯，保留玻璃的蓝灰底色。',source:'https://www.gensler.com/projects/xiamen-shimao-straits-tower'},
  {id:'putuo',name:'南普陀寺',area:'绿瓦飞檐 · 山寺荷塘',x:-1.08,z:-.94,height:.72,distance:3.05,view:[.35,1.02,1.8],description:'沿中轴排布入口殿、大雄宝殿与八角大悲殿，补入荷塘、台阶和两侧院廊。闽南翘脊、红柱与绿瓦相互区分，寺院后方以树冠收拢。',source:'https://twtemple.pixnet.net/blog/posts/16099080626'},
  {id:'jiannan',name:'厦门大学·建南大会堂',area:'嘉庚建筑 · 上弦场',x:1.08,z:-.94,height:.75,distance:3.05,view:[.25,.78,1.8],description:'中央高楼、较低侧翼、绿瓦燕尾脊与花岗岩色墙体形成层级。四根入口柱、大台阶、红褐百叶窗和棕榈共同保留建南楼群的识别点。',source:'https://jjc.xmu.edu.cn/info/1018/53831.htm'},
