@@ -35,27 +35,4 @@ export function ifs(k){
 
 export {hunanMuseum} from './changsha-museum.js';
 
-export function xie(k){
-  const g=new THREE.Group(),base=plaza(k,g,.76,.62,'#b9c0ae'),white=k.mat('#d3d6c7',.92),seam=k.mat('#afb7ac'),glass=k.mat('#4e6e73',.30,.18,'#e1ceac'),warm=glow(k,'#e8cf9e',.58);glass.userData.night.intensity=.40;
-  base.userData.groundSurface=true;
-  k.box(g,1.18,.010,.73,k.mat('#6e9690',.32,.13),0,.021,.12);
-  // An open, supported cantilever shelters the water court and a narrow crossing.
-  k.box(g,.97,.047,.48,white,0,.365,-.10);k.box(g,.97,.15,.065,white,0,.264,-.305);
-  k.box(g,.14,.32,.48,white,-.415,.203,-.10);k.box(g,.12,.32,.48,white,.425,.203,-.10);
-  k.box(g,.70,.135,.032,white,0,.296,.138);
-  // Two genuine horizontal slots in the upper facade.
-  k.box(g,.70,.025,.032,white,0,.210,.138);k.box(g,.045,.042,.032,white,0,.244,.138);
-  for(const x of [-.18,.18])k.box(g,.28,.034,.005,glass,x,.244,.116);
-  k.box(g,.70,.16,.008,glass,0,.132,-.23);
-  for(let i=0;i<9;i++)k.box(g,.004,.158,.006,seam,(i-4)*.079,.132,-.224);
-  k.box(g,.072,.017,.81,white,.16,.039,.16);
-  k.box(g,.48,.024,.17,white,0,.034,-.05);
-  for(let i=0;i<16;i++)k.box(g,.025,.012*(i+1),.13,white,-.19+i*.025,.043+.006*(i+1),-.05);
-  k.box(g,.042,.25,.42,white,.30,.169,-.07);
-  for(let row=0;row<4;row++)for(let col=0;col<18;col++)k.ball(g,.0013,seam,-.45+col*.052,.281+row*.026,.156);
-  k.box(g,.65,.002,.003,warm,0,.198,.122);k.box(g,.003,.003,.57,warm,.121,.049,.16);
-  plaque(k,g,'谢子龙影像艺术馆',.26,.032,.05,.327,.157);
-  for(const [x,z]of [[-.62,.33],[.59,.34],[-.54,-.43]])tree(k,g,x,.014,z,.10);
-  bollards(k,g,[[-.57,.46],[.56,.46],[-.60,-.35],[.59,-.35]],'#e0d1b3');people(k,g,[[.16,.40],[.16,.26],[-.54,.31]]);
-  return k.merge(g);
-}
+export {xie} from './changsha-xie.js';

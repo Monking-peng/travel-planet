@@ -15,7 +15,7 @@ export const LANDMARKS=[
   {id:'ifs',name:'长沙国金中心',area:'五一商圈 · 双塔与露台',x:1.12,z:-1.02,hemisphere:1,height:1.67,distance:3.5,view:[.55,.62,1.8],description:'两座塔楼保持明显高低差，保留深蓝玻璃、退台塔冠和竖向构件。裙楼露台与暖色店铺围绕双塔，窗灯和轮廓光缓慢变化。',source:'https://www.wongtung.com/cn/projects/changsha-international-finance-square-2/'},
   {id:'museum',name:'湖南博物院',area:'开福 · 悬挑屋盖与玻璃大厅',x:-1.10,z:.80,hemisphere:-1,height:.59,distance:2.8,view:[.4,.55,1.7],description:'折面金属屋盖悬挑在平直玻璃大厅上方，两侧浅色展厅、细密百叶和外露白色框架保留主要轮廓。入口藏在观景露台下，连续石阶和透明栏板连接前场；夜间以低亮度窗光分层。',source:'https://travel.voc.com.cn/article/201712/201712010956426419.html'},
   {id:'meixi',name:'梅溪湖艺术中心',area:'梅溪湖 · 三组流动建筑',x:1.12,z:-1.01,hemisphere:-1,height:.47,distance:3.0,view:[.5,1.1,1.5],description:'四瓣大剧场、三瓣艺术馆与单瓣小剧场围绕中央广场展开。浅色曲面在凹口处翻起，青蓝玻璃入口与窗带嵌在屋盖下；弯曲绿地和暖色步道灯连接三组场馆。',source:'https://www.biad.com.cn/project/id/8/'},
-  {id:'xie',name:'谢子龙影像艺术馆',area:'洋湖 · 清水混凝土与水院',x:-1.12,z:-1.05,hemisphere:-1,height:.42,distance:2.8,view:[.45,.68,1.5],description:'浅色混凝土悬挑体量、狭长水平窗和架空水院，窄步道穿过水面，楼梯藏在入口下方。夜间保留克制的檐下照明。',source:'https://xjxq.hunan.gov.cn/hnxjxq/sytpxw/202003/t20200318_11814798.html'},
+  {id:'xie',name:'谢子龙影像艺术馆',area:'洋湖 · 清水混凝土与水院',x:-1.12,z:-1.05,hemisphere:-1,height:.56,distance:2.8,view:[.45,.68,1.5],description:'白色混凝土楼体保持水平，长窗嵌入悬挑立面。内凹三角入口、弧形坡道和露天内院形成层次，窄桥穿过水院，暖光照亮窗带和入口。',source:'https://xjxq.hunan.gov.cn/hnxjxq/sytpxw/202003/t20200318_11814798.html'},
 ].map(item=>({...item,grounded:true}));
 const builders={dufu,yuelu,aiwan,tianxin,juzhouBridge,juzizhou,ifs,museum:hunanMuseum,meixi,xie};
 export function createLandmark(k,id){if(!builders[id])throw new Error(`Unknown Changsha landmark: ${id}`);return builders[id](k);}

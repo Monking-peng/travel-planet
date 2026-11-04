@@ -1,6 +1,21 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Xie photography museum keeps a level pool and roof, recessed entrance and connected stairs',async()=>{
+ const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+ const g=scene.landmarks.get('xie'),ray=(a,b,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...a)),new T.Vector3(...b).transformDirection(g.matrixWorld),0,far).intersectObject(g,true),local=h=>g.worldToLocal(h.point.clone());
+ try{
+  const pool=[-.30,-.15,.30].map(x=>ray([x,.3,.32],[0,-1,0]).find(h=>h.object.material.userData.xieWater));assert.ok(pool.every(Boolean));assert.ok(Math.max(...pool.map(h=>local(h).y))-Math.min(...pool.map(h=>local(h).y))<.0001,'The shallow pool cannot bend with the globe');
+  const roof=[-.35,0,.35].map(x=>ray([x,1,-.31],[0,-1,0]).find(h=>h.object.material.userData.xieRoof));assert.ok(roof.every(Boolean));assert.ok(Math.max(...roof.map(h=>local(h).y))-Math.min(...roof.map(h=>local(h).y))<.0001,'The gallery roof must stay level');
+  const bridge=ray([.10,.20,.32],[0,-1,0]).find(h=>h.object.material.userData.xieBridge);assert.ok(bridge&&local(bridge).y>local(pool[0]).y+.015,'The crossing must sit above water');
+  assert.equal(ray([-.10,.19,.20],[0,0,-1],.25).length,0,'Keep the entrance below the cantilever open');
+  assert.ok(ray([.31,.15,.20],[0,0,-1],.30).length,'An offset concrete pier must support the gallery');
+  const entry=ray([-.70,.30,-.22],[1,0,0],.50)[0];assert.ok(entry&&local(entry).x>-.46,'Side entrance must be recessed into the volume');
+  let last=null;for(let i=0;i<16;i++){const h=ray([-.30+i*.031,.4,-.075],[0,-1,0]).find(h=>h.object.material.userData.xieStep);assert.ok(h);const y=local(h).y;assert.ok(last===null||(y>last&&y-last<.012));last=y;}assert.ok(Math.abs(last-.2135)<.001,'Stairs must reach the raised landing');
+  const concrete=[];g.traverse(o=>{if(o.material?.userData.xieConcrete)concrete.push(o.material);});scene.setNight(true);assert.ok(concrete.length&&concrete.every(m=>m.color.getHexString()==='dce0d8'),'Night must preserve pale concrete');
+ }finally{scene.dispose();}
+});
+
 test('Tianxin Pavilion keeps bowed roofed galleries, a level wall walk and connected rear stairs',async()=>{
  const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
  const g=scene.landmarks.get('tianxin'),ray=(a,b,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...a)),new T.Vector3(...b).transformDirection(g.matrixWorld),0,far).intersectObject(g,true),local=h=>g.worldToLocal(h.point.clone());

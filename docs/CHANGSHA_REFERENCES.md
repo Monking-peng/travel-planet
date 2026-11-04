@@ -115,3 +115,16 @@
 ![天心阁背面](images/changsha-tianxin-back.png)
 
 ![天心阁夜景](images/changsha-tianxin-night.png)
+
+
+## 0.55.21 谢子龙影像艺术馆
+
+对照[地方工作室提供的航拍、外部和内院实照及平面](https://www.gooood.cn/xie-zilong-photography-museum-china-by-regional-studio.htm)与[湖南湘江新区水院实照](https://xjxq.hunan.gov.cn/hnxjxq/sytpxw/202003/t20200318_11814798.html)，把原来被球面弯曲的楼体改为水平白色混凝土体量。长窗实际凹入墙面，侧面三角入口、弧形坡道、窄桥、水院倾斜雕塑与屋顶内院补出空间关系。浅色混凝土细缝和玻璃暖光分别处理，取消原金色匾额。
+
+直接核看姚力的正侧背面、航拍及坡道照片；内部锥塔、内院和楼梯只作从外部可见的简化，不宣称完整室内复原。场地在球面上的台地、尺寸及桥与阶的衔接经过艺术化压缩；窗光为场景表达，不表示实际夜间开放。原始照片仅内部研究，未收入公开包。
+
+![艺术馆日景](images/changsha-xie.png)
+
+![三角入口和水院](images/changsha-xie-entry.png)
+
+![艺术馆夜景](images/changsha-xie-night.png)
