@@ -106,3 +106,16 @@
 ![长拱顶与相邻保护厅](images/xian-warriors-oblique.png)
 
 ![兵马俑展馆夜景](images/xian-warriors-night.png)
+## 0.55.27 永宁门城防建筑
+
+直接核看[西安科普网的城楼与箭楼照片](https://www.xakpw.com/single/24046)、[西安市自然资源和规划局的永宁门广场斜向实拍](https://zygh.xa.gov.cn/ztzl/yhyshj/ggcx/cgal/1777896435710697474.html)、[正面鸟瞰照片](https://www.thestandard.com.hk/china/article/304767/Along-ancient-Silk-Road-Xi-cultivates-new-bonds-with-Central-Asia)，以及[新华社夜景照片](https://news.ifeng.com/c/8PoeiXKFov9)。其他城门的尺寸和形制未直接套用于永宁门。
+
+主城楼采用三重灰瓦歇山顶、深色柱廊、青绿金梁枋和红灯笼；外侧箭楼保留四排凹入箭窗、前部完整屋顶与后部低檐。瓮城、弧形月城、外门楼、护城河与石桥形成前后层次。城门与侧门券洞可贯通，两侧 21 级石阶连接墙顶，月城墙面连续弯曲，避免分块接缝。
+
+夜间暖光分布于檐口、廊下和庭灯，保留砖石、木构和灰瓦底色。建筑本身保持水平，周边场地衔接球面；本组位置略微外移，留出与大雁塔的间距。模型为主要建筑与城防关系的缩微概括，不是完整实测复原；场景灯光不代表现实灯光时刻或夜游安排。照片只作内部研究，不作为公开贴图或打包资产。
+
+![永宁门日景](images/xian-wall.png)
+
+![箭楼、月城与侧门](images/xian-wall-oblique.png)
+
+![永宁门夜景](images/xian-wall-night.png)

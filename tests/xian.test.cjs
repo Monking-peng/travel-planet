@@ -120,3 +120,14 @@ test('Protective hall has a long shallow vault, visible arched glazing and conti
   g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.warriorsRigid);});
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Yongning Gate keeps real arch passages, four recessed arrow-window rows and continuous inner stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{wall}=await import('../web/xian-wall.js'),k=makeKit({time:{value:0},night:{value:0}}),g=wall(k);g.updateMatrixWorld(true);const hit=(p,d,n=1)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  for(const [p,d,n]of [[[0,.07,-.2],[0,0,-1],.40],[[.65,.07,-.09],[-1,0,0],.35],[[0,.07,.80],[0,0,-1],.30]])assert.equal(hit(p,d,n),undefined,'outer, city and barbican-side arches are traversable');
+  for(let row=0;row<4;row++){const y=.210+.021+row*(.215-.045)/3+.0115,opening=hit([0,y,.40],[0,0,-1],.15),pier=hit([.0286,y,.40],[0,0,-1],.15);assert.ok(opening&&pier&&pier.point.z-opening.point.z>.01,'arrow openings are recessed behind masonry piers');}
+  for(const side of [-1,1]){let previous=.014;for(let i=0;i<21;i++){const step=hit([side*(.205+i*.023),.25,-.57],[0,-1,0],.3);assert.ok(step&&Math.abs(step.point.y-previous-.010)<1e-5);previous=step.point.y;}for(const x of [.68,.715]){const landing=hit([side*x,.25,-.57],[0,-1,0],.3);assert.ok(landing&&Math.abs(landing.point.y-previous)<1e-5,'last stair meets the wall landing');}}
+  const archWall=hit([.18,.06,.70],[0,0,-1],.25);assert.ok(archWall,'moon enclosure walls flank the open gate');
+  g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.wallRigid);});const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>.65&&bounds.max.y<.68);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

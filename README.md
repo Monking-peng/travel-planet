@@ -1,6 +1,6 @@
 # 一起去 · Travel Planet
 
-用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.55.26**，支持桌面和手机网页。
+用可旋转的 3D 城市星球发现景点，再和朋友一起决定怎么旅行。当前版本 **0.55.27**，支持桌面和手机网页。
 
 **[上海旅行 · 在线体验](https://43.139.249.151/travel/shanghai-trip.html)** · **[杭州旅行](https://43.139.249.151/travel/)** · **[武汉旅行](https://43.139.249.151/travel/wuhan-trip.html)** · **[武汉纯地图](https://43.139.249.151/travel/wuhan.html)** · **[上海纯地图](https://43.139.249.151/travel/shanghai.html)** · **[北京地图](https://43.139.249.151/travel/beijing.html)** · **[深圳地图](https://43.139.249.151/travel/shenzhen.html)** · **[顺德地图](https://43.139.249.151/travel/shunde.html)** · **[广州地图](https://43.139.249.151/travel/guangzhou.html)** · **[长沙地图](https://43.139.249.151/travel/changsha.html)** · **[西安地图](https://43.139.249.151/travel/xian.html)** · **[成都地图](https://43.139.249.151/travel/chengdu.html)** · **[重庆地图](https://43.139.249.151/travel/chongqing.html)** · **[南京地图](https://43.139.249.151/travel/nanjing.html)** · **[苏州地图](https://43.139.249.151/travel/suzhou.html)** · **[厦门地图](https://43.139.249.151/travel/xiamen.html)** · **[泉州地图](https://43.139.249.151/travel/quanzhou.html)** · **[青岛地图](https://43.139.249.151/travel/qingdao.html)** · **[天津地图](https://43.139.249.151/travel/tianjin.html)** · **[大理地图](https://43.139.249.151/travel/dali.html)** · **[桂林地图](https://43.139.249.151/travel/guilin.html)** · **[三亚地图](https://43.139.249.151/travel/sanya.html)** · **[香港地图](https://43.139.249.151/travel/hongkong.html)** · **[澳门地图](https://43.139.249.151/travel/macau.html)**
 
@@ -119,3 +119,4 @@ npm run check
 武汉目录范围、过江交通预留和开放来源见 [武汉旅行说明](docs/WUHAN_TRAVEL.md)。
 
 和美术馆现以馆方实拍为依据，呈现错位圆层、密竖格、通透天窗、双螺旋梯与夹岸水院。夜景使用温和室内光。
+永宁门已按实拍精修三重檐城楼、四排箭窗、瓮城与弧形月城，补齐贯通券洞和墙顶石阶；[参考与日夜画面](docs/XIAN_REFERENCES.md)。

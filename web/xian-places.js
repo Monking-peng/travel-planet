@@ -2,19 +2,7 @@ import * as THREE from 'three';
 import {colors,terrace,ellipseSurface,steps,timberFloor,eave,hall,groves,finish,archWall,roof,glow,people} from './xian-kit.js';
 import {plaque,rail} from './wuhan-architecture.js';
 
-export function wall(k){
-  const g=new THREE.Group(),p=colors(k);terrace(k,g,p,.77,.61);
-  const water=k.mat('#4b7772',.48,.08);k.box(g,1.37,.004,.078,water,0,.018,.48);
-  const battlement=(x,z,w,d)=>{k.box(g,w,.17,d,p.stone,x,.10,z);for(const s of [-1,1]){k.box(g,w,.018,.015,p.stone,x,.189,z+s*d/2);for(let j=0;j<=Math.ceil(w/.035);j++)k.box(g,.019,.027,.018,p.stone,x-w/2+j*w/Math.ceil(w/.035),.211,z+s*d/2);}};
-  for(const x of [-.49,.49])battlement(x,-.15,.50,.17);
-  archWall(k,g,{w:.48,h:.18,d:.17,z:-.15,y:.016,openings:[{r:.06,spring:.065,bottom:0}],mat:p.stone});
-  const main=new THREE.Group();main.position.set(0,.205,-.15);timberFloor(k,main,p,{w:.68,d:.25,y:0,h:.14,bays:11});eave(k,main,p,.80,.36,.142,.065);timberFloor(k,main,p,{w:.56,d:.22,y:.195,h:.10,bays:9});eave(k,main,p,.69,.32,.296,.067);g.add(main);
-  for(const s of [-1,1]){const a=new THREE.Group();battlement(s*.41,.14,.15,.55);steps(k,a,p,.10,.31,.18,0,.36,16);a.position.x=s*.61;g.add(a);}
-  archWall(k,g,{w:.78,h:.16,d:.12,z:.36,y:.016,openings:[{r:.05,spring:.065,bottom:0}],mat:p.stone});
-  hall(k,g,p,{w:.42,d:.18,z:.36,y:.18,h:.10,roofHeight:.055});k.box(g,.16,.014,.20,p.light,0,.038,.50);
-  for(let i=0;i<13;i++){const x=(i/12-.5)*1.36;k.cyl(g,.002,.003,.10,p.wood,x,.24,-.04,6);for(const h of [.25,.275])k.ball(g,.006,p.warm,x,h,-.04);}
-  plaque(k,main,'永宁门',.12,.03,0,.115,.132);groves(k,g,[[-.67,.38,.08],[.67,.38,.08]]);g.userData={barbican:true,gateCenters:[[-.15,.085],[.36,.085]]};return finish(k,g,p,{lamps:[[-.25,.52],[.25,.52]],visitors:[[-.25,.07],[.23,.10],[.14,-.15],[-.12,.53]]});
-}
+export {wall} from "./xian-wall.js";
 export {historyMuseum} from "./xian-museum.js";
 export function furong(k){
   const g=new THREE.Group(),p=colors(k);p.tile=k.mat('#575746',.75);p.tile.userData.night={color:new THREE.Color('#e8b969'),intensity:.17};terrace(k,g,p,.73,.65);
