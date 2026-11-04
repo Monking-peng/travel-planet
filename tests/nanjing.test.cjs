@@ -47,3 +47,13 @@ test('Nanjing module lighting preserves daylight materials, honors reduced motio
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+test('Jiming hill leaves a continuous stair approach and an open entrance under the gate lintel',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jiming}=await import('../web/nanjing-jiming.js'),k=makeKit({time:{value:0},night:{value:0}}),g=jiming(k);g.updateMatrixWorld(true);
+ try{let previous=.026;
+  for(let z=.75;z>-.13;z-=.002){const head=z>.40?.175:z>.12?.28:.39,hit=new T.Raycaster(new T.Vector3(.20,head,z),new T.Vector3(0,-1,0),0,head+.1).intersectObject(g,true)[0];assert.ok(hit,'Stairs and landings must have a walking surface');assert.ok(Math.abs(hit.point.y-previous)<.017,'Terrace walls or the hillside must not block the stair route');previous=hit.point.y;}
+  const wall=[];g.traverse(o=>{if(o.material?.userData.templeWall)wall.push(o);});
+  const ray=new T.Raycaster(new T.Vector3(.20,.16,.64),new T.Vector3(0,0,-1),0,.20);assert.equal(ray.intersectObjects(wall).length,0,'The gate is an opening, not a painted doorway');ray.ray.origin.x=.315;assert.ok(ray.intersectObjects(wall).length,'The piers must remain solid');
+  const rayDown=new T.Raycaster(new T.Vector3(.055,1.5,-.285),new T.Vector3(0,-1,0),0,.30);assert.ok(rayDown.intersectObject(g,true).length,'The finial is attached at the pagoda summit');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

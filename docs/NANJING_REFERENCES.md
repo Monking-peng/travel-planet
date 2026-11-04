@@ -46,3 +46,16 @@
 ![历史馆日景模型](images/nanjing-museum.png)
 
 ![历史馆侧向细节](images/nanjing-museum-oblique.png)
+
+
+## 0.55.35 鸡鸣寺山地院落精修
+
+对照[国泰航空刊载的 Govan Zhang / Getty Images 航拍](https://www.cathaypacific.com/cx/en_KR/inspiration/travel/things-to-do-nanjing.html)、[鸡鸣寺坡面实拍](https://www.e-yangming.com/articles/baike/20231204/121216.html)和[摄影社区夜景](https://www.mepai.me/tags/MTY3MDU%3D)，并参照[南京地方志关于鸡笼山与寺院的介绍](https://dfz.nanjing.gov.cn/gzdt/202503/t20250324_5101918.html)，将分散小殿改为沿坡叠起的黄墙院落。药师佛塔表现七层八角、红色栏杆、浅色柱、格窗、深色瓦檐、高挑攒尖顶与金色塔刹。
+
+山门采用真实开口；三段石阶在平台中留出槽口，并压低通道范围内的坡面，避免山体或挡墙截断路线。侧后殿窗、台基石缝、错落院墙与林木补足多角度层次。夜间暖光沿塔檐与顶层屋脊展开，保留黄墙和红栏原色。院落位置经过微缩压缩，不属于完整测绘复原；照明为展示效果，不承诺现实夜游安排。照片只用于内部对照，未收入网页或源码包。
+
+![鸡鸣寺日景](images/nanjing-jiming.png)
+
+![鸡鸣寺夜景](images/nanjing-jiming-night.png)
+
+![山地院落侧向](images/nanjing-jiming-oblique.png)
