@@ -53,3 +53,18 @@
 ![青岛站日景](images/qingdao-station-day.png)
 
 ![青岛站夜景](images/qingdao-station-night.png)
+
+
+## 0.55.55 太清宫入口与院落精修
+
+对照两张游客山门和三清殿近照、青岛日报山门全景、景区官网院内古树照片，并核对官方三清殿院落说明。山门改为三间高低灰蓝琉璃顶，保留关闭的中央红门及通透侧门；补石柱、梁枋、门环、瓦陇、脊饰、石狮和三路石阶。三清殿改为灰瓦硬山、前廊与红格门，两侧配殿围合院落。低矮碎岩、错落树冠替换突兀的巨大石块。
+
+- [青岛日报山门全景](https://www.guanhai.com.cn/p/254195.html)
+- [景区官网古树与建筑](https://qdlaoshan.cn/New-Guide-info-gid-1151.html)
+- [景区官网三清殿布局说明](https://qdlaoshan.cn/53.html)
+
+表达范围是山门及三清殿代表性院落，不冒充整个太清宫的精确总平面。梁上图案为程序绘制的简化装饰，没有复制壁画；展示照明不代表现场夜游活动。研究照片仅留本地。
+
+![太清宫日景](images/qingdao-taiqing-day.png)
+
+![太清宫夜景](images/qingdao-taiqing-night.png)

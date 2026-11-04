@@ -56,3 +56,21 @@ test('Qingdao station has a continuous entry apron and actual recessed narrow to
   let last=.020;for(let i=0;i<=180;i++){const z=.362-i*.227/180,hits=new T.Raycaster(new T.Vector3(.095,.12,z),new T.Vector3(0,-1,0),0,.12).intersectObjects(g.children,true);assert.ok(hits.length);const y=hits[0].point.y;assert.ok(y>=last-.001&&y-last<.007,'No broken or oversized step at the entry apron');last=y;}assert.ok(last>.054&&last<.057);
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Taiqing gate retains open side passages and continuous stairs into the courtyard',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{taiqing}=await import('../web/qingdao-taiqing.js'),k=makeKit({time:{value:0},night:{value:0}}),g=taiqing(k);g.updateMatrixWorld(true);
+ try{
+  const ray=x=>new T.Raycaster(new T.Vector3(x,.15,.32),new T.Vector3(0,0,-1),0,.17).intersectObjects(g.children,true);
+  assert.ok(ray(0).length>0,'The central red door remains closed');
+  for(const x of [-.259,.259]){
+   assert.equal(ray(x).length,0,'Each side passage stays open through the entire gate');
+   let last=.021;
+   for(let i=0;i<=220;i++){
+    const z=.460-i*.320/220,hits=new T.Raycaster(new T.Vector3(x,.15,z),new T.Vector3(0,-1,0),0,.20).intersectObjects(g.children,true);
+    assert.ok(hits.length,'No missing surface on the approach');const y=hits[0].point.y;
+    assert.ok(y>=last-.001&&y-last<.008,'No gaps or oversized risers between the stair and the gate');last=y;
+   }
+   assert.ok(last>.067&&last<.069,'The approach reaches the court floor');
+  }
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

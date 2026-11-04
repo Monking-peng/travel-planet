@@ -16,17 +16,4 @@ export function signal(k){
  grove(k,g,height,[[-.49,-.14,.18],[.49,-.14,.18],[-.3,-.43,.18],[.3,-.43,.18],[0,-.48,.17]]);steps(k,g,p,0,.46,.30,6,.03,.1);
  return finish(k,g,{lamps:[[-.37,.023,.32],[.37,.023,.32]],visitors:[[-.06,.024,.28],[.07,.024,.27]]});
 }
-export function taiqing(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.68,.64);paving(k,g,p,.45,.43);const gateTile=k.mat('#39878b',.67),gray=k.mat('#687168',.88);p.wall.color.set('#ab5140');p.wood.color.set('#643c31');
- for(const [x,z,rx,ry,rz]of [[-.38,-.31,.17,.32,.19],[.34,-.33,.19,.38,.20],[.08,-.46,.21,.44,.17]]){const geo=new THREE.IcosahedronGeometry(1,2),a=geo.attributes.position;for(let i=0;i<a.count;i++){const xx=a.getX(i),yy=a.getY(i),zz=a.getZ(i),f=1+.12*Math.sin(xx*8+zz*5)+.09*Math.cos(yy*9+xx*4);a.setXYZ(i,xx*rx*f,(yy+1)*ry*.5,zz*rz*f);}geo.computeVertexNormals();k.mesh(g,geo,p.stone,x,.018,z);}
- hall(k,g,{...p,tile:gray},{w:.44,d:.24,h:.17,z:-.18,y:.045,wall:p.wall,roof:gray});sign(k,g,'三清殿',.11,.026,0,.201,-.047,{background:'#303b37',color:'#d6bf81'});
- for(const x of [-.34,.34])hall(k,g,{...p,tile:gray},{x,z:0,w:.14,d:.27,h:.10,wall:p.wall,roof:gray});
- const z=.235;
- for(const [x,w,top]of [[0,.25,.26],[-.215,.17,.215],[.215,.17,.215]]){
-  k.box(g,w,.18,.055,p.wall,x,.131,z);const door=lit(k,'#8d3c32',.025);k.box(g,w*.70,.14,.006,door,x,.111,z+.030);for(const dx of [-w*.48,w*.48])k.cyl(g,.006,.008,top-.03,p.pale,x+dx,(top+.03)/2,z+.030,8);k.box(g,w,.026,.075,p.blue,x,top-.014,z);hip(k,g,w*1.24,.17,.055,top,gateTile,gateTile,x,z);for(let i=0;i<7;i++){const xx=x+(i/6-.5)*w;k.box(g,.014,.016,.025,p.gold,xx,top-.028,z+.042);}
- }
- sign(k,g,'崂山太清宫',.19,.037,0,.230,.322,{background:'#343b37',color:'#ceb780'});for(const x of [-.43,.43]){k.box(g,.17,.13,.045,p.wall,x,.09,z);hip(k,g,.18,.06,.018,.156,gray,gray,x,z);}
- for(const x of [-.24,.24]){k.box(g,.05,.04,.05,p.stone,x,.049,.375);const lion=k.ball(g,.018,p.stone,x,.081,.375);lion.scale.set(.8,1.4,1);k.ball(g,.014,p.stone,x,.11,.384);}
- steps(k,g,p,0,.445,.49,5,.025,.08);grove(k,g,height,[[-.50,.0,.18],[.50,.0,.18],[-.51,-.24,.20],[.50,-.26,.19],[-.21,-.48,.18],[.22,-.49,.19]]);
- return finish(k,g,{lamps:[[-.37,.024,.34],[.37,.024,.34]],visitors:[[-.08,.024,.40],[.10,.024,.40]]});
-}
+export {taiqing} from './qingdao-taiqing.js';

@@ -137,7 +137,7 @@ export const LANDMARKS=[
    0.95,
    1.8
   ],
-  "description": "蓝绿琉璃山门与灰瓦三清殿前后相映，红墙之间是古树院落，后方由起伏的花岗岩峰围合。",
+  "description": "蓝绿琉璃山门保留通透侧门、彩绘梁架和石狮，院内灰瓦三清殿与两侧配殿围合。错落古树与低矮花岗岩衬托红墙、石阶，夜间柔光保留蓝瓦与红木本色。",
   "source": "https://www.trip.com/travel-guide/attraction/qingdao/laoshan-taiqing-palace-76762/",
   "grounded": true,
   "hemisphere": -1
