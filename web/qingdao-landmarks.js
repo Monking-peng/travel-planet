@@ -83,7 +83,7 @@ export const LANDMARKS=[
    0.75,
    1.8
   ],
-  "description": "粗颗粒石墙、圆形塔楼、白框拱窗与入口柱廊，屋顶保留城垛和露台。庭院树木只在建筑后方形成围合。",
+  "description": "圆塔与多角楼体高低错落，保留通透拱廊、白框彩窗、凹槽石柱与入口阶道；背部红瓦屋顶和小尖塔按航拍补齐，暖灯显出花岗岩细部。",
   "source": "https://dp.pconline.com.cn/photo/list_2302125.html",
   "grounded": true,
   "hemisphere": -1

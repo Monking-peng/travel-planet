@@ -26,3 +26,21 @@ test('St Michael cathedral keeps recessed rose glass and separate bell louvres i
  try{assert.equal(hits(0,.287),0,'The rose glass is recessed behind an actual opening');assert.ok(hits(.073,.287)>0,'The facade remains substantial outside the rose');for(const x of [-.218,.218]){for(const side of [-1,1])assert.equal(hits(x+side*.031,.582),0,'The paired bell openings stay separate');assert.ok(hits(x,.582)>0,'A stone pier remains between bell openings');}}
  finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Huashi Villa has open crown arches, recessed entrance and rear windows, and a continuous entry stair',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{huashi}=await import('../web/qingdao-huashi.js'),k=makeKit({time:{value:0},night:{value:0}}),g=huashi(k);g.updateMatrixWorld(true);const stone=[];g.traverse(o=>{if(o.material?.userData.huashiStone)stone.push(o);});
+ try{
+  const hit=(x,y,z,dir,far)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,0,dir),0,far).intersectObjects(stone);
+  assert.equal(hit(-.205,.680,.34,-1,.15).length,0,'The front crown arch is open');
+  assert.ok(hit(-.157,.680,.34,-1,.15).length>0,'A stone pier remains beside the arch');
+  assert.equal(hit(.012,.20,.08,-1,.05).length,0,'The entrance glass is behind a real opening');
+  assert.equal(hit(.170,.36,-.28,1,.065).length,0,'Rear glass is not hidden behind a solid block');
+  let last=.020;
+  for(let i=0;i<=240;i++){
+   const z=.460-i*.407/240,hits=new T.Raycaster(new T.Vector3(.012,.16,z),new T.Vector3(0,-1,0),0,.16).intersectObjects(g.children,true);
+   assert.ok(hits.length,'The entrance route has no missing landing');const y=hits[0].point.y;assert.ok(y>=last-.001,'The stairs never drop into a gap');assert.ok(y-last<.014,'Each rise stays a small step');last=y;
+  }
+  assert.ok(last>.105&&last<.115,'The landing reaches the doorway threshold');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
