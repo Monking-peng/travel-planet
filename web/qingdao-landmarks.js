@@ -119,7 +119,7 @@ export const LANDMARKS=[
    0.9,
    1.8
   ],
-  "description": "三座高低不同的红色球形观景楼，以石砌楼身、整圈玻璃窗带和白色支撑相连。背后的林冠保留山顶公园气质。",
+  "description": "三座红色观景球高低错落，球顶小拱窗、深色环窗带和白色径向支撑肋保留鲜明轮廓。石砌塔身开有拱窗，连续石阶接入共同观景平台，夜间保留红色本色。",
   "source": "https://www.qingdaonese.com/signal-hill-%E4%BF%A1%E5%8F%B7%E5%B1%B1-qingdao/",
   "grounded": true,
   "hemisphere": -1

@@ -85,3 +85,12 @@ test('Olympic marina keeps continuous pier decks and an open approach to the lig
   assert.equal(hulls.length,5);for(const m of hulls){m.geometry.computeBoundingBox();const h=m.geometry.boundingBox.max.y-m.geometry.boundingBox.min.y;assert.ok(h<.050,'Sailboat hulls stay low in the water instead of becoming tall blocks');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Signal Hill stone towers have recessed arched openings and terrain-connected stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{signal}=await import('../web/qingdao-signal.js'),{siteHeight}=await import('../web/chengdu-kit.js'),k=makeKit({time:{value:0},night:{value:0}}),g=signal(k);g.updateMatrixWorld(true);const masonry=[],paving=[];g.traverse(o=>{if(o.material?.userData.signalMasonry)masonry.push(o);if(o.material?.userData.signalPaving)paving.push(o);});
+ try{
+  for(const y of [.056+.045,.056+.263-.060]){const r=new T.Raycaster(new T.Vector3(0,y,.01),new T.Vector3(0,0,-1),0,.065);assert.equal(r.intersectObjects(masonry).length,0,'Main tower arches remain genuinely recessed');assert.ok(new T.Raycaster(new T.Vector3(.024,y,.01),new T.Vector3(0,0,-1),0,.065).intersectObjects(masonry).length>0,'Stone remains beside the opening');}
+  let prev=siteHeight(0,.532,.66,.58);for(let i=0;i<=220;i++){const z=.532-i*.19/220,h=new T.Raycaster(new T.Vector3(0,.14,z),new T.Vector3(0,-1,0),0,.25).intersectObjects(paving);assert.ok(h.length,`Missing approach at ${z}`);const y=h[0].point.y;assert.ok(y>=prev-.0005);assert.ok(y-prev<.014);assert.ok(y>siteHeight(0,z,.66,.58),`Grass crosses the stair at ${z}`);prev=y;}assert.ok(Math.abs(prev-.056)<.001);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

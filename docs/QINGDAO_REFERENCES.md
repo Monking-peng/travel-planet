@@ -85,3 +85,19 @@
 ![奥帆中心日景](images/qingdao-marina-day.png)
 
 ![奥帆中心夜景](images/qingdao-marina-night.png)
+
+
+## 0.55.57 信号山观景楼
+
+2026-11-05 对照四张不重复的近照与全景，缩短过长塔身、扩大红球下半部、缩窄连续窗带，并补球顶小拱窗、宽白色径向支撑肋、投光灯架与石砌墙面。主塔两层拱窗均开在实体墙中，玻璃后退，三塔共用石铺平台。阶道沿实际地形逐级上升，修复首阶落差与草地穿过踏步的问题。
+
+- [观景楼近照](https://touch.go.qunar.com/poi/716386)
+- [塔身与红球近照](https://k.sina.com.cn/article_6886270846_p19a74277e00100gssc.html)
+- [旅行者塔身照片](https://www.tripadvisor.com/Attraction_Review-g297458-d1810652-Reviews-Signal_Hill_Park-Qingdao_Shandong.html)
+- [三塔航拍参考](https://you.ctrip.com/sight/qingdao5/143748760.html)
+
+保留红球、深色玻璃、米褐石墙，夜景不把红球染白。范围为三座观景楼与紧凑平台，不复制背景城区或通信设备。石纹为程序材质，研究照片不分发；既有全景与新增航拍是同一图片，不重复计数。
+
+![信号山日景](images/qingdao-signal-day.png)
+
+![信号山夜景](images/qingdao-signal-night.png)
