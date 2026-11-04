@@ -102,3 +102,16 @@
 ![湖南博物院背面](images/changsha-museum-back.png)
 
 ![湖南博物院夜景](images/changsha-museum-night.png)
+
+
+## 0.55.20 天心阁
+
+对照[新华社王超航拍与正面实照](https://www.icswb.com/h/160/20161125/451035.html)、[港铁长沙页面的近照](https://www.highspeed.mtr.com.hk/en/travel/changsha.html)，重做三层主阁、两侧副阁和连续弯曲游廊，形成航拍中的弯弓关系。栗色瓦、白墙、深色木柱、挑梁、翘角和正面突出小屋盖分出楼层；城墙步道保持水平，背面石阶衔接山坡。
+
+直接核看航拍、斜视、正面及入口牌坊照片。模型重点是三阁与曲廊，未完整复刻公园、瓮城和雕塑。拱洞及背侧通达空间沿用场景中的艺术化组织，不冒充实测城墙平面；屋脊饰件与匾额文字均作简化。夜间以窗光和檐光照亮楼阁，不代表真实开放安排。参考照片未放入公开包。
+
+![天心阁日景](images/changsha-tianxin.png)
+
+![天心阁背面](images/changsha-tianxin-back.png)
+
+![天心阁夜景](images/changsha-tianxin-night.png)

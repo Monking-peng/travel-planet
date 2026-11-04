@@ -1,6 +1,21 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Tianxin Pavilion keeps bowed roofed galleries, a level wall walk and connected rear stairs',async()=>{
+ const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+ const g=scene.landmarks.get('tianxin'),ray=(a,b,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...a)),new T.Vector3(...b).transformDirection(g.matrixWorld),0,far).intersectObject(g,true),local=h=>g.worldToLocal(h.point.clone());
+ try{
+  const deck=[[0,.185],[.57+.13*Math.sin(.60),-.22+.13*Math.cos(.60)],[-.57-.13*Math.sin(.60),-.22+.13*Math.cos(.60)]].map(([x,z])=>ray([x,.34,z],[0,-1,0])[0]);assert.ok(deck.every(Boolean));assert.ok(Math.max(...deck.map(h=>local(h).y))-Math.min(...deck.map(h=>local(h).y))<.002,'Three towers need a level common wall walk');
+  for(const side of [-1,1]){
+   const path=new T.CatmullRomCurve3([new T.Vector3(side*.23,0,0),new T.Vector3(side*.34,0,-.012),new T.Vector3(side*.42,0,-.085),new T.Vector3(side*.51,0,-.155)]);
+   for(let i=2;i<10;i++){const p=path.getPoint(i/10),roof=ray([p.x,.60,p.z],[0,-1,0]).filter(h=>h.object.material.userData.tianxinRoof);assert.ok(roof.length,'Bowed gallery must have continuous roof cover');assert.ok(local(roof[0]).y>.42);}
+  }
+  assert.equal(ray([.23,.36,.19],[0,0,-1],.30).length,0,'Main pavilion side colonnade must remain open');
+  let last=null;for(let i=0;i<16;i++){const hits=ray([-.18,.5,-.65+i*.019],[0,-1,0]).filter(h=>h.object.material.userData.tianxinStep);assert.ok(hits.length);const y=local(hits[0]).y;assert.ok(last===null||(y>last&&y-last<.034));last=y;}assert.ok(Math.abs(last-.293)<.002,'Rear stairs must meet the wall-walk landing');
+  const roof=[];g.traverse(o=>{if(o.material?.userData.tianxinRoof)roof.push(o.material);});assert.ok(roof.length);scene.setNight(true);assert.ok(roof.every(m=>m.color.getHexString()==='98743d'),'Night must preserve chestnut tiles');
+ }finally{scene.dispose();}
+});
+
 test('Hunan Museum keeps a level terrace, supported wings, closed roof and continuous stairs',async()=>{
  const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
  const g=scene.landmarks.get('museum'),ray=(a,b,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...a)),new T.Vector3(...b).transformDirection(g.matrixWorld),0,far).intersectObject(g,true),height=h=>g.worldToLocal(h.point.clone()).y;
