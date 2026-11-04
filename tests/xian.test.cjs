@@ -131,3 +131,20 @@ test('Yongning Gate keeps real arch passages, four recessed arrow-window rows an
   g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.wallRigid);});const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>.65&&bounds.max.y<.68);
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Ziyun Pavilion keeps four open corner pavilions, connected lakeside steps and recessed galleries',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{furong}=await import('../web/xian-furong.js'),k=makeKit({time:{value:0},night:{value:0}}),g=furong(k);g.updateMatrixWorld(true);
+ const hit=(p,d,n=1)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  for(const x of [-.68,.68])for(const z of [-.39,.035])assert.equal(hit([x-.06,.29,z+.035],[1,0,0],.12),undefined,'corner pavilions have open interiors, not solid small houses');
+  for(const y of [.31,.52])assert.equal(hit([-.31,y,.05],[1,0,0],.62),undefined,'main rooms remain recessed behind continuous outer galleries');
+  let previous=.022;for(let i=0;i<16;i++){const step=hit([.017,.15,.342-i*.010],[0,-1,0],.16);assert.ok(step&&Math.abs(step.point.y-previous-.007)<1e-5,'lakeside stairs rise with uninterrupted treads');previous=step.point.y;}
+  const landing=hit([.017,.15,.110],[0,-1,0],.16);assert.ok(landing&&Math.abs(landing.point.y-previous)<1e-5,'main landing connects the three recessed doors');
+  for(const side of [-1,1]){let y=previous;for(let i=0;i<13;i++){const step=hit([side*(.225+i*.012),.25,.170],[0,-1,0],.2);assert.ok(step&&Math.abs(step.point.y-y-.008)<1e-5);y=step.point.y;}
+   for(const z of [-.39,.035])for(const x of [.44,.51,.59]){const bridge=hit([side*x,.30,z],[0,-1,0],.1);assert.ok(bridge&&bridge.point.y>=.238&&bridge.point.y<.27,'arched links connect the corner terraces');}
+  }
+  for(const x of [-.105,0,.105]){const door=hit([x,.17,.14],[0,0,-1],.1),pier=hit([.0525,.17,.14],[0,0,-1],.1);assert.ok(door&&pier&&pier.point.z-door.point.z>.015,'three ground-floor doors have real recession');}
+  const lake=hit([0,.08,.63],[0,-1,0],.1);assert.ok(lake?.object.material.userData.furongLake&&Math.abs(lake.point.y-.017)<1e-6,'lake is below the shore and lies in front of the podium');
+  g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.furongRigid);});const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>.83&&bounds.max.y<.88);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
