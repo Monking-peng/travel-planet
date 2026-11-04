@@ -88,3 +88,14 @@
 ![解放桥日景](images/tianjin-jiefang-day.png)
 
 ![解放桥夜景](images/tianjin-jiefang-night.png)
+
+
+## 0.55.63 天塔与天塔湖
+
+依据 [天塔全景](https://s.visitbeijing.com.cn/attraction/118518)、[湖中基座航拍](https://commons.wikimedia.org/wiki/File:TianJin_TV_Tower.jpg)、[塔身照片](https://www.thechinatravelplanner.com/china-inspiration/the-best-things-about-tianjin) 与 [暖色夜景](https://s.visitbeijing.com.cn/index.php/attraction/118704)，调整观景舱高度与长天线比例，补出渐收混凝土塔身、倒锥形玻璃观景舱、顶部天线格架、环形台阶及入口玻璃门厅。
+
+两条步道连接环形平台；夜间采用暖色塔身照明，保留玻璃与红白天线的颜色。模型是缩微外观，不模拟真实内部空间；参考照片只供研究，不随项目分发。
+
+![天塔日景](images/tianjin-tianta-day.png)
+
+![天塔夜景](images/tianjin-tianta-night.png)

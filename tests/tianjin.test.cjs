@@ -88,3 +88,12 @@ test('Jiefang has continuous river crossings, clear traffic lanes and a concave 
   const center=ray(0,.6,.103,0,-1,0,.5,steel),shoulder=ray(.32,.6,.103,0,-1,0,.5,steel);assert.ok(center.length&&shoulder.length);assert.ok(shoulder[0].point.y-center[0].point.y>.07,'Upper plate girder must dip toward the center');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Tianta has two continuous causeways, rising planted terraces and a lower observation cabin below its long mast',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tianta}=await import('../web/tianjin-tianta.js'),k=makeKit({time:{value:0},night:{value:0}}),g=tianta(k);g.updateMatrixWorld(true);const paths=[],glass=[],shaft=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.tiantaPaving)paths.push(o);if(o.material.userData.tiantaGlass)glass.push(o);if(o.material.userData.tiantaShaft)shaft.push(o);});
+ try{
+  for(const a of [0,-1.27]){let prev;for(let j=0;j<=360;j++){const r=.575-j*.463/360,hits=new T.Raycaster(new T.Vector3(Math.sin(a)*r,.18,Math.cos(a)*r),new T.Vector3(0,-1,0),0,.18).intersectObjects(paths,false);assert.ok(hits.length,`Missing walkway at ${a}/${r}`);const y=hits[0].point.y;if(j)assert.ok(y>=prev-.0002&&y-prev<.016,`Walkway discontinuity at ${a}/${r}: ${y-prev}`);prev=y;}assert.ok(Math.abs(prev-.106)<.002);}
+  const box=new T.Box3().setFromObject(g);assert.ok(box.max.y>1.65&&box.max.y<1.72);let cabinY=0;for(const o of glass){const b=new T.Box3().setFromObject(o);cabinY=Math.max(cabinY,b.max.y);}assert.ok(cabinY/box.max.y>.60&&cabinY/box.max.y<.68,'Observation cabin must sit well below the tip rather than immediately under a short pole');
+  const radiusAt=y=>new T.Raycaster(new T.Vector3(.2,y,0),new T.Vector3(-1,0,0),0,.3).intersectObjects(shaft,false)[0]?.point.x;assert.ok(radiusAt(.20)>radiusAt(.90)*1.75,'Concrete shaft flares toward its foot');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

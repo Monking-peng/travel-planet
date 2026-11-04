@@ -14,12 +14,4 @@ export function eye(k){
  return finish(k,g,{visitors:[[-.69,.045,.17],[.69,.045,.06]]});
 }
 export {jiefang} from './tianjin-jiefang.js';
-export function tianta(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.58,.56);sea(k,g,p,.57,.55);const cement=lit(k,'#b4b0a0',.07),glass=lit(k,'#41606a',.045,'#7c9bb8'),trim=lit(k,'#bcbca9',.23);
- k.cyl(g,.15,.17,.028,p.stone,0,.045,0,64);k.box(g,.13,.024,.50,p.pale,0,.040,.27);k.cyl(g,.105,.14,.045,p.wall,0,.080,0,64);
- k.cyl(g,.025,.049,1.00,cement,0,.60,0,64);for(let j=0;j<7;j++){const y=1.09+j*.013,r=.042+j*.010;k.cyl(g,r,r,.011,trim,0,y,0,64);}
- k.cyl(g,.116,.105,.040,glass,0,1.20,0,64);k.cyl(g,.112,.122,.018,trim,0,1.229,0,64);k.cyl(g,.053,.112,.034,cement,0,1.255,0,64);k.cyl(g,.035,.052,.035,glass,0,1.289,0,40);k.cyl(g,.015,.033,.08,cement,0,1.346,0,40);
- for(let i=0;i<36;i++){const a=i/36*TAU;k.beam(g,[Math.sin(a)*.113,1.18,Math.cos(a)*.113],[Math.sin(a)*.119,1.223,Math.cos(a)*.119],.0012,p.pale);}
- k.cyl(g,.004,.009,.23,p.red,0,1.498,0,16);for(let j=0;j<4;j++)k.cyl(g,.007,.007,.020,p.pale,0,1.418+j*.048,0,16);
- return finish(k,g,{lamps:[[-.08,.052,.30],[.08,.052,.42]],visitors:[[.025,.053,.26]]});
-}
+export {tianta} from './tianjin-tianta.js';

@@ -101,7 +101,7 @@ export const LANDMARKS=[
    0.65,
    1.8
   ],
-  "description": "细长混凝土塔身从湖中升起，顶部层层展开的观景舱与细长天线形成鲜明轮廓，石堤连接湖岸。",
+  "description": "渐收的混凝土塔身托起倒锥形玻璃观景舱，细长红白天线延续向上的轮廓。湖中环形绿化台阶、玻璃入口和双向步道补出近看细节，夜间以暖光照亮塔身与舱檐。",
   "source": "https://www.tripadvisor.com.au/Attraction_Review-g311293-d1814662-Reviews-Tianta_Lake_Scenic_Resort-Tianjin.html",
   "grounded": true,
   "hemisphere": -1
