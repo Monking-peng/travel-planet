@@ -71,3 +71,18 @@ test('Nanputuo stone porticoes are recessed and the uphill stair meets the octag
   assert.equal(ray([0,.08,.675],[0,-1,0],.06)[0]?.object.material.userData.water,true,'The foreground pond stays open rather than being covered by a building platform');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Shuzhuang has a real stone arch and moon gate, continuous bridge deck and supports touching its underside',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{shuzhuang}=await import('../web/xiamen-shuzhuang.js'),k=makeKit({time:{value:0},night:{value:0}}),g=shuzhuang(k);g.updateMatrixWorld(true);
+ try{
+  const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  assert.equal(ray([.12,.10,.50],[0,0,-1],.10).length,0,'Water can pass beneath the arched span');
+  assert.ok(ray([.12,.21,.50],[0,0,-1],.10).length>0,'The stone crown has genuine thickness');
+  const structure=[];g.traverse(o=>{if(o.material?.userData.shuzhuangStructure)structure.push(o);});let last=.139;
+  for(let x=-.10;x<=.34;x+=.005){const hit=new T.Raycaster(new T.Vector3(x,.35,.395),new T.Vector3(0,-1,0),0,.30).intersectObjects(structure)[0];assert.ok(hit,'The arched walking surface has no missing sections');assert.ok(Math.abs(hit.point.y-last)<.018,'The curved bridge meets its adjacent decks without an abrupt step');last=hit.point.y;}
+  assert.ok(ray([-.60,.115,-.24],[1,0,0],.10).length>0,'Bridge piers reach the slab underside instead of leaving a visible gap');
+  assert.equal(ray([-.28,.226,-.26],[0,0,-1],.10).length,0,'The moon gate is an opening through the wall');
+  assert.ok(ray([-.38,.226,-.26],[0,0,-1],.10).length>0,'Masonry remains beside the gate');
+  for(let z=.28;z>.08;z-=.01){const x=.5+(.28-z)*.2,hit=ray([x,.23,z],[0,-1,0],.2)[0];assert.ok(hit&&hit.point.y<.16,'The route beside the pavilion stays clear of its columns');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
