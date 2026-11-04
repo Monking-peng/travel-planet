@@ -92,3 +92,15 @@ test('Clock tower has an open four-legged base and deeply recessed vertical faca
   }
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Laojun stone figure is one connected carving without floating facial or finger fragments',async()=>{
+ const {makeKit}=await import('../web/wuhan-kit.js'),{laojun}=await import('../web/quanzhou-sculpture.js'),k=makeKit({time:{value:0},night:{value:0}}),g=laojun(k);let body;g.traverse(o=>{if(o.material?.userData.laojunBody)body=o;});
+ try{
+  assert.ok(body);const a=body.geometry.attributes.position,verts=new Map(),parent=[],sizes=[];
+  function id(i){const key=[a.getX(i),a.getY(i),a.getZ(i)].map(v=>Math.round(v*1e5)).join(',');if(!verts.has(key)){verts.set(key,parent.length);parent.push(parent.length);sizes.push(1);}return verts.get(key);}
+  function root(i){while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;}
+  function join(a,b){a=root(a);b=root(b);if(a!==b){if(sizes[a]<sizes[b])[a,b]=[b,a];parent[b]=a;sizes[a]+=sizes[b];}}
+  for(let i=0;i<a.count;i+=3){const n=[id(i),id(i+1),id(i+2)];join(n[0],n[1]);join(n[0],n[2]);}
+  const groups=new Set(parent.map((_,i)=>root(i)));assert.equal(groups.size,1,'Face, beard, hands and seated body remain a continuous sculpture');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

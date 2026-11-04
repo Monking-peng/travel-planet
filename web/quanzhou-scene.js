@@ -14,6 +14,7 @@ export function createQuanzhouScene(){
    if(!o.material.userData.night&&!o.material.userData.landscape)o.material.userData.night={color:o.material.color.clone(),intensity:.065};
   });
   const light=new THREE.PointLight('#ffdda9',0,1.4,2);light.position.set(.15,.35,.37);light.userData.nightIntensity=.040;model.add(light);
+  if(item.id==='laojun'){light.position.set(-.32,.52,.48);light.userData.nightIntensity=.024;}
   if(item.id==='qingjing'){light.position.set(-.20,.45,.52);light.userData.nightIntensity=.025;}
   const n=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(n).multiplyScalar(RADIUS+.007);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
  }
