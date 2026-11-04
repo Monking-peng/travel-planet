@@ -23,15 +23,8 @@ function pagodaStorey(k,g,p,w,top,h,y,door=true){
   }
   k.box(g,top+.026,.013,top+.026,p.brick,0,y+h+.006,0);k.box(g,top+.014,.008,top+.014,p.brick,0,y+h+.016,0);
 }
-export function pagoda(k){
-  const g=new THREE.Group(),p=colors(k);terrace(k,g,p,.60,.64);const base=.057;k.box(g,.49,.04,.49,p.light,0,.034,-.10);
-  const tower=new THREE.Group();tower.position.z=-.10;let y=base;
-  for(let i=0;i<7;i++){const w=.44-i*.030,h=.15-i*.009;pagodaStorey(k,tower,p,w,w-.020,h,y);y+=h+.024;}
-  const cap=k.cyl(tower,.018,.16,.044,p.brick,0,y+.018,0,4);cap.rotation.y=Math.PI/4;k.cyl(tower,.004,.012,.030,p.brick,0,y+.052,0,12);g.add(tower);
-  hall(k,g,p,{w:.43,d:.18,z:.35,h:.13});for(const x of [-.48,.48]){hall(k,g,p,{x,z:-.17,w:.16,d:.40,h:.08,roofHeight:.045});}
-  steps(k,g,p,.25,.13,.035,0,.54,7);groves(k,g,[[-.36,.28,.10],[.36,.28,.10],[-.34,-.45,.12],[.34,-.45,.12]]);
-  g.userData={storeys:7};return finish(k,g,p,{lamps:[[-.22,-.3],[.22,-.3],[-.24,.20],[.24,.20]],visitors:[[-.12,.53],[.10,.51],[-.18,.17]]});
-}
+export {pagoda} from './xian-pagoda.js';
+
 export function smallPagoda(k){
   const g=new THREE.Group(),p=colors(k);p.brick=masonry(k,'#a39b80');terrace(k,g,p,.54,.57);
   let y=.035;for(let i=0;i<13;i++){const t=i/12,w=.31*(1-.49*t),h=i===0?.16:.067-.028*t;pagodaStorey(k,g,p,w,w-.012,h,y,i<11);y+=h+.022;}

@@ -27,7 +27,7 @@ test('Bell tower retains real crossing tunnels rather than painted doorways',asy
 test('Xian module lights detach together, night preserves colors and resources dispose once',async()=>{
  const {createXianScene}=await import('../web/xian-scene.js'),s=createXianScene(),original=new Map(s.landmarks),geos=new Set(),colors=new Map(),pulse=[];
  s.root.traverse(o=>{if(o.geometry)geos.add(o.geometry);if(o.material?.color&&o.userData.landmark){colors.set(o.material,o.material.color.clone());if(o.material.userData.pulse&&!pulse.includes(o.material))pulse.push(o.material);}});
- s.setNight(true);colors.forEach((c,m)=>assert.ok(c.equals(m.color)));assert.ok(pulse.length>0);s.update(1,false);const a=pulse.map(m=>m.emissiveIntensity);s.update(6,false);assert.ok(pulse.some((m,i)=>a[i]!==m.emissiveIntensity));s.update(7,true);const b=pulse.map(m=>m.emissiveIntensity);s.update(99,true);assert.deepEqual(pulse.map(m=>m.emissiveIntensity),b);
+ s.setNight(true);colors.forEach((c,m)=>{assert.ok(c.equals(m.color));assert.ok([m.emissive.r,m.emissive.g,m.emissive.b,m.emissiveIntensity].every(Number.isFinite),'cloned module materials must retain valid night colors');});assert.ok(pulse.length>0);s.update(1,false);const a=pulse.map(m=>m.emissiveIntensity);s.update(6,false);assert.ok(pulse.some((m,i)=>a[i]!==m.emissiveIntensity));s.update(7,true);const b=pulse.map(m=>m.emissiveIntensity);s.update(99,true);assert.deepEqual(pulse.map(m=>m.emissiveIntensity),b);
  for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let count=0;geos.forEach(g=>g.addEventListener('dispose',()=>count++));for(const id of original.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(count,geos.size);
 });
@@ -41,5 +41,17 @@ test('Bell tower colonnades remain open around recessed rooms and supported balc
   assert.ok(hits([0,.28,.195],[0,0,-1],.40).length>0,'room wall must remain recessed behind gallery');
   assert.ok(hits([.075,.28,.27],[0,0,-1],.06).length>0,'outer red columns must support the canopy');
   assert.ok(hits([0,.44,.35],[0,0,-1],.70).length>0,'upper gallery has a continuous structural apron');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
+test('Wild Goose Pagoda has deep arched openings, a level plinth and continuous entry steps',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{pagoda}=await import('../web/xian-pagoda.js'),k=makeKit({time:{value:0},night:{value:0}}),g=pagoda(k);g.updateMatrixWorld(true);
+ const hit=(start,dir,length=1)=>new T.Raycaster(new T.Vector3(...start),new T.Vector3(...dir),0,length).intersectObject(g,true)[0];
+ try{
+  const doorway=hit([.008,.11,.12],[0,0,-1]),wall=hit([.065,.11,.12],[0,0,-1]);assert.ok(doorway&&wall);assert.ok(wall.point.z-doorway.point.z>.015,'entry must sit behind the solid masonry facade');
+  for(const x of [-.129,.129]){const niche=hit([x,.095,.12],[0,0,-1]);assert.ok(niche&&niche.point.z<wall.point.z-.009,'stele niches must have depth, not a painted arch');}
+  const plinth=[-.22,0,.22].map(x=>hit([x,.20,.08],[0,-1,0]).point.y);assert.ok(Math.max(...plinth)-Math.min(...plinth)<1e-6,'stone platform must stay level');
+  let previous=.012;for(let i=0;i<6;i++){const top=hit([.04,.2,.232-i*.023],[0,-1,0]).point.y;assert.ok(top>previous&&top-previous<.009,'entry steps rise without a gap or tall barrier');previous=top;}assert.ok(Math.abs(previous-plinth[0])<1e-5,'last step meets the plinth');
+  const box=new T.Box3().setFromObject(g);assert.ok(box.max.y>1.22&&box.max.y<1.30,'seven-storey silhouette keeps its finial and proportions');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
