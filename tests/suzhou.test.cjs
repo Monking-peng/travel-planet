@@ -36,7 +36,7 @@ test('Suzhou keeps the Gate of East, Panmen passages and Taihu stone holes physi
  try{
   const arch=collect(models[0],'orientArch'),gate=collect(models[1],'panmenGate'),rock=collect(models[2],'taihuRock');
   let ray=new T.Raycaster(new T.Vector3(0,.8,.5),new T.Vector3(0,0,-1),0,1);assert.equal(ray.intersectObjects(arch).length,0);ray.ray.origin.x=.16;assert.ok(ray.intersectObjects(arch).length>0);
-  for(const x of [-.19,.19]){ray=new T.Raycaster(new T.Vector3(x,.075,.5),new T.Vector3(0,0,-1),0,1);assert.equal(ray.intersectObjects(gate).length,0,'Both water and land passages must cross both walls');}ray.ray.origin.x=0;assert.ok(ray.intersectObjects(gate).length>0);
+  ray=new T.Raycaster(new T.Vector3(-.26,.075,.5),new T.Vector3(0,0,-1),0,1);assert.equal(ray.intersectObjects(gate).length,0,'The water passage must cross both walls');ray.ray.origin.x=0;assert.ok(ray.intersectObjects(gate).length>0);
   ray=new T.Raycaster(new T.Vector3(-.009,.3058,.20),new T.Vector3(0,0,-1),0,.5);assert.equal(ray.intersectObjects(rock).length,0,'The main Taihu opening is a real hole');ray.ray.origin.y=.38;assert.ok(ray.intersectObjects(rock).length>0,'The rock crown remains solid');
  }finally{models.forEach(g=>g.traverse(o=>o.geometry?.dispose()));k.materials.forEach(m=>m.dispose());}
 });
@@ -52,4 +52,16 @@ test('Suzhou module lighting preserves daylight materials, honors reduced motion
  s.setNight(true);colors.forEach((c,m)=>assert.ok(c.equals(m.color)));assert.ok(pulse.length>0);s.update(1,false);const a=pulse.map(m=>m.emissiveIntensity);s.update(6,false);assert.ok(pulse.some((m,i)=>a[i]!==m.emissiveIntensity));s.update(9,true);const b=pulse.map(m=>m.emissiveIntensity);s.update(99,true);assert.deepEqual(pulse.map(m=>m.emissiveIntensity),b);
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
+});
+
+test('Panmen keeps an open barbican, offset land gates and an unobstructed water route',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{panmen}=await import('../web/suzhou-panmen.js'),k=makeKit({time:{value:0},night:{value:0}}),g=panmen(k);g.updateMatrixWorld(true);
+ try{
+  const all=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  for(const y of [.038,.075,.12])assert.equal(all([-.26,y,.50],[0,0,-1],1).length,0,'Water must pass through both gates and both canal ends without a stone dam');
+  for(const [x,z]of [[.31,.245],[.17,-.205]]){assert.equal(all([x,.08,z+.075],[0,0,-1],.15).length,0,'Each land gateway must be physically open');assert.ok(all([x-.09,.08,z+.075],[0,0,-1],.15).length>0,'Stone must remain beside each gateway');}
+  assert.ok(all([.31,.08,.18],[0,0,-1],.45).length>0,'The outer gate must not align into a straight tunnel through the inner wall');
+  for(const x of [.06,.16,.26]){const hit=all([x,.80,.04],[0,-1,0],.80)[0];assert.ok(hit&&Math.abs(hit.point.y-.0355)<.001,'The barbican must be open to the sky, down to its paved courtyard');}
+  let previous=.0355;for(let z=.192;z>-.169;z-=.002){const hit=all([.375,.37,z],[0,-1,0],.38)[0];assert.ok(hit,'Inner stair must have no open gap');assert.ok(Math.abs(hit.point.y-previous)<.016,'Stair rises must join the courtyard to the rear terrace continuously');previous=hit.point.y;}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });

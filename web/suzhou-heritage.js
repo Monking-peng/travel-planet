@@ -4,20 +4,7 @@ import {palette,site,disc,pond,steps,grove,hall,hip,archWall,bridge,balcony,sign
 export {tiger} from './suzhou-tiger.js';
 export {hanshan} from './suzhou-hanshan.js';
 
-export function panmen(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.69,.57);pond(k,g,p,.55,.34,0,.09);
- const wall=k.mat('#777d70',.98);wall.userData.panmenGate=true;
- for(const z of [-.13,.09])archWall(k,g,{w:.88,h:.24,d:.095,y:.024,z,openings:[{x:-.19,r:.084,spring:.073,bottom:.001},{x:.19,r:.058,spring:.070,bottom:.001}],mat:wall});
- for(const side of [-1,1])k.box(g,.095,.24,.31,wall,side*.39,.144,-.02);
- k.box(g,.80,.021,.32,p.stone,0,.275,-.02);
- k.box(g,.15,.018,.58,p.pale,.19,.032,.04);
- for(const z of [-.19,.145])for(let i=0;i<17;i++)k.box(g,.034,.027,.035,wall,(i/16-.5)*.83,.297,z);
- hall(k,g,p,{z:-.02,y:.30,w:.52,d:.27,h:.15});hall(k,g,p,{z:-.02,y:.515,w:.34,d:.20,h:.10});
- sign(k,g,'盘门',.086,.029,0,.424,.123,{background:'#d0cebd',color:'#423f32'});
- const stairs=new THREE.Group();stairs.position.set(.50,0,-.05);stairs.rotation.y=Math.PI/2;g.add(stairs);steps(k,stairs,p,0,.12,.12,15,.265,.42);
- grove(k,g,height,[[-.52,-.28,.19],[.47,-.33,.18]]);
- return finish(k,g,{lamps:[[-.32,.29,.09],[.33,.29,.09]],visitors:[[.15,.288,.02],[.05,.290,-.12]]});
-}
+export {panmen} from './suzhou-panmen.js';
 
 export function pingjiang(k){
  const g=new THREE.Group(),p=palette(k),height=site(k,g,.63,.61);pond(k,g,p,.18,.48,0,0);

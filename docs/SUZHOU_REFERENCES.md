@@ -44,3 +44,10 @@
 依据[建造方项目近照与全景](https://www.szscgj.com/a/list_29/204.html)、[入口近照](https://fireinovs.hatenablog.com/entry/2022/08/19/233423)及[塔基与回廊照片](https://hk.trip.com/moments/detail/suzhou-11-120950390/)重新制作五层方形塔身、红褐木构、粉色墙面、四面回廊、深窗栅、宽挑瓦檐与高石台，前院采用矩形木门楼，保留黄色围墙。
 
 夜景参考[姑苏晚报 2024 年末亮灯实拍](https://news.2500sz.com/doc/2024/12/30/1126228.shtml)，将暖光布置在檐口、回廊和塔刹，保留木构暗部。照片为特定节庆活动，不能据此推断每天开放或亮灯时间。本模型是宝塔及局部前庭的风格化微缩，不代表完整寒山寺。照片只用于本地研究，不随项目分发。
+
+
+## 0.55.39 盘门水陆城门
+
+依据[江苏新闻门楼近照](https://jsnews.jschina.com.cn/sxzt/cmcl2024/cmgl2024/202402/t20240219_3363412.shtml)、[俯视航拍](https://www.greentourasia.com/article/panmenjingqu)、[水门近照](https://bbs.zol.com.cn/dcbbs/d34040_10049_0.html)，并以[苏州市政府水陆城门介绍](https://www.suzhou.gov.cn/szwgjyhsj/yhsjjbgk/202110/3ad7341d62c24548bd075701ca6bbeda.shtml)核对结构。保留两重水门直通河道、两道错位陆门、露天瓮城与内门上方城楼的关系，避免用整块城台封住院落。城楼补灰瓦纹理、红柱白墙、木窗栅、连续屋脊饰件；城墙补砖石门券、粗细砌体和局部藤蔓。
+
+夜间参考[城楼实际夜景](https://dp.pconline.com.cn/dphoto/list_3257101.html)，以稳定的暖色檐口和低亮墙面为主。该照片发布于 2014 年，不能说明当前每天的开放时间或亮灯安排。本模型为水陆城门的风格化缩景，未按测绘尺寸复原完整景区；照片仅用于本地研究，不随包分发。
