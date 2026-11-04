@@ -15,7 +15,7 @@ export const LANDMARKS=[
    0.75,
    1.9
   ],
-  "description": "米黄色千寻塔与两座八角小塔前后错落，密檐、塔龛与塔刹沿高度逐级收分，前方水池和石径环绕塔院。",
+  "description": "十六层千寻方塔居前，两座十层八角塔在后方分立；米白砖身、密檐、佛龛、角柱与莲瓣平座层层收分，金属塔刹点出轮廓。夜间柔光保留砖石层次，塔前水池与石径相映。",
   "source": "https://www.ecns.cn/hd/2018-09-13/detail-ifyxxzwt9219171.shtml",
   "grounded": true
  },

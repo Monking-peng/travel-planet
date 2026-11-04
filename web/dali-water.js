@@ -1,24 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,sea,disc,paving,steps,grove,roof,story,lit,sign,archOpening,railing,finish,TAU} from './dali-kit.js';
-function pagoda(k,parent,p,x,z,small=false){
- const g=new THREE.Group();g.position.set(x,.034,z);parent.add(g);const n=small?8:4,levels=small?10:16,body=lit(k,'#cebea0',.13),ledge=lit(k,'#dbccb0',.20),dark=k.mat('#5c5544');
- let y=small?.13:.20;
- const column=(rt,rb,h,mat,yy)=>{const m=k.cyl(g,rt,rb,h,mat,0,yy,0,n);m.rotation.y=Math.PI/n;return m;};
- const r=small?.078:.112;column(r,r*1.04,y,body,y/2);column(r*1.15,r*1.18,.017,p.stone,.008);
- for(let j=0;j<levels;j++){const f=j/(levels-1),rr=r*(1-.66*f),hh=(small?.043:.049)*(1-.40*f);column(rr,rr*1.03,hh,body,y+hh/2);column(rr*1.23,rr*1.28,.008,ledge,y+hh+.004);column(rr*1.13,rr*1.23,.009,ledge,y+hh+.0125);
-  for(let i=0;i<n;i++){const a=i/n*TAU,face=n===4?rr*.707:rr*Math.cos(Math.PI/8);const window=k.box(g,rr*.32,hh*.53,.002,dark,Math.sin(a)*face,y+hh*.47,Math.cos(a)*face+.0001);window.rotation.y=a;}
-  y+=hh+.017;
- }
- column(.008,.015,.038,p.gold,y+.018);k.ball(g,.009,p.gold,0,y+.046,0);
- if(!small)sign(k,g,'永镇山川',.087,.026,0,.12,r*.708+.002,{background:'#c5b99c',color:'#655d43'});
- return g;
-}
-export function pagodas(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.77,.65);paving(k,g,p,.61,.51);
- pagoda(k,g,p,0,.03);pagoda(k,g,p,-.31,-.21,true);pagoda(k,g,p,.31,-.21,true);
- disc(k,g,.33,.15,.028,p.water,0,.35);for(const s of [-1,1]){railing(k,g,p,[[s*.35,.025,.23],[s*.35,.025,.46]],.023);grove(k,g,height,[[s*.55,-.23,.20],[s*.51,.20,.16],[s*.34,-.43,.14]]);}
- return finish(k,g,{lamps:[[-.18,.024,.17],[.18,.024,.17]],visitors:[[-.42,.025,.18],[.42,.025,.27]]});
-}
+export {pagodas} from './dali-pagodas.js';
 export function putuo(k){
  const g=new THREE.Group(),p=palette(k);p.red=k.mat('#526e7b',.92);p.wood=k.mat('#3e4d50',.93);site(k,g,.72,.62);sea(k,g,p,.71,.61);
  const stone=k.mat('#797d6e',.99),island=k.mesh(g,new THREE.CylinderGeometry(.29,.36,.11,29),stone,0,.082,0);island.scale.z=.73;

@@ -25,3 +25,12 @@ test('Dali module lighting preserves daylight materials, honors reduced motion a
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
 
+
+test('Three Pagodas separate real windows from recessed figures and preserve the main-to-side height ratio',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{pagodas}=await import('../web/dali-pagodas.js'),k=makeKit({time:{value:0},night:{value:0}}),g=pagodas(k);g.updateMatrixWorld(true);
+ const hits=(x,y)=>new T.Raycaster(new T.Vector3(x,y,.19),new T.Vector3(0,0,-1),0,.10).intersectObject(g,true).filter(h=>h.object.isMesh);
+ try{assert.equal(hits(0,.346).length,0,'Second upper-storey window is physically open');assert.ok(hits(.035,.346).length>0,'Masonry beside the window stays solid');assert.ok(hits(0,.280).length>0,'Adjacent storey keeps its recessed statue');
+  const tops=[0,-.31,.31].map(x=>new T.Raycaster(new T.Vector3(x,1.5,x===0?.03:-.21),new T.Vector3(0,-1,0)).intersectObject(g,true).filter(h=>h.object.isMesh)[0].point.y);
+  for(const top of tops.slice(1)){const ratio=(top-.034)/(tops[0]-.034);assert.ok(ratio>.60&&ratio<.64,'Side towers should be about 42:69 of the main tower height');}assert.ok(Math.abs(tops[1]-tops[2])<.0001,'Side towers match in height');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
