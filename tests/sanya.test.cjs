@@ -25,3 +25,14 @@ test('Sanya preserves five distinct waterfront towers and a suspended walkway ab
   const slopes=[];bridge.traverse(o=>{if(o.isMesh&&o.material?.userData.landscape)slopes.push(o);});for(const [x,y,z]of [[-.56,.385,.015],[.56,.420,-.040]]){const ground=new T.Raycaster(new T.Vector3(x,y+.04,z),new T.Vector3(0,-1,0)).intersectObjects(slopes);assert.ok(ground.length&&Math.abs(ground[0].point.y-y)<.06,'Both anchors must meet a real hill rather than float above it');}
  }finally{models.forEach(g=>g.traverse(o=>o.geometry?.dispose()));k.materials.forEach(m=>m.dispose());}
 });
+
+test('Phoenix Island has separated broad towers and stable facade coordinates through batching and motion changes',async()=>{
+ const T=await import('three'),{createSanyaScene}=await import('../web/sanya-scene.js'),s=createSanyaScene(),g=s.landmarks.get('phoenix');
+ try{const towers=g.children.filter(o=>Number.isInteger(o.material?.userData.phoenixTower)),lights=g.children.filter(o=>Number.isInteger(o.material?.userData.phoenixLight));assert.equal(towers.length,5);assert.equal(lights.length,5);
+ const boxes=towers.map(m=>{m.geometry.computeBoundingBox();return m.geometry.boundingBox;});for(const b of boxes){const size=b.getSize(new T.Vector3());assert.ok(size.y/Math.max(size.x,size.z)<3.1&&size.y/Math.max(size.x,size.z)>2.4,'Tower must have a broad curved profile instead of a narrow capsule');}
+ for(let i=1;i<boxes.length;i++)assert.ok(boxes[i].min.x-boxes[i-1].max.x>.02,'Separate tower shells must leave room for their projecting side ribs');
+ for(const m of lights){const a=m.geometry.attributes.facadeUV;assert.equal(a.count,m.geometry.attributes.position.count);const levels=new Set();for(let i=0;i<a.count;i++){assert.ok(a.getX(i)>=0&&a.getX(i)<=1);assert.ok(a.getY(i)>=0&&a.getY(i)<=1);levels.add(a.getY(i));}assert.ok(levels.size>25,'Merged light bands retain distinct local floor heights');}
+ s.setNight(true);s.update(7,false);lights.forEach(m=>assert.equal(m.material.userData.facadeTime.value,7));s.update(13,false);lights.forEach(m=>assert.equal(m.material.userData.facadeTime.value,13));s.update(16,true);s.update(99,true);lights.forEach(m=>assert.equal(m.material.userData.facadeTime.value,0));
+ s.setLandmarkEnabled('phoenix',false);s.setLandmarkEnabled('phoenix',true);assert.equal(s.landmarks.get('phoenix'),g);s.setNight(false);lights.forEach(m=>assert.equal(m.material.emissiveIntensity,0));
+ }finally{s.dispose();}
+});

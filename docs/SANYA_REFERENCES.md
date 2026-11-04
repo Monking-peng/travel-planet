@@ -18,3 +18,16 @@
 ![海上观音日景](images/sanya-desktop.png)
 
 ![亚特兰蒂斯夜景](images/sanya-night.png)
+
+
+## 0.55.13 凤凰岛弧塔与动态灯带
+
+对照三亚旅文官方[凤凰岛实拍](https://www.visitsanya.com/destination/fenghuang-island)及此前五楼日景，调整五座楼体的扁宽比例与朝向，补白色弧形侧肋、横向阳台、顶部退台和低矮玻璃门厅。海堤增加厚度，保留原模块位置。
+
+夜景以冷白和浅金色的水平灯带缓慢变化，减弱动态会固定灯光。该效果为原创简化表达，不复刻商业灯光秀，也不代表其时间安排。参考照片仅作造型核对，未进入公开贴图或提交包。
+
+![凤凰岛日景](images/sanya-phoenix.png)
+
+![弧塔背面](images/sanya-phoenix-back.png)
+
+![动态灯带一帧](images/sanya-phoenix-night.png)

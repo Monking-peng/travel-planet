@@ -32,7 +32,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "五座贝壳状曲面楼沿岛岸排列，横向楼层与竖向弧线分出轮廓。夜晚冷白与浅彩灯带缓慢变化。",
+  "description": "五座扁宽弧塔以不同朝向沿海岸排列，白色侧肋、横向阳台与顶部退台勾出贝壳轮廓。低矮门厅连接海岛步道，夜间冷白与浅金色灯带沿立面缓慢流动。",
   "source": "https://www.visitsanya.com/destination/fenghuang-island",
   "grounded": true
  },

@@ -1,20 +1,6 @@
 import * as THREE from 'three';
 import {palette,site,skin,disc,ellipse,band,palms,lit,finish,TAU} from './sanya-kit.js';
-function island(k,g,p,rx=.67,rz=.25){disc(k,g,rx,rz,.029,p.paving);for(let row=0;row<3;row++)band(k,g,a=>[Math.cos(a)*rx,.030+row*.003,Math.sin(a)*rz],p.stone,.001);}
-export function phoenix(k){
- const g=new THREE.Group(),p=palette(k),h=site(k,g,p,{sea:true});island(k,g,p,.685,.265);
- for(let i=0;i<5;i++){
-  const cx=(i-2)*.25,cz=-.015+.042*Math.sin(i*.9),H=.75+.035*Math.sin(i*1.7),angle=[.05,.75,.82,.12,.10][i],tower=new THREE.Group();tower.position.set(cx,.035,cz);tower.rotation.y=angle;g.add(tower);
-  const glass=k.mat('#4d7276',.44,.16);glass.userData.night={color:new THREE.Color('#78999d'),intensity:.035};glass.userData.phoenixTower=i;const ribs=Array.from({length:7},(_,j)=>lit(k,'#c8cfbf',.65,j*.7+i*.9,['#b0d9dc','#b2c9ec','#e8caa3'][i%3]));
-  const point=(a,t)=>{const radius=.72+.28*Math.sin(Math.PI*t*.84),cap=t<.77?1:Math.sqrt(Math.max(.0001,1-((t-.77)/.23)**2)),w=.105*radius*cap,d=.070*radius*cap;return [Math.cos(a)*w+.016*Math.sin(t*Math.PI),t*H,Math.sin(a)*d];};
-  skin(k,tower,(u,t)=>point(u*TAU,t),48,80,glass);
-  for(let j=1;j<=34;j++){const t=j/35;band(k,tower,a=>point(a,t),ribs[j%7],.00155);}
-  for(const side of [-1,1]){const pts=Array.from({length:41},(_,j)=>{const q=point(side*Math.PI/2,j/40);q[0]+=.004*side;return q;});k.line(tower,pts,.003,p.pale);}
-  ellipse(k,tower,p.pale,0,.012,0,.106,.014,.075);
- }
- for(const z of [-.21,.21])palms(k,g,p,()=>.030,Array.from({length:7},(_,i)=>[(i-3)*.17,z,.115+(i%2)*.02]));
- return finish(k,g,{lamps:[[-.58,.04,.24],[0,.04,.24],[.58,.04,.24]],visitors:[[-.1,.04,.19],[.12,.04,.18]]});
-}
+export {phoenix} from './sanya-phoenix.js';
 export function atlantis(k){
  const g=new THREE.Group(),p=palette(k),h=site(k,g,p);disc(k,g,.62,.49,.021,p.paving);
  const glass=k.mat('#557d83',.40,.17);glass.userData.night={color:new THREE.Color('#6c8a94'),intensity:.045};glass.userData.atlantisFin=true;
