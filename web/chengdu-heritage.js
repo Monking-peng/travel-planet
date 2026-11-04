@@ -40,21 +40,4 @@ export function dufu(k){
  return finish(k,g,{lamps:[[-.30,.10],[.30,.10]],visitors:[[-.20,.10],[.23,.08]]});
 }
 
-export function anshun(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.76,.58);pond(k,g,p,.69,.49);p.water.roughness=.28;
- const s=new THREE.Shape();s.moveTo(-.56,0);s.lineTo(.56,0);s.lineTo(.56,.25);s.lineTo(.34,.29);s.lineTo(-.34,.29);s.lineTo(-.56,.25);s.closePath();
- const arches=[{x:0,r:.195,spring:.034},{x:-.405,r:.137,spring:.025},{x:.405,r:.137,spring:.025}];
- for(const {x,r,spring}of arches){const h=new THREE.Path();h.moveTo(x-r,.001);h.lineTo(x-r,spring);h.absarc(x,spring,r,Math.PI,0,true);h.lineTo(x+r,.001);h.closePath();s.holes.push(h);}
- for(const x of [-.24,.24]){const h=new THREE.Path();h.absarc(x,.166,.039,0,TAU,true);s.holes.push(h);}
- const stone=k.mat('#b2b4a1',.94);stone.userData.bridgeMasonry=true;k.mesh(g,new THREE.ExtrudeGeometry(s,{depth:.21,bevelEnabled:false,curveSegments:40}),stone,0,0,-.105);
- const edge=glow(k,'#efc27d',1.05,.5,.45);
- for(const z of [-.108,.108]){for(const {x,r,spring}of arches)k.line(g,Array.from({length:41},(_,i)=>[x+r*Math.cos(i/40*Math.PI),spring+r*Math.sin(i/40*Math.PI),z]),.003,edge);for(const x of [-.24,.24])k.line(g,Array.from({length:40},(_,i)=>[x+.04*Math.sin(i/40*TAU),.166+.04*Math.cos(i/40*TAU),z]),.002,edge,true);}
- k.box(g,.66,.012,.29,p.stone,0,.293,0);k.box(g,.59,.125,.20,p.wood,0,.36,0);
- for(const side of [-1,1]){for(let i=0;i<9;i++){const x=-.29+i*.58/8;k.cyl(g,.004,.005,.13,p.red,x,.36,side*.132,8);lattice(k,g,x,.36,side*.102,.052,.089,p.pale);}balcony(k,g,0,side*.145,.66,.299,p.wood);}
- roof(k,g,.74,.34,.10,.428,p.tile,edge);
- k.box(g,.47,.083,.17,p.pale,0,.505,0);for(const z of [-.087,.087])for(const x of [-.17,0,.17])lattice(k,g,x,.51,z,.085,.045,p.wood);
- roof(k,g,.59,.27,.09,.55,p.tile,edge);plaque(k,g,'安顺廊桥',.17,.035,0,.512,.091);
- for(const x of [-.455,.455]){k.box(g,.23,.11,.22,p.wood,x,.314,0);for(const z of [-.113,.113]){for(let i=0;i<4;i++)k.cyl(g,.003,.004,.11,p.red,x-.095+i*.19/3,.314,z,8);balcony(k,g,x,z,.23,.265,p.pale);}roof(k,g,.29,.29,.092,.377,p.tile,edge,x,0);}
- for(const x of [-.61,.61]){k.box(g,.11,.02,.34,p.stone,x,.03,0);steps(k,g,p,x,.21,.12,8,.21,.15);}
- return finish(k,g,{lamps:[[-.61,-.20],[.61,-.20],[-.61,.20],[.61,.20]]});
-}
+export {anshun} from './chengdu-anshun.js';

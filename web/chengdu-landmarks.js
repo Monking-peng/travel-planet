@@ -3,7 +3,7 @@ import {ifs,pandaTower,tianfu} from './chengdu-modern.js';
 import {jinsha,dongan} from './chengdu-culture.js';
 export const LANDMARKS=[
  {id:'wuhou',name:'武侯祠·汉昭烈庙',area:'红墙古柏 · 入口庭院',x:-.96,z:.86,height:.39,distance:2.6,view:[.24,.68,1.8],description:'灰瓦五开间门屋、红墙、石狮和竹影小径。根据入口与林荫实拍制作，呈现武侯祠的前庭片段，不将它冒充整个祠庙建筑群。',source:'https://news.cri.cn/20230723/399db06e-9fb9-6b3b-66b0-938a43027c0f.html'},
- {id:'anshun',name:'安顺廊桥',area:'锦江 · 三孔廊桥',x:1.01,z:.87,height:.65,distance:2.8,view:[.25,.50,1.8],description:'三座透空桥拱、桥肩圆洞、长屋脊与两端亭阁。暖金灯光勾勒桥洞和檐口，保留灰白桥身与深色瓦顶。',source:'https://unsplash.com/photos/photography-of-building-and-bridge-during-nighttime-ogCzbpkxdK4'},
+ {id:'anshun',name:'安顺廊桥',area:'锦江 · 三孔廊桥',x:1.01,z:.87,height:.65,distance:2.8,view:[.25,.50,1.8],description:'三孔尖拱与桥肩圆洞保留真实开口，灰石砌缝、雕纹石栏、双层亭阁和红柱回廊补齐层次。两端台阶沿桥轴连接桥面；夜间暖光照亮檐下与拱腹，瓦顶保持深灰。',source:'https://unsplash.com/photos/photography-of-building-and-bridge-during-nighttime-ogCzbpkxdK4'},
  {id:'ifs',name:'成都IFS·爬墙熊猫',area:'春熙路 · I AM HERE',x:-1.04,z:-.87,height:1.14,distance:2.9,view:[.25,.65,1.8],description:'黑白熊猫攀在商场外墙，前爪越过屋顶，后腿悬在立面上；玻璃塔楼和暖色店面保留商业街层次。雕塑原作由 Lawrence Argent 创作，此处为几何缩微表达。',source:'https://www.hkcd.com.hk/content_p/2024-07/01/content_173280.html'},
  {id:'pandaTower',name:'熊猫基地·熊猫塔',area:'芙蓉花塔 · 铜色外肋',x:1.09,z:-.87,height:1.24,distance:2.8,view:[.26,.69,1.8],description:'十一层逐级收窄的观景平台、铜色花瓣外肋和高起的三片尖梢。正面留出透空切口，可以看到内层平台、扶手与支撑。',source:'https://www.gooood.cn/panda-tower-in-chengdu-research-base-of-giant-panda-breeding-udg-atelier-alpha.htm'},
  {id:'dufu',name:'杜甫草堂·茅屋故居',area:'浣花溪 · 竹林茅屋',x:-1.00,z:.88,hemisphere:-1,height:.41,distance:2.6,view:[.28,.63,1.8],description:'低矮土墙、木格门窗、厚茅草屋面和竹林水院。呈现草堂内茅屋故居这一处景观，避免将整个博物馆简化成一栋古宅。',source:'https://you.ctrip.com/sight/chengdu104/4226.html'},

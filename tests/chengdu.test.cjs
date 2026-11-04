@@ -29,3 +29,11 @@ test('Chengdu module lighting preserves daylight materials, honors reduced motio
  for(const [id,g]of modules){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of modules.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(disposed,geos.size);
 });
+
+test('Anshun light linings keep openings clear and end stairs rise along the bridge axis',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{anshun}=await import('../web/chengdu-anshun.js'),k=makeKit({time:{value:0},night:{value:0}}),g=anshun(k);g.updateMatrixWorld(true);
+ try{for(const [x,y]of [[0,.12],[-.405,.08],[.405,.08],[-.24,.166],[.24,.166]]){const ray=new T.Raycaster(new T.Vector3(x,y,.17),new T.Vector3(0,0,-1),0,.34);assert.equal(ray.intersectObject(g,true).length,0,`Lighting blocked the opening at ${x}/${y}`);}
+  let stairs;g.traverse(o=>{if(o.material?.userData.anshunSteps)stairs=o;});assert.ok(stairs);
+  for(const side of [-1,1]){let previous=0;for(const i of [0,2,4,6,8]){const ray=new T.Raycaster(new T.Vector3(side*(.735-i*.021),.6,0),new T.Vector3(0,-1,0)),hit=ray.intersectObject(stairs)[0];assert.ok(hit);assert.ok(hit.point.y>previous+.02);previous=hit.point.y;}assert.ok(Math.abs(previous-.25)<.001,'The stair must reach the bridge end');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

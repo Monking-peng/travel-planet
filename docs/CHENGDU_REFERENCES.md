@@ -22,3 +22,16 @@ IFS 的「I AM HERE」熊猫雕塑原作由 Lawrence Argent 创作；此处为�
 ![成都安顺廊桥](images/chengdu-anshun.png)
 
 ![成都东安湖体育场夜景](images/chengdu-dongan-night.png)
+
+
+## 0.55.15 安顺廊桥
+
+对照[2026 年日景实拍](https://commons.wikimedia.org/wiki/File:Anshun_Bridge_and_Jin_River_20261003124712.jpg)、[石拱及廊檐近景](https://commons.wikimedia.org/wiki/File:Anshunlang_bridge_detail.jpg)与[夜景照片](https://unsplash.com/photos/photography-of-building-and-bridge-during-nighttime-ogCzbpkxdK4)，调整三孔尖拱，补石砌缝、拱圈、桥墩小石兽、雕纹石栏及双层亭阁。两端台阶改为沿桥轴通向桥面，正背廊窗均保留进深。
+
+夜间以暖光表现拱腹与檐下，保留深灰瓦面；灯光衬面不会封住桥洞和圆洞。石雕、瓦纹与照明均为缩微表达，不是文物扫描。参考照片只用于研究，没有作为贴图或收入公开包。
+
+![安顺廊桥日景](images/chengdu-anshun.png)
+
+![桥背与轴向台阶](images/chengdu-anshun-back.png)
+
+![安顺廊桥夜景](images/chengdu-anshun-night.png)
