@@ -1,35 +1,7 @@
 import * as THREE from 'three';
 import {palette,site,paving,steps,grove,sign,finish,hall,lit,TAU,skin,lantern,dragon,hip,sea,railing} from './quanzhou-kit.js';
 import {bridge} from './shunde-kit.js';
-function stonePagoda(k,g,p,x,z,scale=1){
- const child=new THREE.Group();g.add(child);child.position.set(x,.035,z);child.scale.setScalar(scale);
- for(let i=0;i<3;i++)k.cyl(child,.14-i*.008,.15-i*.008,.014,p.stone,0,.007+i*.014,0,8);
- const wall=lit(k,'#9e9983',.16),shade=k.mat('#4b4b40',.96),trim=lit(k,'#aaa58c',.35);
- for(let level=0;level<5;level++){
-  const y=.043+level*.125,r=.092-level*.006;k.cyl(child,r,r*.99,.098,wall,0,y+.049,0,8);
-  for(let face=0;face<8;face++){const a=(face+.5)/8*TAU,c=new THREE.Group();c.rotation.y=a;c.position.set(Math.sin(a)*r*.926,y,Math.cos(a)*r*.926);child.add(c);
-   k.box(c,.020,.050,.003,shade,0,.044,0);k.mesh(c,new THREE.CircleGeometry(.010,16,0,Math.PI),shade,0,.069,.002);k.box(c,.028,.004,.006,p.pale,0,.017,.001);
-   for(const side of [-1,1]){k.cyl(c,.003,.003,.078,p.stone,side*.030,.047,0,8);k.box(c,.012,.006,.009,p.pale,side*.030,.086,.002);}
-   for(let j=0;j<3;j++)k.box(c,.065,.001,.001,p.stone,0,.015+j*.028,.003);
-  }
-  k.cyl(child,r*1.20,r*1.20,.007,trim,0,y+.008,0,8);
-  const eave=r*1.34,high=.038;
-  const point=(u,v)=>{const a=u*TAU,sector=TAU/8,local=((a+sector/2)%sector)-sector/2,rr=eave*Math.cos(sector/2)/Math.cos(local),t=.001+.999*v;return [Math.sin(a)*rr*t,y+.097+high*(1-t)**1.4+.013*t**8*(Math.abs(local)/(sector/2))**5,Math.cos(a)*rr*t];};
-  skin(k,child,point,10,96,p.stone);k.line(child,Array.from({length:96},(_,i)=>point(i/96,1)),.002,trim,true);
-  for(let i=0;i<32;i++)k.line(child,Array.from({length:8},(_,j)=>{const q=point(i/32,.08+.92*j/7);q[1]+=.001;return q;}),.0009,p.stone);
- }
- const top=.043+4*.125+.135;k.cyl(child,.006,.014,.13,p.stone,0,top+.065,0,12);for(let j=0;j<8;j++)k.cyl(child,.014-j*.0011,.014-j*.0011,.004,p.stone,0,top+.012+j*.014,0,16);k.ball(child,.005,p.gold,0,top+.140,0);
- for(let i=0;i<8;i++){const a=i/8*TAU;k.line(child,[[0,top+.13,0],[Math.sin(a)*.035,top+.075,Math.cos(a)*.035],[Math.sin(a)*.084,top-.025,Math.cos(a)*.084]],.0007,shade);}
-}
-export function kaiyuan(k){
- const g=new THREE.Group(),p=palette(k),h=site(k,g,.66,.55);paving(k,g,p,.53,.42);g.userData.stonePagodas={stories:[5,5],sides:8};
- stonePagoda(k,g,p,-.31,.13,.92);stonePagoda(k,g,p,.31,.13,1.02);p.tile=k.mat('#9e6549',.91);
- hall(k,g,p,{w:.42,d:.23,h:.16,z:-.14,double:true,ornate:true});hall(k,g,p,{w:.23,d:.12,h:.07,z:.32});
- for(const x of [-.40,.40])hall(k,g,p,{x,z:-.22,w:.16,d:.15,h:.095});
- steps(k,g,p,0,.02,.24,5,.030,.08);sign(k,g,'开元寺',.088,.031,0,.205,.005,{background:'#47382b',color:'#dbc18b'});
- grove(k,g,h,[[-.49,-.05,.16],[.49,-.06,.16],[-.25,-.39,.18],[.23,-.39,.17],[0,-.41,.17]]);
- return finish(k,g,{lamps:[[-.13,.023,.24],[.13,.023,.24],[-.48,.023,.27],[.48,.023,.27]],visitors:[[-.10,.023,.12],[.05,.023,.16],[.13,.023,.29],[-.18,.023,-.02]]});
-}
+export {kaiyuan} from './quanzhou-kaiyuan.js';
 export function tianhou(k){
  const g=new THREE.Group(),p=palette(k),h=site(k,g,.62,.55);paving(k,g,p,.49,.43);p.tile=k.mat('#79755c',.91);
  hall(k,g,p,{z:.23,w:.55,d:.18,h:.17,ornate:true});hall(k,g,p,{z:-.18,w:.45,d:.25,h:.18,double:true,ornate:true});

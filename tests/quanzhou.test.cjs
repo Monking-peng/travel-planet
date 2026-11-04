@@ -1,5 +1,13 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
+test('Kaiyuan stone towers alternate four open portals and four solid niches between storeys',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{kaiyuan}=await import('../web/quanzhou-kaiyuan.js'),k=makeKit({time:{value:0},night:{value:0}}),g=kaiyuan(k);g.updateMatrixWorld(true);const stone=[];g.traverse(o=>{if(o.material?.userData.kaiyuanStone)stone.push(o);});
+ try{for(const [x,scale]of [[-.32,.92],[.32,.985]])for(let level=0;level<5;level++)for(let i=0;i<8;i++){
+  const a=i*Math.PI/4,y=.034+scale*(.064+level*.129+.040),ray=new T.Raycaster(new T.Vector3(x+Math.sin(a)*.16*scale,y,.13+Math.cos(a)*.16*scale),new T.Vector3(-Math.sin(a),0,-Math.cos(a)),0,.11*scale),hits=ray.intersectObjects(stone).length;
+  assert.equal(hits>0,(i+level)%2!==0,`Tower ${x}, storey ${level+1}, face ${i}: four genuine portals rotate 45 degrees on the next level`);
+  ray.ray.origin.add(new T.Vector3(Math.cos(a)*.025*scale,0,-Math.sin(a)*.025*scale));assert.ok(ray.intersectObjects(stone).length>0,'Stone piers remain beside the opening');
+ }}finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
 test('Quanzhou stone portals are open and the Luoyang cutwaters keep clear beam spans',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{qingjing,luoyang}=await import('../web/quanzhou-civic.js');const k=makeKit({time:{value:0},night:{value:0}}),mosque=qingjing(k),bridge=luoyang(k);mosque.updateMatrixWorld(true);bridge.updateMatrixWorld(true);
  try{const portals=[],piers=[];mosque.traverse(o=>{if(o.material?.userData.pointedPortal)portals.push(o);});bridge.traverse(o=>{if(o.material?.userData.luoyangPiers)piers.push(o);});assert.ok(portals.length&&piers.length);
