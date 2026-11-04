@@ -38,3 +38,18 @@
 - [携程游客实拍](https://you.ctrip.com/sight/qingdao5/1278.html)
 
 保留微缩比例调整；具体窗数、屋内和隐蔽结构不宣称测绘级还原。研究照片只在本地，不随源代码或提交包分发。
+
+
+## 0.55.54 青岛站实拍校正
+
+2026-11-05 对照既有老站正面、夜景照片及青岛日报九张站区航拍，重做偏置钟楼、四面钟盘与连续收分红尖顶、窄长凹窗、高低候车厅、曲线山花、老虎窗和侧后立面。航拍中邻近酒店的金色穹顶不属于老站，未混入模型。入口平台、六级台阶和门槛连通，修复底阶悬高和门槛落差。
+
+- [青岛日报老站建筑照片](https://www.dailyqd.com/arc/2016-09/22/content_352743.htm)
+- [青岛日报站区航拍](https://www.dailyqd.com/image/2016-12/27/content_367904.htm)
+- [青岛站夜景照片](https://www.chinaairlinetravel.com/trains/qingdao-to-shanghai/)
+
+保留浅褐石墙、红瓦与灰绿门窗，夜间主要照亮钟盘、山花边饰和檐口。属于微缩老站房表达，站区整体、内部空间和实际灯光活动不在还原范围内。参考照片仅留本地，不作为贴图分发。
+
+![青岛站日景](images/qingdao-station-day.png)
+
+![青岛站夜景](images/qingdao-station-night.png)

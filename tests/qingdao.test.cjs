@@ -44,3 +44,15 @@ test('Huashi Villa has open crown arches, recessed entrance and rear windows, an
   assert.ok(last>.105&&last<.115,'The landing reaches the doorway threshold');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+
+test('Qingdao station has a continuous entry apron and actual recessed narrow tower windows',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{station}=await import('../web/qingdao-station.js'),k=makeKit({time:{value:0},night:{value:0}}),g=station(k);g.updateMatrixWorld(true);const stone=[];g.traverse(o=>{if(o.material?.userData.stationMasonry)stone.push(o);});
+ try{
+  const ray=(x,y,z,far)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(0,0,-1),0,far).intersectObjects(stone);
+  for(const x of [-.244,-.212,-.180])assert.equal(ray(x,.290,.155,.04).length,0,'Long tower windows are recessed into actual openings');
+  assert.ok(ray(-.228,.290,.155,.04).length>0,'Window piers retain their stone thickness');
+  for(const x of [.022,.095,.168])assert.equal(ray(x,.10,.151,.034).length,0,'Each central door has a clear opening');
+  let last=.020;for(let i=0;i<=180;i++){const z=.362-i*.227/180,hits=new T.Raycaster(new T.Vector3(.095,.12,z),new T.Vector3(0,-1,0),0,.12).intersectObjects(g.children,true);assert.ok(hits.length);const y=hits[0].point.y;assert.ok(y>=last-.001&&y-last<.007,'No broken or oversized step at the entry apron');last=y;}assert.ok(last>.054&&last<.057);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
