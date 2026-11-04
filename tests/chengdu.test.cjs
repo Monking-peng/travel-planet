@@ -37,3 +37,17 @@ test('Anshun light linings keep openings clear and end stairs rise along the bri
   for(const side of [-1,1]){let previous=0;for(const i of [0,2,4,6,8]){const ray=new T.Raycaster(new T.Vector3(side*(.735-i*.021),.6,0),new T.Vector3(0,-1,0)),hit=ray.intersectObject(stairs)[0];assert.ok(hit);assert.ok(hit.point.y>previous+.02);previous=hit.point.y;}assert.ok(Math.abs(previous-.25)<.001,'The stair must reach the bridge end');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Wuhou gate has a clear central passage, closed timber sides and connected ascending entrance steps',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{wuhou}=await import('../web/chengdu-wuhou.js'),k=makeKit({time:{value:0},night:{value:0}}),g=wuhou(k);g.updateMatrixWorld(true);
+ const hit=(p,d,n)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  const entry=hit([0,.14,.35],[0,0,-1],.35);assert.ok(!entry,'central entry stays open; hit='+JSON.stringify(entry?{p:entry.point.toArray(),color:entry.object.material.color.getHexString()}:null));
+  for(const x of [-.21,.21])assert.ok(hit([x,.14,.35],[0,0,-1],.3),'dark timber side panels remain solid');
+  let y=.020;for(let i=0;i<5;i++){const a=hit([0,.10,.340-i*.014],[0,-1,0],.1);assert.ok(a&&Math.abs(a.point.y-y-.006)<1e-5,'each step rises without being hidden');y=a.point.y;}
+  for(const z of [.279,.275,.270]){const a=hit([0,.10,z],[0,-1,0],.1);assert.ok(a&&Math.abs(a.point.y-y)<1e-5,'last tread meets gate landing without a gap');}
+  const lane=hit([.5,.10,.10],[0,0,-1],.30);assert.ok(!lane,'red-wall lane remains walkable; hit='+JSON.stringify(lane?{p:lane.point.toArray(),color:lane.object.material.color.getHexString()}:null));
+  for(const z of [-.25,-.15,-.05,.05]){const outer=hit([.75,.10,z],[-1,0,0],.2);assert.ok(outer&&outer.object.material.color.getHexString()==='8e3e32','bamboo must remain behind the red wall');}
+  assert.equal(k.materials.filter(m=>m.userData.pulse).length,4,'four lanterns retain separate light phases');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

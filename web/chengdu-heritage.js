@@ -1,24 +1,7 @@
 import * as THREE from 'three';
 import {TAU,palette,site,pond,paving,steps,grove,bamboo,roof,plaque,skin,lattice,balcony,glow,finish} from './chengdu-kit.js';
 
-function lion(k,g,p,x,z){k.box(g,.044,.04,.052,p.stone,x,.041,z);const body=k.ball(g,.022,p.stone,x,.076,z);body.scale.set(.77,1.1,1);k.ball(g,.019,p.stone,x,.103,z+.008);for(let i=0;i<9;i++){const a=i/9*TAU;k.ball(g,.0045,p.stone,x+.017*Math.sin(a),.103+.014*Math.cos(a),z+.009);}for(const side of [-1,1])k.cyl(g,.005,.007,.03,p.stone,x+side*.010,.063,z+.018,6);k.ball(g,.006,p.stone,x,.10,z+.024);}
-export function wuhou(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.66,.58);paving(k,g,p,.49,.46);
- // Five-bay gate, with a genuinely open central passage, then red garden walls.
- const z=.17,w=.65,h=.23;
- for(const side of [-1,1]){k.box(g,.22,h,.095,p.red,side*.23,h/2+.043,z);k.box(g,.27,.035,.10,p.stone,side*.23,.039,z);k.box(g,.11,h*.76,.007,p.wood,side*.135,.13,z+.051);lattice(k,g,side*.23,.14,z+.053,.09,.12,p.wood);}
- k.box(g,w,.045,.11,p.red,0,.249,z);
- for(const x of [-.322,-.195,-.067,.067,.195,.322]){k.cyl(g,.007,.008,h,p.red,x,.158,z+.067,12);k.cyl(g,.011,.012,.018,p.stone,x,.049,z+.067,12);k.box(g,.035,.009,.03,p.wood,x,.267,z+.067);}
- roof(k,g,.78,.25,.095,.278,p.tile,p.tile,0,z);plaque(k,g,'汉昭烈庙',.175,.048,0,.241,z+.073);
- for(const x of [-.26,-.10,.10,.26]){const lantern=glow(k,'#d96643',.65);k.cyl(g,.013,.013,.039,lantern,x,.212,z+.082,8);k.cyl(g,.015,.015,.004,p.gold,x,.234,z+.082,8);k.beam(g,[x,.235,z+.082],[x,.269,z+.082],.0015,p.wood);}
- steps(k,g,p,0,.315,.65,5,.026,.055);lion(k,g,p,-.36,.32);lion(k,g,p,.36,.32);
- for(const side of [-1,1]){k.box(g,.026,.20,.49,p.red,side*.415,.121,-.045);for(const dx of [-.008,.008])k.box(g,.034,.009,.50,p.tile,side*.415+dx,.226,-.045);k.box(g,.15,.20,.024,p.red,side*.39,.121,.17);}
- // A shaded red-wall lane is the second recognizable part of this entrance group.
- k.box(g,.019,.18,.43,p.red,.29,.113,-.07);roof(k,g,.05,.45,.015,.207,p.tile,p.tile,.29,-.07);
- for(let i=0;i<5;i++)bamboo(k,g,.35,-.27+i*.08,.30+(i%2)*.025);
- grove(k,g,height,[[-.43,-.35,.20],[-.22,-.40,.23],[0,-.43,.25],[.20,-.40,.20],[-.44,-.13,.22],[-.47,.12,.24],[.47,.18,.22],[.48,-.27,.23]]);
- return finish(k,g,{lamps:[[-.23,.39],[.23,.39],[-.37,-.20]],visitors:[[-.06,.34],[.05,.37],[.12,.30],[.00,-.05],[-.18,-.19]]});
-}
+export {wuhou} from "./chengdu-wuhou.js";
 export function dufu(k){
  const g=new THREE.Group(),p=palette(k),height=site(k,g,.68,.57);pond(k,g,p,.36,.15,0,.30);k.box(g,.82,.018,.41,p.stone,0,.029,-.10);
  const earth=k.mat('#b6a77e',.99),thatch=k.mat('#6e6b48',.99),straw=k.mat('#9b9165',.98);

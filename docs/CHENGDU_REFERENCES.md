@@ -35,3 +35,18 @@ IFS 的「I AM HERE」熊猫雕塑原作由 Lawrence Argent 创作；此处为�
 ![桥背与轴向台阶](images/chengdu-anshun-back.png)
 
 ![安顺廊桥夜景](images/chengdu-anshun-night.png)
+
+
+## 0.55.29 武侯祠入口
+
+对照[馆方入口照片](https://en.wuhouci.net.cn/about)、[四川省情网入口全景](https://www.scdfz.org.cn/whzh/slzc1/content_130193)与[馆方供图的林荫、红墙和内院](https://news.cri.cn/20230723/399db06e-9fb9-6b3b-66b0-938a43027c0f.html)，将旧模型的红色格窗改为深木色门板，补灰黑瓦垄、起翘檐角、门钉、红柱、四盏多边形灯笼、石狮与连续入口台阶。
+
+中央门道与红墙夹道保持通透，竹丛收在围墙内，树冠遮蔽院落。庭院采用平整地面并向球面过渡，避免铺地和墙脚悬空；本组稍向外移，为放大的场地留出净空。夜间灯笼分别缓慢变化，保留深木门和灰瓦底色；减少动态效果时保持静态。
+
+只呈现汉昭烈庙入口及压缩的内院片段，不代表武侯祠全院布局。参考照片仅用于研究，雕刻与夜间照明为缩微表达。
+
+![武侯祠入口日景](images/chengdu-wuhou.png)
+
+![红墙与竹影](images/chengdu-wuhou-side.png)
+
+![入口夜景](images/chengdu-wuhou-night.png)
