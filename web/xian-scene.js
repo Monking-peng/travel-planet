@@ -14,7 +14,7 @@ export function createXianScene(){
     model.traverse(o=>{
       if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;o.material.envMapIntensity=.30;
       const old=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(old);old.dispose();const a=o.geometry.attributes.position,n=o.geometry.attributes.normal;
-      if(!o.material.userData.pagodaRigid)for(let i=0;i<a.count;i++){const x=a.getX(i),z=a.getZ(i);a.setY(i,a.getY(i)-sag(x,z));if(o.material.userData.preserveSmooth){const ny=n.getY(i),r=Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),nx=n.getX(i)+x/r*ny,nz=n.getZ(i)+z/r*ny,len=Math.hypot(nx,ny,nz);n.setXYZ(i,nx/len,ny/len,nz/len);}}
+      if(!o.material.userData.pagodaRigid&&!o.material.userData.drumRigid)for(let i=0;i<a.count;i++){const x=a.getX(i),z=a.getZ(i);a.setY(i,a.getY(i)-sag(x,z));if(o.material.userData.preserveSmooth){const ny=n.getY(i),r=Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),nx=n.getX(i)+x/r*ny,nz=n.getZ(i)+z/r*ny,len=Math.hypot(nx,ny,nz);n.setXYZ(i,nx/len,ny/len,nz/len);}}
       a.needsUpdate=true;if(o.material.userData.preserveSmooth)n.needsUpdate=true;else o.geometry.computeVertexNormals();
       if(!o.material.userData.night)o.material.userData.night={color:o.material.color.clone(),intensity:.045};
     });

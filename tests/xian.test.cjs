@@ -1,6 +1,22 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Drum tower keeps its arch and galleries open with level side stairs and gabled roof',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{drum}=await import('../web/xian-drum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=drum(k);g.updateMatrixWorld(true);
+ const hits=(p,d,n=1)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true);
+ try{
+  assert.equal(hits([0,.07,.4],[0,0,-1],.8).length,0,'north-south arch must be a real passage');
+  assert.ok(hits([.16,.07,.4],[0,0,-1],.8).length>0,'brick piers support the platform');
+  for(const y of [.26,.45])assert.equal(hits([-.4,y,.15],[1,0,0],.8).length,0,'recessed rooms leave a continuous outer gallery');
+  const gable=hits([.5,.658,0],[-1,0,0],.4)[0];assert.ok(gable&&gable.point.x>.285&&gable.point.x<.31,'short side retains its triangular gable');
+  for(const s of [-1,1]){
+   let previous=.014;for(let i=0;i<22;i++){const hit=hits([s*.565,.25,.380-i*.021],[0,-1,0],.3)[0];assert.ok(hit);assert.ok(Math.abs(hit.point.y-previous-.008)<1e-5,'stair treads are consecutive and level');previous=hit.point.y;}
+   const landing=hits([s*.565,.25,-.11],[0,-1,0],.3)[0],deck=hits([s*.40,.25,-.11],[0,-1,0],.3)[0];assert.ok(Math.abs(landing.point.y-previous)<1e-5&&Math.abs(deck.point.y-previous)<1e-5,'side landing meets the terrace without a barrier');
+  }
+  assert.ok(new T.Box3().setFromObject(g).max.y>.73);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
 test('Furong Lake has only its shoreline boundary after curving onto the planet',async()=>{
  const {createXianScene}=await import('../web/xian-scene.js'),s=createXianScene();
  try{let water;s.landmarks.get('furong').traverse(o=>{if(o.material?.userData.furongLake)water=o;});assert.ok(water);

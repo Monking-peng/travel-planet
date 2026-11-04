@@ -1,18 +1,10 @@
 import * as THREE from 'three';
-import {colors,terrace,steps,ledge,timberFloor,eave,hall,groves,finish,archWall,roof,masonry} from './xian-kit.js';
-import {plaque} from './wuhan-architecture.js';
+import {colors,terrace,hall,groves,finish,masonry} from './xian-kit.js';
 
 export {bell} from './xian-bell.js';
 
-export function drum(k){
-  const g=new THREE.Group(),p=colors(k);p.red=k.mat('#51463b');p.tile=k.mat('#596052');terrace(k,g,p,.65,.49);
-  p.stone.userData.night.intensity=.34;p.wall.userData.night.intensity=.24;p.red.userData.night={color:new THREE.Color('#e5b66e'),intensity:.22};
-  archWall(k,g,{w:.84,h:.17,d:.36,y:.018,openings:[{r:.055,spring:.065,bottom:0}],mat:p.stone});ledge(k,g,p,.87,.40,.20);
-  timberFloor(k,g,p,{w:.66,d:.33,y:.22,h:.14,bays:11});eave(k,g,p,.82,.46,.365,.073);
-  timberFloor(k,g,p,{w:.54,d:.28,y:.42,h:.11,bays:9});eave(k,g,p,.69,.39,.535,.045);k.box(g,.48,.035,.25,p.wall,0,.573,0);eave(k,g,p,.62,.36,.592,.095);
-  for(const s of [-1,1]){const stair=new THREE.Group();steps(k,stair,p,.12,.32,.19,0,.35,14);stair.position.x=s*.36;g.add(stair);for(let i=0;i<8;i++){const x=(i/7-.5)*.66;const d=k.cyl(g,.012,.012,.016,p.red,x,.246,s*.19,16);d.rotation.x=Math.PI/2;}}
-  plaque(k,g,'文武盛地',.22,.04,0,.337,.18);g.userData={roofTiers:3,drums:16};return finish(k,g,p,{lamps:[[-.56,.35],[.56,.35],[-.55,-.32],[.55,-.32]],visitors:[[-.22,.36],[.18,.37],[.07,.40]]});
-}
+export {drum} from './xian-drum.js';
+
 function pagodaStorey(k,g,p,w,top,h,y,door=true){
   const sub=new THREE.Group();
   for(let side=0;side<4;side++){

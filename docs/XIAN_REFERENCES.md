@@ -46,3 +46,18 @@
 ![大雁塔砖构近景](images/xian-pagoda-oblique.png)
 
 ![大雁塔夜景](images/xian-pagoda-night.png)
+
+
+## 0.55.23 鼓楼木构与侧面台阶精修
+
+依据[西安科普网的形制资料与侧面照片](https://www.xakpw.com/single/23806)，以七开间、三进深、两层外廊、三重檐歇山顶和青砖台基作为轮廓约束。直接核看 BrokenSphere 在 2007 年 10 月 24 日拍摄的[西北侧立面](https://commons.wikimedia.org/wiki/File:Xi%27an_Drum_Tower_northwest_view.JPG)、[夜间檐下细部](https://commons.wikimedia.org/wiki/File:Xi%27an_Drum_Tower_facade_at_night.JPG)和[鼓架近照](https://commons.wikimedia.org/wiki/File:Xi%27an_Drum_Tower_row_of_drums.JPG)。历史照片用于形制和配色观察，不声称反映当前每日灯光方案。
+
+取消密集白窗格，改为深木色柱廊、退入内侧的门窗、青绿金彩绘和层叠斗拱。最高屋顶补红山墙、歇山转折、瓦垄与脊兽，保留南北匾额；两列鼓架分别制作鼓身、鼓面和支架，廊下悬挂红灯笼。登楼台阶移到台基两侧，贯通券洞与水平平台保持连通，场地外缘顺接球面。夜间使用低亮度暖光，灯笼缓慢变化，减少动态模式保持稳定。
+
+彩绘、脊兽和鼓面纹饰采用缩微概括，未复制照片作为贴图。该模块为完整可增删单元，未改动其他景点的位置或多人旅行数据。
+
+![鼓楼日景](images/xian-drum.png)
+
+![鼓楼侧面](images/xian-drum-oblique.png)
+
+![鼓楼夜景](images/xian-drum-night.png)
