@@ -63,3 +63,16 @@
 ![杜甫江阁灰瓦与开放回廊](images/changsha-dufu.png)
 
 ![杜甫江阁暖金夜景](images/changsha-dufu-night.png)
+
+
+## 0.55.17 爱晚亭
+
+对照[2024 年前、侧、背面实拍](https://www.jiangyu.org/yue-lu-shan/)与[湖南省文旅厅的结构介绍](https://whhlyt.hunan.gov.cn/ggwh/201408/t20140804_5430585.html)，重做绿琉璃瓦双檐、四根灰石外柱、四根红色内柱、透空万字窗棂和红底匾额。彩绘横梁、石栏、瓦脊与檐下照明补足近看层次，亭内保持通透。
+
+石阶沿山坡升至水平台基，建筑保持刚性。匾额使用系统楷体，并非历史书法原件；莲花藻井依据官方文字作缩微表达，没有冒称对照内部实拍复原。秋色和夜间檐下暖光为艺术化场景，不表示景区夜间开放或真实灯光节目。照片仅作内部研究，没有收入公开包。
+
+![爱晚亭日景](images/changsha-aiwan.png)
+
+![爱晚亭背面](images/changsha-aiwan-back.png)
+
+![爱晚亭夜景](images/changsha-aiwan-night.png)

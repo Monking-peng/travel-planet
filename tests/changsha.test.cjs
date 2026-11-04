@@ -134,3 +134,23 @@ test('Du Fu Pavilion has deep open galleries, closed grey roofs and continuous e
   const lights=[];g.traverse(o=>{if(o.isPointLight)lights.push(o);});assert.equal(lights.length,2);assert.ok(lights.every(l=>l.parent===g&&l.intensity===0&&l.userData.nightIntensity>0));
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+
+test('Aiwan Pavilion keeps open passages and grilles, closed green roofs and a continuous hillside stair',async()=>{
+ const T=await import('three'),{createChangshaScene}=await import('../web/changsha-scene.js'),scene=createChangshaScene();scene.root.updateMatrixWorld(true);
+ const g=scene.landmarks.get('aiwan'),ray=(origin,direction,far=5)=>new T.Raycaster(g.localToWorld(new T.Vector3(...origin)),new T.Vector3(...direction).transformDirection(g.matrixWorld),0,far).intersectObject(g,true);
+ try{
+  assert.equal(ray([0,.30,.40],[0,0,-1],.8).length,0,'Visitors must be able to see through the pavilion at walking height');
+  const roofHits=ray([.02,1,.04],[0,-1,0]);assert.ok(roofHits.some(h=>h.object.material.userData.aiwanRoof),'Upper roof must close over the center');
+  assert.ok(ray([.02,1,.23],[0,-1,0]).some(h=>h.object.material.userData.aiwanRoof),'Lower eaves must cover the outer colonnade');
+  let open=0,framed=0;for(let x=-.10;x<=.10;x+=.009)for(let y=.54;y<=.62;y+=.009){const hits=ray([x,y,.15],[0,0,-1],.05);if(hits.length)framed++;else open++;}
+  assert.ok(open>50&&framed>15,'Upper lattice must have actual openings and framing, not a filled panel');
+  let last=null;for(let i=0;i<16;i++){
+   const hits=ray([0,1,.61-i*.026],[0,-1,0]).filter(h=>h.object.material.userData.aiwanSteps);assert.ok(hits.length,'Each step must be present');
+   const y=g.worldToLocal(hits[0].point.clone()).y;assert.ok(last===null||(y>last&&y-last<.030),'Stair rise must stay continuous');last=y;
+  }
+  assert.ok(Math.abs(last-.1925)<.003,'Top stair must meet the pavilion floor');
+  const mats=new Set();g.traverse(o=>{if(o.material)mats.add(o.material);});const roofs=[...mats].filter(m=>m.userData.aiwanRoof);assert.ok(roofs.length);assert.ok(roofs.every(m=>m.color.getHexString()==='42776d'));
+  scene.setNight(true);assert.ok(roofs.every(m=>m.color.getHexString()==='42776d'),'Night must retain the green glaze');
+ }finally{scene.dispose();}
+});

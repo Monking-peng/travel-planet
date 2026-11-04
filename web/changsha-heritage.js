@@ -46,26 +46,7 @@ export function yuelu(k){
   return k.merge(g);
 }
 
-export function aiwan(k){
-  const g=new THREE.Group(),p=palette(k);p.edge=glow(k,'#e9cb8d',.55);p.tile=k.mat('#427767',.65,.20);p.red=k.mat('#9c5143');p.bark=k.mat('#75654c');p.leaves=['#a45737','#be743c','#8f773e','#62805b'].map(c=>k.mat(c,.96));
-  const elevation=hill(k,g,.72,.67,.17,'#758869'),y=.17;
-  k.box(g,.42,.018,.40,p.stone,0,y+.009,0);
-  for(const x of [-.16,.16])for(const z of [-.15,.15])k.box(g,.015,.23,.015,p.stone,x,y+.13,z);
-  for(const x of [-.115,.115])for(const z of [-.105,.105])k.cyl(g,.008,.009,.24,p.red,x,y+.135,z,10);
-  for(const side of [-1,1]){k.box(g,.35,.032,.013,p.wood,0,y+.239,side*.15);k.box(g,.013,.032,.32,p.wood,side*.16,y+.239,0);}
-  hip(k,g,.52,.50,.10,y+.26,p.tile,p.edge);
-  k.box(g,.22,.092,.22,p.wood,0,y+.36,0);
-  for(const side of [-1,1]){lattice(k,g,0,y+.36,side*.112,.19,.07,p.red);k.box(g,.20,.006,.006,p.red,0,y+.403,side*.115);}
-  hip(k,g,.365,.35,.092,y+.41,p.tile,p.edge);k.ball(g,.010,p.tile,0,y+.515,0);
-  plaque(k,g,'爱晚亭',.13,.043,0,y+.36,.118);
-  // Continuous stepped approach follows the mound instead of floating above it.
-  for(let i=0;i<12;i++){const z=.61-i*.027,h=elevation(0,z);k.box(g,.15,.018,.029,p.stone,0,h+.010,z);}
-  for(let i=0;i<27;i++){const a=i*2.399,r=.32+(i%5)*.064,x=Math.cos(a)*r,z=Math.sin(a)*r;if(z>.18&&Math.abs(x)<.12)continue;autumn(k,g,x,elevation(x,z),z,.13+(i%3)*.022,p,i);}
-  for(const x of [-.16,.16]){const lamp=new THREE.PointLight('#efbc78',0,.42,2);lamp.userData.nightIntensity=.018;lamp.position.set(x,y+.19,.19);g.add(lamp);}
-  bollards(k,g,[[-.12,.58],[.12,.58],[-.22,.30],[.22,.30]],'#edc389');
-  // Merge geometry before attaching the small local lights.
-  const lights=g.children.filter(o=>o.isLight);k.merge(g);lights.forEach(o=>g.add(o));return g;
-}
+export {aiwan} from './changsha-aiwan.js';
 
 function pavilion(k,g,p,{x=0,z=0,w=.58,d=.40,base=.10,levels=3,step=.205}={}){
   for(let level=0;level<levels;level++){
