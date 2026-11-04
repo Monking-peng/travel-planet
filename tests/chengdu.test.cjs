@@ -51,3 +51,14 @@ test('Wuhou gate has a clear central passage, closed timber sides and connected 
   assert.equal(k.materials.filter(m=>m.userData.pulse).length,4,'four lanterns retain separate light phases');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Tianfu has an open central court, level water and a dry continuous entrance from the land',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tianfu}=await import('../web/chengdu-tianfu.js'),k=makeKit({time:{value:0},night:{value:0}}),g=tianfu(k);g.updateMatrixWorld(true);
+ try{
+  let roof,water;g.traverse(m=>{if(m.material?.userData.museumRoof)roof=m;if(m.material?.userData.water)water=m;});assert.ok(roof&&water);
+  assert.equal(new T.Raycaster(new T.Vector3(0,.7,.025),new T.Vector3(0,-1,0)).intersectObject(roof).length,0,'the roof must not cap the courtyard');
+  assert.ok(new T.Raycaster(new T.Vector3(.25,.7,0),new T.Vector3(0,-1,0)).intersectObject(roof).length>0,'gallery roof remains solid');
+  const pos=water.geometry.attributes.position;for(let i=0;i<pos.count;i++)assert.ok(Math.abs(pos.getY(i)-.018)<1e-6,'water cannot curve down as a vertical wall');
+  let previous=.04;for(let z=-.44;z>=-1.04;z-=.01){const hit=new T.Raycaster(new T.Vector3(0,.04,z),new T.Vector3(0,-1,0),0,.5).intersectObject(g,true)[0];assert.ok(hit&&['c5c9bc','657875'].includes(hit.object.material.color.getHexString()),'entry path must not break into grass or water at '+z);assert.ok(hit.point.y<=previous+.004&&previous-hit.point.y<.035,'entry ramp remains connected');previous=hit.point.y;}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

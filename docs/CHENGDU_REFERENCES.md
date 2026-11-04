@@ -50,3 +50,18 @@ IFS 的「I AM HERE」熊猫雕塑原作由 Lawrence Argent 创作；此处为�
 ![红墙与竹影](images/chengdu-wuhou-side.png)
 
 ![入口夜景](images/chengdu-wuhou-night.png)
+
+
+## 0.55.30 天府美术馆
+
+对照[设计方提供的项目介绍与日夜、鸟瞰照片](https://www.archiposition.com/items/71382578ed)、[谷德的设计资料和剖面](https://www.gooood.cn/chengdu-tianfu-art-gallery-by-china-southwest-architectural-design-and-research-institute-corp.htm)，重做宽阔的五片曲面翼展、暖色深檐、两层玻璃展厅和中央庭院。原模型只在巨大屋顶下放了窄小玻璃核心，现让展厅跟随各翼展开，并补内部隔墙、楼层和曲线楼梯。
+
+临水步道连成一体，在背面接回陆地；水面保持水平，取消沿球面弯下的水墙。屋顶用圆润而不完全对称的五翼轮廓，开敞中庭以收窄的水滴形表达。灯光来自展厅和檐下，玻璃保持深浅与透明层次；低矮庭灯缓慢变化，减少动态效果时静止。扩大后的组团向外移，与东安湖体育场留出空隙。
+
+建筑、庭院和水岸是实拍指导的几何缩微表达，不是精确测绘；室内布局、岸坡和灯光经过压缩，不代表全部展厅或现实展览。摄影作品只在本地用于研究，未作为纹理或公开文件分发。
+
+![天府美术馆日景](images/chengdu-tianfu.png)
+
+![展厅夜景](images/chengdu-tianfu-night.png)
+
+![陆地入口与连续步道](images/chengdu-tianfu-back.png)

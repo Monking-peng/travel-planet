@@ -62,24 +62,4 @@ export function pandaTower(k){
  return finish(k,g,{lamps:[[-.27,.25],[.27,.25]],visitors:[[-.09,.34],[.10,.36]]});
 }
 
-export function tianfu(k){
- const g=new THREE.Group(),p=palette(k),height=site(k,g,.74,.67);p.water.color.set('#607d7b');p.water.roughness=.25;
- // The exhibition hall emerges from a reflecting pool, under five generous petals.
- skin(k,g,(u,v)=>{const a=u*TAU,r=v*.60;return [Math.sin(a)*r,.020,Math.cos(a)*r];},36,160,p.water);
- const glass=k.mat('#8fa39c',.33,.26),frame=k.mat('#788c88',.5,.3),roofMat=k.mat('#deded0',.58,.27),soffit=k.mat('#b39462',.85),rim=glow(k,'#e8d4ad',.53,.3,.37);
- glass.userData.night={color:new THREE.Color('#e6c698'),intensity:.27};soffit.userData.night={color:new THREE.Color('#e3bd80'),intensity:.23};
- function roofPoint(u,v,under=0){const a=u*TAU,petal=(1+Math.cos(5*a))/2,r=(.105+v*(.36+.11*petal));return [Math.sin(a)*r,.205+v*(.045+.205*petal)+.018*Math.sin(v*Math.PI)-under,Math.cos(a)*r];}
- skin(k,g,(u,v)=>roofPoint(u,v),30,240,roofMat);skin(k,g,(u,v)=>roofPoint(u,v,.008),30,240,soffit);
- roofMat.userData.preserveSmooth=true;soffit.userData.preserveSmooth=true;
- k.line(g,Array.from({length:240},(_,i)=>roofPoint(i/240,1,.003)),.003,rim,true);
- k.cyl(g,.104,.104,.014,roofMat,0,.204,0,64);
- for(let j=1;j<=16;j++)k.line(g,Array.from({length:240},(_,i)=>roofPoint(i/240,j/16,.010)),.00065,soffit,true);
- for(let i=0;i<60;i++)k.line(g,Array.from({length:16},(_,j)=>roofPoint(i/60,j/15)),.00065,frame);
- function wallPoint(a,y){const r=.225+.035*Math.cos(5*a);return [Math.sin(a)*r,.027+y*.184,Math.cos(a)*r];}
- skin(k,g,(u,v)=>wallPoint(u*TAU,v),8,160,glass);
- for(let i=0;i<56;i++){const a=i/56*TAU;k.beam(g,wallPoint(a,0),wallPoint(a,1),.0013,frame,5);}
- for(let j=1;j<=3;j++)k.line(g,Array.from({length:160},(_,i)=>wallPoint(i/160*TAU,j/4)),.0011,frame,true);
- for(const side of [-1,1]){k.box(g,.10,.008,.27,p.pale,side*.36,.027,.27);for(let i=0;i<6;i++)k.box(g,.105,.002,.001,p.stone,side*.36,.032,.16+i*.04);}
- grove(k,g,height,[[-.57,-.20,.12],[.57,-.20,.12],[-.32,-.52,.13],[.34,-.52,.13]]);
- return finish(k,g,{lamps:[[-.36,.42],[.36,.42]],visitors:[[-.36,.30],[-.36,.37],[.36,.31]]});
-}
+export {tianfu} from "./chengdu-tianfu.js";
