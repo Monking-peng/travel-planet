@@ -1,6 +1,22 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Shaanxi museum has an open entrance, separate forecourt and connected level hall stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{historyMuseum}=await import('../web/xian-museum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=historyMuseum(k);g.updateMatrixWorld(true);
+ const hit=(p,d,n=1)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  assert.equal(hit([0,.075,.54],[0,0,-1],.30),undefined,'front gate must leave a central passage into the court');
+  assert.equal(hit([-.32,.17,-.067],[1,0,0],.64),undefined,'main hall facade stays behind the column gallery');
+  const lawn=hit([.28,.12,.17],[0,-1,0],.2),court=hit([0,.12,.24],[0,-1,0],.2);assert.ok(lawn&&court&&court.point.y<.02,'open forecourt separates the gate and elevated main hall');
+  let previous=.013;for(let i=0;i<10;i++){const step=hit([.04,.12,.19-i*.016],[0,-1,0],.2);assert.ok(step);assert.ok(Math.abs(step.point.y-previous-.0082)<1e-5,'every stair rises by one small tread');previous=step.point.y;}
+  for(const z of [.027,.0,-.01]){const landing=hit([.04,.12,z],[0,-1,0],.2);assert.ok(landing&&Math.abs(landing.point.y-previous)<1e-5,'stair landing and main platform remain continuous');}
+  for(const x of [-.54,.54])for(const z of [-.49,.35]){const corner=hit([x,1,z],[0,-1,0],1);assert.ok(corner&&corner.point.y>.28,'four raised corner pavilions stay distinct from low linking wings');}
+  for(const x of [-.54,.54]){const wing=hit([x,1,-.055],[0,-1,0],1);assert.ok(wing&&wing.point.y<.18,'side galleries do not become extra tall halls');}
+  g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.museumRigid,'the roof, stairs, sign and court lights share a level foundation');});
+  const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>.48&&bounds.max.y<.55);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
 test('Drum tower keeps its arch and galleries open with level side stairs and gabled roof',async()=>{
  const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{drum}=await import('../web/xian-drum.js'),k=makeKit({time:{value:0},night:{value:0}}),g=drum(k);g.updateMatrixWorld(true);
  const hits=(p,d,n=1)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true);

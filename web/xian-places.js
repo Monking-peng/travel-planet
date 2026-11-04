@@ -16,19 +16,7 @@ export function wall(k){
   for(let i=0;i<13;i++){const x=(i/12-.5)*1.36;k.cyl(g,.002,.003,.10,p.wood,x,.24,-.04,6);for(const h of [.25,.275])k.ball(g,.006,p.warm,x,h,-.04);}
   plaque(k,main,'永宁门',.12,.03,0,.115,.132);groves(k,g,[[-.67,.38,.08],[.67,.38,.08]]);g.userData={barbican:true,gateCenters:[[-.15,.085],[.36,.085]]};return finish(k,g,p,{lamps:[[-.25,.52],[.25,.52]],visitors:[[-.25,.07],[.23,.10],[.14,-.15],[-.12,.53]]});
 }
-export function historyMuseum(k){
-  const g=new THREE.Group(),p=colors(k);p.red=p.light;p.tile=k.mat('#535a54');p.wood=k.mat('#635e4c');terrace(k,g,p,.72,.58);
-  const main=new THREE.Group();main.position.z=-.08;
-  // An open columned portico in front of the glazed exhibition entrance.
-  k.box(main,.57,.17,.28,p.wall,0,.12,-.10);k.box(main,.48,.145,.006,p.wood,0,.10,.043);
-  for(let i=0;i<7;i++){const x=(i/6-.5)*.56;k.cyl(main,.007,.010,.19,p.light,x,.12,.16,10);for(let j=0;j<3;j++)k.box(main,.022+j*.014,.005,.030,p.light,x,.195+j*.008,.16);}
-  eave(k,main,p,.78,.54,.237,.105);g.add(main);
-  for(const s of [-1,1]){hall(k,g,p,{x:s*.49,z:-.04,w:.23,d:.54,h:.13,roofHeight:.06});hall(k,g,p,{x:s*.36,z:-.32,w:.25,d:.23,h:.18,roofHeight:.07});}
-  const water=k.mat('#5c8276',.35,.12);k.box(g,.65,.004,.20,water,0,.019,.32);for(const s of [-1,1])k.box(g,.018,.023,.23,p.light,s*.33,.025,.32);k.box(g,.68,.02,.015,p.light,0,.025,.43);
-  k.box(g,.36,.058,.022,p.light,0,.047,.25);plaque(k,g,'陕西历史博物馆',.34,.031,0,.054,.263);
-  groves(k,g,[[-.62,.31,.095],[.62,.31,.095],[-.63,-.37,.10],[.63,-.37,.10]]);
-  g.userData={openPortico:true};return finish(k,g,p,{lamps:[[-.45,.37],[.45,.37],[-.30,-.43],[.30,-.43]],visitors:[[-.43,.32],[.42,.37],[.08,.10]]});
-}
+export {historyMuseum} from "./xian-museum.js";
 export function furong(k){
   const g=new THREE.Group(),p=colors(k);p.tile=k.mat('#575746',.75);p.tile.userData.night={color:new THREE.Color('#e8b969'),intensity:.17};terrace(k,g,p,.73,.65);
   const water=k.mat('#527d79',.40,.1);water.userData.furongLake=true;water.userData.preserveSmooth=true;ellipseSurface(k,g,.66,.66*.86,.023,water);
