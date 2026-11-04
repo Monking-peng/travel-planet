@@ -66,7 +66,7 @@ export const LANDMARKS=[
    1.25,
    1.8
   ],
-  "description": "青瓦白墙围成院落，蓝白边饰的福字照壁、雕饰门楼、木窗回廊与后方小洋楼共同呈现喜洲宅院。",
+  "description": "蓝白彩绘照壁与层叠门楼围合院落，红木双层回廊、雕花窗格、灯笼和盆栽相映。后方小洋楼保留粉白墙身、拱窗阳台与石栏；这里呈现一组代表性庭院。",
   "source": "https://bau.com.hk/web/article/1305292658495438848/web/content_1305292658495438848.html",
   "grounded": true
  },
@@ -137,7 +137,7 @@ export const LANDMARKS=[
    0.75,
    1.9
   ],
-  "description": "红木戏台朝向石板广场，后方魁星阁抬高屋檐，两侧白族房屋围出表演空间。此处位于大理州剑川县。",
+  "description": "石砌台脚托起开放木戏台，蓝金彩绘门楣、木格窗与灰瓦翘檐围绕后方魁星阁。两侧为相连的旧铺面，夜间暖光落在梁枋与檐下；此处位于大理州剑川县。",
   "source": "https://touch.go.qunar.com/poi/5942814",
   "grounded": true,
   "hemisphere": -1

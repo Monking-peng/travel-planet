@@ -49,3 +49,25 @@
 ![南门日景](images/dali-south-day.png)
 
 ![南门夜景](images/dali-south-night.png)
+
+
+## 0.55.66 沙溪古戏台
+
+对照[近景实拍](https://touch.go.qunar.com/poi/5942814)、[正面照片](https://www.trip.com/moments/theme/destination-shaxi-ancient-town-2032362-attraction-993137/)与[2025 年完整立面](https://cj.sina.com.cn/articles/view/2393857144/p8eaf5c78027012tv8)，重做石砌高台、开放舞台、蓝金梁枋、木格门窗、后方魁星阁及相连铺面。屋檐、纹饰与背景彩绘采用缩微简化，不宣称逐件复原。
+
+后台两侧阶道接入舞台；修复末级台阶与木地板的高差、上层柱脚悬空和后墙挡住入口的问题。夜间暖光集中在木构和檐下；没有添加虚构演出、票价或夜游时间。
+
+![沙溪日景](images/dali-shaxi-day.png)
+
+![沙溪夜景](images/dali-shaxi-night.png)
+
+
+## 0.55.67 喜洲严家大院
+
+对照[紫荆杂志记者的门楼、回廊、照壁与洋楼实拍](https://bau.com.hk/web/article/1305292658495438848/web/content_1305292658495438848.html)及[庭院全景](https://www.asiaodysseytravel.com/yunnan-tours/6-days-dali-shaxi-lijiang-tour.html)，重做层叠门楼、蓝白纹饰照壁、红木双层回廊、窗格、栏杆、灯笼与小洋楼的拱窗阳台。福字使用正方形贴图，修复旧版压窄的问题；参考照片不作为贴图分发。
+
+重新整理门楼入院通路，分开传统屋顶与洋楼露台，移开挡住通路的盆栽。院落只表达代表性组合，不宣称还原全部严家大院或精确测绘位置。夜间暖光为展示设计，不代表实际开放时间。沙溪古戏台的 0.55.66 修改合并于本次交付。
+
+![严家大院日景](images/dali-yan-day.png)
+
+![严家大院夜景](images/dali-yan-night.png)

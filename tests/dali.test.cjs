@@ -54,3 +54,27 @@ test('Dali South Gate preserves three open passages with continuous supported ap
 
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Shaxi keeps an open stage, accessible rear entrances and continuous stairs attached to the platform',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{shaxi}=await import('../web/dali-shaxi.js'),k=makeKit({time:{value:0},night:{value:0}}),g=shaxi(k);g.updateMatrixWorld(true);const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(meshes,false);
+ try{
+  for(const x of [-.215,.215]){assert.equal(ray(x,.31,-.5,0,0,1,.7).length,0,'Rear access must not terminate against a solid wall');let previous=-Infinity;for(let i=0;i<=260;i++){const z=-.49+i/260*.65,h=ray(x,.29,z,0,-1,0,.6);assert.ok(h.length,'Stairs and platform have no missing tread');const y=h[0].point.y;if(i)assert.ok(y-previous<.025,'The entry and each stair rise stay bounded');assert.ok(y>=previous-.002,`No reverse drop before the stage: x=${x} z=${z} y=${y} prev=${previous}`);previous=y;}assert.ok(Math.abs(previous-.241)<.0001,'Last stair reaches the stage floor');}
+  assert.equal(ray(-.21,.36,.12,1,0,0,.42).length,0,'Performance space remains open between the front posts');assert.ok(ray(0,.36,.12,0,0,-1,.4).length,'Rear timber backdrop is physically present');
+  for(const x of [-.178,.178])for(const z of [-.305,.015]){const hit=ray(x,.66,z,0,-1,0,.03);assert.ok(hit.length&&hit[0].point.y>.645,'Upper columns have a supporting deck');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+
+test('Yan courtyard keeps a connected entrance, recessed galleries and a clear western villa terrace',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{yan}=await import('../web/dali-yan.js'),k=makeKit({time:{value:0},night:{value:0}}),g=yan(k);g.updateMatrixWorld(true);const meshes=[];g.traverse(o=>{if(o.isMesh)meshes.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(meshes,false);
+ try{
+  assert.equal(ray(-.38,.10,.42,0,0,-1,.25).length,0,'Open gate must lead to the court without hitting a side-wing wall');
+  assert.equal(ray(-.38,.10,.17,1,0,0,.38).length,0,'Inside the gate, the route must turn into the main courtyard');
+  for(let i=0;i<=80;i++){const z=.42-i/80*.25,h=ray(-.405,.08,z,0,-1,0,.1);assert.ok(h.length,'Entrance has continuous paving');assert.ok(Math.abs(h[0].point.y-.021)<.002,'No floating threshold or abrupt entrance step');}
+  for(const y of [.10,.28])assert.equal(ray(-.20,y,-.245,1,0,0,.40).length,0,'Recessed windows leave a clear timber gallery');
+  // Traditional roofs previously cut through the villa terrace.
+  for(const x of [.40,.48,.56])for(const z of [-.47,-.40,-.33]){const hits=ray(x,1,z,0,-1,0,1);assert.ok(hits.length);assert.ok(hits[0].point.y>.38&&hits[0].point.y<.40,'Terrace remains clear, level and separate from the old roof');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
