@@ -27,3 +27,14 @@
 ![双塔背面](images/guilin-twins-back.png)
 
 ![双色夜景与水纹](images/guilin-twins-night.png)
+
+
+## 0.55.71 靖江王府与独秀峰
+
+核看[桂林日报的承运门实拍](https://epaper.guilinlife.com/glrbh5/glrb/20240919/Articel05001NR.htm)、[完整门楼照片](https://www.zhangjiajietravelguide.com/guilin/attraction/jingjiang-palace.html)与上表独秀峰摄影。承运门改为向两翼逐级降低的黄色门楼，补充三层拱石、红木格窗、竖向金色匾额和白石平台；中央石坡与两侧石阶连接前庭，门后石阶通向庭院。拱洞保持真实贯通。
+
+独秀峰改为顶部钝圆、侧壁较陡的灰白石灰岩山体，保留不规则崖纹、局部苔色、稀疏树丛与峰顶小亭。移除了草稿里过于规整的横向接缝。日景保持黄色墙身和深灰瓦，夜间只加强门楼暖光与檐口；山体保持暗部。场地是压缩的代表性组合，不是整个王府的测绘复原。
+
+![靖江王府日景](images/guilin-jingjiang-day.png)
+
+![靖江王府夜景](images/guilin-jingjiang-night.png)

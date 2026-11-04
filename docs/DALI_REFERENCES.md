@@ -93,3 +93,14 @@
 ![兴盛大桥日景](images/dali-xingsheng-day.png)
 
 ![兴盛大桥夜景](images/dali-xingsheng-night.png)
+
+
+## 0.55.70 苍山洗马潭
+
+对照[洗马潭山脊与栈道实拍](https://gs.ctrip.com/html5/you/sight/dalicity1445616/1834533.html)及[云南网刊载的高山杜鹃照片](https://m.yunnan.cn/system/2020/06/16/030723793.shtml)，用有高差和岩面起伏的山脊替换光滑山包，湖岸改为不规则轮廓，低矮灌丛与浅色花簇沿坡分布。花色采用花期的艺术化表达，不代表全年景色或实时花情。
+
+栈道随地形逐级变化，保留栏杆、支柱和观景平台。实测步道中心及两侧均高于地面、没有断口，湖心高于湖床且没有方形水面越出岸线。夜间取消步道和栏杆自发光，让自然山地保留暗部；没有增设虚构灯光秀。模型没有复制精确地形或完整索道线路，参考照片没有作为公开贴图分发。
+
+![洗马潭日景](images/dali-cangshan-day.png)
+
+![洗马潭夜景](images/dali-cangshan-night.png)

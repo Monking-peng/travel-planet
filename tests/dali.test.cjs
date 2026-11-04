@@ -98,3 +98,17 @@ test('Xingsheng keeps five open spans, hollow pylons and uninterrupted deck-to-b
   for(let i=0;i<=300;i++){const x=-.70+i/300*1.4,h=ray([x,.27,.137],[0,-1,0],.10);assert.ok(h.length&&h[0].point.y>.245,'Footway must remain continuous across all five spans');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Washitan keeps water inside its basin and a continuous above-ground boardwalk to the viewpoint',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{cangshan,MOUNTAIN_ROUTE}=await import('../web/dali-mountain.js'),k=makeKit({time:{value:0},night:{value:0}}),g=cangshan(k);g.updateMatrixWorld(true);const deck=[],terrain=[],water=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.cangshanDeck)deck.push(o);if(o.material.userData.cangshanTerrain)terrain.push(o);if(o.material.userData.water)water.push(o);});
+ const down=(x,z,objects)=>new T.Raycaster(new T.Vector3(x,1,z),new T.Vector3(0,-1,0),0,2).intersectObjects(objects,false)[0]?.point.y;
+ try{
+  for(const [x,z]of [[.06,.17],[-.08,.16],[.16,.18],[.06,.27]]){const h=down(x,z,water),ground=down(x,z,terrain);assert.ok(h>ground+.002,'Lake interior must be visibly above the basin');assert.ok(Math.abs(h-.052)<.0001,'Water has a level surface');}
+  for(const [x,z]of [[-.28,.17],[.39,.17],[.06,-.06],[.06,.42]])assert.equal(down(x,z,water),undefined,'Water must not extend as a rectangular patch beyond the shoreline');
+  let previous;for(let segment=1;segment<MOUNTAIN_ROUTE.length;segment++){
+   const a=new T.Vector2(...MOUNTAIN_ROUTE[segment-1]),b=new T.Vector2(...MOUNTAIN_ROUTE[segment]),n=Math.ceil(a.distanceTo(b)/.002),normal=b.clone().sub(a).normalize();
+   for(let i=0;i<=n;i++){const q=a.clone().lerp(b,i/n);for(const side of [-1,0,1]){const x=q.x+normal.y*side*.015,z=q.y-normal.x*side*.015,h=down(x,z,deck),base=down(x,z,terrain);assert.ok(h!==undefined,`No missing path surface at ${x},${z}`);assert.ok(h>base+.001,`Terrain must not pierce the boardwalk at ${x},${z}: ${h}/${base}`);if(side===0){if(previous!==undefined)assert.ok(Math.abs(h-previous)<.019,`Continuous stair risers: ${h}/${previous}`);previous=h;}}}
+  }
+  const platform=down(.37,.26,deck);assert.ok(platform>.04&&Math.abs(platform-previous)<.001,'The route ends on the viewpoint floor');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

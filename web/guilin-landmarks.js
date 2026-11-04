@@ -49,7 +49,7 @@ export const LANDMARKS=[
    0.87,
    1.9
   ],
-  "description": "黄色王府门楼、灰瓦飞檐和贯通拱门朝向石阶，后方独秀峰拔地而起，峰顶小亭点出山城相依的尺度。",
+  "description": "黄色承运门的三组高低屋顶向两翼展开，红木格窗与石砌拱圈围住通道；石阶连通前庭，灰岩独秀峰与峰顶小亭立在后方。",
   "source": "https://gs.ctrip.com/html5/you/sight/guilin28/5066548.html",
   "grounded": true
  },

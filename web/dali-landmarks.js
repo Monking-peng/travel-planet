@@ -101,7 +101,7 @@ export const LANDMARKS=[
    1.2,
    1.8
   ],
-  "description": "起伏山脊和高山灌丛围住清蓝潭水，浅色栈道沿坡地转折，观景平台望向苍山深处。",
+  "description": "嶙峋山脊围住不规则的高山湖岸，浅色栈道沿坡转折，低矮杜鹃灌丛连接观景平台。",
   "source": "https://gs.ctrip.com/html5/you/sight/dalicity1445616/1834533.html",
   "grounded": true,
   "hemisphere": -1

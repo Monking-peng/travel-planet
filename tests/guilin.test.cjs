@@ -39,3 +39,15 @@ test('Sun and Moon Pagodas retain their height ratio and their water animation r
  s.setLandmarkEnabled('twins',false);s.setLandmarkEnabled('twins',true);assert.equal(s.landmarks.get('twins').children.find(o=>o.material===m),lake,'Module restoration reuses its water material');s.setNight(false);assert.equal(m.emissiveIntensity,0);assert.ok(day.equals(m.color));
  }finally{s.dispose();}
 });
+
+test('Jingjiang preserves its complete arch passage and connected front and rear stair approaches',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{jingjiang}=await import('../web/guilin-jingjiang.js'),k=makeKit({time:{value:0},night:{value:0}}),g=jingjiang(k);g.updateMatrixWorld(true);const wall=[],paving=[],all=[];g.traverse(o=>{if(!o.isMesh)return;all.push(o);if(o.material.userData.jingjiangWall)wall.push(o);if(o.material.userData.jingjiangPaving)paving.push(o);});
+ const ray=(x,y,z,dx,dy,dz,far,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(dx,dy,dz),0,far).intersectObjects(objects,false);
+ try{
+  for(const x of [-.07,0,.07])assert.equal(ray(x,.19,.5,0,0,-1,.6,wall).length,0,'The arch must pass through the entire gateway');
+  assert.ok(ray(.14,.19,.5,0,0,-1,.6,wall).length,'The pier beside the arch stays solid');
+  for(const x of [-.145,.145]){let previous;for(let i=0;i<=300;i++){const z=.617-i/300*.329,h=ray(x,.15,z,0,-1,0,.4,paving);assert.ok(h.length,`No entry gap at ${x}/${z}`);const y=h[0].point.y;if(previous!==undefined){assert.ok(y>=previous-.002,'Stair approach must not drop backward');assert.ok(y-previous<.014,'No missing stair tread');}previous=y;}assert.ok(Math.abs(previous-.092)<.001,'Front flight reaches the elevated gateway');}
+  let previous;for(let i=0;i<=210;i++){const z=.28-i/210*.49,h=ray(0,.15,z,0,-1,0,.4,all);assert.ok(h.length,'Paving and rear stairs remain continuous');const y=h[0].point.y;if(previous!==undefined)assert.ok(Math.abs(y-previous)<.017,'Rear stair has no abrupt break');previous=y;}
+  const rock=all.filter(o=>o.material.userData.naturalFeature==='duxiu-peak');assert.equal(rock.length,1);const b=new T.Box3().setFromObject(rock[0]);assert.ok(b.max.y>.62&&b.max.y<.72,'Limestone summit has the intended blunt peak scale');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
