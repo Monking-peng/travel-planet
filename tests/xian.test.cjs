@@ -58,8 +58,10 @@ test('Bell tower retains real crossing tunnels rather than painted doorways',asy
 });
 test('Xian module lights detach together, night preserves colors and resources dispose once',async()=>{
  const {createXianScene}=await import('../web/xian-scene.js'),s=createXianScene(),original=new Map(s.landmarks),geos=new Set(),colors=new Map(),pulse=[];
+ const courtLights=[];s.landmarks.get('warriors').traverse(o=>{if(o.material?.userData.pulse)courtLights.push(o.material);});assert.equal(courtLights.length,4,'protective hall courtyard lamps have independent slow variation');
  s.root.traverse(o=>{if(o.geometry)geos.add(o.geometry);if(o.material?.color&&o.userData.landmark){colors.set(o.material,o.material.color.clone());if(o.material.userData.pulse&&!pulse.includes(o.material))pulse.push(o.material);}});
  s.setNight(true);colors.forEach((c,m)=>{assert.ok(c.equals(m.color));assert.ok([m.emissive.r,m.emissive.g,m.emissive.b,m.emissiveIntensity].every(Number.isFinite),'cloned module materials must retain valid night colors');});assert.ok(pulse.length>0);s.update(1,false);const a=pulse.map(m=>m.emissiveIntensity);s.update(6,false);assert.ok(pulse.some((m,i)=>a[i]!==m.emissiveIntensity));s.update(7,true);const b=pulse.map(m=>m.emissiveIntensity);s.update(99,true);assert.deepEqual(pulse.map(m=>m.emissiveIntensity),b);
+ s.update(1,false);const courtyardA=courtLights.map(m=>m.emissiveIntensity);s.update(4,false);assert.ok(courtLights.every((m,i)=>m.emissiveIntensity!==courtyardA[i]));s.update(7,true);const courtyardStill=courtLights.map(m=>m.emissiveIntensity);s.update(99,true);assert.deepEqual(courtLights.map(m=>m.emissiveIntensity),courtyardStill);
  for(const [id,g]of original){const lights=[];g.traverse(o=>{if(o.isLight)lights.push(o);});assert.ok(lights.length&&lights.every(l=>l.intensity>0));assert.equal(s.setLandmarkEnabled(id,false),true);assert.equal(g.parent,null);assert.equal(s.setLandmarkEnabled(id,true),true);assert.equal(s.landmarks.get(id),g);}
  s.setNight(false);s.root.traverse(o=>{if(o.isLight)assert.equal(o.intensity,0);});let count=0;geos.forEach(g=>g.addEventListener('dispose',()=>count++));for(const id of original.keys())s.setLandmarkEnabled(id,false);s.dispose();s.dispose();assert.equal(count,geos.size);
 });
@@ -103,5 +105,18 @@ test('Small Wild Goose Pagoda has north-south recessed windows, broken crown and
   assert.equal(hit([0,.060,.65],[0,0,-1],.42),undefined,'central temple entrance must remain a usable passage');
   g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.smallPagodaRigid,'court lamps and buildings use the same level foundation');});
   const bounds=new T.Box3().setFromObject(g);assert.ok(bounds.max.y>1.27&&bounds.max.y<1.31,'tower retains thirteen-storey height without a fictitious spire');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
+
+test('Protective hall has a long shallow vault, visible arched glazing and continuous stone entrance',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{warriors}=await import('../web/xian-warriors.js'),k=makeKit({time:{value:0},night:{value:0}}),g=warriors(k);g.updateMatrixWorld(true);
+ const hit=(p,d,n=2)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,n).intersectObject(g,true)[0];
+ try{
+  assert.equal(hit([-.54,.08,.465],[1,0,0],.36),undefined,'columns leave the outside gallery clear in front of recessed doors');
+  const face=hit([-.345,.212,.55],[0,0,-1]);assert.ok(face&&Math.abs(face.point.z-.38)<.01,'arched end-wall remains visible above the low entrance roof');
+  for(const z of [-.72,-.20,.32]){const crest=hit([-.36,.4,z],[0,-1,0]),edge=hit([-.56,.4,z],[0,-1,0]);assert.ok(crest&&edge&&crest.point.y>edge.point.y+.045,'shallow arched roof continues the whole long hall');}
+  let previous=.014;for(let i=0;i<5;i++){const tread=hit([-.345,.07,.43+.128-i*.012],[0,-1,0],.1);assert.ok(tread&&Math.abs(tread.point.y-previous-.0048)<1e-5);previous=tread.point.y;}
+  for(const z of [.506,.49]){const landing=hit([-.345,.07,z],[0,-1,0],.1);assert.ok(landing&&Math.abs(landing.point.y-previous)<1e-5,'landing joins the final stair without an empty gap');}
+  g.traverse(o=>{if(o.isMesh)assert.ok(o.material.userData.warriorsRigid);});
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });

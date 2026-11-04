@@ -91,3 +91,18 @@
 ![陕历博柱廊与台阶](images/xian-museum-oblique.png)
 
 ![陕历博院落夜景](images/xian-museum-night.png)
+
+
+## 0.55.26 兵马俑保护展馆
+
+直接对照[秦始皇帝陵博物院一号坑页面](https://www.bmy.com.cn/pitone.html)的入口实拍、[独立正门照片](https://www.globalmountainsummit.org/terra-cotta-warriors.html)，以及[新华社发布的场馆航拍](https://www.xinhuanet.com/culture/20240910/61e0116ddcc6435584a9c5cc988564d5/c.html)。[博物院导览图](https://www.bmy.com.cn/guide/scenic.html?tid=2)仅用于核对相对位置，不作为屋面实拍。
+
+一号坑采用浅拱长壳，保留连续脊部天窗、两侧窗带、浅拱玻璃端墙和深灰金属分缝。前部改为五跨米灰石柱门廊、低矮灰瓦檐和连续宽阶，露出上部拱窗；去掉旧模型误用的红柱小殿。相邻保护厅保留宽阔低屋面、浅色墙板、前部突出门厅与入口，前院以草坪、修剪灌木和侧方雪松围合；不把其他馆舍冒称某号坑。
+
+夜间保留材质原色，以入口檐下暖灯、窗光和庭灯分层，避免将整片屋面点亮。建筑整体保持水平，场地外缘衔接球面，并拉开与陕历博的间距。模型是两座主要保护展厅的缩微表达，不是完整考古遗址或实测建筑复原；没有把场景灯光表述为现实夜游开放安排。照片仅作内部研究，未作为公开纹理或打包资产。
+
+![兵马俑展馆日景](images/xian-warriors.png)
+
+![长拱顶与相邻保护厅](images/xian-warriors-oblique.png)
+
+![兵马俑展馆夜景](images/xian-warriors-night.png)
