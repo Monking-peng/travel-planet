@@ -56,3 +56,18 @@ test('Nanxun keeps the uninstalled-clock opening and wind pavilion genuinely ope
   for(const x of [-.12,.12])assert.equal(ray([x,.075,.37],[0,0,-1],.20).length,0,'Water between the detached pavilions remains open');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Nanputuo stone porticoes are recessed and the uphill stair meets the octagonal podium without a jump',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{putuo}=await import('../web/xiamen-putuo.js'),k=makeKit({time:{value:0},night:{value:0}}),g=putuo(k);g.updateMatrixWorld(true);
+ try{
+  const ray=(p,d,far)=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,far).intersectObject(g,true);
+  assert.equal(ray([0,.20,.1125],[0,0,-1],.08).length,0,'The main-hall portico must have depth in front of the door wall');
+  assert.ok(ray([.045,.20,.1125],[0,0,-1],.08).length>0,'The front stone columns remain solid');
+  assert.equal(ray([0,.25,-.26],[0,0,-1],.065).length,0,'The octagonal hall has an open outer porch');
+  assert.ok(ray([.07156,.25,-.26],[0,0,-1],.065).length>0,'The octagonal porch still has stone posts');
+  let last=.034;
+  for(let z=-.200;z>-.305;z-=.002){const hit=ray([.024,.24,z*.90],[0,-1,0],.24)[0];assert.ok(hit,'The stair cannot float over a gap');assert.ok(hit.point.y>=last-.001&&hit.point.y-last<.012,'The stair must ascend continuously into the podium');last=hit.point.y;}
+  assert.ok(last>.179,'The stairs must reach the hall terrace');
+  assert.equal(ray([0,.08,.675],[0,-1,0],.06)[0]?.object.material.userData.water,true,'The foreground pond stays open rather than being covered by a building platform');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
