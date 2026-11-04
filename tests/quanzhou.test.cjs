@@ -37,3 +37,11 @@ test('Luojia bridge joins its island without a blocking seawall rail, temple por
   const arch=new T.Raycaster(new T.Vector3(-.65,.15,.27),new T.Vector3(1,0,0),0,.35);assert.equal(arch.intersectObjects(gate).length,0,'The green gate is a genuine arch passage');arch.ray.origin.z=.32;assert.ok(arch.intersectObjects(gate).length,'Gate piers remain beside the opening');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Tianhou gate keeps three passages and all approach stairs join the court and raised platforms',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tianhou}=await import('../web/quanzhou-tianhou.js'),k=makeKit({time:{value:0},night:{value:0}}),g=tianhou(k),structures=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.material?.userData.tianhouStructure)structures.push(o);});
+ try{
+  for(const x of [-.235,0,.235]){const ray=new T.Raycaster(new T.Vector3(x,.13,.61),new T.Vector3(0,0,-1),0,.15);assert.equal(ray.intersectObjects(structures).length,0,'Gate has three open bays, not solid painted doorways');}
+  for(const [x,start,end,min,max]of [[0,.66,.55,.024,.050],[0,.22,.10,.024,.055],[-.23,.175,.315,.024,.105],[.23,.175,.315,.024,.105]]){let last;for(let i=0;i<=100;i++){const z=start+(end-start)*i/100,ray=new T.Raycaster(new T.Vector3(x,.14,z),new T.Vector3(0,-1,0),0,.14),hit=ray.intersectObjects(structures)[0];assert.ok(hit,'Stair must remain supported');const y=hit.point.y;assert.ok(y>=min&&y<=max,`Clear tread at ${x},${z}; got ${y}`);if(last!==undefined)assert.ok(Math.abs(y-last)<.013,'No gap or abrupt riser between stair and platform');last=y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
