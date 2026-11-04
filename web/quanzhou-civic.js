@@ -33,16 +33,4 @@ export function clock(k){
  for(const side of [-1,1])for(let i=0;i<7;i++){k.box(g,.013,.001,.073,p.pale,side*.20+(i-3)*.017,.029,.135);k.box(g,.073,.001,.013,p.pale,.135,.029,side*.20+(i-3)*.017);}
  return finish(k,g,{lamps:[[-.28,.023,.24],[.28,.023,.24],[-.28,.023,-.24],[.28,.023,-.24]],visitors:[[-.22,.023,.24],[.29,.023,.19],[-.25,.023,-.17],[.20,.023,-.23]]});
 }
-export function luoyang(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,.72,.53);sea(k,g,p,.68,.46);const pierMat=k.mat('#a3a18b',.99);pierMat.userData.luoyangPiers=true;g.userData.bridgeType='stone-beam';
- // Long stone slabs rest on pointed cutwater piers, with no invented arch spans.
- for(let i=0;i<7;i++){const x=(i-3)*.165;const sh=new THREE.Shape();[[-.039,-.09],[0,-.15],[.039,-.09],[.039,.09],[0,.15],[-.039,.09]].forEach(([a,b],j)=>j?sh.lineTo(a,b):sh.moveTo(a,b));sh.closePath();const ge=new THREE.ExtrudeGeometry(sh,{depth:.138,bevelEnabled:false});ge.rotateX(-Math.PI/2);k.mesh(g,ge,pierMat,x,.027,0);
-  for(let j=1;j<6;j++){const points=[[-.039,-.09],[0,-.15],[.039,-.09],[.039,.09],[0,.15],[-.039,.09]].map(([a,b])=>[x+a*1.005,.027+j*.022,b*1.005]);k.line(g,points,.00065,p.wood,true);}
- }
- for(let i=0;i<10;i++){const x=(i-4.5)*.124;for(let j=0;j<4;j++)k.box(g,.124,.023,.040,p.pale,x,.177,(j-1.5)*.041);}
- for(const z of [-.081,.081]){railing(k,g,p,[[-.62,.19,z],[.62,.19,z]],.048);for(let i=0;i<25;i++)k.box(g,.033,.016,.006,p.stone,(i-12)*.050,.216,z);}
- const island=k.cyl(g,.13,.16,.155,p.stone,-.33,.105,-.14,12);k.box(g,.17,.018,.15,p.pale,-.33,.19,-.14);
- for(const x of [-.39,-.27])for(const z of [-.20,-.08])k.cyl(g,.0035,.004,.12,p.red,x,.258,z,8);hip(k,g,.21,.20,.045,.319,p.tile,lit(k,p.tile.color,.34),-.33,-.14);
- const pagoda=new THREE.Group();g.add(pagoda);pagoda.position.set(.48,.194,-.11);for(let j=0;j<4;j++){k.cyl(pagoda,.025-j*.002,.026-j*.002,.031,p.stone,0,.015+j*.042,0,8);k.cyl(pagoda,.019-j*.002,.034-j*.002,.013,p.stone,0,.037+j*.042,0,8);}k.cyl(pagoda,.001,.012,.045,p.stone,0,.19,0,8);
- return finish(k,g,{lamps:[[-.58,.193,.07],[.58,.193,.07]],visitors:[[-.14,.190,.015],[.12,.190,-.018],[.36,.190,.015]]});
-}
+export {luoyang} from './quanzhou-luoyang.js';

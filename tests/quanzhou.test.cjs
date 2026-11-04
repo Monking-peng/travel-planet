@@ -45,3 +45,14 @@ test('Tianhou gate keeps three passages and all approach stairs join the court a
   for(const [x,start,end,min,max]of [[0,.66,.55,.024,.050],[0,.22,.10,.024,.055],[-.23,.175,.315,.024,.105],[.23,.175,.315,.024,.105]]){let last;for(let i=0;i<=100;i++){const z=start+(end-start)*i/100,ray=new T.Raycaster(new T.Vector3(x,.14,z),new T.Vector3(0,-1,0),0,.14),hit=ray.intersectObjects(structures)[0];assert.ok(hit,'Stair must remain supported');const y=hit.point.y;assert.ok(y>=min&&y<=max,`Clear tread at ${x},${z}; got ${y}`);if(last!==undefined)assert.ok(Math.abs(y-last)<.013,'No gap or abrupt riser between stair and platform');last=y;}}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+
+test('Luoyang approaches meet the slab bridge, pavilion stairs stay supported and pointed foundations stay below upper piers',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{luoyang}=await import('../web/quanzhou-luoyang.js'),k=makeKit({time:{value:0},night:{value:0}}),g=luoyang(k),stone=[],piers=[];g.updateMatrixWorld(true);g.traverse(o=>{if(o.material?.userData.luoyangStructure)stone.push(o);if(o.material?.userData.luoyangPiers)piers.push(o);});
+ try{
+  let prev;for(let i=0;i<=300;i++){const x=-.865+1.73*i/300,ray=new T.Raycaster(new T.Vector3(x,.27,0),new T.Vector3(0,-1,0),0,.27),hit=ray.intersectObjects(stone)[0];assert.ok(hit,'Both shore approaches connect to the bridge');const y=hit.point.y;assert.ok(y>=.040&&y<=.204,'Bridge path has no raised obstructions');if(prev!==undefined)assert.ok(Math.abs(y-prev)<.012,`No unconnected slab or stair at ${x}: ${prev} to ${y}`);prev=y;}
+  const walk=new T.Raycaster(new T.Vector3(-.87,.227,0),new T.Vector3(1,0,0),0,1.74);assert.equal(walk.intersectObjects(stone).length,0,'Clear walking corridor along all spans');
+  prev=undefined;for(let i=0;i<=60;i++){const z=-.08-i*.10/60,ray=new T.Raycaster(new T.Vector3(-.29,.27,z),new T.Vector3(0,-1,0),0,.27),hit=ray.intersectObjects(stone)[0];assert.ok(hit,'Island and pavilion stairs remain connected');const y=hit.point.y;assert.ok(y>=.195&&y<=.234);if(prev!==undefined)assert.ok(Math.abs(y-prev)<.012,'Pavilion stair does not jump');prev=y;}
+  const foundation=new T.Raycaster(new T.Vector3(0,.15,-.21),new T.Vector3(0,-1,0),0,.15),hit=foundation.intersectObjects(piers)[0];assert.ok(hit&&Math.abs(hit.point.y-.104)<.002,'Long pointed cutwater is lower than the rectangular upper pier');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});
