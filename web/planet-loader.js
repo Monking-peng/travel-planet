@@ -21,19 +21,22 @@ export function createPlanetLoader({canvas,onPick,onInspect,selection,load=()=>i
     destroy(){disposed=true;instance?.destroy();retry.onclick=null;canvas.removeEventListener('planeterror',runtimeError);},
     async start(){
       if(pending||disposed)return pending;
-      controller.failed=false;state('loading');
+      controller.failed=false;state('loading');stage.dataset.phase='resources';
       pending=(async()=>{
         try{
           // On retry, change only the entry URL; local module dependencies keep
           // their identities. A failed attempt never blocks the travel API.
+          await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+          if(disposed)return;
           const module=await load(attempt++);
           if(disposed)return;
           await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
           if(disposed)return;
+          stage.dataset.phase='building';
           const builtSelection=[...selection],next=await module.mountPlanet(canvas,onPick,builtSelection,{onInspect});
           if(disposed){next.destroy();return;}
           if(next.failed){next.destroy();throw new Error('3D unavailable');}
-          instance=next;
+          instance=next;stage.dataset.phase='rendering';
           if(selection.join(',')!==builtSelection.join(','))next.setComponents(selection);
           instance.pause(paused);instance.setEditing(editing);instance.setInspection(inspecting);
           // Draw the complete scene before replacing the matching still image.

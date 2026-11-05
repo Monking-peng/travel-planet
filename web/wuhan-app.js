@@ -17,6 +17,7 @@ for(const l of LANDMARKS){const button=document.createElement('button');button.t
 const storage={get:()=>{try{return localStorage.getItem('travel-wuhan-night')==='true';}catch{return false;}},set:n=>{try{localStorage.setItem('travel-wuhan-night',String(n));}catch{}}};
 let dispose=null;
 function boot(){
+  canvas.dataset.state='loading';canvas.dataset.phase='building';
   let renderer,composer,bloom,model,controls,envTarget,pmrem,environment,resize,frame=0;
   const cleanups=[];
   const listen=(target,event,fn)=>{target.addEventListener(event,fn);cleanups.push(()=>target.removeEventListener(event,fn));};
@@ -61,10 +62,10 @@ function boot(){
       if(transition){const t=Math.min(1,(now-transition.start)/700),e=t*t*(3-2*t);camera.position.copy(transitionPosition(transition.from,transition.to,e));controls.target.lerpVectors(transition.fromTarget,transition.toTarget,e);if(t===1){transition=null;}}
       model.update(elapsed,reduced.matches);controls.update(dt);composer.render();
     }
-    setNight(storage.get());syncRotation();select(null);canvas.dataset.state='ready';canvas.setAttribute('aria-busy','false');$('#loading').hidden=true;document.querySelectorAll('button:disabled').forEach(b=>{b.disabled=false;});cleanups.push(mountModulePanel({model,canvas,resetView:()=>select(null)}));frame=requestAnimationFrame(render);
+    setNight(storage.get());syncRotation();select(null);canvas.dataset.phase='rendering';render(performance.now());canvas.dataset.state='ready';canvas.setAttribute('aria-busy','false');$('#loading').hidden=true;document.querySelectorAll('button:disabled').forEach(b=>{b.disabled=false;});cleanups.push(mountModulePanel({model,canvas,resetView:()=>select(null)}));
     dispose=()=>{stopped=true;cancelAnimationFrame(frame);resize.disconnect();cleanups.forEach(fn=>fn());controls.dispose();model.dispose();envTarget.dispose();composer.passes.forEach(p=>p.dispose?.());composer.dispose();renderer.dispose();};
     listen(canvas,'webglcontextlost',e=>{e.preventDefault();dispose();showError('3D 画面暂时不可用，请重新载入。');});
   }catch(error){cancelAnimationFrame(frame);resize?.disconnect();cleanups.forEach(fn=>fn());controls?.dispose();model?.dispose();envTarget?.dispose();pmrem?.dispose();environment?.dispose();composer?.passes.forEach(p=>p.dispose?.());composer?.dispose();renderer?.dispose();console.error(error);showError('武汉星球载入失败，请重试。');}
 }
-function showError(message){canvas.dataset.state='error';canvas.setAttribute('aria-busy','false');$('#loading').hidden=false;$('#loading span').textContent=message;$('#retry').hidden=false;document.querySelectorAll('button:not(#retry)').forEach(b=>{b.disabled=true;});}
-$('#retry').addEventListener('click',()=>location.reload());addEventListener('pagehide',event=>{if(!event.persisted)dispose?.();});boot();
+function showError(message){canvas.dataset.state='error';canvas.setAttribute('aria-busy','false');$('#loading').hidden=false;$('#loading span').textContent=message;$('#retry').hidden=false;document.querySelectorAll('button:not(#retry):not([data-intro-action])').forEach(b=>{b.disabled=true;});}
+$('#retry').addEventListener('click',()=>location.reload());addEventListener('pagehide',event=>{if(!event.persisted)dispose?.();});requestAnimationFrame(()=>requestAnimationFrame(boot));
