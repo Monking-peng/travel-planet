@@ -74,3 +74,42 @@
 ![M+ 侧后方](images/hongkong-mplus-back.png)
 
 ![M+ 夜景](images/hongkong-mplus-night.png)
+
+
+## 0.55.86 凌霄阁
+
+核看[运营方航拍](https://www.thepeak.com.hk/en/the-peak-experience/the-peak-tower-overview)、[建筑师历史照片](https://farrells.com/project/peak-tower/)与[香港工程师学会改建说明](https://hkie.org.hk/ea/en/project/95)，重做横向窗带、背面 V 形支撑、弧形底板端部梁槽、玻璃中庭、错层商铺和屋顶观景台。中庭采用 2006 年改建后的玻璃围护，未照搬旧照片中的空洞。
+
+三稿修正初版悬空台阶，将连续石阶接入山坡。夜间保留深绿玻璃和浅色实体，入口与台阶柔和照明。模型只提炼可识别体量，不宣称工程测绘复原；照片未公开打包。
+
+![凌霄阁日景](images/hongkong-peak.png)
+
+![凌霄阁背面](images/hongkong-peak-back.png)
+
+![凌霄阁夜景](images/hongkong-peak-night.png)
+
+
+## 0.55.87 志莲净苑第一进莲池庭院
+
+对照[净苑官方导览](https://en.chilin.org/tour/nunnery/index.html)、[官方唐式木构资料及航拍](https://en.chilin.org/buddhism/tang/index.html)和[地区景点实拍](https://www.gohk.gov.hk/chs/spots/spot_detail.php?spot=Chi+Lin+Nunnery+%26+Nan+Lian+Garden)，选择山门与天王殿之间的第一进庭院，重做重檐、两侧配楼、通透山门和环廊，补充灰瓦、木格栅、斗栱、石台、四方莲池、石栏与盆景。入口、穿门步行线和殿前石阶连续衔接；夜间保持柔和暖光。
+
+官方页面中的历史佛光寺对照照片未作为净苑现状；大雄殿位于后续院落，未把其单层屋顶照片冒充天王殿。此模块是第一进庭院的微缩提炼，未声称复原整座寺院。实拍只作内部研究，不纳入公开图片或贴图。
+
+![志莲净苑日景](images/hongkong-chilin.png)
+
+![庭院背面与廊庑](images/hongkong-chilin-back.png)
+
+![志莲净苑夜景](images/hongkong-chilin-night.png)
+
+
+## 0.55.88 天坛大佛
+
+对照[离岛区官方五张多角度实拍](https://www.islands.gov.hk/en/explores-tai-o-tian-tan-buddha-statue.php)，修正过绿的铜像色调、圆柱状莲瓣和简单石台。青铜材质保留日夜本色，衣褶贴合躯体，莲座采用两排错位尖瓣；三层花岗岩台基补充石栏、柱头和砌缝，长阶连续穿过台基开口。参考相册中的宝莲禅寺殿宇及牌楼不属于铜像，未混入模型。
+
+人物五官、衣纹和手势仍为程序微缩提炼，不声称雕塑或真实阶数的等比复刻。图片仅作内部参考，未纳入公开资产。夜间采用低强度暖光，不给铜像添加彩色闪灯。
+
+![天坛大佛日景](images/hongkong-buddha.png)
+
+![天坛大佛背面](images/hongkong-buddha-back.png)
+
+![天坛大佛夜景](images/hongkong-buddha-night.png)

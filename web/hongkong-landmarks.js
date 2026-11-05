@@ -92,7 +92,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "弧形悬挑体量架在双柱和玻璃基座上，顶部围栏、内部层线与山坡台阶形成山顶观景建筑。",
+  "description": "弧形悬挑体量围合观景台，正面横向窗带与背面 V 形支撑各具特点。玻璃中庭、错层商铺、端部梁槽和连续山阶连接山顶地形。",
   "source": "https://www.gohk.gov.hk/tc/spots/spot_detail.php?spot=The+Peak+and+Peak+Tram",
   "grounded": true,
   "facesHarbour": true
@@ -168,7 +168,7 @@ export const LANDMARKS=[
    1.3,
    1.9
   ],
-  "description": "灰瓦木构殿堂围合庭院，主殿、山门、两侧廊殿与四方莲池共同呈现净苑的层次，庭边保留盆景。",
+  "description": "选取第一进莲池庭院：天王殿重檐与两侧楼阁围合四方莲池，灰瓦木构、开放山门、斗拱、石栏和盆景形成层次。连续石阶连接院内外，夜间保持柔和暖光。",
   "source": "https://www.gohk.gov.hk/chs/spots/spot_detail.php?spot=Chi+Lin+Nunnery+%26+Nan+Lian+Garden",
   "grounded": true,
   "facesHarbour": true
@@ -187,7 +187,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "青铜坐像以举起的右手、盘坐双腿、衣褶和莲座区分轮廓，三层石台与山间长阶连接林坡。",
+  "description": "青铜坐像保留举起的右手与盘坐姿态，贴合身体的袈裟衣褶、双排尖瓣莲座和三层石栏台基构成层次。连续长阶穿过台基，夜间保持青铜本色与柔和石台灯光。",
   "source": "https://www.islands.gov.hk/en/explores-tai-o-tian-tan-buddha-statue.php",
   "grounded": true,
   "facesHarbour": true

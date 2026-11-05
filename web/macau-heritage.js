@@ -12,17 +12,7 @@ export function senado(k){
  const sphere=new THREE.Group();sphere.position.set(0,.16,.25);g.add(sphere);for(let i=0;i<4;i++){const o=k.mesh(sphere,new THREE.TorusGeometry(.035,.0018,5,48),p.gold);o.rotation.set(i*.6,i*.9,i*.2);}k.beam(g,[-.03,.12,.25],[.03,.20,.25],.002,p.gold);
  return finish(k,g,{lamps:[[-.43,.024,.25],[.43,.024,.25]],visitors:[[-.2,.026,.35],[.31,.026,.08],[.23,.026,.39]]});
 }
-export function dominic(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,p);const z=.12,y=.045;
- k.box(g,.65,.43,.57,p.ochre,0,y+.215,-.14);hip(k,g,.69,.61,.12,y+.43,p.tile,p.pale,0,-.14);
- const s=new THREE.Shape();s.moveTo(-.36,y);s.lineTo(.36,y);s.lineTo(.36,y+.43);s.bezierCurveTo(.24,y+.43,.205,y+.57,.19,y+.65);s.lineTo(0,y+.76);s.lineTo(-.19,y+.65);s.bezierCurveTo(-.205,y+.57,-.24,y+.43,-.36,y+.43);s.closePath();extrude(k,g,s,p.ochre,.045,z);
- for(const yy of [.02,.22,.43,.65])k.box(g,yy>.5?.42:.75,.011,.067,p.pale,0,y+yy,z);
- for(const x of [-.31,-.15,.15,.31]){k.box(g,.018,.40,.022,p.pale,x,y+.23,z+.027);for(const yy of [.03,.21,.42])k.box(g,.031,.012,.034,p.pale,x,y+yy,z+.026);}
- for(const x of [-.24,0,.24]){panel(k,g,p,{x,y:y+.035,z:z+.027,w:x===0?.13:.09,h:.15,door:true});panel(k,g,p,{x,y:y+.26,z:z+.027,w:x===0?.125:.09,h:.13,door:true,shutters:true});}
- for(const x of [-.16,.16])column(k,g,p,x,y+.45,z+.03,.18,.008);const o=k.mesh(g,new THREE.TorusGeometry(.047,.005,6,48),p.pale,0,y+.54,z+.032);k.cyl(g,.031,.031,.005,p.ochre,0,y+.54,z+.033).rotation.x=Math.PI/2;for(let j=0;j<8;j++){const a=j/8*TAU;k.ball(g,.004,p.pale,Math.sin(a)*.03,y+.54+Math.cos(a)*.03,z+.038);}
- pediment(k,g,p,0,y+.65,z+.017,.43,.10);k.box(g,.005,.06,.008,p.pale,0,y+.79,z);k.box(g,.03,.005,.008,p.pale,0,y+.8,z);
- steps(k,g,p,0,.34,.69,3,.023,.11);return finish(k,g,{lamps:[[-.43,.025,.21],[.43,.025,.21]],visitors:[[-.24,.026,.42],[.10,.026,.40]]});
-}
+export {dominic} from './macau-dominic.js';
 function villa(k,g,p,x,z,w=.19,tall=false){const y=.044,h=tall?.245:.145,d=.17;
  k.box(g,w+.015,.025,d+.025,p.stone,x,y-.01,z);k.box(g,w,h,d,p.mint,x,y+h/2,z);hip(k,g,w+.02,d+.035,.065,y+h,p.tile,p.pale,x,z);
  for(const yy of [y+.015,y+h])k.box(g,w+.02,.008,d+.018,p.pale,x,yy,z);

@@ -54,8 +54,8 @@ export const LANDMARKS=[
    0.7,
    1.9
   ],
-  "description": "暖黄色立面由白色壁柱、绿色木门窗和卷曲山花分层，中央圆饰与十字架保留教堂的正面轮廓。",
-  "source": "https://you.ctrip.com/sight/macau39/3400.html",
+  "description": "暖黄立面分为四个横向层次，白色灰泥花饰、柱头、卷曲肩部和中央椭圆浮雕构成轮廓。深绿色外开百叶围住内退格窗，石门框与连续台阶连接前场；夜晚保持暖白照明。",
+  "source": "https://www.wh.gov.mo/en/site/detail/17",
   "grounded": true,
   "facesHarbour": true
  },

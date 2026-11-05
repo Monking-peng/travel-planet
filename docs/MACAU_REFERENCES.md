@@ -44,3 +44,16 @@
 ![大三巴夜间泛光](images/macau-paul-night.png)
 
 ![大三巴侧面与后侧支撑](images/macau-paul-oblique.png)
+
+
+## 0.55.89 玫瑰堂
+
+对照[澳门文化遗产正侧近景](https://www.culturalheritage.mo/en/detail/99971)与[世界遗产立面资料](https://www.wh.gov.mo/en/site/detail/17)，补充黄墙、乳白灰泥线脚、柱头、花饰、椭圆浮雕、菱形窗下饰板、内退矩形窗面和外开绿色百叶。前阶与铺地连续连接，避免铺面交错露出碎片。夜间保留黄色墙面和绿色木窗，以暖白泛光突出线脚，不添加彩色闪灯。
+
+本次范围为主要外立面与侧墙；雕花采用概括造型，未声称复原全部宗教图案、内部空间或后侧三层钟楼。照片仅作内部造型对照，不纳入公开贴图或下载包。
+
+![玫瑰堂日景](images/macau-dominic-day.png)
+
+![玫瑰堂侧背面](images/macau-dominic-back.png)
+
+![玫瑰堂夜景](images/macau-dominic-night.png)

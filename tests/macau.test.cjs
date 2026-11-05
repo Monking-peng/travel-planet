@@ -59,3 +59,13 @@ test('St Paul preserves rectangular entrances, three open upper windows and rece
   const lights=[];g.traverse(o=>{if(o.isSpotLight)lights.push(o);});assert.ok(lights.length>0);assert.ok(lights.every(o=>o.intensity===0&&o.target.parent===g),'Facade washes stay inside the removable module and start off in daylight');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('St Dominic has three recessed rectangular upper windows and a continuous stone entrance',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{dominic}=await import('../web/macau-dominic.js'),k=makeKit({time:{value:0},night:{value:0}}),g=dominic(k);g.updateMatrixWorld(true);const walk=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.dominicWalk)walk.push(m);});
+ const ray=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  for(const x of [-.242,0,.242])for(const y of [.352,.409]){const h=ray([x+.006,y,.4],[0,0,-1])[0];assert.ok(h?.object.material.userData.dominicWindow,'White trim and shutters must not cover the recessed glass');assert.ok(h.point.z<.14,'Each opening is recessed behind the actual wall thickness');}
+  const entry=ray([.017,.150,.4],[0,0,-1])[0];assert.ok(entry&&entry.point.z<.09,'Central entrance is deep behind its stone frame');
+  for(const x of [-.24,0,.24]){let last;for(let j=0;j<=200;j++){const z=.389-j*.235/200,h=ray([x,.054,z],[0,-1,0],walk)[0];assert.ok(h,`Missing entry paving at ${x}/${z}`);assert.ok(Math.hypot(x,2.15+h.point.y,z)>2.15-.002);if(last!==undefined)assert.ok(Math.abs(last-h.point.y)<.016);last=h.point.y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

@@ -67,3 +67,36 @@ test('M+ keeps gaps between embedded LED rails, an open entrance and continuous 
   const screen=k.materials.find(m=>m.userData.mplusScreen),shader={uniforms:{},vertexShader:'#include <begin_vertex>',fragmentShader:'#include <emissivemap_fragment>'};screen.onBeforeCompile(shader);assert.equal(shader.uniforms.hkTime,clock.time);assert.match(shader.fragmentShader,/hkTime\*\.38/);
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Peak Tower has an enclosed atrium, curved bowl with recessed side slots, and a continuous hill approach',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{peak,peakSoffit}=await import('../web/hongkong-peak.js'),k=makeKit({time:{value:0},night:{value:0}}),g=peak(k);g.updateMatrixWorld(true);
+ const walk=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.peakWalk)walk.push(m);});
+ const cast=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  for(const y of [.36,.535,.615]){const h=cast([.039,y,.4],[0,0,-1])[0];assert.ok(h?.object.material.userData.peakGlazing,'Atrium must be glazed between its piers');assert.ok(h.point.z<.209);}
+  for(const x of [.348,.373,.398]){const h=cast([x,.6,0],[0,1,0])[0];assert.ok(h&&h.point.y>peakSoffit(x)+.018,'Underside viewing recess has real depth between its beams');}
+  assert.ok(peakSoffit(.48)-peakSoffit(0)>.22,'The soffit retains its deeply curved bowl outline');
+  for(const x of [-.09,0,.09]){let last;for(let i=0;i<=220;i++){const z=.699-i*.365/220,h=cast([x,.28,z],[0,-1,0],walk)[0];assert.ok(h,`Missing stair surface at ${x}/${z}`);assert.ok(Math.hypot(x,2.15+h.point.y,z)>2.15-.002);if(last!==undefined)assert.ok(Math.abs(last-h.point.y)<.018,`Stair jump at ${z}: ${last}/${h.point.y}`);last=h.point.y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Chi Lin first courtyard has a passable mountain gate, four recessed ponds and continuous stone approaches',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{chilin}=await import('../web/hongkong-chilin.js'),k=makeKit({time:{value:0},night:{value:0}}),g=chilin(k);g.updateMatrixWorld(true);const water=[],walk=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.chilinPond)water.push(m);if(m.isMesh&&m.material.userData.chilinWalk)walk.push(m);});
+ const cast=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  for(const x of [-.028,0,.028])for(const y of [.135,.177])assert.equal(cast([x,y,.55],[0,0,-1]).some(h=>h.distance<.22),false,'Gate must be open through both faces');
+  for(const x of [-.17,.17])for(const z of [-.048,.18]){const h=cast([x,.2,z],[0,-1,0],water)[0];assert.ok(h&&Math.abs(h.point.y-.071)<.001);const rim=cast([x+.131,.2,z],[0,-1,0])[0];assert.ok(rim&&rim.point.y>.10,'Stone railing stands above the recessed lotus pool');}
+  assert.equal(cast([0,.09,.29],[0,0,-1],water).length,0,'The lotus pools do not block the central walking axis');
+  for(const x of [-.025,0,.025]){let previous;for(let j=0;j<=260;j++){const z=.650-j*.85/260,h=cast([x,.20,z],[0,-1,0],walk)[0];assert.ok(h,`Entry surface missing at ${x}/${z}`);assert.ok(Math.hypot(x,2.15+h.point.y,z)>2.15-.002);if(previous!==undefined)assert.ok(Math.abs(previous-h.point.y)<.020,`Stone route jumps at ${z}: ${previous}/${h.point.y}`);previous=h.point.y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Tian Tan Buddha has bronze materials and an uninterrupted stair through three granite terraces',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{buddha}=await import('../web/hongkong-buddha.js'),k=makeKit({time:{value:0},night:{value:0}}),g=buddha(k);g.updateMatrixWorld(true);const walk=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.buddhaWalk)walk.push(m);});
+ const cast=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  for(const x of [-.06,0,.06]){let last;for(let j=0;j<=320;j++){const z=.622-j*.407/320,h=cast([x,.392,z],[0,-1,0],walk)[0];assert.ok(h,`Missing granite stair at ${x}/${z}`);assert.ok(Math.hypot(x,2.15+h.point.y,z)>2.15-.002);if(last!==undefined)assert.ok(Math.abs(last-h.point.y)<.018,`Stair jump at ${x}/${z}: ${last}/${h.point.y}`);last=h.point.y;}}
+  for(const r of [.31,.275,.24]){const h=cast([r,.5,0],[0,-1,0])[0];assert.ok(h&&h.point.y>.32,'Every terrace has a separate stone balustrade');}
+  const bronze=k.materials.find(m=>m.userData.buddhaBronze);assert.ok(bronze&&bronze.color.r>bronze.color.b&&bronze.color.g<bronze.color.r*1.1,'Bronze must not become saturated green');assert.ok(bronze.userData.night.intensity<.1,'Keep statue material subdued at night');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
