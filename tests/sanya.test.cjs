@@ -111,3 +111,13 @@ test('Tianya inscriptions follow the actual rock surface and the two broad bould
   for(const x of [-.45,-.2,0,.2,.45]){const hit=new T.Raycaster(new T.Vector3(x,.09,.25),new T.Vector3(0,-1,0),0,.15).intersectObject(g,true)[0];assert.ok(hit&&hit.point.y>.015&&hit.point.y<.05,'Visitors have a continuous sandy approach in front of the rocks');}
  }finally{global.document=old;g?.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
 });
+
+test('Luhuitou keeps an open neck aperture, two sculpted sides and a continuous grounded stair flight',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{luhuitou}=await import('../web/sanya-luhuitou.js'),k=makeKit({time:{value:0},night:{value:0}}),g=luhuitou(k);g.updateMatrixWorld(true);
+ const core=[];g.traverse(o=>{if(o.isMesh&&o.material.userData.deerCarving)core.push(o);});const ray=(x,y,z,d,far=2)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,far).intersectObject(g,true);
+ try{
+  for(const x of [.160,.167,.174])for(const y of [.780,.787,.794])assert.equal(ray(x,y,.3,[0,0,-1],.6).length,0,'The neck opening remains a real tunnel from both sides');
+  for(const x of [-.170,-.150]){const front=ray(x,.55,.4,[0,0,-1])[0],back=ray(x,.55,-.4,[0,0,1])[0];const frontStone=new T.Raycaster(new T.Vector3(x,.55,.4),new T.Vector3(0,0,-1)).intersectObjects(core)[0],backStone=new T.Raycaster(new T.Vector3(x,.55,-.4),new T.Vector3(0,0,1)).intersectObjects(core)[0];assert.ok(front&&back&&frontStone&&backStone&&front.point.z-frontStone.point.z>.035&&backStone.point.z-back.point.z>.035,'Figures project beyond both actual stone faces');}
+  for(const x of [-.15,0,.15]){let previous=null;for(let i=0;i<=220;i++){const z=.49-i*.29/220,hit=ray(x,.21,z,[0,-1,0])[0];assert.ok(hit&&hit.point.y>.02&&hit.point.y<.16,'Stair and court form a continuous approach');if(previous!==null)assert.ok(Math.abs(previous-hit.point.y)<.016,'No unsupported drop between stair treads');previous=hit.point.y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

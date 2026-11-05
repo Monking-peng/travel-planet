@@ -35,3 +35,16 @@
 ![背面与设备舱](images/hongkong-hsbc-back.png)
 
 ![汇丰夜景](images/hongkong-hsbc-night.png)
+
+
+## 0.55.83 会展中心临海翼部
+
+对照[承建方航拍及结构照片](https://dragageshk.com/project/hkcec-extension/)，将并列筒形棚顶改为前后错落的飞鸟翼顶，保留前檐内收、下层屋面向海伸出和浅银细接缝。蓝绿玻璃退进檐口，前场露台逐层外展，入口台阶连续接入曲面广场。日间保留材质色差，夜间玻璃和檐缘柔和透光。
+
+仅表现临海代表性体量，不声称完整复原园区或工程尺寸。历史施工照片只用于辨认屋顶结构；外观以完工航拍为准。照片仅作研究，未纳入公开贴图。
+
+![会展中心日景](images/hongkong-cec.png)
+
+![会展中心侧后方](images/hongkong-cec-back.png)
+
+![会展中心夜景](images/hongkong-cec-night.png)

@@ -78,3 +78,16 @@
 ![天涯海角日景](images/sanya-tianya-day.png)
 
 ![天涯海角夜景](images/sanya-tianya-night.png)
+
+
+## 0.55.82 鹿回头石雕与山顶台阶
+
+对照[三亚旅文实拍](https://www.visitsanya.com/zh/destination/鹿回头风景区)、[ChinaServices 侧面照片](https://www.chinaservicesinfo.com/s/202307/18/WS64b64e62498ea274927c5827/luhuitou-park.html)和[三亚学院介绍](https://www.sanyau.edu.cn/2013/0817/c531a227278/page.htm)，重做回首鹿颈的贯通孔洞、正反面人物、衣褶与石雕厚度。石体采用连续曲面和不规则细微起伏，宽台阶接入山顶庭院，周围保留低矮成组树冠。
+
+前几稿的平板轮廓、网格闪点及规则波纹均被弃用；最后一稿仍是风格化微缩雕塑，不是等比扫描复刻。照片只作参考，没有加入公开素材。
+
+![鹿回头日景](images/sanya-luhuitou.png)
+
+![背面人物](images/sanya-luhuitou-back.png)
+
+![鹿回头夜景](images/sanya-luhuitou-night.png)

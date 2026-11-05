@@ -33,3 +33,13 @@ test('HSBC escalator treads rise through an open undercroft and night trusses pr
   const truss=k.materials.find(m=>m.userData.hsbcTruss);assert.ok(truss&&truss.userData.night.color.r>truss.userData.night.color.g*3);assert.ok(truss.color.r<.7,'Daytime truss must remain silver, not red');
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('HKCEC staggered wings keep a recessed glazed envelope and a grounded continuous waterfront approach',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{cec,cecRoof}=await import('../web/hongkong-cec.js'),k=makeKit({time:{value:0},night:{value:0}}),g=cec(k);g.updateMatrixWorld(true);const roof=[],glass=[],walk=[];g.traverse(o=>{if(!o.isMesh)return;if(o.material.userData.cecRoof)roof.push(o);if(o.material.userData.cecGlass)glass.push(o);if(o.material.userData.cecWalk)walk.push(o);});
+ const cast=(x,y,z,d,objects)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,3).intersectObjects(objects);
+ try{
+  assert.ok(cecRoof(.5,.5,0)[1]-cecRoof(.5,.5,1)[1]>.07);assert.ok(cecRoof(.5,1,1)[2]-cecRoof(.5,1,0)[2]>.5,'Lower wing projects beyond the concave main roof');
+  for(const i of [0,1])for(const u of [.15,.3,.5,.7,.85]){const q=cecRoof(.07+.86*u,.9,i);const h=cast(q[0],q[1]-.05,q[2]+.2,[0,0,-1],glass)[0];assert.ok(h&&Math.abs(h.point.z-q[2])<.005,'Facade is present underneath each wing');const e=cecRoof(.07+.86*u,1,i);assert.ok(e[2]-q[2]>.025,'Cantilever edge projects beyond glass');}
+  for(const x of [.03,.13,.23]){let last;for(let j=0;j<=100;j++){const z=.639-j*.14/100,h=cast(x,.06,z,[0,-1,0],walk)[0];assert.ok(h&&Math.hypot(x,2.15+h.point.y,z)>2.15&&h.point.y<.031,'Entry stairs stays above the curved planet and below the doorway');if(last!==undefined)assert.ok(Math.abs(last-h.point.y)<.017);last=h.point.y;}}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});

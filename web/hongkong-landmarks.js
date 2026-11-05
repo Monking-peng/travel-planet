@@ -73,8 +73,8 @@ export const LANDMARKS=[
    1.05,
    1.9
   ],
-  "description": "层叠的浅银色弧顶覆在蓝绿色玻璃幕墙上，屋檐、层层露台与滨水前场连成一体。",
-  "source": "https://www.discoverhongkong.com/tc/place-to-go/travel.guide-hong-kong-convention-and-exhibition-centre.html",
+  "description": "前后错落的浅银飞鸟屋顶覆盖蓝绿玻璃，内收檐口、退进幕墙与层叠露台构成轮廓。入口台阶接入滨水前场，夜间玻璃与檐边柔和透光。",
+  "source": "https://dragageshk.com/project/hkcec-extension/",
   "grounded": true,
   "facesHarbour": true
  },

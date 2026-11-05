@@ -2,24 +2,7 @@ import * as THREE from 'three';
 import {TAU,palette,site,skin,windowGlass,lit,finish,disc,perimeter,sign} from './hongkong-kit.js';
 import {palm} from './shenzhen-forms.js';
 
-export function cec(k){
- const g=new THREE.Group(),p=palette(k);site(k,g,p,.78,.66);const glass=windowGlass(k,'#507f89',58),roof=lit(k,'#b7c6c3',.14),edge=lit(k,'#d4d9ce',.35,7);
- k.box(g,1.12,.034,.68,p.pale,0,.037,0);k.box(g,.94,.10,.50,glass,0,.10,0);
- const wings=[{x:-.15,z:0,w:.76,d:.66,y:.22,h:.31},{x:.31,z:.005,w:.40,d:.54,y:.18,h:.19}];
- for(const [i,w]of wings.entries()){
-  const fn=(u,v)=>[w.x+(u-.5)*w.w*(1-.16*v)+.025*Math.sin(v*Math.PI),w.y+w.h*Math.pow(Math.max(0,Math.sin(u*Math.PI)),.64)*(1-.38*v)+.025*Math.sin(v*Math.PI),w.z+(v-.5)*w.d*(.82+.18*Math.sin(u*Math.PI))];
-  skin(k,g,fn,28,56,roof);skin(k,g,(u,v)=>{const q=fn(u,v);q[1]-=.009;return q;},12,56,p.steel);
-  for(const v of [0,1]){k.line(g,Array.from({length:65},(_,j)=>fn(j/64,v)),.004,edge);skin(k,g,(u,t)=>{const q=fn(.045+.91*u,v===1?.94:.06);return [q[0],.07+(q[1]-.085)*t,q[2]];},20,40,glass);
-   for(let j=0;j<=22;j++){const q=fn(.045+.91*j/22,v===1?.94:.06);k.beam(g,[q[0],.07,q[2]],q,.0017,p.steel);}
-  }
-  for(let j=1;j<13;j++)k.line(g,Array.from({length:65},(_,l)=>{const q=fn(l/64,j/13);q[1]+=.001;return q;}),.0009,p.steel);
-  for(let j=1;j<7;j++){const t=j/7;for(const v of [0,1])k.line(g,Array.from({length:40},(_,l)=>{const q=fn(.045+.91*l/39,v===1?.941:.059);return [q[0],.07+(q[1]-.085)*t,q[2]];}),.0018,p.steel);}
- }
- for(const y of [.10,.16,.22]){const m=k.box(g,.87,.012,.20,p.pale,-.12,y,.245);m.rotation.y=.035;}
- for(const x of [-.47,-.22,.03,.27,.48])palm(k,g,x,.023,.42,.12);
- sign(k,g,'會展中心',.21,.035,0,.074,.347,{background:'#d6d6ca',color:'#395d65'});
- return finish(k,g,{lamps:[[-.56,.021,.43],[.56,.021,.43]],visitors:[[-.13,.021,.44],[.08,.021,.43],[.28,.021,.43]]});
-}
+export {cec} from './hongkong-cec.js';
 
 export function clock(k){
  const g=new THREE.Group(),p=palette(k);site(k,g,p);const cream=lit(k,'#c8c0a7',.16),brick=k.mat('#a86d51',.95),face=lit(k,'#dfddc8',.50),black=k.mat('#26383c',.65),roof=k.mat('#697d74',.78,.2);
