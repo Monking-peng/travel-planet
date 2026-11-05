@@ -83,3 +83,31 @@ test('Dragon Bridge has supported landings, fine open nets and an unobstructed s
  for(const t of [.2,.4,.6,.8]){const q=point(t),hits=new T.Raycaster(new T.Vector3(q[0],q[1]+.04,q[2]-.040),new T.Vector3(0,0,1),0,.08).intersectObjects(all,false);assert.equal(hits.length,0,'No branch, railing or column blocks the walking lane');}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Nanshan has a connected bridge and shore, a recessed entrance and a broad octagonal podium',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{nanshan}=await import('../web/sanya-nanshan.js'),k=makeKit({time:{value:0},night:{value:0}}),g=nanshan(k);g.updateMatrixWorld(true);const all=[],podium=[];g.traverse(o=>{if(o.isMesh)all.push(o);if(o.material?.userData.guanyinPodium)podium.push(o);});
+ const ray=(x,y,z,d,objects=all)=>new T.Raycaster(new T.Vector3(x,y,z),new T.Vector3(...d),0,2).intersectObjects(objects,false);
+ try{
+ for(const x of [-.030,0,.030]){let previous=null;for(let i=0;i<=240;i++){const z=.514-i*.382/240,hit=ray(x,.115,z,[0,-1,0])[0];assert.ok(hit&&hit.point.y>.034&&hit.point.y<.09,'Continuous shore, stair, deck and doorway threshold');if(previous!==null)assert.ok(Math.abs(hit.point.y-previous)<.014,'Approach has no oversized step or gap');previous=hit.point.y;}}
+ for(const x of [-.025,0,.025]){const hit=ray(x,.105,.20,[0,0,-1])[0];assert.ok(hit&&hit.point.z<.14,'The main entrance must recess inside the sloped front wall');}
+ for(const angle of [0,Math.PI/2,Math.PI,Math.PI*1.5]){const d=[-Math.sin(angle),0,-Math.cos(angle)],hit=ray(Math.sin(angle)*.4,.090,-.12+Math.cos(angle)*.4,d,podium)[0];assert.ok(hit&&Math.hypot(hit.point.x,hit.point.z+.12)>.24,'Podium walls retain their broad faceted footprint');}
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('Tianya inscriptions follow the actual rock surface and the two broad boulders leave a clear sandy approach',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{tianya}=await import('../web/sanya-tianya.js');
+ const old=global.document,drawn=[];
+ global.document={createElement(){
+  return {width:0,height:0,getContext(){
+   return {clearRect(){},fillText(text,x,y){drawn.push({text,x,y});}};
+  }};
+ }};
+ const k=makeKit({time:{value:0},night:{value:0}});let g;
+ try{
+  g=tianya(k);g.updateMatrixWorld(true);const rocks=[],labels=[];g.traverse(o=>{if(o.material?.userData.coastalGranite)rocks.push(o);if(o.material?.userData.rockInscription)labels.push(o);});
+  assert.equal(labels.length,3);assert.ok(drawn.some(x=>x.text==='涯')&&drawn.some(x=>x.text==='角'));
+  for(const label of labels){const a=label.geometry.attributes.position;for(let i=0;i<a.count;i+=19){const p=new T.Vector3().fromBufferAttribute(a,i);const hit=new T.Raycaster(p.clone().add(new T.Vector3(0,0,.005)),new T.Vector3(0,0,-1),0,.02).intersectObjects(rocks,false)[0];assert.ok(hit&&Math.abs(p.z-hit.point.z)<.001,'Inscription must hug the carved face, not float as a rectangular sign');}}
+  for(const id of ['tianya','haijiao']){const rock=rocks.find(o=>o.material.userData.coastalGranite===id);rock.geometry.computeBoundingBox();const b=rock.geometry.boundingBox,size=b.getSize(new T.Vector3());assert.ok(size.x>size.y*1.2,'Named stones are broad granite masses, not slender columns');assert.ok(b.min.y<.04,'Granite reaches the sand');const colors=rock.geometry.attributes.color;let min=1,max=0;for(let i=0;i<colors.count;i++){const v=colors.getX(i);min=Math.min(min,v);max=Math.max(max,v);}assert.ok(max-min>.14,'Weathered upper surfaces and pale base must remain distinct');}
+  for(const x of [-.45,-.2,0,.2,.45]){const hit=new T.Raycaster(new T.Vector3(x,.09,.25),new T.Vector3(0,-1,0),0,.15).intersectObject(g,true)[0];assert.ok(hit&&hit.point.y>.015&&hit.point.y<.05,'Visitors have a continuous sandy approach in front of the rocks');}
+ }finally{global.document=old;g?.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>{m.map?.dispose();m.dispose();});}
+});

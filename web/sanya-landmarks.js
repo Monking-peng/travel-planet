@@ -15,7 +15,7 @@ export const LANDMARKS=[
    0.65,
    1.9
   ],
-  "description": "白色三面观音立于金色莲台，层层基座、海上平台与普济桥连接岸边。白色衣褶、持物与冠饰分别表现。",
+  "description": "白色三面观音立于金色莲座和八角基座之上，石栏、浮雕分格和凹入门厅环绕平台；普济桥经连续石阶连接海岸。",
   "source": "https://www.visitsanya.com/zh/destination/南山文化旅游区",
   "grounded": true
  },
@@ -83,7 +83,7 @@ export const LANDMARKS=[
    0.62,
    1.9
   ],
-  "description": "两块刻字花岗岩在沙滩上形成不同轮廓，石面保留风化色差，海浪与椰树围绕海岸展开。",
+  "description": "宽厚的天涯石与不规则海角石立在沙岸，横排红色刻字贴合裂隙石面，深色风化纹与浅色石脚形成层次；潮湿沙带和椰影围绕岸边。",
   "source": "https://dp.pconline.com.cn/photo/2493209.html",
   "grounded": true,
   "hemisphere": -1
