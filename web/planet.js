@@ -19,8 +19,9 @@ export async function mountPlanet(canvas,onPick,selection,{onInspect}={}){
   try{renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});}catch{return {failed:true,reset(){},pause(){},setEditing(){},setInspection(){},zoomBy(){},toggleRotation(){},focusComponent(){},focusOverview(){},setComponents(){},destroy(){}};}
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;configurePlanetRenderer(renderer);
   const scene=new THREE.Scene(),camera=createPlanetCamera();
+  const atlasView=canvas.dataset.presentation==='atlas';
   let compactView=canvas.getBoundingClientRect().width<=760;
-  if(compactView){camera.zoom*=.5;camera.updateProjectionMatrix();}
+  if(atlasView||compactView){camera.zoom*=.5;camera.updateProjectionMatrix();}
   const lighting=lightPlanet(scene,renderer,{shadows:true});
   let composition;
   try{composition=await createEditablePlanetAsync(selection);}catch(error){lighting.dispose();renderer.dispose();throw error;}
@@ -52,9 +53,9 @@ export async function mountPlanet(canvas,onPick,selection,{onInspect}={}){
   setNight(readNightPreference(localStorage));
   function setZoom(value){clearHover();dirty=true;camera.zoom=THREE.MathUtils.clamp(value,MIN_ZOOM,zoomLimit());camera.updateProjectionMatrix();hold();notify();}
   function zoomBy(factor){focusTransition=null;setZoom(camera.zoom*factor);}
-  function reset(){focusTransition=null;inspectionId='';framing=null;planet.rotation.set(-.35,-.20,.25);planet.position.y=0;setZoom(editing?.9:overviewView('lake').zoom*(compactView?.5:1));}
+  function reset(){focusTransition=null;inspectionId='';framing=null;planet.rotation.set(-.35,-.20,.25);planet.position.y=0;setZoom(editing?.9:overviewView('lake').zoom*((atlasView||compactView)?.5:1));}
   function toggleRotation(){autoRotate=!autoRotate;resumeAt=0;notify();}
-  const resize=()=>{clearHover();const {width,height}=canvas.getBoundingClientRect();visibleInLayout=Boolean(width&&height);if(!visibleInLayout)return;dirty=true;renderer.setSize(width,height,false);camera.aspect=width/height;const compact=width<=760;if(compact!==compactView&&!inspecting&&!editing){camera.zoom*=compact?.5:2;notify();}compactView=compact;camera.fov=inspecting?34:viewportFov(34,width,height);if(inspecting&&inspectionId&&framing){const next=inspectionView(inspectionId,width,height),dy=next.offsetY-framing.offsetY;camera.zoom=THREE.MathUtils.clamp(camera.zoom*next.zoom/framing.zoom,MIN_ZOOM,zoomLimit());planet.position.y+=dy;if(focusTransition){focusTransition.from.offsetY+=dy;focusTransition.to.offsetY+=dy;focusTransition.from.zoom*=next.zoom/framing.zoom;focusTransition.viaZoom*=next.zoom/framing.zoom;focusTransition.to.zoom=next.zoom;}framing=next;notify();}camera.updateProjectionMatrix();};
+  const resize=()=>{clearHover();const {width,height}=canvas.getBoundingClientRect();visibleInLayout=Boolean(width&&height);if(!visibleInLayout)return;dirty=true;renderer.setSize(width,height,false);camera.aspect=width/height;const compact=width<=760;if(!atlasView&&compact!==compactView&&!inspecting&&!editing){camera.zoom*=compact?.5:2;notify();}compactView=compact;camera.fov=inspecting?34:viewportFov(34,width,height);if(inspecting&&inspectionId&&framing){const next=inspectionView(inspectionId,width,height),dy=next.offsetY-framing.offsetY;camera.zoom=THREE.MathUtils.clamp(camera.zoom*next.zoom/framing.zoom,MIN_ZOOM,zoomLimit());planet.position.y+=dy;if(focusTransition){focusTransition.from.offsetY+=dy;focusTransition.to.offsetY+=dy;focusTransition.from.zoom*=next.zoom/framing.zoom;focusTransition.viaZoom*=next.zoom/framing.zoom;focusTransition.to.zoom=next.zoom;}framing=next;notify();}camera.updateProjectionMatrix();};
   const observer=new ResizeObserver(resize);observer.observe(canvas);resize();
   function rebase(){const p=[...pointers.values()];gesture=p.length>1?{type:'pinch',distance:Math.max(1,Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)),zoom:camera.zoom}:p.length?{type:'drag',x:p[0].x,y:p[0].y,rotX:planet.rotation.x,rotY:planet.rotation.y}:null;}
   const down=e=>{if(!active()||e.button!==0)return;clearHover();focusTransition=null;if(!pointers.size)moved=false;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size>1)moved=true;canvas.setPointerCapture(e.pointerId);hold();rebase();};

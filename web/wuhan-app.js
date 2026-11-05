@@ -67,5 +67,5 @@ function boot(){
     listen(canvas,'webglcontextlost',e=>{e.preventDefault();dispose();showError('3D 画面暂时不可用，请重新载入。');});
   }catch(error){cancelAnimationFrame(frame);resize?.disconnect();cleanups.forEach(fn=>fn());controls?.dispose();model?.dispose();envTarget?.dispose();pmrem?.dispose();environment?.dispose();composer?.passes.forEach(p=>p.dispose?.());composer?.dispose();renderer?.dispose();console.error(error);showError('武汉星球载入失败，请重试。');}
 }
-function showError(message){canvas.dataset.state='error';canvas.setAttribute('aria-busy','false');$('#loading').hidden=false;$('#loading span').textContent=message;$('#retry').hidden=false;document.querySelectorAll('button:not(#retry):not([data-intro-action])').forEach(b=>{b.disabled=true;});}
+function showError(message){canvas.dataset.state='error';canvas.setAttribute('aria-busy','false');$('#loading').hidden=false;$('#loading span').textContent=message;$('#retry').hidden=false;document.querySelectorAll('button:not(#retry):not([data-intro-action]):not(.city-picker-trigger):not(.city-picker-close)').forEach(b=>{b.disabled=true;});}
 $('#retry').addEventListener('click',()=>location.reload());addEventListener('pagehide',event=>{if(!event.persisted)dispose?.();});requestAnimationFrame(()=>requestAnimationFrame(boot));

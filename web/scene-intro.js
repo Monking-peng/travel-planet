@@ -23,7 +23,7 @@
       closing=true;clearTimeout(slowTimer);intro.dataset.phase='ready';status.textContent='已准备好，出发吧';
       if(reduced.matches){close();return;}
       // Readiness comes from the renderer, never from elapsed time or window.load.
-      closeTimer=setTimeout(close,480);return;
+      closeTimer=setTimeout(close,720);return;
     }
     if(['failed','error'].includes(scene.dataset.state)){fail('城市景观暂时没有打开，可以重试或先进入页面。');return;}
     if(intro.dataset.phase==='slow')return;
@@ -39,7 +39,7 @@
   retry.addEventListener('click',()=>location.reload());
   addEventListener('error',scriptError,true);addEventListener('pagehide',leave);
   observer.observe(scene,{attributes:true,attributeFilter:['data-state','data-phase']});
-  intro.showModal();intro.dataset.phase='loading';
+  intro.showModal();intro.focus({preventScroll:true});intro.dataset.phase='loading';
   slowTimer=setTimeout(()=>{if(finished||closing)return;intro.dataset.phase='slow';status.textContent='加载比平时久一些，可以继续等待，或先进入页面。';retry.hidden=false;},15000);
   sync();
 })();

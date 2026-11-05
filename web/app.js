@@ -55,11 +55,11 @@ function renderOrbit(room){
   if(orbit.innerHTML!==html){orbit.innerHTML=html;if(activeId)[...orbit.querySelectorAll('[data-id]')].find(b=>b.dataset.id===activeId)?.focus({preventScroll:true});}
 }
 function render(){
-  const r=state.room;$('#back-label').textContent=r?'返回首页':'一起去';$('#back .arrow').hidden=!r;
+  const r=state.room;document.body.dataset.travelState=r?'room':'welcome';$('#back-label').textContent=r?'返回首页':'一起去';$('#back .arrow').hidden=!r;
   renderOrbit(r);
-  if(!state.ready){$('#heading').innerHTML=`<h1>${currentCity}，慢慢来。</h1>`;$('#members').innerHTML='';$('#action-area').innerHTML=`<button class="primary" data-action="retry" ${state.connecting?'disabled':''}>${state.connecting?'正在连接…':'重新连接'}</button>${state.connectionError?`<p class="action-note" role="status">${esc(state.connectionError)}</p>`:''}`;return;}
+  if(!state.ready){$('#heading').innerHTML=`<p class="journey-kicker">选一座城 · 和喜欢的人出发</p><h1 class="journey-city">${currentCity}<span>一起去。</span></h1><p class="journey-description">${isHangzhou?'把时间留给西湖的风，<br>也留给一起出发的人。':isShanghai?'沿着黄浦江慢慢走，<br>收集这座城的不同模样。':'看江城灯火，走一条樱花路，<br>把想去的地方放在一起。'}</p><button class="journey-catalog" data-action="catalog">先看看景点 <span>↗</span></button>`;$('#members').innerHTML='';$('#action-area').innerHTML=`<button class="primary" data-action="retry" ${state.connecting?'disabled':''}>${state.connecting?'正在连接…':'重新连接'}</button>${state.connectionError?`<p class="action-note" role="status">${esc(state.connectionError)}</p>`:''}`;return;}
   if(!r){
-    $('#heading').innerHTML=`<h1>${currentCity}，慢慢来。</h1>`;
+    $('#heading').innerHTML=`<p class="journey-kicker">选一座城 · 和喜欢的人出发</p><h1 class="journey-city">${currentCity}<span>一起去。</span></h1><p class="journey-description">${isHangzhou?'把时间留给西湖的风，<br>也留给一起出发的人。':isShanghai?'沿着黄浦江慢慢走，<br>收集这座城的不同模样。':'看江城灯火，走一条樱花路，<br>把想去的地方放在一起。'}</p><button class="journey-catalog" data-action="catalog">先看看景点 <span>↗</span></button>`;
     $('#members').innerHTML='';
     $('#action-area').innerHTML='<button class="primary" data-action="create">发起一趟旅行 <span>＋</span></button><div class="action-links"><button class="text-button" data-action="join">加入朋友的旅行</button><button class="text-button" data-action="mytrips">我的旅行</button></div>';return;
   }
