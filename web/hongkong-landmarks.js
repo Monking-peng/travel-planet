@@ -123,15 +123,15 @@ export const LANDMARKS=[
   "x": 1.49691,
   "z": 0.09617,
   "hemisphere": -1,
-  "height": 1.22,
+  "height": 1.37,
   "distance": 3.2,
   "view": [
    0.58,
    0.7,
    1.9
   ],
-  "description": "红砖与浅色花岗岩边角相间，四面钟盘上方是通透的八角亭与尖顶，前场水池和棕榈树衬托塔身。",
-  "source": "https://www.lcsd.gov.hk/en/hkcc/TSTClockTower.html",
+  "description": "红砖与浅色花岗岩构成方形塔身。四面罗马数字钟盘、内凹山花窗、两层八角阁楼和浅色混凝土圆顶形成轮廓，拱门前有连续台阶与水池。",
+  "source": "https://www.hkculturalcentre.gov.hk/sc/hkcc/TSTClockTower/ThePresent.html",
   "grounded": true,
   "facesHarbour": true
  },
@@ -149,8 +149,8 @@ export const LANDMARKS=[
    0.85,
    1.9
   ],
-  "description": "低矮横向展厅托起薄片式竖向体量，深灰绿陶瓷构件与屋顶花园形成倒T形。夜晚立面播放原创抽象光纹。",
-  "source": "https://www.mplus.org.hk/en/the-building/people/",
+  "description": "横向展厅悬挑于开放门厅上方，与薄片式高层形成倒 T 形。深绿陶瓷格栅、屋顶花园、侧面混凝土体量和入口台阶构成细节；夜间嵌入灯带播放原创缓慢光纹。",
+  "source": "https://www.mplus.org.hk/en/the-building/design/",
   "grounded": true,
   "facesHarbour": true
  },

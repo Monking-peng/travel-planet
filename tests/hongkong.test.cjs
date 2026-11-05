@@ -43,3 +43,27 @@ test('HKCEC staggered wings keep a recessed glazed envelope and a grounded conti
   for(const x of [.03,.13,.23]){let last;for(let j=0;j<=100;j++){const z=.639-j*.14/100,h=cast(x,.06,z,[0,-1,0],walk)[0];assert.ok(h&&Math.hypot(x,2.15+h.point.y,z)>2.15&&h.point.y<.031,'Entry stairs stays above the curved planet and below the doorway');if(last!==undefined)assert.ok(Math.abs(last-h.point.y)<.017);last=h.point.y;}}
  }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
 });
+
+test('Tsim Sha Tsui clock tower keeps a rounded concrete dome, recessed windows and a reachable doorway',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{clock}=await import('../web/hongkong-clock.js'),k=makeKit({time:{value:0},night:{value:0}}),g=clock(k);g.updateMatrixWorld(true);const domes=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.clockDome)domes.push(m);});
+ const ray=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  for(const x of [0,.03,.06,.08]){const hit=ray([x,1.4,-.12],[0,-1,0],domes)[0];assert.ok(hit);const expected=1.187+.067*Math.sqrt(1-(x/.090)**2);assert.ok(Math.abs(hit.point.y-expected)<.001,'Roof must retain a rounded cross-section rather than a conical spire');}
+  for(const side of [1,2,3])for(const y of [.25,.43,.61]){const a=side*Math.PI/2,d=[-Math.sin(a),0,-Math.cos(a)],p=[Math.sin(a)*.3,y,-.12+Math.cos(a)*.3];const h=ray(p,d)[0];assert.ok(h?.object.material.userData.clockGlazing,'Side opening must expose glass, not a wall covering it');assert.ok(.3-h.distance<.123,'Glazing is set behind the stone surround');}
+  for(const side of [0,1,2,3]){const a=side*Math.PI/2,h=ray([Math.sin(a)*.3,.851,-.12+Math.cos(a)*.3],[-Math.sin(a),0,-Math.cos(a)])[0];assert.ok(h?.object.material.userData.clockGlazing,'Three-light attic windows must not be buried under the stone shell');}
+  let prev;for(let i=0;i<81;i++){const z=.113-i*.086/80,h=ray([0,.14,z],[0,-1,0])[0];assert.ok(h);if(prev!==undefined)assert.ok(Math.abs(h.point.y-prev)<.023,'Entrance stair treads rise continuously without a tall plinth jump');prev=h.point.y;}
+  const mat=k.materials.find(m=>m.userData.clockDome);assert.ok(mat.color.r>mat.color.b&&mat.color.g>mat.color.b,'Concrete roof has a warm neutral finish, not a green copper spire');
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
+
+test('M+ keeps gaps between embedded LED rails, an open entrance and continuous arrival stairs',async()=>{
+ const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{mplus}=await import('../web/hongkong-mplus.js'),clock={time:{value:0},night:{value:0}},k=makeKit(clock);k.clock=clock;const g=mplus(k);g.updateMatrixWorld(true);const lights=[];g.traverse(m=>{if(m.isMesh&&m.material.userData.mplusScreen)lights.push(m);});
+ const cast=(p,d,objects=[g])=>new T.Raycaster(new T.Vector3(...p),new T.Vector3(...d),0,2).intersectObjects(objects,true);
+ try{
+  let bars=0,gaps=0;for(let i=0;i<250;i++){const y=.328+i*.0019;if(cast([.011,y,.10],[0,0,-1],lights).length)bars++;else gaps++;}assert.ok(bars>40&&gaps>140,'LED material forms separated rails rather than an opaque screen covering the whole facade');
+  for(const y of [.38,.5,.65]){const h=cast([.011,y,.1],[0,0,-1])[0];assert.ok(h&&h.point.z<.02,'Facade stays shallow instead of a detached luminous slab');}
+  assert.equal(cast([0,.125,.35],[0,0,-1]).some(h=>h.distance<.16),false,'Cantilevered podium must not close the public entrance');
+  for(const dx of [-.055,0,.055]){let last;for(let j=0;j<=180;j++){const z=.496-j*.300/180,t=Math.max(0,(z-.472)/.024),x=.342+dx-.055*t,h=cast([x,.15,z],[0,-1,0])[0];assert.ok(h&&Math.hypot(x,2.15+h.point.y,z)>2.15&&h.point.y<.11);if(last!==undefined)assert.ok(Math.abs(h.point.y-last)<.014,'Approach, stairs and upper entrance landing must meet');last=h.point.y;}}
+  const screen=k.materials.find(m=>m.userData.mplusScreen),shader={uniforms:{},vertexShader:'#include <begin_vertex>',fragmentShader:'#include <emissivemap_fragment>'};screen.onBeforeCompile(shader);assert.equal(shader.uniforms.hkTime,clock.time);assert.match(shader.fragmentShader,/hkTime\*\.38/);
+ }finally{g.traverse(o=>o.geometry?.dispose());k.materials.forEach(m=>m.dispose());}
+});
