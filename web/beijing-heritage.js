@@ -19,41 +19,7 @@ export function hall(k,g,p,{x=0,z=0,w=.35,d=.22,h=.13,y=.025,double=false,name='
 }
 function court(k,g,p,w,d){k.box(g,w,.016,d,p.stone,0,.008,0);for(let i=-4;i<=4;i++)k.box(g,w,.0008,.0015,p.gold,0,.017,i*d/10);}
 function cypress(k,g,x,y,z,s=.08){const bark=k.mat('#6f5941'),leaf=k.mat('#365744',.94);k.cyl(g,.004,.005,s*.7,bark,x,y+s*.3,z,6);const b=k.ball(g,s*.34,leaf,x,y+s*.72,z);b.scale.set(.75,2.0,.75);}
-export function tiananmen(k){
-  const g=new THREE.Group(),p=palette(k);court(k,g,p,1.02,.76);
-  const shape=new THREE.Shape();shape.moveTo(-.45,.02);shape.lineTo(.45,.02);shape.lineTo(.45,.21);shape.lineTo(-.45,.21);shape.closePath();
-  for(let i=-2;i<=2;i++){const x=i*.14,r=i===0?.033:.023,hole=new THREE.Path();hole.moveTo(x-r,.022);hole.lineTo(x-r,.078);hole.absarc(x,.078,r,Math.PI,0,true);hole.lineTo(x+r,.022);hole.closePath();shape.holes.push(hole);}
-  k.mesh(g,new THREE.ExtrudeGeometry(shape,{depth:.20,bevelEnabled:false}),p.red,0,0,-.28);
-  k.box(g,.93,.014,.23,p.stone,0,.215,-.18);hall(k,g,p,{z:-.18,w:.68,d:.19,h:.105,y:.222,double:true});
-  // Nine facade bays, a broad two-tier roof and five real vaulted openings.
-  k.box(g,.99,.009,.075,k.mat('#56858b',.43,.10),0,.019,.045);
-  for(let i=-3;i<=3;i++){
-    const x=i*.116,w=i===0?.075:.05,bg=new THREE.Group();bg.position.set(x,.02,.045);g.add(bg);
-    for(let j=0;j<15;j++){const z=(j/14-.5)*.15,y=.009+.017*Math.sin(j/14*Math.PI);k.box(bg,w,.012,.012,p.stone,0,y,z);for(const side of [-1,1]){k.cyl(bg,.0017,.002,.021,p.stone,side*w*.48,y+.016,z,6);if(j<14)k.box(bg,.003,.003,.014,p.stone,side*w*.48,y+.028,z+.005);}}
-  }
-  for(const x of [-.40,.40]){k.box(g,.046,.015,.046,p.stone,x,.024,.18);k.cyl(g,.008,.011,.12,p.stone,x,.09,.18,12);for(let i=0;i<7;i++){const a=i*.8;k.ball(g,.004,p.stone,x+Math.cos(a)*.009,.045+i*.014,.18+Math.sin(a)*.009);}k.box(g,.046,.01,.015,p.stone,x,.135,.18);k.ball(g,.009,p.stone,x,.16,.18);}
-  // Small terrace standards and a central flag preserve the ceremonial forecourt.
-  for(const x of [-.40,.40]){k.cyl(g,.0013,.0015,.10,p.stone,x,.268,-.12,8);k.box(g,.025,.018,.001,p.red,x+.012,.309,-.12);}
-  k.cyl(g,.0015,.002,.23,p.stone,0,.13,.26,10);k.box(g,.048,.029,.001,p.red,.024,.23,.26);
-  const relief=k.mat('#d7bb7c',.74);k.box(g,.048,.064,.003,relief,0,.151,-.076);
-  plaque(k,g,'天安门',.13,.025,0,.339,-.055);
-  for(const x of [-.45,.45])for(const z of [.26,.33]){k.box(g,.07,.008,.04,p.stone,x,.023,z);k.box(g,.06,.01,.032,k.mat('#a35048'),x,.032,z);}
-  return k.merge(g);
-}
-export function palace(k){
-  const g=new THREE.Group(),p=palette(k);g.name='forbidden-city';court(k,g,p,.88,1.30);
-  // Palace courts are specific architectural wings, not generic city filler.
-  for(const side of [-1,1]){k.box(g,.025,.085,1.28,p.red,side*.43,.05,0);k.box(g,.035,.012,1.29,p.tile,side*.43,.097,0);k.box(g,.048,.003,1.30,k.mat('#5f9290',.5),side*.48,.009,0);}
-  for(const z of [-.63,.63]){k.box(g,.88,.085,.025,p.red,0,.05,z);for(const x of [-.43,.43]){hall(k,g,p,{x,z,w:.12,d:.12,h:.065,y:.08,double:true});}}
-  hall(k,g,p,{z:.55,w:.46,d:.11,h:.09,y:.07,name:'午门'});
-  for(const x of [-.25,.25])hall(k,g,p,{x,z:.46,w:.11,d:.23,h:.07,y:.05});
-  for(let i=0;i<3;i++){const z=.12-i*.19,w=i===0?.39:.25;for(let j=0;j<3;j++){k.box(g,w+.10-j*.02,.019,.19+.04-j*.012,p.stone,0,.026+j*.019,z);const r=new THREE.Group();r.position.z=z;g.add(r);rail(k,r,w+.09-j*.02,.22-j*.012,.033+j*.019,p.stone);}hall(k,g,p,{z,w,d:.17,h:i===0?.125:.08,y:.08,double:i===0,name:i===0?'太和殿':''});stairs(k,g,.09,.10,.066,p.stone,0,z+.15,9);}
-  for(const x of [-.31,.31])for(const z of [.1,-.16,-.40])hall(k,g,p,{x,z,w:.11,d:.20,h:.055,y:.025});
-  hall(k,g,p,{z:-.50,w:.25,d:.1,h:.07,y:.025,name:'乾清宫'});
-  for(const x of [-.14,.14])for(const z of [-.39,-.51])cypress(k,g,x,.02,z,.045);
-  for(const x of [-.13,-.065,0,.065,.13]){k.box(g,.039,.012,.09,p.stone,x,.028,.33);for(const s of [-1,1])k.box(g,.002,.015,.09,p.stone,x+s*.018,.04,.33);}
-  return k.merge(g);
-}
+export {palace,tiananmen} from './beijing-palace.js';
 export function heaven(k){
   const g=new THREE.Group(),p=palette(k);court(k,g,p,.78,.86);
   for(let level=0;level<3;level++){

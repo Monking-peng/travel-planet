@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {greatWallAcrossGlobe} from './beijing-greatwall.js';
 import {makeKit} from './wuhan-kit.js';
 import {createBeijingAxis} from './beijing-axis.js';
 import {surfaceDetail} from './wuhan-atmosphere.js';
@@ -12,13 +13,13 @@ export function createBeijingScene(){
   const clock={time:{value:0},night:{value:0}},k=makeKit(clock),root=new THREE.Group(),landmarks=new Map(),modules=new Map();
   const ground=k.mat('#8f9c79',.97),terrain=k.mesh(root,new THREE.SphereGeometry(RADIUS,160,128),ground);terrain.name='beijing-terrain';terrain.receiveShadow=true;surfaceDetail(ground,clock);
   for(const item of LANDMARKS){
-    const model=createLandmark(k,item.id);model.name=item.id;
-    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position,normals=o.geometry.attributes.normal,smooth=o.material.userData.cushion||o.material.userData.preserveSmooth;
+    const spherical=item.id==='wall',model=spherical?greatWallAcrossGlobe(k,RADIUS):createLandmark(k,item.id);model.name=item.id;
+    model.traverse(o=>{if(!o.isMesh)return;o.userData.landmark=item.id;o.castShadow=true;o.receiveShadow=true;if(spherical)return;const original=o.geometry;o.geometry=new TessellateModifier(.055,7).modify(original);original.dispose();const a=o.geometry.attributes.position,normals=o.geometry.attributes.normal,smooth=o.material.userData.cushion||o.material.userData.preserveSmooth;
       for(let i=0;i<a.count;i++){
         const x=a.getX(i),z=a.getZ(i);a.setY(i,a.getY(i)-sag(x,z));
         // Inverse-transpose of the spherical bend preserves shared smooth normals.
         // Recomputing on TessellateModifier's non-indexed output flattens every face.
-        if(smooth){const ny=normals.getY(i),denom=Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),nx=normals.getX(i)+x/denom*ny,nz=normals.getZ(i)+z/denom*ny,length=Math.hypot(nx,ny,nz);normals.setXYZ(i,nx/length,ny/length,nz/length);}
+        if(smooth){const ny=normals.getY(i),denom=Math.sqrt(Math.max(.001,RADIUS*RADIUS-x*x-z*z)),nx=normals.getX(i)+x/denom*ny,nz=normals.getZ(i)+z/denom*ny,length=Math.hypot(nx,ny,nz);if(length>1e-10)normals.setXYZ(i,nx/length,ny/length,nz/length);else normals.setXYZ(i,0,1,0);}
       }
       a.needsUpdate=true;if(smooth)normals.needsUpdate=true;else o.geometry.computeVertexNormals();
       const material=o.material;if(!material.userData.night&&!material.userData.terrainTint&&['palace','tiananmen','heaven','summer','beihai','drum','wall','jingshan'].includes(item.id)){material.userData.night={color:material.color.clone(),intensity:material.metalness>.1?.14:.045};}
@@ -26,12 +27,17 @@ export function createBeijingScene(){
     // Lamps belong to the complete landmark module; removal leaves no floating lights.
     const warm=k.mat(item.id==='watercube'?'#7bcbf1':'#f2ce8a',.42,.1,item.id==='watercube'?'#68c7fa':'#ffd398');warm.userData.night.intensity=1.1;
     const pole=k.mat('#49564c');
-    const edgeLamps={summer:[[-.55,-.08],[.55,-.08],[-.61,.18],[.61,.18],[-.45,.49],[.45,.49]],beihai:Array.from({length:8},(_,i)=>[Math.cos(i*Math.PI/4)*.46,.08+Math.sin(i*Math.PI/4)*.39]),watercube:[[-.38,-.35],[.38,-.35],[-.38,.35],[.38,.35]],cctv:[[-.38,-.28],[.38,-.28],[-.38,.28],[.38,.28]]};
-    const radius={palace:.72,tiananmen:.60,heaven:.52,beihai:.46,theatre:.66,nest:.59,drum:.43}[item.id]||.46;
-    const lamps=['wall','jingshan'].includes(item.id)?[]:edgeLamps[item.id]||Array.from({length:8},(_,i)=>{const a=i/8*Math.PI*2;return [Math.cos(a)*radius,Math.sin(a)*radius*(item.id==='palace'?.95:.80)];});
+    const edgeLamps={palace:[[-.64,-.83],[.64,-.83],[-.64,0],[.64,0],[-.64,.83],[.64,.83]],summer:[[-.55,-.08],[.55,-.08],[-.61,.18],[.61,.18],[-.45,.49],[.45,.49]],beihai:Array.from({length:8},(_,i)=>[Math.cos(i*Math.PI/4)*.46,.08+Math.sin(i*Math.PI/4)*.39]),watercube:[[-.38,-.35],[.38,-.35],[-.38,.35],[.38,.35]],cctv:[[-.38,-.28],[.38,-.28],[-.38,.28],[.38,.28]]};
+    const radius={palace:.93,tiananmen:.60,heaven:.52,beihai:.46,theatre:.66,nest:.59,drum:.43}[item.id]||.46;
+    const lamps=['wall','jingshan'].includes(item.id)?[]:edgeLamps[item.id]||Array.from({length:8},(_,i)=>{const a=i/8*Math.PI*2;return [Math.cos(a)*radius,Math.sin(a)*radius*(item.id==='palace'?1.07:.80)];});
     for(const [x,z] of lamps){const y=-sag(x,z);k.cyl(model,.002,.003,.045,pole,x,y+.025,z,6);k.ball(model,.005,warm,x,y+.049,z);}
     const light=new THREE.PointLight(item.id==='heaven'?'#dce6f1':'#ffd8a2',0,1.7,2);light.position.set(0,.60,.24);light.userData.nightIntensity=item.id==='palace'?.055:.035;model.add(light);
-    const n=surface(item.x,item.z,0,item.hemisphere||1).normalize();model.position.copy(n).multiplyScalar(RADIUS+.006);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
+    const n=surface(item.x,item.z,0,item.hemisphere||1).normalize();
+    if(spherical){
+      const pose=new THREE.Matrix4().compose(n.clone().multiplyScalar(RADIUS+.006),new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),n),new THREE.Vector3(1,1,1)),inverse=pose.clone().invert();
+      model.traverse(o=>{if(o.isMesh)o.geometry.applyMatrix4(inverse);});
+    }
+    model.position.copy(n).multiplyScalar(RADIUS+.006);model.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);model.rotateY(item.rotation||0);root.add(model);landmarks.set(item.id,model);modules.set(item.id,model);
   }
   root.add(createBeijingAxis(k,{radius:RADIUS,landmarks}));
   let night=false,disposed=false;

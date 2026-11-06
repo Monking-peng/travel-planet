@@ -74,11 +74,18 @@ test('Beijing landmark geometry is finite and complete modules detach with all t
   let disposed=0;geos.forEach(g=>g.addEventListener('dispose',()=>disposed++));for(const id of original.keys())scene.setLandmarkEnabled(id,false);scene.dispose();scene.dispose();assert.equal(disposed,geos.size);
 });
 
-test('Beijing spherical footprints stay separate and both hemispheres hold reachable landmarks',async()=>{
-  const T=await import('three'),{createBeijingScene}=await import('../web/beijing-scene.js');const scene=createBeijingScene();scene.root.updateMatrixWorld(true);
-  try{const caps=[];for(const [id,g] of scene.landmarks){const normal=g.position.clone().normalize();let radius=0;g.traverse(m=>{if(!m.isMesh)return;const a=m.geometry.attributes.position;for(let i=0;i<a.count;i++){const p=new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld);radius=Math.max(radius,normal.angleTo(p));}});caps.push({id,normal,radius});}
+test('Beijing landmarks stay separate from each other and the long narrow mountain corridor',async()=>{
+  const T=await import('three'),{createBeijingScene,RADIUS}=await import('../web/beijing-scene.js');const scene=createBeijingScene();scene.root.updateMatrixWorld(true);
+  try{const caps=[];for(const [id,g] of scene.landmarks){if(id==='wall')continue;const normal=g.position.clone().normalize();let radius=0;g.traverse(m=>{if(!m.isMesh)return;const a=m.geometry.attributes.position;for(let i=0;i<a.count;i++){const p=new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld);radius=Math.max(radius,normal.angleTo(p));}});caps.push({id,normal,radius});}
     for(let i=0;i<caps.length;i++)for(let j=i+1;j<caps.length;j++){const a=caps[i],b=caps[j];assert.ok(a.normal.angleTo(b.normal)-a.radius-b.radius>.025,`${a.id} crowds ${b.id}`);}
-    assert.ok(caps.filter(c=>c.normal.y<0).length>=4);
+    assert.ok(caps.filter(c=>c.normal.y<0).length>=3);
+    const wall=scene.landmarks.get('wall'),walk=wall.userData.walk.map(p=>new T.Vector3(...p)),path=walk.map(p=>p.clone().normalize());
+    assert.equal(wall.userData.towerPositions.length,10);assert.ok(path[0].angleTo(path.at(-1))>1.5,'wall must cross a broad hemisphere, not stay a small isolated module');
+    assert.ok(walk.reduce((sum,p,i)=>sum+(i?p.distanceTo(walk[i-1]):0),0)>6,'wall must form a continuous long ridge');
+    for(let i=1;i<walk.length;i++)assert.ok(walk[i].distanceTo(walk[i-1])<.06,'walk must not have gaps');
+    for(const c of caps)assert.ok(Math.min(...path.map(p=>p.angleTo(c.normal)))-c.radius-wall.userData.halfWidth>.025,`mountain corridor crowds ${c.id}`);
+    const soil=wall.children.find(o=>o.material?.userData.terrainTint);assert.ok(soil);let hits=0;
+    for(let i=5;i<walk.length;i+=19){const n=path[i],ray=new T.Raycaster(n.clone().multiplyScalar(RADIUS+1),n.clone().negate());const found=ray.intersectObject(soil);assert.ok(found.length,'mountain must face outward and support the walk');const height=walk[i].length()-found[0].point.length();assert.ok(height>.04&&height<.09,'walk foundation must meet the ridge');hits++;}assert.ok(hits>15);
   }finally{scene.dispose();}
 });
 

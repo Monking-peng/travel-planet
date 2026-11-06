@@ -10,7 +10,7 @@
 | 天安门·金水桥 | 宽城台、五券门、九开间柱廊、重檐、七座桥与华表 | [北京市介绍](https://korean.beijing.gov.cn/travellinginbeijing/attractions/202604/t20260403_4574593.html)；[正立面照片](https://bivitour.com/Uploads/images/BaiViet/chuyen-phat-nhanh-bac-kinh.png) |
 | 天坛·祈年殿 | 三重蓝瓦圆檐、十二根外檐柱、蓝绿梁枋、斗拱、上檐竖匾、三层白石圆台和配殿 | [北京市公园管理中心](https://gygl.beijing.gov.cn/mlgy/mlgy_gyjg01/201912/t20191211_1048233.html)；[俯瞰照片](https://p0.itc.cn/images03/20200528/b38a3a4604f14b3d87bed0a07f656df4.jpeg) |
 | 颐和园 | 昆明湖、万寿山、八角佛香阁、橙黄瓦心与深绿脊边、红柱外廊、青蓝金色梁枋、依山石阶、长廊与拱桥 | [北京旅游介绍](https://s.visitbeijing.com.cn/index.php/line/463)；[佛香阁照片](https://stat.ameba.jp/user_images/20240520/10/sisiza1949/c1/e1/j/o0640048015441067520.jpg) |
-| 八达岭长城 | 连续山脊、随坡城墙、垛口、石阶与四座敌楼 | [北京市山地照片](https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html) |
+| 八达岭长城 | 连续山脊、随坡城墙、垛口、石阶与十座敌楼 | [北京市山地照片](https://www.beijing.gov.cn/renwen/bjgk/yqgk/fg/202212/t20221202_2870249.html) |
 | 北海·白塔 | 湖心林丘、覆钵塔身、相轮、宝顶、山门和桥梁 | [北京市介绍](https://www.beijing.gov.cn/tsbj/sxym/202512/t20251212_4338563.html)；[白塔与山门照片](https://adventurepatches.com/wp-content/uploads/2015/09/Sept-14-2015-Beihai-Park-102-copy.jpg) |
 | 钟鼓楼 | 前红后灰的两座城楼、厚台座、绿瓦重檐和独立广场 | [北京市介绍](https://www.beijing.gov.cn/renwen/rwzyd/qxdw/zmzhzhpgj/zhgl/202309/t20230919_3262298.html)；[鼓楼照片](https://r1.visitbeijing.com.cn/vbj-spanish/2024/0929/e94fc9f258a099da319ea34ce5cdb84f.jpg) |
 | 国家大剧院 | 银灰半椭球、中央玻璃帷幕、分缝与环绕水池 | [国家大剧院建筑介绍](https://www.chncpa.org/cgylx/jyjg/)；[外观照片](https://k.sinaimg.cn/n/sinacn/20170801/36db-fyinvwu4442225.jpg/w700d1q75cms.jpg) |
@@ -72,3 +72,20 @@
 ![国家大剧院白天](images/beijing-theatre.png)
 
 ![国家大剧院夜景](images/beijing-theatre-night.png)
+
+
+## 宫城、中轴路网与长城山脊（0.55.92）
+
+对照[故宫博物院午门照片](https://www.dpm.org.cn/explore/building/236454.html)、[殿院实拍](https://img.dpm.org.cn/Uploads/Picture/2020/04/16/s5e9837bfea847.jpg)、[天安门正面照片](https://korean.beijing.gov.cn/travellinginbeijing/attractions/202604/W020260413627919681590.jpg)与[八达岭山脊实拍](https://english.beijing.gov.cn/specials/wanderinginbeijing/route4/scenicspots/202304/W020230427541444294812.jpeg)调整景观。
+
+故宫扩大为连续殿院，午门保留凹字形城台与突出两翼；内金水河和五座桥连接前庭，三大殿、石阶、侧廊、内廷与角楼分层。瓦面采用赭金色和细瓦垄，红墙、深色门窗、青绿梁枋与灰白铺地分别表现。天安门重做宽城台、九开间廊柱与重檐，七座白石桥前的仪式性广场保持开阔。
+
+公共景观增加宫城外环、中轴步道、长安街前庭和通向北海、天坛、国家大剧院、国贸及奥林匹克场馆的道路。十二组地标继续独立增删。长城成为横贯背面山地的完整模块：连续起伏山脊、十座贯通敌楼、阶梯与垛口一同移除和恢复。球面布局为便于浏览的艺术化压缩，不代表真实地理距离，也不用于行程导航。
+
+验收关注宫城和地标间距、长城窄带与其他建筑的净距、城墙连续性与地形承托、日夜切换、自由转动和整组移除恢复。参考照片仅用于观察；没有将外部照片作为产品贴图或素材打包。
+
+![中轴宫城与道路](images/beijing-overview-day-092.png)
+
+![故宫殿院与金水河](images/beijing-palace-day-092.png)
+
+![背面连续山地长城](images/beijing-wall-day-092.png)

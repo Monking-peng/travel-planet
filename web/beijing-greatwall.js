@@ -105,3 +105,47 @@ export function greatWall(k){
   for(const t of towers){const l=new THREE.PointLight('#e4bd82',0,.35,2);l.position.copy(t.p).add(new THREE.Vector3(.10,.21,.12));l.userData.nightIntensity=.012;g.add(l);}
   return g;
 }
+
+// A long, sphere-following mountain panorama. Coordinates are world-space;
+// the scene places this complete module under its focus/removal pivot.
+export function greatWallAcrossGlobe(k,radius){
+  const g=new THREE.Group(),count=360,halfWidth=.245;
+  const p={wall:brick(k,'#929184'),foundation:brick(k,'#727669',.6),cap:k.mat('#b9b5a5',.95,0),floor:k.mat('#a4a697',.98,0),warm:k.mat('#c5ae7b',.8,0,'#e0be7d')};p.warm.userData.night.intensity=.52;
+  const ridge=(t)=>.09+Math.pow(Math.sin(t*Math.PI),.6)*(.25+.11*Math.sin(t*23)+.065*Math.cos(t*41));
+  const direction=(t,offset=0)=>{const u=(t-.5)*3.04,v=.64+.16*Math.sin(t*8.5)+.065*Math.cos(t*17)+offset;return new THREE.Vector3(Math.sin(u)*Math.cos(v),-Math.cos(u)*Math.cos(v),-Math.sin(v));};
+  const height=(t,offset)=>{
+    const width=halfWidth*(.83+.14*Math.sin(t*37)+.08*Math.cos(t*73)),edge=Math.max(0,Math.cos(Math.min(1,Math.abs(offset)/width)*Math.PI/2));
+    const end=THREE.MathUtils.smoothstep(t,0,.025)*(1-THREE.MathUtils.smoothstep(t,.975,1));
+    return .002+ridge(t)*Math.pow(edge,1.5)*end+(Math.sin(t*190+offset*72)*.014+Math.cos(t*93-offset*51)*.009)*Math.pow(edge,.7)*Math.min(1,Math.abs(offset)/.04)*end;
+  };
+  const point=(t,o=0,lift=0)=>direction(t,o).multiplyScalar(radius+height(t,o)+lift);
+  const frame=(t,lift=0)=>{const n=direction(t),along=point(Math.min(1,t+.0001)).sub(point(Math.max(0,t-.0001))).projectOnPlane(n).normalize(),x=new THREE.Vector3().crossVectors(n,along).normalize();const part=new THREE.Group();part.position.copy(point(t,0,lift));part.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(x,n,along));return part;};
+  const vertices=[],colors=[],indices=[],rows=48,base=new THREE.Color('#8f9c79'),forest=new THREE.Color('#536c4c'),stone=new THREE.Color('#91917f');
+  for(let i=0;i<=count;i++)for(let j=0;j<=rows;j++){
+    const t=i/count,o=(j/rows*2-1)*halfWidth,h=height(t,o);vertices.push(...point(t,o).toArray());
+    const c=base.clone().lerp(forest,THREE.MathUtils.smoothstep(h,.005,.08));const steep=Math.abs(height(t,o+.002)-height(t,o-.002))/.004;
+    c.lerp(stone,THREE.MathUtils.smoothstep(steep,.8,1.8)*.6);c.multiplyScalar(1+Math.sin(t*320+o*190)*.025);colors.push(c.r,c.g,c.b);
+    if(i<count&&j<rows){const a=i*(rows+1)+j;indices.push(a,a+1,a+rows+1,a+1,a+rows+2,a+rows+1);}
+  }
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geo.setIndex(indices);geo.computeVertexNormals();
+  // Ensure outward-facing terrain independently of the route's handedness.
+  if(new THREE.Vector3().fromBufferAttribute(geo.attributes.normal,500).dot(new THREE.Vector3().fromBufferAttribute(geo.attributes.position,500))<0){for(let i=0;i<indices.length;i+=3)[indices[i+1],indices[i+2]]=[indices[i+2],indices[i+1]];geo.setIndex(indices);geo.computeVertexNormals();}
+  const soil=k.mat('#ffffff',1,0);soil.vertexColors=true;soil.userData.terrainTint=true;soil.userData.preserveSmooth=true;soil.userData.night={color:new THREE.Color('#45594b'),intensity:.045};k.mesh(g,geo,soil);
+  const towerTs=[.055,.15,.25,.35,.45,.55,.65,.75,.85,.945],walk=[];
+  for(let i=0;i<count;i++){
+    const t=(i+.5)/count,part=frame(t,.066),len=point(i/count).distanceTo(point((i+1)/count))+.003;g.add(part);walk.push(part.position.toArray());
+    k.box(part,.074,.012,len,p.floor);k.box(part,.081,.082,len,p.foundation,0,-.043,0);
+    if(towerTs.some(q=>Math.abs(q-t)*6.3<.095))continue;
+    for(const side of [-1,1]){k.box(part,.012,.035,len,p.wall,side*.042,.019,0);k.box(part,.014,.004,len,p.cap,side*.042,.038,0);if(i%2===0)k.box(part,.013,.026,len*.77,p.wall,side*.042,.050,0);if(i%5===0)k.box(part,.002,.002,len*.8,p.warm,side*.034,.008,0);}
+  }
+  const towerPositions=[];
+  for(const t of towerTs){const a=frame(t);g.add(a);watchtower(k,a,{p:new THREE.Vector3(),angle:0},p);towerPositions.push(a.position.toArray());}
+  const leaves=['#496344','#61774e','#728159'].map(c=>k.mat(c,1,0));let planted=0;
+  for(let i=0;i<950;i++){
+    const t=.025+.95*((i*.61803398875)%1),o=Math.sin(i*24.713)*halfWidth*.93;
+    if(Math.abs(o)<.035||height(t,o)<.015)continue;
+    const n=direction(t,o),pos=point(t,o,.018),leaf=k.mesh(g,new THREE.IcosahedronGeometry(.024+(i%4)*.004,1),leaves[i%3]);leaf.position.copy(pos);leaf.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);leaf.scale.set(1,1.15,1);planted++;
+  }
+  g.userData={sphereLandscape:true,walk,towerPositions,treeCount:planted,angularSpan:3.04,halfWidth};
+  return k.merge(g);
+}
