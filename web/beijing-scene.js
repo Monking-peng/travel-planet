@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {greatWallAcrossGlobe} from './beijing-greatwall.js';
+import {updateCeremonialFlag} from './beijing-flag.js';
 import {makeKit} from './wuhan-kit.js';
 import {createBeijingAxis} from './beijing-axis.js';
 import {surfaceDetail} from './wuhan-atmosphere.js';
@@ -42,7 +43,8 @@ export function createBeijingScene(){
   root.add(createBeijingAxis(k,{radius:RADIUS,landmarks}));
   let night=false,disposed=false;
   function setNight(value){night=Boolean(value);clock.night.value=+night;ground.color.set(night?'#304744':'#8f9c79');for(const m of k.materials){if(m.userData.terrainTint){const day=new THREE.Color('#8f9c79');m.color.setRGB(ground.color.r/day.r,ground.color.g/day.g,ground.color.b/day.b);}const n=m.userData.night;if(n){m.emissive.copy(n.color);m.emissiveIntensity=night?n.intensity:0;}}modules.forEach(g=>g.traverse(o=>{if(o.isLight)o.intensity=night?o.userData.nightIntensity:0;}));}
-  function update(time,reduced){clock.time.value=reduced?0:time;for(const m of k.materials){const n=m.userData.night,p=m.userData.pulse;if(n&&p)m.emissiveIntensity=night?n.intensity*(reduced?1:.84+.16*Math.sin(time*p.speed+p.phase)):0;}}
+  const flag=modules.get('tiananmen')?.getObjectByName('ceremonial-flag');
+  function update(time,reduced){clock.time.value=reduced?0:time;if(landmarks.has('tiananmen'))updateCeremonialFlag(flag,time,reduced);for(const m of k.materials){const n=m.userData.night,p=m.userData.pulse;if(n&&p)m.emissiveIntensity=night?n.intensity*(reduced?1:.84+.16*Math.sin(time*p.speed+p.phase)):0;}}
   function setLandmarkEnabled(id,enabled){const m=modules.get(id);if(!m||landmarks.has(id)===Boolean(enabled))return false;if(enabled){root.add(m);landmarks.set(id,m);}else{m.removeFromParent();landmarks.delete(id);}return true;}
   function dispose(){if(disposed)return;disposed=true;const geos=new Set(),mats=new Set(k.materials),textures=new Set();const collect=o=>{if(o.geometry)geos.add(o.geometry);if(o.material)mats.add(o.material);};root.traverse(collect);modules.forEach(m=>m.traverse(collect));geos.forEach(g=>g.dispose());mats.forEach(m=>{if(m.map)textures.add(m.map);m.dispose();});textures.forEach(t=>t.dispose());}
   setNight(false);return {root,landmarks,setNight,update,setLandmarkEnabled,dispose};

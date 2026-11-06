@@ -1,13 +1,20 @@
 import * as THREE from 'three';
 import {stairs,rail,plaque} from './wuhan-architecture.js';
+import {createCeremonialFlag} from './beijing-flag.js';
 
 // Forms and palette follow the Palace Museum's Wumen/courtyard photographs.
 // This is a deliberately compressed ensemble, not a surveying model.
 function palette(k){
   const p={red:k.mat('#80352f',.91,0),shadow:k.mat('#3a2924',.96,0),stone:k.mat('#d1cfc3',.94,0),paving:k.mat('#b2b2a5',.99,0),joint:k.mat('#92978d',1,0),tile:k.mat('#a77b39',.78,.08),ridge:k.mat('#b18c4d',.76,.07),teal:k.mat('#315a54',.92,0),blue:k.mat('#34505d',.9,0),gold:k.mat('#bd9c61',.8,.08),water:k.mat('#4e8586',.4,.12)};
   p.tile.userData.preserveSmooth=true;p.ridge.userData.preserveSmooth=true;
-  for(const name of ['tile','ridge'])p[name].userData.night={color:new THREE.Color('#d9ae65'),intensity:.17};
-  p.red.userData.night={color:new THREE.Color('#9d5940'),intensity:.055};
+  // Warm architectural floodlighting: gold roofs, readable red columns and
+  // soft white terraces remain distinct instead of one uniform yellow outline.
+  for(const [name,color,intensity] of [['tile','#efab44',.65],['ridge','#efb75c',.62],['red','#ca674c',.17],['gold','#ffcd85',.60],['teal','#c9ad76',.22],['stone','#ffdaa1',.13]]){
+    p[name].userData.night={color:new THREE.Color(color),intensity};
+    p[name].userData.palaceLighting=name;
+  }
+  p.window=k.mat('#352b25',.85,0,'#ffc47d');p.window.userData.night.intensity=.38;
+  p.lantern=k.mat('#bd9c61',.75,.04,'#ffd598');p.lantern.userData.night.intensity=1.6;
   return p;
 }
 function surfaceMesh(k,g,rows,cols,point,mat){
@@ -43,7 +50,8 @@ function hall(k,g,p,{x=0,z=0,w=.42,d=.22,h=.13,y=.035,double=false,bays=9,name='
       if(i===bays)continue;
       const bx=xx+w*.48/bays,bw=w*.70/bays;
       k.box(g,bw,h*.80,.004,p.red,bx,y+h*.43,z+side*d*.34);
-      k.box(g,bw*.78,h*.43,.004,p.shadow,bx,y+h*.57,z+side*(d*.34+.003));
+      k.box(g,bw*.78,h*.43,.004,p.window,bx,y+h*.57,z+side*(d*.34+.003));
+      if(i%2===0)k.box(g,.006,.008,.005,p.lantern,bx,y+h*.82,z+side*d*.46);
       for(let j=0;j<3;j++)k.box(g,.0012,h*.41,.0012,p.gold,bx+(j-1)*bw*.22,y+h*.57,z+side*(d*.34+.006));
       k.box(g,bw*.78,.0016,.0018,p.gold,bx,y+h*.59,z+side*(d*.34+.006));
     }
@@ -100,7 +108,13 @@ export function palace(k){
   }
   hall(k,g,p,{z:-.65,w:.29,d:.11,h:.075,y:.036,double:true,name:'乾清宫'});
   hall(k,g,p,{z:-.81,w:.22,d:.075,h:.043,y:.025,bays:5});
-  g.userData={ensemble:'forbidden-city',courts:5,bridges:5,footprint:[1.27,1.98]};return k.merge(g);
+  g.userData={ensemble:'forbidden-city',courts:5,bridges:5,footprint:[1.27,1.98]};k.merge(g);
+  // A few shielded area accents illuminate actual masonry and paving. They
+  // belong to the removable palace, with no per-window or per-tile lights.
+  for(const z of [.60,.16,-.34,-.70]){
+    const light=new THREE.PointLight('#ffd29a',0,.62,2);light.position.set(0,.26,z);light.userData.nightIntensity=.045;g.add(light);
+  }
+  return g;
 }
 export function tiananmen(k){
   const g=new THREE.Group(),p=palette(k);court(k,g,p,1.16,.90,.02);
@@ -116,6 +130,7 @@ export function tiananmen(k){
   k.box(g,.048,.064,.003,p.gold,0,.151,-.077);k.box(g,.038,.054,.004,k.mat('#a68b69',.94,0),0,.151,-.075);
   // Restrained ceremonial banners, kept separate from the masonry and colonnade.
   for(const x of [-.27,.27])k.box(g,.28,.029,.003,p.red,x,.160,-.076);
-  k.cyl(g,.0015,.002,.23,p.stone,0,.13,.34,10);k.box(g,.048,.029,.001,p.red,.024,.23,.34);
-  g.userData={ensemble:'tiananmen',bridges:7,facadeBays:9};return k.merge(g);
+  k.cyl(g,.0015,.002,.26,p.stone,0,.145,.34,10);
+  g.userData={ensemble:'tiananmen',bridges:7,facadeBays:9};k.merge(g);
+  g.add(createCeremonialFlag(k));return g;
 }

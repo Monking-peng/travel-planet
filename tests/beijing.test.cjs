@@ -1,6 +1,41 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Palace architectural lighting switches off cleanly and travels with its module',async()=>{
+  const {createBeijingScene}=await import('../web/beijing-scene.js'),s=createBeijingScene();
+  try{
+    const palace=s.landmarks.get('palace'),materials=new Set(),lights=[];
+    palace.traverse(o=>{if(o.material?.userData.palaceLighting)materials.add(o.material);if(o.isLight)lights.push(o);});
+    assert.ok(materials.size>=6&&lights.length===5);
+    s.setNight(true);
+    for(const material of materials){assert.ok(material.emissiveIntensity>0);assert.ok(material.emissive.r>material.emissive.b,'palace lighting stays warm');}
+    assert.ok(lights.every(l=>l.intensity>0));
+    s.setLandmarkEnabled('palace',false);assert.equal(palace.parent,null);
+    s.setNight(false);assert.ok([...materials].every(m=>m.emissiveIntensity===0));assert.ok(lights.every(l=>l.intensity===0));
+    s.setLandmarkEnabled('palace',true);assert.ok(lights.every(l=>l.intensity===0),'restoring a module in daytime must not leave nighttime lights on');
+  }finally{s.dispose();}
+});
+
+test('Flag cloth moves at its free edge, stays attached to the pole and honors reduced motion',async()=>{
+  const {createBeijingScene}=await import('../web/beijing-scene.js'),s=createBeijingScene();
+  try{
+    const flag=s.landmarks.get('tiananmen').getObjectByName('ceremonial-flag');assert.ok(flag);
+    s.update(0,false);const pos=flag.geometry.attributes.position,uv=flag.geometry.attributes.uv,first=pos.array.slice();
+    s.update(.9,false);let moving=0;
+    for(let i=0;i<pos.count;i++){
+      assert.ok(Number.isFinite(pos.getZ(i)));
+      if(uv.getX(i)===0)for(let j=0;j<3;j++)assert.equal(pos.array[i*3+j],first[i*3+j],'pole edge must stay pinned');
+      if(uv.getX(i)>.9&&Math.abs(pos.getZ(i)-first[i*3+2])>.002)moving++;
+      assert.ok(Math.abs(pos.getZ(i)-flag.userData.flagRest[i*3+2])<.009,'cloth motion stays gentle');
+    }
+    assert.ok(moving>10,'actual free-edge vertices must move');
+    s.update(1,true);const still=pos.array.slice();s.update(70,true);assert.deepEqual(pos.array,still);
+    s.setLandmarkEnabled('tiananmen',false);s.update(71,false);assert.deepEqual(pos.array,still);
+    s.setLandmarkEnabled('tiananmen',true);s.update(72,false);assert.notDeepEqual(pos.array,still);
+    let disposed=0;flag.material.map.addEventListener('dispose',()=>disposed++);s.dispose();s.dispose();assert.equal(disposed,1);
+  }finally{s.dispose();}
+});
+
 test('Badaling walk passes through four hollow towers on a continuous supported ridge',async()=>{
   const T=await import('three'),{makeKit}=await import('../web/wuhan-kit.js'),{greatWall}=await import('../web/beijing-greatwall.js'),k=makeKit({time:{value:0},night:{value:0}}),g=greatWall(k);g.updateMatrixWorld(true);
   try{
