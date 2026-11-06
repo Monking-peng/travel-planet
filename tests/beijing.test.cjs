@@ -1,6 +1,23 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 
+test('Beijing curved streets stay continuous and roadside trunks leave paving clear',async()=>{
+  const T=await import('three'),{createBeijingScene,RADIUS}=await import('../web/beijing-scene.js'),s=createBeijingScene();
+  try{
+    const axis=s.root.getObjectByName('beijing-axis-landscape'),{roads,plantings}=axis.userData;assert.ok(roads.length>=9&&plantings.length>40);
+    for(const road of roads){
+      const p=road.points.map(v=>new T.Vector3(...v));
+      for(let i=1;i<p.length;i++){assert.ok(p[i].distanceTo(p[i-1])<.022,'road mesh must not jump across a gap');assert.ok(Math.abs(p[i].length()-RADIUS-.014)<1e-6);}
+      for(let i=1;i<p.length-1;i++){const a=p[i].clone().sub(p[i-1]),b=p[i+1].clone().sub(p[i]);if(a.length()>1e-6&&b.length()>1e-6)assert.ok(a.angleTo(b)<.48,'rounded roads must not retain a sharp kink');}
+      for(const tree of plantings){const q=new T.Vector3(...tree.position);for(let i=1;i<p.length;i++){
+        const segment=new T.Line3(p[i-1],p[i]),closest=segment.closestPointToPoint(q,true,new T.Vector3());assert.ok(closest.distanceTo(q)>road.width/2+.024,'tree trunk and low branches must leave the walkway clear');
+      }}
+    }
+    const verge=axis.children.find(o=>o.material?.userData.terrainTint);assert.ok(verge);s.setNight(true);
+    const ground=s.root.getObjectByName('beijing-terrain').material.color,c=new T.Color('#8f9c79').multiply(verge.material.color);assert.ok(c.distanceTo?c.distanceTo(ground)<1e-6:Math.abs(c.r-ground.r)+Math.abs(c.g-ground.g)+Math.abs(c.b-ground.b)<1e-6,'soft road edges must match nighttime ground');
+  }finally{s.dispose();}
+});
+
 test('Palace architectural lighting switches off cleanly and travels with its module',async()=>{
   const {createBeijingScene}=await import('../web/beijing-scene.js'),s=createBeijingScene();
   try{
